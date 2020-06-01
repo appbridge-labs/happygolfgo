@@ -181,7 +181,7 @@ open class BaseActivity : TLSActivity(), LifecycleObserver {
     // 하단의 공통 버튼을 눌렀을 때의 이벤트의 액션
     open fun bottomButtonAction() {}
 
-    // 네트워크 연결 실패시에 '다시시도'할 때 필요한 액션을 넣는다.
+    // 네트워크 연결 실패시에 '다시시도'할 때 필요한 액션을 넣는다
     open fun retryAction() {}
 
     fun setFrameLayoutID(viewID: Int) {
