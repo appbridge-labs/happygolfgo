@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootlaytou"
+    android:background="@color/color_white"
+    tools:context=".ui.user.ConfirmReservationActivity">
+
+    <include
+        android:id="@+id/custom_toolbar"
+        layout="@layout/partial_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/bottom_nav"
+        layout="@layout/partial_bottom_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/custom_toolbar">
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_layout_confirm_reservation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/custom_toolbar">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/tv_title"
+                    layout="@layout/partial_text_section_view" />
+
+                <include
+                    android:id="@+id/tv_date"
+                    layout="@layout/partial_number_section_view" />
+
+                <include
+                    android:id="@+id/tv_time"
+                    layout="@layout/partial_number_section_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <include
+                    android:id="@+id/tv_plate"
+                    layout="@layout/partial_number_section_view" />
+
+<!--                <include-->
+<!--                    android:id="@+id/tv_status"-->
+<!--                    layout="@layout/partial_number_section_view" />-->
+
+                <!--            <include-->
+                <!--                android:id="@+id/text_section_status_confirm_reservation"-->
+                <!--                layout="@layout/partial_text_section_view"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content" />-->
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/policy_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/text_view_policy_title_reservation_confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/text_view_title_policy_reservation"
+                        android:textColor="@color/color_black"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/text_view_policy_content_reservation_confirm"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="sans-serif"
+                        android:text="- 취소와 변경에 대한 정책 수업 당일 예약의 취소나 변경은 수업 시작 전까지만 가능합니다.\n\n  - 결석에 대한 정책 무단 결석이나 예약취소를 하지 못한 경우에는 잔여 횟수가 자 동으로 차감됩니다.\n"
+                        android:textColor="@color/color_black"
+                        android:textSize="14dp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_view_policy_title_reservation_confirm" />
+
+                    <include
+                        android:id="@+id/include2"
+                        layout="@layout/partial_line_separator"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

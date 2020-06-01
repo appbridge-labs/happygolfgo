@@ -1,0 +1,76 @@
+package com.artilearn.happygolfgo.util
+
+import android.content.Context
+import android.graphics.Color
+import android.view.View
+import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.NotificationManagerCompat
+import com.google.android.material.snackbar.Snackbar
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+
+fun View.snackbar(message: String) {
+    Snackbar.make(this, message, Snackbar.LENGTH_LONG).also { snackbar ->
+        snackbar.setAction("확인") { snackbar.dismiss() }
+        snackbar.setTextColor(Color.RED)
+    }.show()
+}
+
+fun convertTime(time: String): String {
+    val default = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    val conver = "yyyy:MM:dd:HH:mm"
+
+    val input = SimpleDateFormat(default, Locale.KOREA)
+    input.timeZone = TimeZone.getTimeZone("UTC")
+
+    val output = SimpleDateFormat(conver, Locale.KOREA)
+    val date = input.parse(time)
+
+    return output.format(date)
+}
+
+fun convertDate(str: String): Date? {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA)
+    dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+    return try {
+        dateFormat.parse(str)
+    } catch (e: ParseException) {
+        null
+    }
+}
+
+fun convertCalendar(date: Date): Calendar {
+    val calendar = Calendar.getInstance()
+    calendar.time = date
+
+    return calendar
+}
+
+fun notificationCheck(context: Context): Int {
+    val check = NotificationManagerCompat.from(context).areNotificationsEnabled()
+
+    return if (check) 1
+    else 0
+}
+
+fun noticeDialog(context: Context, title: String, message: String) {
+    val builder = AlertDialog.Builder(context)
+
+    builder.setTitle(title).setMessage(message)
+
+    builder.setPositiveButton("확인") { _, _ ->
+
+    }
+
+    builder.show()
+}
+
+fun loading(progressbar: ProgressBar, loading: Boolean) {
+    progressbar.visibility = if (loading) {
+        View.VISIBLE
+    } else {
+        View.INVISIBLE
+    }
+}
