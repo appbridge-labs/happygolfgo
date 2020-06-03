@@ -48,6 +48,7 @@ class MyPageActivity : BaseActivity() {
     private fun setDisplay() {
         setUpActionBar(toolbar_my_page.toolbar, getString(R.string.toolbar_title_my_page), true)
 
+        lesson.text_view_title.text = getString(R.string.mypage_lesson_title)
         infor.text_view_title.text = getString(R.string.text_view_title_change_my_information)
         password.text_view_title.text = getString(R.string.text_view_title_change_password)
         signout.text_view_title.text = getString(R.string.text_view_title_sign_out)
