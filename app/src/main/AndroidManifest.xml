@@ -16,20 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".ui.user.PwReSetActivity"
+        <activity android:name=".ui.user.LessonListActivity"></activity>
+        <activity
+            android:name=".ui.user.PwReSetActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.user.AlramActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"></activity>
-        <activity android:name=".ui.user.AlramActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.user.PolicyUseActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".ui.user.PolicyUseActivity"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.user.PolicyActivity"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
-        <activity android:name=".ui.user.PolicyActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.user.InforChangeActivity"
             android:screenOrientation="portrait"
@@ -105,7 +109,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_appnotifi" />
-
     </application>
 
 </manifest>

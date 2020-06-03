@@ -104,4 +104,5 @@
     <string name="noalram">알림이 없습니다.</string>
     <string name="pwreset">********</string>
     <string name="mypage_lesson_title">레슨 일지</string>
+    <string name="mypage_lesson_empty_title">레슨 일지가 없습니다.</string>
 </resources>
