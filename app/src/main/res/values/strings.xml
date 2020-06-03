@@ -103,4 +103,5 @@
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="noalram">알림이 없습니다.</string>
     <string name="pwreset">********</string>
+    <string name="mypage_lesson_title">레슨 일지</string>
 </resources>
