@@ -43,7 +43,7 @@ enum class HappyGolfGoRequest : Request {
         return when (environmentMode) {
             RequestEnvironmentMode.production -> "https://happygolfgoapi.com/happygolfgo/appClient/"
             RequestEnvironmentMode.test -> "http://192.168.0.87:8080/appClient/"
-            RequestEnvironmentMode.development -> "http://192.168.0.87:8080/appClient/"
+            RequestEnvironmentMode.development -> "http://52.79.253.238/development/appClient"
         }
     }
 
