@@ -74,16 +74,6 @@
                     android:id="@+id/tv_plate"
                     layout="@layout/partial_number_section_view" />
 
-<!--                <include-->
-<!--                    android:id="@+id/tv_status"-->
-<!--                    layout="@layout/partial_number_section_view" />-->
-
-                <!--            <include-->
-                <!--                android:id="@+id/text_section_status_confirm_reservation"-->
-                <!--                layout="@layout/partial_text_section_view"-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="wrap_content" />-->
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/policy_section"
                     android:layout_width="match_parent"

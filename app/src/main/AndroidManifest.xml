@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.user.LessonListActivity"></activity>
+        <activity android:name=".ui.user.LessonReviewActivity"></activity>
+        <activity android:name=".ui.user.LessonListActivity" />
         <activity
             android:name=".ui.user.PwReSetActivity"
             android:screenOrientation="portrait"

@@ -105,4 +105,6 @@
     <string name="pwreset">********</string>
     <string name="mypage_lesson_title">레슨 일지</string>
     <string name="mypage_lesson_empty_title">레슨 일지가 없습니다.</string>
+    <string name="lesson_review_out_day">후기를 남길 수 있는 기간이 지났습니다.</string>
+    <string name="lesson_review_my_review_title">나의 후기</string>
 </resources>
