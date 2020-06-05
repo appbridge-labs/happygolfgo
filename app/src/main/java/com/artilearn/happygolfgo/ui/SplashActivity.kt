@@ -81,7 +81,7 @@ class SplashActivity : AppCompatActivity() {
     private fun checkSynchronized() {
         request = HappyGolfGoRequest.userSynchronized
         request.body =
-            "{\"Data\": {\"clientSecretKey\": \"${"$clientKey"}\", \"operatingSystem\": \"1\", \"userType\": \"${"$user"}\", \"fcmToken\": \"${"$realToken"}\", \"isPushOn\": \"${"$pushOn"}\" }}"
+            "{\"Data\": {\"clientSecretKey\": \"${"$clientKey"}\", \"operatingSystem\": \"1\", \"clientType\": \"${"$user"}\", \"fcmToken\": \"${"$realToken"}\", \"isPushOn\": \"${"$pushOn"}\" }}"
         requestManager.request(request, userManager.user) { result, json ->
             when (result) {
                 RequestResult.nSuccess -> {

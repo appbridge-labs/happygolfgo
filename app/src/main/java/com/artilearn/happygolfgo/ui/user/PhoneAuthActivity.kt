@@ -26,7 +26,7 @@ class PhoneAuthActivity : BaseActivity() {
     private var isOk = false
     private var number: String? = null
     private var phone: String? = null
-    private val type = 1
+    private val type = 0
     private var join = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +92,7 @@ class PhoneAuthActivity : BaseActivity() {
     private fun getNumber() {
         val request = HappyGolfGoRequest.pwNumber
         request.body =
-            "{\"Data\": {\"phoneNumber\": \"${"$phone"}\", \"type\": \"${"$type"}\" }}"
+            "{\"Data\": {\"phoneNumber\": \"${"$phone"}\", \"clientType\": \"${"$type"}\" }}"
         requestManager.request(request, userManager.user) { result, json ->
             when (result) {
                 RequestResult.nSuccess -> {
