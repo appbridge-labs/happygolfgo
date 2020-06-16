@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.artilearn.happygolfgo.R
@@ -184,6 +185,8 @@ class MainActivity : BaseActivity(), TicketAdapter.TicketClick {
                                 json?.get("Tickets") as? ArrayList<LinkedTreeMap<String, Any>>
                             val item =
                                 ticketsJSON?.mapNotNull { Ticket.create(it) } as? ArrayList<Ticket>
+                            Log.d("ssssssssi", "$ticketsJSON")
+                            Log.d("ssssssssi", "$item")
 
                             if (item?.size!! > 0) {
                                 runOnUiThread {

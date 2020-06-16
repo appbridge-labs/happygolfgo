@@ -60,6 +60,7 @@ class PlateReservationListFragment(private val fragmentData: LinkedTreeMap<Strin
         val item =
             plateReservationsJSON?.mapNotNull { PlateReservation.create(it) } as? ArrayList<PlateReservation>
 
+
         if (item != null) {
             itemCheck(false)
             plateReservationAdapter.setItem(item)

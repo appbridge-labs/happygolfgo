@@ -37,17 +37,14 @@ class PlateReservationAdapter : RecyclerView.Adapter<PlateReservationAdapter.Ite
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.text_view_title_reservation_card)
         val date = itemView.findViewById<TextView>(R.id.text_view_date_reservation_card)
-        val number = itemView.findViewById<TextView>(R.id.text_view_plate_number_reservation_card)
         val time = itemView.findViewById<TextView>(R.id.text_view_time_reservation_card)
         val check = itemView.findViewById<TextView>(R.id.text_view_status_reservation_card)
-        //val color = itemView.findViewById<ConstraintLayout>(R.id.dot_reservation_card)
 
         fun bind(item: PlateReservation) {
             val start = convertTime(item.startDate).trim().split(":")
             val end = convertTime(item.endDate).trim().split(":")
 
             title.text = item.name
-            number.text = item.plateNumber.toString()
             date.text = start[1] + "." + start[2]
             time.text = start[3] + ":" + start[4] + " ~ " + end[3] + ":" + end[4]
             check.text = "예약완료"

@@ -9,6 +9,7 @@ import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.ui.BaseActivity
 import com.artilearn.happygolfgo.ui.SignInActivity
 import com.artilearn.happygolfgo.util.SharedPreferencesHelper
+import com.artilearn.happygolfgo.util.noticeDialog
 import com.tlsolution.tlsmodules.Extensions.showTwoActionableAlert
 import com.tlsolution.tlsmodules.Network.RequestManager
 import com.tlsolution.tlsmodules.Network.RequestResult
@@ -57,6 +58,7 @@ class MyPageActivity : BaseActivity() {
     private fun setUpClickListener() {
         infor.setOnClickListener { changeInfor() }
         password.setOnClickListener { pwChange() }
+        lesson.setOnClickListener { noticeDialog(this, "준비중", "레슨일지 준비 중 입니다") }
         signout.setOnClickListener {
             showTwoActionableAlert(
                 getString(R.string.alert_title_sign_out),

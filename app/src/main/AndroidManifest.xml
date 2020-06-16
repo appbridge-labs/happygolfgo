@@ -58,10 +58,6 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.user.SelectPlateActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
             android:name=".ui.user.SelectTimeActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

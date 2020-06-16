@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.artilearn.happygolfgo.R
@@ -20,6 +21,7 @@ import com.tlsolution.tlsmodules.Extensions.showTwoActionableAlert
 import com.tlsolution.tlsmodules.Network.RequestManager
 import com.tlsolution.tlsmodules.Network.RequestResult
 import kotlinx.android.synthetic.main.activity_confirm_reservation.*
+import kotlinx.android.synthetic.main.common_textview.view.*
 import kotlinx.android.synthetic.main.partial_bottom_button.view.*
 import kotlinx.android.synthetic.main.partial_text_section_view.view.*
 import kotlinx.android.synthetic.main.partial_toolbar.view.*
@@ -34,9 +36,8 @@ class ConfirmReservationActivity : BaseActivity() {
     private lateinit var lessonReservation: LessonReservation
     private lateinit var plateCancel: PlateReservation
     private lateinit var lessonCancel: LessonReservation
-    private lateinit var plateReserve: Plate
+
     private lateinit var ticket: Ticket
-    private lateinit var plateTime: PlateTime
     private lateinit var lessonTime: LessonTime
 
     private lateinit var type: Any
@@ -111,16 +112,20 @@ class ConfirmReservationActivity : BaseActivity() {
         }
     }
 
-    private fun bottomCheck(type: ClassType.ModelType) {
+    private fun bottomCheck(type: ClassType.ModelType, isCancellable: Boolean) {
         when (type) {
             ClassType.ModelType.PLATE_CANCEL, ClassType.ModelType.LESSON_CANCEL -> {
                 statusType = 1
-                setUpBottomButton(
-                    bottom_nav.layout_bottom_button,
-                    getString(R.string.bottom_button_cancel_reservation)
-                )
-                bottom_nav.layout_bottom_button.setBackgroundColor(getColor(R.color.color_red))
-                bottom_nav.layout_bottom_button.image_view_flag_bottom_button.setImageResource(R.drawable.ic_cancel)
+                if (isCancellable) {
+                    setUpBottomButton(
+                        bottom_nav.layout_bottom_button,
+                        getString(R.string.bottom_button_cancel_reservation)
+                    )
+                    bottom_nav.layout_bottom_button.setBackgroundColor(getColor(R.color.color_red))
+                    bottom_nav.layout_bottom_button.image_view_flag_bottom_button.setImageResource(R.drawable.ic_cancel)
+                } else {
+                    bottom_nav.visibility = View.GONE
+                }
             }
             ClassType.ModelType.PLATE_RESERVE, ClassType.ModelType.LESSON_RESERVE -> {
                 setUpBottomButton(
@@ -137,10 +142,8 @@ class ConfirmReservationActivity : BaseActivity() {
     private fun initView() {
         val infor = intent.getSerializableExtra("item")
         val tk = intent.getSerializableExtra("ticket")
-        val pt = intent.getSerializableExtra("pt")
 
         if (tk != null) ticket = tk as Ticket
-        if (pt != null) plateTime = pt as PlateTime
 
         val start: List<String>
         val end: List<String>
@@ -153,49 +156,46 @@ class ConfirmReservationActivity : BaseActivity() {
             when (it) {
                 is PlateReservation -> { // plate reserve cancel
                     plateCancel = it
-                    bottomCheck(plateCancel.type)
+                    bottomCheck(plateCancel.type, it.isCancellable!!)
                     start = convertTime(plateCancel.startDate).trim().split(":")
                     end = convertTime(plateCancel.endDate).trim().split(":")
                     tv_title.text_view_content.text = plateCancel.name
                     tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
                     tv_time.text_view_title.text = "시간"
                     tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
-                    tv_plate.text_view_title.text = "타석"
-                    tv_plate.text_view_content.text = plateCancel.plateNumber.toString()
+                    tv_policy_content.tv_text.text = getString(R.string.plate_reserve_policy)
                 }
                 is LessonReservation -> { // lesson reserve cancel
                     lessonCancel = it
-                    bottomCheck(lessonCancel.type)
+                    bottomCheck(lessonCancel.type, it.isCancellable!!)
                     start = convertTime(lessonCancel.startDate).trim().split(":")
                     end = convertTime(lessonCancel.endDate).trim().split(":")
                     tv_title.text_view_content.text = lessonCancel.name
                     tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
                     tv_time.text_view_title.text = "레슨 시간"
                     tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
-                    tv_plate.visibility = View.GONE
+                    tv_policy_content.tv_text.text = getString(R.string.lesson_reserve_policy)
                 }
-                is Plate -> { // plate reserve
-                    plateReserve = it
-                    bottomCheck(plateReserve.type)
-                    start = convertTime(plateTime.startDate).trim().split(":")
-                    end = convertTime(plateTime.endDate).trim().split(":")
+                is PlateTime -> { // plate reserve
+                    bottomCheck(it.type, true)
+                    start = convertTime(it.startDate).trim().split(":")
+                    end = convertTime(it.endDate).trim().split(":")
                     tv_title.text_view_content.text = ticket.name
                     tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
                     tv_time.text_view_title.text = "시간"
                     tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
-                    tv_plate.text_view_title.text = "타석"
-                    tv_plate.text_view_content.text = plateReserve.number.toString()
+                    tv_policy_content.tv_text.text = getString(R.string.plate_reserve_policy)
                 }
                 is LessonTime -> { // lesson reserve
                     lessonTime = it
-                    bottomCheck(lessonTime.type)
+                    bottomCheck(lessonTime.type, true)
                     start = convertTime(lessonTime.startDate).trim().split(":")
                     end = convertTime(lessonTime.endDate).trim().split(":")
                     tv_title.text_view_content.text = ticket.name
                     tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
                     tv_time.text_view_title.text = "레슨 시간"
                     tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
-                    tv_plate.visibility = View.GONE
+                    tv_policy_content.tv_text.text = getString(R.string.lesson_reserve_policy)
                 }
             }
         }
@@ -229,10 +229,11 @@ class ConfirmReservationActivity : BaseActivity() {
 
     private fun uploadReady() {
         when (type) {
-            is Plate -> {
-                request = HappyGolfGoRequest.makePlateReservation
+            is PlateTime -> {
+                val plate = type as PlateTime
+                request = HappyGolfGoRequest.withOutPlateNumberReserve
                 request.body =
-                    "{\"Data\": {\"ticketID\": \"${ticket.id}\", \"plateAvailabilityID\": \"${plateReserve.plateAvailability}\", \"plateNumber\": \"${plateReserve.number}\" }}"
+                    "{\"Data\": {\"ticketID\": \"${ticket.id}\", \"plateAvailabilityID\": \"${plate.plateAvailabilityID}\" }}"
                 plateHttp(request)
             }
             is LessonTime -> {

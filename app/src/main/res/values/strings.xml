@@ -47,7 +47,7 @@
 
     <string name="toolbar_title_my_reservation_list">내 예약목록</string>
     <string name="alert_title_cancel_reservation">예약 취소</string>
-    <string name="alert_message_cancel_reservation">예약을 취소하시겠습니까? 정책사항에 따라 페널티가 부과 될 수 있습니다.</string>
+    <string name="alert_message_cancel_reservation">예약을 취소하시겠습니까?</string>
     <string name="text_view_reservation_completed">예약완료</string>
     <string name="text_view_reservation_absent">결석</string>
     <string name="bottom_button_cancel_reservation">예약 취소</string>
@@ -110,4 +110,6 @@
     <string name="lesson_review_write_subtitle">이번 레슨은 어떠셨나요?</string>
     <string name="lesson_review_comment_title">후기 남기기</string>
     <string name="lesson_review_comment_hint">최대 100자 까지 남길 수 있습니다.</string>
+    <string name="plate_reserve_policy">- 예약 취소 정책\n타석예약 취소는 예약시간 3시간 이전까지만 가능합니다.\n\n- 결석에 대한 정책\n타석예약에 대한 결석 시 타석 이용권이 1회 차감이 됩니다.</string>
+    <string name="lesson_reserve_policy">- 예약 취소 정책\n예약 취소는 레슨 당일 이전에만 가능합니다.\n\n- 결석 정책\n예약된 레슨에 결석 시 레슨 이용권이 1회 차감 됩니다.</string>
 </resources>

@@ -14,6 +14,7 @@ data class LessonReservation(
     val totalCount: Int,
     val remainingCount: Int,
     val isUnlimited: Boolean,
+    val isCancellable: Boolean?,
     val type: ClassType.ModelType
 ) : Serializable {
     companion object {
@@ -27,6 +28,7 @@ data class LessonReservation(
             val totalCount = (json.get("totalCount") as Double).toInt()
             val remainingCount = (json.get("remainingCount") as Double).toInt()
             val isUnlimited = json.get("isUnlimited") as Boolean
+            val isCancellable = json["isCancellable"] as Boolean?
             val type = ClassType.ModelType.LESSON_CANCEL
 
             return LessonReservation(
@@ -38,6 +40,7 @@ data class LessonReservation(
                 totalCount,
                 remainingCount,
                 isUnlimited,
+                isCancellable,
                 type
             )
         }
