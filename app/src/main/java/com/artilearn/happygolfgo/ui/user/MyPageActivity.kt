@@ -49,7 +49,7 @@ class MyPageActivity : BaseActivity() {
     private fun setDisplay() {
         setUpActionBar(toolbar_my_page.toolbar, getString(R.string.toolbar_title_my_page), true)
 
-        lesson.text_view_title.text = getString(R.string.mypage_lesson_title)
+        //lesson.text_view_title.text = getString(R.string.mypage_lesson_title)
         infor.text_view_title.text = getString(R.string.text_view_title_change_my_information)
         password.text_view_title.text = getString(R.string.text_view_title_change_password)
         signout.text_view_title.text = getString(R.string.text_view_title_sign_out)
@@ -58,7 +58,7 @@ class MyPageActivity : BaseActivity() {
     private fun setUpClickListener() {
         infor.setOnClickListener { changeInfor() }
         password.setOnClickListener { pwChange() }
-        lesson.setOnClickListener { noticeDialog(this, "준비중", "레슨일지 준비 중 입니다") }
+        //lesson.setOnClickListener { noticeDialog(this, "준비중", "레슨일지 준비 중 입니다") }
         signout.setOnClickListener {
             showTwoActionableAlert(
                 getString(R.string.alert_title_sign_out),
