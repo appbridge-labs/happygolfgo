@@ -25,6 +25,7 @@
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/ic_arrow_reservation_card" />
 
     <TextView
@@ -42,19 +43,6 @@
         app:layout_constraintTop_toTopOf="@id/image_view_check_reservation_card" />
 
     <TextView
-        android:id="@+id/text_view_plate_reservation_card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/text_view_plate_reservation_card"
-        android:textColor="@color/color_white"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/text_view_plate_number_reservation_card" />
-
-    <TextView
         android:id="@+id/text_view_date_reservation_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,19 +54,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_view_check_reservation_card"
         tools:text="00.00" />
-
-    <TextView
-        android:id="@+id/text_view_plate_number_reservation_card"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/roboto_light"
-        android:textColor="@color/color_white"
-        android:textSize="36dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="00" />
 
     <TextView
         android:id="@+id/text_view_time_reservation_card"

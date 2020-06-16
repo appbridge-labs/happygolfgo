@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.artilearn.happygolfgo.R
@@ -129,11 +128,16 @@ class SelectTimeActivity : BaseActivity() {
             if (plate.availableCount == 0) {
                 root.snackbar("잔여 타석이 없습니다")
             } else {
-                val intent = Intent(this, SelectPlateActivity::class.java)
-                intent.putExtra("plate", plate)
+                val intent = Intent(this, ConfirmReservationActivity::class.java)
+                intent.putExtra("item", plate)
                 intent.putExtra("ticket", ticket)
                 intent.putExtra("idx", date)
                 startActivity(intent)
+//                val intent = Intent(this, SelectPlateActivity::class.java)
+//                intent.putExtra("plate", plate)
+//                intent.putExtra("ticket", ticket)
+//                intent.putExtra("idx", date)
+//                startActivity(intent)
             }
         }
     }

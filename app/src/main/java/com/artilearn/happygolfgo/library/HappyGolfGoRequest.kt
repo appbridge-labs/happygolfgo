@@ -28,6 +28,7 @@ enum class HappyGolfGoRequest : Request {
     verifyNumber,
     pwUpdate,
     nickNameUpdate,
+    withOutPlateNumberReserve,
 
     coachSignIn,
     coachMain,
@@ -42,8 +43,8 @@ enum class HappyGolfGoRequest : Request {
     override fun getBaseURLString(): String {
         return when (environmentMode) {
             RequestEnvironmentMode.production -> "https://happygolfgoapi.com/happygolfgo/appClient/"
-            RequestEnvironmentMode.test -> "http://192.168.0.87:8080/appClient/"
-            RequestEnvironmentMode.development -> "http://52.79.253.238/development/appClient"
+            RequestEnvironmentMode.test -> "http://172.30.1.17:8080/appClient/"
+            RequestEnvironmentMode.development -> "http://52.79.253.238/development/appClient/"
         }
     }
 
@@ -61,18 +62,19 @@ enum class HappyGolfGoRequest : Request {
                 selectPlateReserve -> return getBaseURLString() + "reservation/user/plateReservation/detail/${endpoint}"
                 makePlateReservation -> return getBaseURLString() + "reservation/user/plateReservation"
                 makeLessonReservation -> return getBaseURLString() + "reservation/user/lessonReservation"
-                userSynchronized -> return getBaseURLString() + "auth/common/update"
+                userSynchronized -> return getBaseURLString() + "auth/common/uptodate"
                 clientSignOut -> return getBaseURLString() + "mypage/signOut"
                 clientSignIn -> return getBaseURLString() + "auth/user/signIn"
                 pushAlram -> return getBaseURLString() + "main/user/notifications"
-                pwNumber -> return getBaseURLString() + "auth/user/sendSMS"
-                verifyNumber -> return getBaseURLString() + "auth/user/verifySMS"
+                pwNumber -> return getBaseURLString() + "auth/common/verification/send"
+                verifyNumber -> return getBaseURLString() + "auth/common/verification/check"
                 pwUpdate -> return getBaseURLString() + "auth/user/changePassword"
                 nickNameUpdate -> return getBaseURLString() + "mypage/profile"
+                withOutPlateNumberReserve -> return getBaseURLString() + "reservation/user/plate"
 
                 plateTime -> return getBaseURLString() + "reservation/plateReservation/plateAvailability?${endpoint}"
                 plate -> return getBaseURLString() + "reservation/plateReservation/${endpoint}/relatedPlate"
-                reservationList -> return getBaseURLString() + "reservation/user"
+                reservationList -> return getBaseURLString() + "reservation/user/myReservations"
                 lessonTime -> return getBaseURLString() + "reservation/lessonReservation/lessonAvailability?${endpoint}"
                 plateTimeAfterLessonTime -> return getBaseURLString() + "reservation/lessonReservation/plateAvailability?${endpoint}"
 
@@ -94,6 +96,7 @@ enum class HappyGolfGoRequest : Request {
                 makeLessonReservation,
                 pwNumber,
                 verifyNumber,
+                withOutPlateNumberReserve,
                 userSynchronized -> return "POST"
                 main,
                 plateTime,

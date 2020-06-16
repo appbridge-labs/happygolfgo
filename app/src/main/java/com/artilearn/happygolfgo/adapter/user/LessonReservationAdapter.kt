@@ -40,16 +40,10 @@ class LessonReservationAdapter : RecyclerView.Adapter<LessonReservationAdapter.I
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.text_view_title_reservation_card)
         val date = itemView.findViewById<TextView>(R.id.text_view_date_reservation_card)
-        val number = itemView.findViewById<TextView>(R.id.text_view_plate_number_reservation_card)
         val time = itemView.findViewById<TextView>(R.id.text_view_time_reservation_card)
         val check = itemView.findViewById<TextView>(R.id.text_view_status_reservation_card)
-        //val color = itemView.findViewById<ConstraintLayout>(R.id.dot_reservation_card)
-        val plate = itemView.findViewById<TextView>(R.id.text_view_plate_reservation_card)
 
         fun bind(item: LessonReservation) {
-            number.visibility = View.GONE
-            plate.visibility = View.GONE
-
             val start = convertTime(item.startDate).trim().split(":")
             val end = convertTime(item.endDate).trim().split(":")
 

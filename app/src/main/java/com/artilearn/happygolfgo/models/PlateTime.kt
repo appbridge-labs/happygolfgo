@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.models
 
+import com.artilearn.happygolfgo.enummodel.ClassType
 import com.google.gson.internal.LinkedTreeMap
 import java.io.Serializable
 import java.util.*
@@ -9,7 +10,8 @@ data class PlateTime(
     val startDate: String,
     val endDate: String,
     val totalCount: Int,
-    val availableCount: Int
+    val availableCount: Int,
+    val type: ClassType.ModelType
 ) : Serializable {
 
     companion object {
@@ -19,13 +21,15 @@ data class PlateTime(
             val endDate = json["endDate"] as String
             val totalCount = (json["totalCount"] as Double).toInt()
             val availableCount = (json["availableCount"] as Double).toInt()
+            val type = ClassType.ModelType.PLATE_RESERVE
 
             return PlateTime(
                 plateAvailabilityID,
                 startDate,
                 endDate,
                 totalCount,
-                availableCount
+                availableCount,
+                type
             )
         }
     }

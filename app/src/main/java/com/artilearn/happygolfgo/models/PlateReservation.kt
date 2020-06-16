@@ -16,6 +16,7 @@ data class PlateReservation(
     val totalCount: Int,
     val remainingCount: Int,
     val isUnlimited: Boolean,
+    val isCancellable: Boolean?,
     val type: ClassType.ModelType
 ) : Serializable {
 
@@ -41,6 +42,7 @@ data class PlateReservation(
             val totalCount = (json["totalCount"] as Double).toInt()
             val remainingCount = (json["remainingCount"] as Double).toInt()
             val isUnlimited = json["isUnlimited"] as Boolean
+            val isCancellable = json["isCancellable"] as Boolean?
             val type = ClassType.ModelType.PLATE_CANCEL
 
             return PlateReservation(
@@ -53,6 +55,7 @@ data class PlateReservation(
                 totalCount,
                 remainingCount,
                 isUnlimited,
+                isCancellable,
                 type
             )
         }

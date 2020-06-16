@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.user
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.models.LessonReservation
 import com.artilearn.happygolfgo.models.PlateReservation
@@ -33,7 +34,8 @@ class CompletionActivity : BaseActivity() {
         when (intent.getIntExtra("data", 0)) {
             0 -> {
                 tv_title.text = getString(R.string.text_view_title_cancel_reservation)
-                tv_content.text = getString(R.string.text_view_subtitle_cancel_reservation)
+                //tv_content.text = getString(R.string.text_view_subtitle_cancel_reservation)
+                tv_content.visibility = View.GONE
             }
             1 -> {
                 typeSuccess(type)
@@ -54,11 +56,11 @@ class CompletionActivity : BaseActivity() {
                     val use =
                         "연습장 이용권 (${plateReservation.totalCount}회 중 ${plateReservation.remainingCount}회 남음)"
                     tv_title.text = plateReservation.name
-                    tv_content.text = "${use} \n ${time} / ${plate}"
+                    tv_content.text = "${use} \n ${time}"
                 } else {
                     val use = "연습장 이용권 (무제한 사용권)"
                     tv_title.text = plateReservation.name
-                    tv_content.text = "${use} \n ${time} / ${plate}"
+                    tv_content.text = "${use} \n ${time}"
                 }
             }
             is LessonReservation -> {

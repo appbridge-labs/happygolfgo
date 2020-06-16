@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootlaytou"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rootlaytou"
     android:background="@color/color_white"
     tools:context=".ui.user.ConfirmReservationActivity">
 
@@ -70,10 +70,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <include
-                    android:id="@+id/tv_plate"
-                    layout="@layout/partial_number_section_view" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/policy_section"
                     android:layout_width="match_parent"
@@ -97,19 +93,11 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/text_view_policy_content_reservation_confirm"
+                    <include
+                        android:id="@+id/tv_policy_content"
+                        layout="@layout/common_textview"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="16dp"
-                        android:fontFamily="sans-serif"
-                        android:text="- 취소와 변경에 대한 정책 수업 당일 예약의 취소나 변경은 수업 시작 전까지만 가능합니다.\n\n  - 결석에 대한 정책 무단 결석이나 예약취소를 하지 못한 경우에는 잔여 횟수가 자 동으로 차감됩니다.\n"
-                        android:textColor="@color/color_black"
-                        android:textSize="14dp"
-                        android:textStyle="normal"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
