@@ -6,7 +6,6 @@ import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.library.HappyGolfGoCoachManager
 import com.artilearn.happygolfgo.library.HappyGolfGoRequest
 import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.models.User
@@ -23,7 +22,6 @@ class SplashActivity : AppCompatActivity() {
     private val TAG = "SplashActivity"
 
     private lateinit var userManager: HappyGolfGoUserManager
-    private lateinit var coachManager: HappyGolfGoCoachManager
     private lateinit var request: HappyGolfGoRequest
     private lateinit var requestManager: RequestManager
     private lateinit var sp: SharedPreferencesHelper
@@ -49,7 +47,6 @@ class SplashActivity : AppCompatActivity() {
 
     private fun initView() {
         userManager = HappyGolfGoUserManager(this)
-        coachManager = HappyGolfGoCoachManager(this)
         requestManager = RequestManager(this)
         sp = SharedPreferencesHelper
         sp.init(this)
