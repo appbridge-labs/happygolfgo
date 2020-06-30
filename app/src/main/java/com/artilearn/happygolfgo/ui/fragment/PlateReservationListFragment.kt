@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.adapter.user.PlateReservationAdapter
+import com.artilearn.happygolfgo.adapter.PlateReservationAdapter
 import com.artilearn.happygolfgo.models.PlateReservation
 import com.artilearn.happygolfgo.ui.user.ConfirmReservationActivity
 import com.google.gson.internal.LinkedTreeMap
@@ -41,7 +41,8 @@ class PlateReservationListFragment(private val fragmentData: LinkedTreeMap<Strin
     }
 
     private fun setUpAdapter() {
-        plateReservationAdapter = PlateReservationAdapter()
+        plateReservationAdapter =
+            PlateReservationAdapter()
         recycler_view_plate_reservation_list.adapter = plateReservationAdapter
         plateReservationAdapter.listener = this
     }

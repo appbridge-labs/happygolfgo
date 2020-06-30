@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.adapter.user
+package com.artilearn.happygolfgo.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

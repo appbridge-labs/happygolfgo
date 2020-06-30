@@ -5,11 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.adapter.user.MyReservationListAdapter
+import com.artilearn.happygolfgo.adapter.MyReservationListAdapter
 import com.artilearn.happygolfgo.library.HappyGolfGoRequest
 import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.ui.BaseActivity
@@ -100,12 +99,12 @@ class MyReservationListActivity : BaseActivity() {
                     when (result.statusCode) {
                         200 -> {
                             fragmentData = json
-                            Log.d("aaa", "fetchData: $fragmentData")
 
-                            viewPagerAdapter = MyReservationListAdapter(
-                                supportFragmentManager,
-                                fragmentData
-                            )
+                            viewPagerAdapter =
+                                MyReservationListAdapter(
+                                    supportFragmentManager,
+                                    fragmentData
+                                )
 
                             runOnUiThread {
                                 view_pager_my_reservation_list.adapter = viewPagerAdapter

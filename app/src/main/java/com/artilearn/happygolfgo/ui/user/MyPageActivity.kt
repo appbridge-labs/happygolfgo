@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.partial_toolbar.view.*
 
 
 class MyPageActivity : BaseActivity() {
-val TAG = javaClass.simpleName
+private val TAG = javaClass.simpleName
     private lateinit var requestManager: RequestManager
     private lateinit var userManager: HappyGolfGoUserManager
     private lateinit var sp: SharedPreferencesHelper
@@ -71,7 +71,7 @@ val TAG = javaClass.simpleName
     private fun setUpClickListener() {
         infor.setOnClickListener { changeInfor() }
         password.setOnClickListener { pwChange() }
-        lesson.setOnClickListener { noticeDialog(this, "준비중", "레슨일지 준비 중 입니다") }
+        lesson.setOnClickListener { goLessonReview() }
         signout.setOnClickListener {
             showTwoActionableAlert(
                 getString(R.string.alert_title_sign_out),
@@ -81,6 +81,7 @@ val TAG = javaClass.simpleName
                 { signOut() }
             )
         }
+        tv_update.setOnClickListener { updateAppStore() }
     }
 
     private fun isLoading(loading: Boolean) {
@@ -112,6 +113,11 @@ val TAG = javaClass.simpleName
     private fun pwChange() {
         val intent = Intent(this, PhoneAuthActivity::class.java)
         intent.putExtra("where", 101)
+        startActivity(intent)
+    }
+
+    private fun goLessonReview() {
+        val intent = Intent(this, LessonListActivity::class.java)
         startActivity(intent)
     }
 
@@ -183,6 +189,11 @@ val TAG = javaClass.simpleName
         }
 
         return packageInfo?.versionName
+    }
+
+    //todo 프레레이스토어 클릭 작성
+    private fun updateAppStore() {
+
     }
 
 }

@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.adapter.user
+package com.artilearn.happygolfgo.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +22,10 @@ class LessonTimeAdapter : RecyclerView.Adapter<LessonTimeAdapter.LessonViewHolde
             R.layout.item_time_selection, parent, false
         )
 
-        val vh = LessonViewHolder(view)
+        val vh =
+            LessonViewHolder(
+                view
+            )
 
         view.setOnClickListener {
             callback(list[vh.adapterPosition])

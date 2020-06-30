@@ -8,8 +8,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.adapter.user.LessonTimeAdapter
-import com.artilearn.happygolfgo.adapter.user.PlateTimeAdapter
+import com.artilearn.happygolfgo.adapter.LessonTimeAdapter
+import com.artilearn.happygolfgo.adapter.PlateTimeAdapter
 import com.artilearn.happygolfgo.library.HappyGolfGoRequest
 import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.models.LessonTime

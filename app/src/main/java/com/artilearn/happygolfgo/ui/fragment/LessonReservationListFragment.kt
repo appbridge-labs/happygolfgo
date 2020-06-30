@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.adapter.user.LessonReservationAdapter
+import com.artilearn.happygolfgo.adapter.LessonReservationAdapter
 import com.artilearn.happygolfgo.models.LessonReservation
 import com.artilearn.happygolfgo.ui.user.ConfirmReservationActivity
 import com.google.gson.internal.LinkedTreeMap
@@ -42,7 +42,8 @@ class LessonReservationListFragment(private val fragmentData: LinkedTreeMap<Stri
     }
 
     private fun setUpAdapter() {
-        lessonReservationAdapter = LessonReservationAdapter()
+        lessonReservationAdapter =
+            LessonReservationAdapter()
         recycler_view_lesson_reservation_list.adapter = lessonReservationAdapter
         lessonReservationAdapter.listener = this
     }

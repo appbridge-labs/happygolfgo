@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.user.LessonReviewWriteActivity"></activity>
+        <activity android:name=".ui.user.VideoActivity"></activity>
+        <activity android:name=".ui.user.LessonReviewWriteActivity" />
         <activity android:name=".ui.user.LessonReviewActivity" />
         <activity android:name=".ui.user.LessonListActivity" />
         <activity

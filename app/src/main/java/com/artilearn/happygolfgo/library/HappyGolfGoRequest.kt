@@ -30,6 +30,8 @@ enum class HappyGolfGoRequest : Request {
     nickNameUpdate,
     withOutPlateNumberReserve,
     appVersion,
+    lessonReviewList,
+    lessonReviewDetail,
     ;
 
 
@@ -68,6 +70,8 @@ enum class HappyGolfGoRequest : Request {
                 nickNameUpdate -> return getBaseURLString() + "mypage/profile"
                 withOutPlateNumberReserve -> return getBaseURLString() + "reservation/user/plate"
                 appVersion -> return getBaseURLString() + "mypage/appversion?platform=1&clientType=0"
+                lessonReviewList -> return getBaseURLString() + "user/lessonlogs"
+                lessonReviewDetail -> return getBaseURLString() + "user/lessonlogs/detail/${endpoint}"
 
                 plateTime -> return getBaseURLString() + "reservation/plateReservation/plateAvailability?${endpoint}"
                 plate -> return getBaseURLString() + "reservation/plateReservation/${endpoint}/relatedPlate"
@@ -103,6 +107,8 @@ enum class HappyGolfGoRequest : Request {
                 selectPlateReserve,
                 pushAlram,
                 appVersion,
+                lessonReviewList,
+                lessonReviewDetail,
                 plateTimeAfterLessonTime -> return "GET"
 
                 clientSignOut,

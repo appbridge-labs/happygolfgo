@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.adapter.user
+package com.artilearn.happygolfgo.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,36 +6,35 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.models.LessonReservation
+import com.artilearn.happygolfgo.models.PlateReservation
 import com.artilearn.happygolfgo.util.convertTime
 
-class LessonReservationAdapter : RecyclerView.Adapter<LessonReservationAdapter.ItemViewHolder>() {
+class PlateReservationAdapter : RecyclerView.Adapter<PlateReservationAdapter.ItemViewHolder>() {
 
-    private val lessonList: ArrayList<LessonReservation> = ArrayList()
-    var listener: LessonClick? = null
+    private val reserveList: ArrayList<PlateReservation> = ArrayList()
+    var listener: ReserveClick? = null
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.item_reservation_card_view, parent, false
         )
 
-        return ItemViewHolder(view).also {
+        return ItemViewHolder(
+            view
+        ).also {
             it.itemView.setOnClickListener { position ->
-                val curretItem =
-                    lessonList.getOrNull(it.adapterPosition) ?: return@setOnClickListener
-                listener?.lesson(curretItem)
+                val currentItem =
+                    reserveList.getOrNull(it.adapterPosition) ?: return@setOnClickListener
+                listener?.reserve(currentItem)
             }
         }
     }
 
-    override fun getItemCount() = lessonList.size
-
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(lessonList[position])
+        holder.bind(reserveList[position])
     }
+
+    override fun getItemCount() = reserveList.size
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.text_view_title_reservation_card)
@@ -43,7 +42,7 @@ class LessonReservationAdapter : RecyclerView.Adapter<LessonReservationAdapter.I
         val time = itemView.findViewById<TextView>(R.id.text_view_time_reservation_card)
         val check = itemView.findViewById<TextView>(R.id.text_view_status_reservation_card)
 
-        fun bind(item: LessonReservation) {
+        fun bind(item: PlateReservation) {
             val start = convertTime(item.startDate).trim().split(":")
             val end = convertTime(item.endDate).trim().split(":")
 
@@ -54,18 +53,18 @@ class LessonReservationAdapter : RecyclerView.Adapter<LessonReservationAdapter.I
         }
     }
 
-    fun setItem(item: List<LessonReservation>) {
-        this.lessonList.addAll(item)
+    fun setItem(item: List<PlateReservation>) {
+        this.reserveList.addAll(item)
         notifyDataSetChanged()
     }
 
     fun itemClear() {
-        this.lessonList.clear()
+        this.reserveList.clear()
         notifyDataSetChanged()
     }
 
-    interface LessonClick {
-        fun lesson(lesson: LessonReservation)
+    interface ReserveClick {
+        fun reserve(reserve: PlateReservation)
     }
-}
 
+}
