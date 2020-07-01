@@ -4,25 +4,33 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.library.HappyGolfGoRequest
 import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
+import com.artilearn.happygolfgo.models.LessonReviewDetail
 import com.artilearn.happygolfgo.models.LessonReviewList
 import com.artilearn.happygolfgo.ui.BaseActivity
 import com.artilearn.happygolfgo.util.convertTime
 import com.artilearn.happygolfgo.util.noticeDialog
+import com.google.gson.internal.LinkedTreeMap
 import com.tlsolution.tlsmodules.Network.RequestManager
+import com.tlsolution.tlsmodules.Network.RequestResult
 import kotlinx.android.synthetic.main.activity_lesson_review_write.*
+import kotlinx.android.synthetic.main.activity_lesson_review_write.progressBar
+import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.partial_bottom_button.view.*
 import kotlinx.android.synthetic.main.partial_toolbar.view.*
 
 class LessonReviewWriteActivity : BaseActivity() {
-
+private val TAG = javaClass.simpleName
     private lateinit var requestManager: RequestManager
     private lateinit var userManager: HappyGolfGoUserManager
     private lateinit var request: HappyGolfGoRequest
     private var lessonReviewList: LessonReviewList? = null
+    private var comment: String? = null
+    private var grade: Float = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +83,9 @@ class LessonReviewWriteActivity : BaseActivity() {
 
     private fun uploadLessonReviewBefore() {
         if (et_comment.text.isNotEmpty() && ratingBar.rating != 0f) {
+            Log.d(TAG, "zzzzzz")
+            comment = et_comment.text.toString()
+            grade = ratingBar.rating
             uploadLessonReview()
         } else {
             when {
@@ -91,8 +102,53 @@ class LessonReviewWriteActivity : BaseActivity() {
         }
     }
 
+    private fun isLoading(loading: Boolean) {
+        progressBar.visibility = if (loading) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
+        }
+    }
+
     private fun uploadLessonReview() {
-        Toast.makeText(this, "a", Toast.LENGTH_SHORT).show()
+        isLoading(true)
+
+        request = HappyGolfGoRequest.uploadLessonReview
+        request.body =
+            "{\"Data\": {\"lessonLogID\": \"${lessonReviewList?.id}\", \"comment\": \"$comment\", \"ratings\": \"$grade\" }}"
+
+        requestManager.request(request, userManager.user) { result, json ->
+            when (result) {
+                RequestResult.nSuccess -> {
+                    Log.d(TAG, "nnnnnnnn!!!!: ")
+                    runOnUiThread { isLoading(false) }
+                }
+                RequestResult.pSuccess -> {
+                    when (result.statusCode) {
+                        200 -> {
+                            Log.d(TAG, "200!!!!: ")
+                            runOnUiThread {
+                                isLoading(false)
+                            }
+                        }
+                        406 -> {
+                            Log.d(TAG, "406!!!!: ")
+                            runOnUiThread {
+                                isLoading(false)
+                            }
+                        }
+                    }
+                }
+                RequestResult.failure -> {
+                    Log.d(TAG, "failure!!!!: ")
+                    runOnUiThread { isLoading(false) }
+                }
+                else -> {
+                    Log.d(TAG, "else!!!!: ")
+                    runOnUiThread { isLoading(false) }
+                }
+            }
+        }
     }
 
 }
