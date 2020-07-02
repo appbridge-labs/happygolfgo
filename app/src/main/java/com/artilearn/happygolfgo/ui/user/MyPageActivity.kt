@@ -20,15 +20,15 @@ import kotlinx.android.synthetic.main.activity_my_page.*
 import kotlinx.android.synthetic.main.partial_menu_with_right_arrow.view.*
 import kotlinx.android.synthetic.main.partial_toolbar.view.*
 
-
+//todo 주석처리 처리(xml포함) 전부 해제완료하면 됨....(지금 크러쉬 잡을려고 앱배포 2020.07.02)
 class MyPageActivity : BaseActivity() {
-private val TAG = javaClass.simpleName
+
     private lateinit var requestManager: RequestManager
     private lateinit var userManager: HappyGolfGoUserManager
     private lateinit var sp: SharedPreferencesHelper
-    private var version: String? = null
-    private var currentVersion: String? = null
-    private var packageInfo: PackageInfo? = null
+    //private var version: String? = null
+    //private var currentVersion: String? = null
+    //private var packageInfo: PackageInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,11 +48,11 @@ private val TAG = javaClass.simpleName
         requestManager = RequestManager(this)
         userManager = HappyGolfGoUserManager(this)
 
-        currentVersion = nowAppVersion()
+        //currentVersion = nowAppVersion()
 
         setDisplay()
         setUpClickListener()
-        loadAppVersion()
+        //loadAppVersion()
     }
 
     private fun setDisplay() {
@@ -62,16 +62,19 @@ private val TAG = javaClass.simpleName
         infor.text_view_title.text = getString(R.string.text_view_title_change_my_information)
         password.text_view_title.text = getString(R.string.text_view_title_change_password)
         signout.text_view_title.text = getString(R.string.text_view_title_sign_out)
-        currentVersion?.let {
-            tv_version.text = it
-        }
+//        currentVersion?.let {
+//            tv_version.text = it
+//        }
 
     }
 
     private fun setUpClickListener() {
         infor.setOnClickListener { changeInfor() }
         password.setOnClickListener { pwChange() }
-        lesson.setOnClickListener { goLessonReview() }
+        lesson.setOnClickListener {
+            //goLessonReview()
+            noticeDialog(this, "레슨 일지", "준비 중 입니다...")
+        }
         signout.setOnClickListener {
             showTwoActionableAlert(
                 getString(R.string.alert_title_sign_out),
@@ -81,7 +84,7 @@ private val TAG = javaClass.simpleName
                 { signOut() }
             )
         }
-        tv_update.setOnClickListener { updateAppStore() }
+        //tv_update.setOnClickListener { updateAppStore() }
     }
 
     private fun isLoading(loading: Boolean) {
@@ -116,10 +119,10 @@ private val TAG = javaClass.simpleName
         startActivity(intent)
     }
 
-    private fun goLessonReview() {
-        val intent = Intent(this, LessonListActivity::class.java)
-        startActivity(intent)
-    }
+//    private fun goLessonReview() {
+//        val intent = Intent(this, LessonListActivity::class.java)
+//        startActivity(intent)
+//    }
 
     private fun signOut() {
         isLoading(true)
@@ -158,42 +161,42 @@ private val TAG = javaClass.simpleName
         }
     }
 
-    private fun loadAppVersion() {
-        val request = HappyGolfGoRequest.appVersion
-
-        requestManager.request(request, userManager.user) { result, json ->
-            when (result) {
-                RequestResult.pSuccess -> {
-                    when (result.statusCode) {
-                        200 -> {
-                            version = json?.get("latestVersion") as String
-
-                            runOnUiThread {
-                                if (currentVersion != version) {
-                                    tv_update.visibility = View.VISIBLE
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-
-    private fun nowAppVersion(): String? {
-        try {
-            packageInfo = packageManager.getPackageInfo(packageName, 0)
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
-
-        return packageInfo?.versionName
-    }
-
-    //todo 프레레이스토어 클릭 작성
-    private fun updateAppStore() {
-
-    }
+//    private fun loadAppVersion() {
+//        val request = HappyGolfGoRequest.appVersion
+//
+//        requestManager.request(request, userManager.user) { result, json ->
+//            when (result) {
+//                RequestResult.pSuccess -> {
+//                    when (result.statusCode) {
+//                        200 -> {
+//                            version = json?.get("latestVersion") as String
+//
+//                            runOnUiThread {
+//                                if (currentVersion != version) {
+//                                    tv_update.visibility = View.VISIBLE
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//        }
+//    }
+//
+//    private fun nowAppVersion(): String? {
+//        try {
+//            packageInfo = packageManager.getPackageInfo(packageName, 0)
+//        } catch (e: PackageManager.NameNotFoundException) {
+//            e.printStackTrace()
+//        }
+//
+//        return packageInfo?.versionName
+//    }
+//
+//    //todo 프레레이스토어 클릭 작성
+//    private fun updateAppStore() {
+//
+//    }
 
 }
