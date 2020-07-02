@@ -3,7 +3,7 @@ package com.artilearn.happygolfgo.ui.user
 import android.os.Bundle
 import android.view.View
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.adapter.user.AlramAdapter
+import com.artilearn.happygolfgo.adapter.AlramAdapter
 import com.artilearn.happygolfgo.library.HappyGolfGoRequest
 import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.models.Alram

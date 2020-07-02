@@ -29,12 +29,11 @@ enum class HappyGolfGoRequest : Request {
     pwUpdate,
     nickNameUpdate,
     withOutPlateNumberReserve,
-
-    coachSignIn,
-    coachMain,
-    coachReservation,
-    customerInfo;
-
+    appVersion,
+    lessonReviewList,
+    lessonReviewDetail,
+    uploadLessonReview,
+    ;
 
 
     override var endpoint: String = ""
@@ -71,17 +70,16 @@ enum class HappyGolfGoRequest : Request {
                 pwUpdate -> return getBaseURLString() + "auth/user/changePassword"
                 nickNameUpdate -> return getBaseURLString() + "mypage/profile"
                 withOutPlateNumberReserve -> return getBaseURLString() + "reservation/user/plate"
+                appVersion -> return getBaseURLString() + "mypage/appversion?platform=1&clientType=0"
+                lessonReviewList -> return getBaseURLString() + "user/lessonlogs"
+                lessonReviewDetail -> return getBaseURLString() + "user/lessonlogs/detail/${endpoint}"
+                uploadLessonReview -> return getBaseURLString() + "user/lessonlogs"
 
                 plateTime -> return getBaseURLString() + "reservation/plateReservation/plateAvailability?${endpoint}"
                 plate -> return getBaseURLString() + "reservation/plateReservation/${endpoint}/relatedPlate"
                 reservationList -> return getBaseURLString() + "reservation/user/myReservations"
                 lessonTime -> return getBaseURLString() + "reservation/lessonReservation/lessonAvailability?${endpoint}"
                 plateTimeAfterLessonTime -> return getBaseURLString() + "reservation/lessonReservation/plateAvailability?${endpoint}"
-
-                coachSignIn -> return getBaseURLString() + "appEmployee/auth/signIn"
-                coachMain -> return getBaseURLString() + "appEmployee?${endpoint}"
-                coachReservation -> return getBaseURLString() + "appEmployee/reservation/${endpoint}/show"
-                customerInfo -> return getBaseURLString() + "appEmployee/user/${endpoint}/show"
 
             }
         }
@@ -110,21 +108,18 @@ enum class HappyGolfGoRequest : Request {
                 selectPlate,
                 selectPlateReserve,
                 pushAlram,
+                appVersion,
+                lessonReviewList,
+                lessonReviewDetail,
                 plateTimeAfterLessonTime -> return "GET"
 
                 clientSignOut,
                 nickNameUpdate,
+                uploadLessonReview,
                 pwUpdate -> return "PUT"
 
                 cancelPlateReservation,
                 cancelLessonReservation -> return "DELETE"
-
-                coachSignIn -> return "POST"
-                coachMain,
-
-                coachReservation,
-                customerInfo -> return "GET"
-
             }
         }
 

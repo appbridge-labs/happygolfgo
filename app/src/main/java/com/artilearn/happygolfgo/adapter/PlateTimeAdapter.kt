@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.adapter.user
+package com.artilearn.happygolfgo.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +21,10 @@ class PlateTimeAdapter : RecyclerView.Adapter<PlateTimeAdapter.PlateViewHolder>(
             R.layout.item_time_selection, parent, false
         )
 
-        val vh = PlateViewHolder(view)
+        val vh =
+            PlateViewHolder(
+                view
+            )
 
         view.setOnClickListener {
             listener(list[vh.adapterPosition])

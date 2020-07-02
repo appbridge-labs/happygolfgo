@@ -1,27 +1,4 @@
-package com.artilearn.happygolfgo.ui.user
-
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.os.Bundle
-import android.util.Log
-import android.view.View
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.adapter.user.PlateAdapter
-import com.artilearn.happygolfgo.library.HappyGolfGoRequest
-import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
-import com.artilearn.happygolfgo.models.Plate
-import com.artilearn.happygolfgo.models.PlateTime
-import com.artilearn.happygolfgo.models.Ticket
-import com.artilearn.happygolfgo.ui.BaseActivity
-import com.artilearn.happygolfgo.util.snackbar
-import com.google.gson.internal.LinkedTreeMap
-import com.tlsolution.tlsmodules.Network.RequestManager
-import com.tlsolution.tlsmodules.Network.RequestResult
-import kotlinx.android.synthetic.main.activity_select_plate.*
-import kotlinx.android.synthetic.main.partial_toolbar.view.*
+package com.artilearn.happygolfgo.deprecated
 
 /**
  * Deprecated 2020.06.16 타석번호 제거

@@ -97,9 +97,7 @@ class SelectDateActivity : BaseActivity() {
                     } else {
                         val month = eventDay.calendar.get(Calendar.MONTH)
                         date = "startDate=${eventDay.calendar.get(Calendar.YEAR)}-${month + 1}-${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}"
-                        Log.d("sibal", "$date")
                         dayZone = date + "&" + "ticketID=${ticket.id}"
-                        Log.d("sibal", "$dayZone")
                         startActivity()
                     }
                 }
@@ -178,18 +176,12 @@ class SelectDateActivity : BaseActivity() {
                         201 -> {
                             val availableDate = json?.get("availableDates") as ArrayList<String>
                             val eventDate = json["eventDates"] as ArrayList<String>
-                            println("availableDate: $availableDate")
-                            println("eventDate: $eventDate")
 
                             if (availableDate.size != 0) {
                                 val min = Collections.min(availableDate)
                                 val max = Collections.max(availableDate)
                                 val minDate = convertDate(min)
                                 val maxDate = convertDate(max)
-                                Log.d("dddd", "maintest min: $min")
-                                Log.d("dddd", "maintest max: $max")
-                                Log.d("dddd", "maintest minDate: $minDate")
-                                Log.d("dddd", "maintest maxDate: $maxDate")
 
                                 availableDates = availableDate.map {
                                     val date = convertDate(it)

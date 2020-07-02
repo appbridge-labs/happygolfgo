@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.adapter.user
+package com.artilearn.happygolfgo.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +19,9 @@ class TicketAdapter : RecyclerView.Adapter<TicketAdapter.ItemViewHolder>() {
             R.layout.item_ticket_card_view, parent, false
         )
 
-        return ItemViewHolder(view).also {
+        return ItemViewHolder(
+            view
+        ).also {
             it.itemView.setOnClickListener { position ->
                 val currentItem =
                     ticketList.getOrNull(it.adapterPosition) ?: return@setOnClickListener

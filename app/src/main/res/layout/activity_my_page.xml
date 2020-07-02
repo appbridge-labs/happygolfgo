@@ -16,23 +16,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <View-->
-<!--        android:id="@+id/view_empty"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="32dp"-->
-<!--        android:background="@color/color_gray"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/toolbar_my_page"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
+    <View
+        android:id="@+id/view_empty"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@color/color_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_my_page"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-<!--    <include-->
-<!--        android:id="@+id/lesson"-->
-<!--        layout="@layout/partial_menu_with_right_arrow"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/view_empty" />-->
+    <include
+        android:id="@+id/lesson"
+        layout="@layout/partial_menu_with_right_arrow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_empty" />
 
     <View
         android:id="@+id/view_empty_two"
@@ -40,7 +40,7 @@
         android:layout_height="32dp"
         android:background="@color/color_gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_my_page"
+        app:layout_constraintTop_toBottomOf="@id/lesson"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <include
@@ -69,6 +69,65 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
+
+<!--    <View-->
+<!--        android:id="@+id/view_empty_three"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="32dp"-->
+<!--        android:background="@color/color_gray"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/signout"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/view_empty_three">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_app"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            android:textSize="16dp"-->
+<!--            android:text="@string/mypage_app_name"-->
+<!--            android:textColor="@color/color_black"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_version"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:textColor="@color/color_black"-->
+<!--            android:textSize="16dp"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:text="@string/mypage_app_version"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@id/tv_app"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:text="1.0.0"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_update"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="20dp"-->
+<!--            android:textColor="@color/color_red"-->
+<!--            android:textSize="16dp"-->
+<!--            android:text="@string/mypage_app_update"-->
+<!--            android:visibility="invisible"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <ProgressBar
         android:id="@+id/progressBar"

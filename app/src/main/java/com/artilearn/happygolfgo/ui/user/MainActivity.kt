@@ -5,11 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.adapter.user.TicketAdapter
+import com.artilearn.happygolfgo.adapter.TicketAdapter
 import com.artilearn.happygolfgo.library.HappyGolfGoRequest
 import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.models.Ticket
@@ -20,6 +19,7 @@ import com.google.gson.internal.LinkedTreeMap
 import com.tlsolution.tlsmodules.Network.RequestManager
 import com.tlsolution.tlsmodules.Network.RequestResult
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.RuntimeException
 
 
 class MainActivity : BaseActivity(), TicketAdapter.TicketClick {
@@ -185,8 +185,6 @@ class MainActivity : BaseActivity(), TicketAdapter.TicketClick {
                                 json?.get("Tickets") as? ArrayList<LinkedTreeMap<String, Any>>
                             val item =
                                 ticketsJSON?.mapNotNull { Ticket.create(it) } as? ArrayList<Ticket>
-                            Log.d("ssssssssi", "$ticketsJSON")
-                            Log.d("ssssssssi", "$item")
 
                             if (item?.size!! > 0) {
                                 runOnUiThread {

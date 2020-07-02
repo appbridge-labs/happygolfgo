@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.adapter.user
+package com.artilearn.happygolfgo.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +18,9 @@ class AlramAdapter : RecyclerView.Adapter<AlramAdapter.AlramViewHolder>() {
             R.layout.item_alram_message, parent, false
         )
 
-        return AlramViewHolder(view)
+        return AlramViewHolder(
+            view
+        )
     }
 
     override fun onBindViewHolder(holder: AlramViewHolder, position: Int) {
