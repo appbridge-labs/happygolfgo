@@ -110,6 +110,7 @@ private val TAG = javaClass.simpleName
         }
     }
 
+    //todo 레슨 업로드 통신 안됨 확인바람
     private fun uploadLessonReview() {
         isLoading(true)
 
