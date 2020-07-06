@@ -15,6 +15,7 @@ import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.models.*
 import com.artilearn.happygolfgo.ui.BaseActivity
 import com.artilearn.happygolfgo.util.convertTime
+import com.artilearn.happygolfgo.util.noticeDialog
 import com.artilearn.happygolfgo.util.snackbar
 import com.google.gson.internal.LinkedTreeMap
 import com.tlsolution.tlsmodules.Extensions.showTwoActionableAlert
@@ -34,13 +35,15 @@ class ConfirmReservationActivity : BaseActivity() {
 
     private lateinit var plateReservation: PlateReservation
     private lateinit var lessonReservation: LessonReservation
-    private lateinit var plateCancel: PlateReservation
-    private lateinit var lessonCancel: LessonReservation
+    private var plateCancel: PlateReservation? = null
+    private var lessonCancel: LessonReservation? = null
+    private var policy: Policy? = null
 
     private lateinit var ticket: Ticket
     private lateinit var lessonTime: LessonTime
 
     private lateinit var type: Any
+    private lateinit var cancelType: Any
     private var statusType: Int = 0
     private var networkStatus = 0
 
@@ -138,10 +141,10 @@ class ConfirmReservationActivity : BaseActivity() {
         }
     }
 
-
     private fun initView() {
         val infor = intent.getSerializableExtra("item")
         val tk = intent.getSerializableExtra("ticket")
+        val reserve = intent.getSerializableExtra("reserve")
 
         if (tk != null) ticket = tk as Ticket
 
@@ -154,29 +157,7 @@ class ConfirmReservationActivity : BaseActivity() {
         infor?.let {
             type = infor
             when (it) {
-                is PlateReservation -> { // plate reserve cancel
-                    plateCancel = it
-                    bottomCheck(plateCancel.type, it.isCancellable!!)
-                    start = convertTime(plateCancel.startDate).trim().split(":")
-                    end = convertTime(plateCancel.endDate).trim().split(":")
-                    tv_title.text_view_content.text = plateCancel.name
-                    tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
-                    tv_time.text_view_title.text = "시간"
-                    tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
-                    tv_policy_content.tv_text.text = getString(R.string.plate_reserve_policy)
-                }
-                is LessonReservation -> { // lesson reserve cancel
-                    lessonCancel = it
-                    bottomCheck(lessonCancel.type, it.isCancellable!!)
-                    start = convertTime(lessonCancel.startDate).trim().split(":")
-                    end = convertTime(lessonCancel.endDate).trim().split(":")
-                    tv_title.text_view_content.text = lessonCancel.name
-                    tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
-                    tv_time.text_view_title.text = "레슨 시간"
-                    tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
-                    tv_policy_content.tv_text.text = getString(R.string.lesson_reserve_policy)
-                }
-                is PlateTime -> { // plate reserve
+                is PlateTime -> {
                     bottomCheck(it.type, true)
                     start = convertTime(it.startDate).trim().split(":")
                     end = convertTime(it.endDate).trim().split(":")
@@ -186,7 +167,7 @@ class ConfirmReservationActivity : BaseActivity() {
                     tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
                     tv_policy_content.tv_text.text = getString(R.string.plate_reserve_policy)
                 }
-                is LessonTime -> { // lesson reserve
+                is LessonTime -> {
                     lessonTime = it
                     bottomCheck(lessonTime.type, true)
                     start = convertTime(lessonTime.startDate).trim().split(":")
@@ -199,20 +180,69 @@ class ConfirmReservationActivity : BaseActivity() {
                 }
             }
         }
+
+        reserve?.let {
+            type = it
+            cancelType = it
+                requestData()
+        }
+    }
+
+    private fun cancelInitData() {
+        val start: List<String>
+        val end: List<String>
+
+        when (type) {
+            is PlateReservation -> {
+                bottomCheck(plateCancel!!.type, plateCancel?.isCancellable!!)
+                start = convertTime(plateCancel!!.startDate).trim().split(":")
+                end = convertTime(plateCancel!!.endDate).trim().split(":")
+                tv_title.text_view_content.text = plateCancel!!.name
+                tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
+                tv_time.text_view_title.text = "시간"
+                tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
+                tv_policy_content.tv_text.text = policy?.body
+            }
+            is LessonReservation -> {
+                bottomCheck(lessonCancel!!.type, lessonCancel!!.isCancellable!!)
+                start = convertTime(lessonCancel!!.startDate).trim().split(":")
+                end = convertTime(lessonCancel!!.endDate).trim().split(":")
+                tv_title.text_view_content.text = lessonCancel!!.name
+                tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
+                tv_time.text_view_title.text = "레슨 시간"
+                tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
+                tv_policy_content.tv_text.text = getString(R.string.lesson_reserve_policy)
+            }
+        }
     }
 
     private fun deleteReady() {
         when (type) {
             is PlateReservation -> {
-                deleteData(plateCancel.id, plateCancel)
+                deleteData(plateCancel!!.id, plateCancel)
             }
             is LessonReservation -> {
-                deleteData(lessonCancel.id, lessonCancel)
+                deleteData(lessonCancel!!.id, lessonCancel)
             }
         }
     }
 
-    private fun deleteData(id: Int, type: Any) {
+    private fun requestData() {
+        when (cancelType) {
+            is PlateReservation -> {
+                request = HappyGolfGoRequest.plateDetail
+                request.endpoint = (cancelType as PlateReservation).id.toString()
+                reservePlate(request)
+            }
+            is LessonReservation -> {
+                request = HappyGolfGoRequest.lessonDetail
+                request.endpoint = (cancelType as LessonReservation).id.toString()
+                reserveLesson(request)
+            }
+        }
+    }
+
+    private fun deleteData(id: Int, type: Any?) {
         when (type) {
             is PlateReservation -> {
                 request = HappyGolfGoRequest.cancelPlateReservation
@@ -254,6 +284,9 @@ class ConfirmReservationActivity : BaseActivity() {
             when (result) {
                 RequestResult.nSuccess -> {
                     hideLoading()
+                    runOnUiThread {
+                        noticeDialog(this, "예약 확인", "${result.statusCode}\n${result.errorMessage}\n예약 취소에 실패 습니다")
+                    }
                     return@request
                 }
                 RequestResult.pSuccess -> {
@@ -285,6 +318,92 @@ class ConfirmReservationActivity : BaseActivity() {
         }
     }
 
+    private fun reservePlate(body: HappyGolfGoRequest) {
+        allHide()
+        showLoading()
+
+        requestManager.request(body, userManager.user) { result, json ->
+
+            when (result) {
+                RequestResult.nSuccess -> {
+                    hideLoading()
+                    return@request
+                }
+                RequestResult.pSuccess -> {
+                    when (result.statusCode) {
+                        200 -> {
+                            val item = json?.get("PlateReservation") as LinkedTreeMap<String, Any>
+                            val policyData = json?.get("policy") as LinkedTreeMap<String, Any>
+                            plateCancel = PlateReservation.create(item)
+                            policy = Policy.create(policyData)
+
+                            runOnUiThread {
+                                cancelInitData()
+                            }
+                            hideLoading()
+                        }
+                    }
+                }
+                RequestResult.failure -> {
+                    hideLoading()
+                    if (result.errorMessage === "timeout") {
+                        runOnUiThread { showNetworkDelay() }
+                    } else {
+                        runOnUiThread { showUnknownError() }
+                    }
+                }
+                else -> {
+                    hideLoading()
+                    runOnUiThread { showUnknownError() }
+                    return@request
+                }
+            }
+
+        }
+    }
+
+    private fun reserveLesson(body: HappyGolfGoRequest) {
+        allHide()
+        showLoading()
+
+        requestManager.request(body, userManager.user) { result, json ->
+
+            when (result) {
+                RequestResult.nSuccess -> {
+                    hideLoading()
+                    return@request
+                }
+                RequestResult.pSuccess -> {
+                    hideLoading()
+                    when (result.statusCode) {
+                        200 -> {
+                            val item = json?.get("LessonReservation") as LinkedTreeMap<String, Any>
+                            lessonCancel = LessonReservation.create(item)
+
+                            runOnUiThread {
+                                cancelInitData()
+                            }
+                        }
+                    }
+                }
+                RequestResult.failure -> {
+                    hideLoading()
+                    if (result.errorMessage === "timeout") {
+                        runOnUiThread { showNetworkDelay() }
+                    } else {
+                        runOnUiThread { showUnknownError() }
+                    }
+                }
+                else -> {
+                    hideLoading()
+                    runOnUiThread { showUnknownError() }
+                    return@request
+                }
+            }
+
+        }
+    }
+
     private fun plateHttp(body: HappyGolfGoRequest) {
         allHide()
         showLoading()
@@ -294,6 +413,9 @@ class ConfirmReservationActivity : BaseActivity() {
             when (result) {
                 RequestResult.nSuccess -> {
                     hideLoading()
+                    runOnUiThread {
+                        noticeDialog(this, "예약 확인", "${result.statusCode}\n${result.errorMessage}\n예약에 실패 하였습니다")
+                    }
                     return@request
                 }
                 RequestResult.pSuccess -> {
@@ -340,6 +462,9 @@ class ConfirmReservationActivity : BaseActivity() {
             when (result) {
                 RequestResult.nSuccess -> {
                     hideLoading()
+                    runOnUiThread {
+                        noticeDialog(this, "예약 확인", "${result.statusCode}\n${result.errorMessage}\n예약에 실패 하였습니다")
+                    }
                     return@request
                 }
                 RequestResult.pSuccess -> {

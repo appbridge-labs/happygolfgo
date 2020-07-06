@@ -9,12 +9,14 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.ui.BaseActivity
 import kotlinx.android.synthetic.main.fragment_network_failure.*
 
+
 class NetworkFailureFragment(private val rootActivity: BaseActivity) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_network_failure, container, false)
     }
 

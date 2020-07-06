@@ -46,9 +46,9 @@ open class BaseActivity : TLSActivity(), LifecycleObserver {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        fragmentManager = supportFragmentManager
         networkFailureFragment = NetworkFailureFragment(this)
         networkDelayFragment = NetworkDelayFragment(this)
+        fragmentManager = supportFragmentManager
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }

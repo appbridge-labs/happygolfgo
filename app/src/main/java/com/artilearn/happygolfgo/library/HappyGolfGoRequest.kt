@@ -33,6 +33,8 @@ enum class HappyGolfGoRequest : Request {
     lessonReviewList,
     lessonReviewDetail,
     uploadLessonReview,
+    lessonDetail,
+    plateDetail,
     ;
 
 
@@ -74,6 +76,8 @@ enum class HappyGolfGoRequest : Request {
                 lessonReviewList -> return getBaseURLString() + "user/lessonlogs"
                 lessonReviewDetail -> return getBaseURLString() + "user/lessonlogs/detail/${endpoint}"
                 uploadLessonReview -> return getBaseURLString() + "user/lessonlogs"
+                lessonDetail -> return getBaseURLString() + "reservation/user/lessonReservation/detail/${endpoint}"
+                plateDetail -> return getBaseURLString() + "reservation/user/plateReservation/detail/${endpoint}"
 
                 plateTime -> return getBaseURLString() + "reservation/plateReservation/plateAvailability?${endpoint}"
                 plate -> return getBaseURLString() + "reservation/plateReservation/${endpoint}/relatedPlate"
@@ -111,6 +115,8 @@ enum class HappyGolfGoRequest : Request {
                 appVersion,
                 lessonReviewList,
                 lessonReviewDetail,
+                lessonDetail,
+                plateDetail,
                 plateTimeAfterLessonTime -> return "GET"
 
                 clientSignOut,
