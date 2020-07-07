@@ -96,6 +96,7 @@ open class BaseActivity : TLSActivity(), LifecycleObserver {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 
+    // 대기
     fun setUpReachability() {
         networkStatusReceiver = (object : BroadcastReceiver() {
             override fun onReceive(p0: Context?, p1: Intent?) {
