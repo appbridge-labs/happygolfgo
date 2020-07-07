@@ -39,7 +39,7 @@ class SelectDateActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_date)
 
-        setFrameLayoutID(R.id.frameLayout)
+        setFrameLayoutID(R.id.date_frameLayout)
         setBaseFragments()
         initView()
     }
@@ -169,7 +169,10 @@ class SelectDateActivity : BaseActivity() {
 
             when (result) {
                 RequestResult.nSuccess -> {
-                    runOnUiThread { hideLoading() }
+                    runOnUiThread {
+                        showUnknownError()
+                        hideLoading()
+                    }
                 }
                 RequestResult.pSuccess -> {
                     when (result.statusCode) {
@@ -209,10 +212,16 @@ class SelectDateActivity : BaseActivity() {
                     }
                 }
                 RequestResult.failure -> {
-                    runOnUiThread { showUnknownError() }
+                    runOnUiThread {
+                        showNetworkFailure()
+                        hideLoading()
+                    }
                 }
                 else -> {
-                    runOnUiThread { showUnknownError() }
+                    runOnUiThread {
+                        showUnknownError()
+                        hideLoading()
+                    }
                 }
             }
         }

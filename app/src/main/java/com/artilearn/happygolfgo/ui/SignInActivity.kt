@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import com.artilearn.happygolfgo.R
@@ -226,8 +227,14 @@ class SignInActivity : BaseActivity() {
                 RequestResult.failure -> {
                     runOnUiThread {
                         isLoading(false)
-                        showToast("인터넷 환경이 좋지 않습니다")
+                        showToast("서버 또는 인터넷 환경이 좋지 않습니다")
                     }
+                }
+                RequestResult.error -> {
+
+                }
+                RequestResult.tryAgain -> {
+
                 }
                 else -> {
                     runOnUiThread {

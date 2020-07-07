@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -95,6 +96,7 @@ open class BaseActivity : TLSActivity(), LifecycleObserver {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 
+    // 대기
     fun setUpReachability() {
         networkStatusReceiver = (object : BroadcastReceiver() {
             override fun onReceive(p0: Context?, p1: Intent?) {

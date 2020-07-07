@@ -57,7 +57,7 @@ class MyReservationListActivity : BaseActivity() {
         setFrameLayoutID(R.id.frameLayout)
         setBaseFragments()
 
-        setUpReachability()
+        //setUpReachability()
         setDisplay()
         fetchData()
     }

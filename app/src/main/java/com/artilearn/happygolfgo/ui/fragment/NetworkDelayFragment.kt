@@ -9,12 +9,8 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.ui.BaseActivity
 import kotlinx.android.synthetic.main.fragment_network_delay.*
 
+
 class NetworkDelayFragment(var rootActivity: BaseActivity) : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

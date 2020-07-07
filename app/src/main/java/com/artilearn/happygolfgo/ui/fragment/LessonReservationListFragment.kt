@@ -37,7 +37,7 @@ class LessonReservationListFragment(private val fragmentData: LinkedTreeMap<Stri
 
     override fun lesson(lesson: LessonReservation) {
         val intent = Intent(activity, ConfirmReservationActivity::class.java)
-        intent.putExtra("item", lesson)
+        intent.putExtra("reserve", lesson)
         activity!!.startActivity(intent)
     }
 

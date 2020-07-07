@@ -36,7 +36,7 @@ class PlateReservationListFragment(private val fragmentData: LinkedTreeMap<Strin
 
     override fun reserve(reserve: PlateReservation) {
         val intent = Intent(activity, ConfirmReservationActivity::class.java)
-        intent.putExtra("item", reserve)
+        intent.putExtra("reserve", reserve)
         activity!!.startActivity(intent)
     }
 

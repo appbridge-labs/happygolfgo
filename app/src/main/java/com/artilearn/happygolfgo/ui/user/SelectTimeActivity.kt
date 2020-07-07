@@ -45,7 +45,7 @@ class SelectTimeActivity : BaseActivity() {
         setFrameLayoutID(R.id.frame_layout_select_time)
         setBaseFragments()
 
-        setUpReachability()
+        //setUpReachability()
         initData()
         initAdapter()
     }
@@ -133,11 +133,6 @@ class SelectTimeActivity : BaseActivity() {
                 intent.putExtra("ticket", ticket)
                 intent.putExtra("idx", date)
                 startActivity(intent)
-//                val intent = Intent(this, SelectPlateActivity::class.java)
-//                intent.putExtra("plate", plate)
-//                intent.putExtra("ticket", ticket)
-//                intent.putExtra("idx", date)
-//                startActivity(intent)
             }
         }
     }

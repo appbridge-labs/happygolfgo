@@ -49,7 +49,7 @@
         app:selectionLabelColor="@color/color_dark_red" />
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/date_frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
