@@ -123,7 +123,7 @@ class MainActivity : BaseActivity(), TicketAdapter.TicketClick {
         setFrameLayoutID(R.id.frame_layout_main)
         setBaseFragments()
 
-        setUpReachability()
+        //setUpReachability()
         setDisplay()
         refreshLayout()
         setUpAdapter()
@@ -178,7 +178,6 @@ class MainActivity : BaseActivity(), TicketAdapter.TicketClick {
                     return@request
                 }
                 RequestResult.pSuccess -> {
-                    hideLoading()
                     when (result.statusCode) {
                         200 -> {
                             val ticketsJSON =
@@ -196,11 +195,11 @@ class MainActivity : BaseActivity(), TicketAdapter.TicketClick {
                             } else {
                                 runOnUiThread { chlid_layout.visibility = View.VISIBLE }
                             }
+                            hideLoading()
                         }
                     }
                 }
                 RequestResult.failure -> {
-                    hideLoading()
                     runOnUiThread {
                         if (result.errorMessage === "timeout") {
                             chlid_layout.visibility = View.GONE
@@ -211,18 +210,21 @@ class MainActivity : BaseActivity(), TicketAdapter.TicketClick {
                                 showUnknownError()
                             }
                         }
+                        hideLoading()
                     }
                 }
                 RequestResult.tryAgain -> {
-                    hideLoading()
-                    userManager.setNewToken(result.newToken)
-                    fetchData()
+                    runOnUiThread {
+                        hideLoading()
+                        userManager.setNewToken(result.newToken)
+                        fetchData()
+                    }
                 }
                 else -> {
-                    hideLoading()
                     runOnUiThread {
                         chlid_layout.visibility = View.GONE
                         showUnknownError()
+                        hideLoading()
                     }
                     return@request
                 }

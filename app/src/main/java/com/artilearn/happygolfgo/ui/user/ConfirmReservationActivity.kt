@@ -40,7 +40,7 @@ class ConfirmReservationActivity : BaseActivity() {
     private var policy: Policy? = null
 
     private lateinit var ticket: Ticket
-    private lateinit var lessonTime: LessonTime
+    //private lateinit var lessonTime: LessonTime
 
     private lateinit var type: Any
     private lateinit var cancelType: Any
@@ -56,7 +56,7 @@ class ConfirmReservationActivity : BaseActivity() {
 
         setFrameLayoutID(R.id.frame_layout_confirm_reservation)
         setBaseFragments()
-        setUpReachability()
+        //setUpReachability()
 
         initView()
         setUpActionBar(
@@ -116,6 +116,7 @@ class ConfirmReservationActivity : BaseActivity() {
     }
 
     private fun bottomCheck(type: ClassType.ModelType, isCancellable: Boolean) {
+        Log.d("abc", "bottomCheck: $type")
         when (type) {
             ClassType.ModelType.PLATE_CANCEL, ClassType.ModelType.LESSON_CANCEL -> {
                 statusType = 1
@@ -168,10 +169,9 @@ class ConfirmReservationActivity : BaseActivity() {
                     tv_policy_content.tv_text.text = getString(R.string.plate_reserve_policy)
                 }
                 is LessonTime -> {
-                    lessonTime = it
-                    bottomCheck(lessonTime.type, true)
-                    start = convertTime(lessonTime.startDate).trim().split(":")
-                    end = convertTime(lessonTime.endDate).trim().split(":")
+                    bottomCheck(it.type, true)
+                    start = convertTime(it.startDate).trim().split(":")
+                    end = convertTime(it.endDate).trim().split(":")
                     tv_title.text_view_content.text = ticket.name
                     tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
                     tv_time.text_view_title.text = "레슨 시간"
@@ -184,7 +184,7 @@ class ConfirmReservationActivity : BaseActivity() {
         reserve?.let {
             type = it
             cancelType = it
-                requestData()
+            requestData()
         }
     }
 
@@ -267,9 +267,10 @@ class ConfirmReservationActivity : BaseActivity() {
                 plateHttp(request)
             }
             is LessonTime -> {
+                val lesson = type as LessonTime
                 request = HappyGolfGoRequest.makeLessonReservation
                 request.body =
-                    "{\"Data\": {\"ticketID\": \"${ticket.id}\", \"lessonAvailabilityID\": \"${lessonTime.lessonAvailabilityID}\" }}"
+                    "{\"Data\": {\"ticketID\": \"${ticket.id}\", \"lessonAvailabilityID\": \"${lesson.lessonAvailabilityID}\" }}"
                 lessonHttp(request)
             }
         }
@@ -283,16 +284,20 @@ class ConfirmReservationActivity : BaseActivity() {
 
             when (result) {
                 RequestResult.nSuccess -> {
-                    hideLoading()
                     runOnUiThread {
-                        noticeDialog(this, "예약 확인", "${result.statusCode}\n${result.errorMessage}\n예약 취소에 실패 습니다")
+                        hideLoading()
+                        noticeDialog(
+                            this,
+                            "예약 확인",
+                            "${result.statusCode}\n${result.errorMessage}\n예약 취소에 실패 습니다"
+                        )
                     }
                     return@request
                 }
                 RequestResult.pSuccess -> {
-                    hideLoading()
                     when (result.statusCode) {
                         201 -> {
+                            hideLoading()
                             val intent = Intent(this, CompletionActivity::class.java)
                             intent.putExtra("data", 0)
                             startActivity(intent)
@@ -301,16 +306,18 @@ class ConfirmReservationActivity : BaseActivity() {
                     }
                 }
                 RequestResult.failure -> {
-                    hideLoading()
                     if (result.errorMessage === "timeout") {
                         runOnUiThread { showNetworkDelay() }
                     } else {
                         runOnUiThread { showUnknownError() }
                     }
+                    runOnUiThread { hideLoading() }
                 }
                 else -> {
-                    hideLoading()
-                    runOnUiThread { showUnknownError() }
+                    runOnUiThread {
+                        hideLoading()
+                        showUnknownError()
+                    }
                     return@request
                 }
             }
@@ -326,7 +333,7 @@ class ConfirmReservationActivity : BaseActivity() {
 
             when (result) {
                 RequestResult.nSuccess -> {
-                    hideLoading()
+                    runOnUiThread { hideLoading() }
                     return@request
                 }
                 RequestResult.pSuccess -> {
@@ -339,22 +346,24 @@ class ConfirmReservationActivity : BaseActivity() {
 
                             runOnUiThread {
                                 cancelInitData()
+                                hideLoading()
                             }
-                            hideLoading()
                         }
                     }
                 }
                 RequestResult.failure -> {
-                    hideLoading()
                     if (result.errorMessage === "timeout") {
                         runOnUiThread { showNetworkDelay() }
                     } else {
                         runOnUiThread { showUnknownError() }
                     }
+                    runOnUiThread { hideLoading() }
                 }
                 else -> {
-                    hideLoading()
-                    runOnUiThread { showUnknownError() }
+                    runOnUiThread {
+                        showUnknownError()
+                        hideLoading()
+                    }
                     return@request
                 }
             }
@@ -370,33 +379,35 @@ class ConfirmReservationActivity : BaseActivity() {
 
             when (result) {
                 RequestResult.nSuccess -> {
-                    hideLoading()
+                    runOnUiThread { hideLoading() }
                     return@request
                 }
                 RequestResult.pSuccess -> {
-                    hideLoading()
                     when (result.statusCode) {
                         200 -> {
                             val item = json?.get("LessonReservation") as LinkedTreeMap<String, Any>
                             lessonCancel = LessonReservation.create(item)
 
                             runOnUiThread {
+                                hideLoading()
                                 cancelInitData()
                             }
                         }
                     }
                 }
                 RequestResult.failure -> {
-                    hideLoading()
                     if (result.errorMessage === "timeout") {
                         runOnUiThread { showNetworkDelay() }
                     } else {
                         runOnUiThread { showUnknownError() }
                     }
+                    runOnUiThread { hideLoading() }
                 }
                 else -> {
-                    hideLoading()
-                    runOnUiThread { showUnknownError() }
+                    runOnUiThread {
+                        hideLoading()
+                        showUnknownError()
+                    }
                     return@request
                 }
             }
@@ -412,16 +423,20 @@ class ConfirmReservationActivity : BaseActivity() {
 
             when (result) {
                 RequestResult.nSuccess -> {
-                    hideLoading()
                     runOnUiThread {
-                        noticeDialog(this, "예약 확인", "${result.statusCode}\n${result.errorMessage}\n예약에 실패 하였습니다")
+                        hideLoading()
+                        noticeDialog(
+                            this,
+                            "예약 확인",
+                            "${result.statusCode}\n${result.errorMessage}\n예약에 실패 하였습니다"
+                        )
                     }
                     return@request
                 }
                 RequestResult.pSuccess -> {
-                    hideLoading()
                     when (result.statusCode) {
                         201 -> {
+                            hideLoading()
                             val item = json?.get("plateReservation") as LinkedTreeMap<String, Any>
                             val data = PlateReservation.create(item)
 
@@ -436,16 +451,18 @@ class ConfirmReservationActivity : BaseActivity() {
                     }
                 }
                 RequestResult.failure -> {
-                    hideLoading()
                     if (result.errorMessage === "timeout") {
                         runOnUiThread { showNetworkDelay() }
                     } else {
                         runOnUiThread { showUnknownError() }
                     }
+                    runOnUiThread { hideLoading() }
                 }
                 else -> {
-                    hideLoading()
-                    runOnUiThread { showUnknownError() }
+                    runOnUiThread {
+                        hideLoading()
+                        showUnknownError()
+                    }
                     return@request
                 }
             }
@@ -461,16 +478,21 @@ class ConfirmReservationActivity : BaseActivity() {
 
             when (result) {
                 RequestResult.nSuccess -> {
-                    hideLoading()
                     runOnUiThread {
-                        noticeDialog(this, "예약 확인", "${result.statusCode}\n${result.errorMessage}\n예약에 실패 하였습니다")
+                        hideLoading()
+                        noticeDialog(
+                            this,
+                            "예약 확인",
+                            "${result.statusCode}\n${result.errorMessage}\n예약에 실패 하였습니다"
+                        )
                     }
                     return@request
                 }
                 RequestResult.pSuccess -> {
-                    hideLoading()
                     when (result.statusCode) {
                         201 -> {
+                            hideLoading()
+
                             val item = json?.get("lessonReservaion") as LinkedTreeMap<String, Any>
                             val data = LessonReservation.create(item)
 
@@ -485,16 +507,18 @@ class ConfirmReservationActivity : BaseActivity() {
                     }
                 }
                 RequestResult.failure -> {
-                    hideLoading()
                     if (result.errorMessage === "timeout") {
                         runOnUiThread { showNetworkDelay() }
                     } else {
                         runOnUiThread { showUnknownError() }
                     }
+                    runOnUiThread { hideLoading() }
                 }
                 else -> {
-                    hideLoading()
-                    runOnUiThread { showUnknownError() }
+                    runOnUiThread {
+                        hideLoading()
+                        showUnknownError()
+                    }
                     return@request
                 }
             }

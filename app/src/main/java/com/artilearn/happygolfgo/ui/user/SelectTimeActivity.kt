@@ -45,7 +45,7 @@ class SelectTimeActivity : BaseActivity() {
         setFrameLayoutID(R.id.frame_layout_select_time)
         setBaseFragments()
 
-        setUpReachability()
+        //setUpReachability()
         initData()
         initAdapter()
     }

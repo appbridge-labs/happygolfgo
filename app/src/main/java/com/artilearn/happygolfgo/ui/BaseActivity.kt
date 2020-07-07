@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -46,9 +47,9 @@ open class BaseActivity : TLSActivity(), LifecycleObserver {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        fragmentManager = supportFragmentManager
         networkFailureFragment = NetworkFailureFragment(this)
         networkDelayFragment = NetworkDelayFragment(this)
-        fragmentManager = supportFragmentManager
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
