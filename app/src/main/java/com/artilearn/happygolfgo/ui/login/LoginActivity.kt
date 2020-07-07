@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui
+package com.artilearn.happygolfgo.ui.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
