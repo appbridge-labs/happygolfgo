@@ -1,4 +1,8 @@
 package com.artilearn.happygolfgo.ui.login
 
-class LoginViewModel {
+import com.artilearn.happygolfgo.base.BaseViewModel
+
+class LoginViewModel : BaseViewModel() {
+
+
 }

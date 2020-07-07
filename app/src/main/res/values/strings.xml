@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">행복골프</string>
+    <string name="login_title">행복골프 시작하기</string>
+    <string name="login_phone">전화번호</string>
+    <string name="login_phone_hint">01000000000</string>
+    <string name="login_password">비밀번호</string>
+    <string name="login_password_hint">********</string>
+    <string name="login_button_title">로그인</string>
+    <string name="login_password_forget_text">비밀번호를 잊어 버리셨나요?</string>
 </resources>

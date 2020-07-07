@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
+        <variable
+            name="vm"
+            type="com.artilearn.happygolfgo.ui.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="ㅇㅇㅇㅇㅇ"
+            android:text="@string/login_title"
             android:textColor="@color/color_black"
             android:textSize="24dp"
             android:textStyle="bold"
@@ -49,7 +53,7 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="전화번호"
+                android:text="@string/login_phone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,23 +64,13 @@
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/color_line_gray"
                 android:gravity="start"
-                android:hint="01000000000"
+                android:hint="@string/login_phone_hint"
                 android:inputType="number"
                 android:maxLength="11"
                 android:textColorHint="@color/color_sub_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title" />
-
-            <TextView
-                android:id="@+id/tv_emptyPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:textColor="@color/color_red"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_phone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -95,7 +89,7 @@
                 android:id="@+id/tv_pwTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="비밀번호"
+                android:text="@string/login_password"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -106,7 +100,7 @@
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/color_line_gray"
                 android:gravity="start"
-                android:hint="********"
+                android:hint="@string/login_password_hint"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:textColorHint="@color/color_sub_gray"
@@ -146,7 +140,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/bg_btn_main"
             android:stateListAnimator="@null"
-            android:text="로그인"
+            android:text="@string/login_button_title"
             android:textColor="@color/color_white"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -159,7 +153,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="비밀번호를 잊어 버리셨나요?"
+            android:text="@string/login_password_forget_text"
             android:textColor="@color/color_sub_gray"
             android:textSize="12dp"
             android:textStyle="bold"
@@ -170,7 +164,7 @@
             android:id="@+id/progressBar"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:visibility="invisible"
+            android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
