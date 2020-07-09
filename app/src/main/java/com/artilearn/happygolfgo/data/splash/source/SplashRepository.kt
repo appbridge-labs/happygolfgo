@@ -8,6 +8,7 @@ interface SplashRepository {
 
     var clientSecretKey: String
     val autoLogin: Boolean
+    val tutorial: Boolean
 
     fun getAccessToken(
         data: HashMap<String, SplashTokenModel>

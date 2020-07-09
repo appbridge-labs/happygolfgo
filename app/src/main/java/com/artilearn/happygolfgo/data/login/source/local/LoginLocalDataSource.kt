@@ -9,4 +9,5 @@ interface LoginLocalDataSource {
     var clientSecretKey: String
     var accessToken: String
     var autoLogin: Boolean
+    var fcmToken: String?
 }

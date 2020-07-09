@@ -24,6 +24,9 @@ class SplashRepositoryImpl(
     override val autoLogin: Boolean
         get() = splashLocalDataSource.autoLogin
 
+    override val tutorial: Boolean
+        get() = splashLocalDataSource.tutorial
+
     override fun getAccessToken(
         data: HashMap<String, SplashTokenModel>
     ): Single<SplashTokenResponse> {

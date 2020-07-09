@@ -9,6 +9,9 @@ class SplashLocalDataSourceImpl(
     override val autoLogin: Boolean
         get() = preferenceManager.autoLogin
 
+    override val tutorial: Boolean
+        get() = preferenceManager.tutorial
+
     override var clientSecretKey: String
         get() = preferenceManager.clientScreetKey
         set(value) {

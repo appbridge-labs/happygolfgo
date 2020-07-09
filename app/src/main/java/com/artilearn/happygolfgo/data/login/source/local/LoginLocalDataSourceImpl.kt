@@ -46,4 +46,10 @@ class LoginLocalDataSourceImpl(
         set(value) {
             preferenceManager.autoLogin = value
         }
+
+    override var fcmToken: String?
+        get() = preferenceManager.fcmToken
+        set(value) {
+            preferenceManager.fcmToken = value
+        }
 }

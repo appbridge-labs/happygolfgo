@@ -8,6 +8,7 @@ interface LoginRepository {
 
     var autoLogin: Boolean
     val tutorial: Boolean
+    var fcmToken: String?
 
     fun repositoryLogin(
         data: HashMap<String, LoginDataModel>

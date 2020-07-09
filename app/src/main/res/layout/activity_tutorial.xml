@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="vm"
             type="com.artilearn.happygolfgo.ui.tutorial.TutorialViewModel" />
@@ -15,6 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/color_white"
         tools:context=".ui.tutorial.TutorialActivity">
 
         <TextView
@@ -120,17 +119,17 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="72dp"
             android:background="@drawable/bg_btn_main"
-            android:clickable="@{() -> vm.onStartClick()}"
-            android:stateListAnimator="@null"
             android:text="@string/tutorial_btn_text"
             android:textColor="@color/color_white"
             android:textSize="16dp"
             android:textStyle="bold"
-            android:visibility="invisible"
+            android:alpha="0"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:onClick="@{() -> vm.onStartClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

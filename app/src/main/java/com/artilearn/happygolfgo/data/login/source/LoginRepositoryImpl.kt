@@ -23,6 +23,13 @@ class LoginRepositoryImpl(
     override val tutorial: Boolean
         get() = loginLocalDataSource.autoLogin
 
+    override var fcmToken: String?
+        get() = loginLocalDataSource.fcmToken
+        set(value) {
+            loginLocalDataSource.fcmToken = value
+        }
+
+
     override fun repositoryLogin(
         data: HashMap<String, LoginDataModel>
     ): Single<LoginResponse> {

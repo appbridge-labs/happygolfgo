@@ -1,12 +1,11 @@
 package com.artilearn.happygolfgo.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.source.LoginRepository
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -58,7 +57,7 @@ class LoginViewModel(
 
     private fun requestLogin() {
         val dataModel = LoginDataModel(
-            currentPhone, currentPassword, test!!
+            currentPhone, currentPassword, loginRepository.fcmToken
         )
 
         val hashMap = hashMapOf<String, LoginDataModel>()
@@ -71,6 +70,7 @@ class LoginViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({
+                    Log.d("Dddddddd", "requestLogin: $it")
                     _loginSuccess.value = Unit
                 }, {
                     when (it.message) {
