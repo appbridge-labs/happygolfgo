@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.data.login
 
-import com.artilearn.happygolfgo.data.User
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -11,5 +10,13 @@ data class LoginResponse(
 
     @SerializedName("Data")
     @Expose
-    val user: User
+    val data: LoginData,
+
+    @SerializedName("resultCode")
+    @Expose
+    val resultCode: Int,
+
+    @SerializedName("statusCode")
+    @Expose
+    val statusCode: Int
 )
