@@ -15,7 +15,7 @@ interface ApiInterface {
         @Body data: HashMap<String, LoginDataModel>
     ): Single<LoginResponse>
 
-    @POST("common/auth/token")
+    @POST("auth/common/token")
     fun getAccessToken(
         @Body data: HashMap<String, SplashTokenModel>
     ): Single<SplashTokenResponse>

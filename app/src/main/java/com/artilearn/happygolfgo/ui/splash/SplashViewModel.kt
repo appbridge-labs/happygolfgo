@@ -21,6 +21,7 @@ class SplashViewModel(
     init {
         getFcmToken()
         selectAccessToken()
+        Log.d(TAG, "key: ${PreferenceManager(applicationContext).clientScreetKey}")
     }
 
 

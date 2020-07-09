@@ -11,4 +11,10 @@
     <string name="login_empth_phone">핸드폰 번호를 입력해 주세요</string>
     <string name="login_empty_password">비밀번호를 입력해 주세요</string>
     <string name="login_fail_password">비밀번호가 틀렸습니다</string>
+    <string name="tutorial_title_text">환영합니다!\n행복골프 GO 입니다.</string>
+    <string name="tutorial_reserve_text">학교와 훈련소를 포함하여\n모든 지점을 여기서 예약하실 수 있습니다.</string>
+    <string name="tutorial_nfc_text">교통카드 처럼 \n간단하게 체크인하실 수 있습니다.</string>
+    <string name="tutorial_reserve_title">행복골프 예약</string>
+    <string name="tutorial_nfc_title">NFC 체크인</string>
+    <string name="tutorial_btn_text">시작하기</string>
 </resources>

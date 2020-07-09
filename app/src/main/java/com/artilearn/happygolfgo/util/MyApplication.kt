@@ -16,6 +16,10 @@ import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSource
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.tutorial.source.TutorialRepository
+import com.artilearn.happygolfgo.data.tutorial.source.TutorialRepositoryImpl
+import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSource
+import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSourceImpl
 import com.facebook.stetho.Stetho
 
 class MyApplication : Application() {
@@ -28,9 +32,11 @@ class MyApplication : Application() {
     private lateinit var loginLocalDataSource: LoginLocalDataSource
     private lateinit var splashLocalDataSource: SplashLocalDataSource
     private lateinit var splashRemoteDataSource: SplashRemoteDataSource
+    private lateinit var tutorialLocalDataSource: TutorialLocalDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
+    lateinit var tutorialRepository: TutorialRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -48,9 +54,11 @@ class MyApplication : Application() {
         loginLocalDataSource = LoginLocalDataSourceImpl(preferenceManager)
         splashLocalDataSource = SplashLocalDataSourceImpl(preferenceManager)
         splashRemoteDataSource = SplashRemoteDataSourceImpl(apiInterface)
+        tutorialLocalDataSource = TutorialLocalDataSourceImpl(preferenceManager)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
+        tutorialRepository = TutorialRepositoryImpl(tutorialLocalDataSource)
     }
 
     init {

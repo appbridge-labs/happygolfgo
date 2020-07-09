@@ -7,6 +7,7 @@ import io.reactivex.Single
 interface SplashRepository {
 
     var clientSecretKey: String
+    val autoLogin: Boolean
 
     fun getAccessToken(
         data: HashMap<String, SplashTokenModel>

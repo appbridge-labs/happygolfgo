@@ -21,6 +21,9 @@ class SplashRepositoryImpl(
             splashLocalDataSource.clientSecretKey = value
         }
 
+    override val autoLogin: Boolean
+        get() = splashLocalDataSource.autoLogin
+
     override fun getAccessToken(
         data: HashMap<String, SplashTokenModel>
     ): Single<SplashTokenResponse> {
