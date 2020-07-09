@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.login
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
@@ -36,7 +37,43 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun initViewModelObserve() {
         with(viewModel) {
+            networkError.observe(this@LoginActivity, Observer {
 
+            })
+            serverError.observe(this@LoginActivity, Observer {
+
+            })
+            emptyPhone.observe(this@LoginActivity, Observer {
+                showEmptyPhone()
+            })
+            emptyPassword.observe(this@LoginActivity, Observer {
+                showEmptyPassword()
+            })
+            emptyUser.observe(this@LoginActivity, Observer {
+                showEmptyUser()
+            })
+            failPassword.observe(this@LoginActivity, Observer {
+                showFailPassword()
+            })
+            loginSuccess.observe(this@LoginActivity, Observer {
+
+            })
         }
+    }
+
+    private fun showEmptyUser() {
+        binding.etPhone.error = getString(R.string.login_empty_user)
+    }
+
+    private fun showEmptyPhone() {
+        binding.etPhone.error = getString(R.string.login_empth_phone)
+    }
+
+    private fun showEmptyPassword() {
+        binding.etPw.error = getString(R.string.login_empty_password)
+    }
+
+    private fun showFailPassword() {
+        binding.etPw.error = getString(R.string.login_fail_password)
     }
 }

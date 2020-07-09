@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -10,12 +9,10 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import retrofit2.HttpException
 
 class LoginViewModel(
     private val loginRepository: LoginRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     val phone = MutableLiveData("")
     val password = MutableLiveData("")
@@ -59,10 +56,10 @@ class LoginViewModel(
 
         when {
             currentPhone.isEmpty() -> {
-                Log.d(TAG, "onLoginClick: ?")
+                _emptyPhone.value = Unit
             }
             currentPassword.isEmpty() -> {
-                Log.d(TAG, "onLoginClick: ??")
+                _emptyPassword.value = Unit
             }
             else -> {
                 requestLogin()
@@ -90,7 +87,7 @@ class LoginViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({
-                    Log.d(TAG, "success, requestLogin: $it")
+                    _loginSuccess.value = Unit
                 }, {
                     when (it.message) {
                         "HTTP 401 Unauthorized", "HTTP 401 " -> {

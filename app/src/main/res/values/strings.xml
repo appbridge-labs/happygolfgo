@@ -7,4 +7,8 @@
     <string name="login_password_hint">********</string>
     <string name="login_button_title">로그인</string>
     <string name="login_password_forget_text">비밀번호를 잊어 버리셨나요?</string>
+    <string name="login_empty_user">가입되지 않은 계정 입니다</string>
+    <string name="login_empth_phone">핸드폰 번호를 입력해 주세요</string>
+    <string name="login_empty_password">비밀번호를 입력해 주세요</string>
+    <string name="login_fail_password">비밀번호가 틀렸습니다</string>
 </resources>
