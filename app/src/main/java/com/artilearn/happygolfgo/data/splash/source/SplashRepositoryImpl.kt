@@ -3,6 +3,8 @@ package com.artilearn.happygolfgo.data.splash.source
 import android.util.Log
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
+import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
+import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
@@ -35,6 +37,20 @@ class SplashRepositoryImpl(
                 .flatMap {
                     Log.d(TAG, "getAccessToken: $it")
                     splashLocalDataSource.clientSecretKey = it.data.accessToken
+                    Single.just(it)
+                }
+        } else {
+            Single.error(IllegalStateException("Network Error"))
+        }
+    }
+
+    override fun userSynchronized(
+        data: HashMap<String, SynchronizedDataModel>
+    ): Single<SynchronizedResponse> {
+        return if (networkManager.networkState()) {
+            splashRemoteDataSource.remoteUserSynchronized(data)
+                .flatMap {
+                    Log.d(TAG, "userSynchronized: ???$it")
                     Single.just(it)
                 }
         } else {

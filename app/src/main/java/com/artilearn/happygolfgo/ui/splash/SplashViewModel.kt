@@ -22,11 +22,11 @@ class SplashViewModel(
 
     private val applicationContext = MyApplication.getApplicationContext()
 
-    private val _goMain: MutableLiveData<Unit> = MutableLiveData()
+    private val _goHome: MutableLiveData<Unit> = MutableLiveData()
     private val _goLogin: MutableLiveData<Unit> = MutableLiveData()
     private val _goTutorial: MutableLiveData<Unit> = MutableLiveData()
 
-    val goMain: LiveData<Unit> get() = _goMain
+    val goHome: LiveData<Unit> get() = _goHome
     val goLogin: LiveData<Unit> get() = _goLogin
     val goTutorial: LiveData<Unit> get() = _goTutorial
 
@@ -41,16 +41,15 @@ class SplashViewModel(
                 .delay(1200L, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    userStatusConfirm()
+                    splashStatus()
                 }
         )
     }
 
-    private fun userStatusConfirm() {
-        Log.d(TAG, "userStatusConfirm: ${splashRepository.autoLogin}\n${splashRepository.tutorial}")
+    private fun splashStatus() {
         if (splashRepository.tutorial) {
             if (splashRepository.autoLogin) {
-                selectAccessToken()
+                userSynchronized()
             } else {
                 _goLogin.value = Unit
             }
@@ -59,6 +58,13 @@ class SplashViewModel(
         }
     }
 
+    private fun userSynchronized() {
+        if (splashRepository.clientSecretKey.isNotEmpty()) {
+            selectAccessToken()
+        } else {
+            _goLogin.value = Unit
+        }
+    }
 
     private fun selectAccessToken() {
         val dataModel = SplashTokenModel(splashRepository.clientSecretKey)
@@ -72,8 +78,10 @@ class SplashViewModel(
                 .doOnSubscribe {  }
                 .doAfterTerminate {  }
                 .subscribe({
+                    _goHome.value = Unit
                     Log.d(TAG, "selectAccessToken: $it")
                 }, {
+                    _goHome.value = Unit
                     Log.d(TAG, "selectAccessToken: ${it.message}")
                 })
         )

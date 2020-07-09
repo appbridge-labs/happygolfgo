@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivitySplashBinding
+import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.tutorial.TutorialActivity
 import com.artilearn.happygolfgo.util.MyApplication
@@ -46,8 +47,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
             goLogin.observe(this@SplashActivity, Observer {
                 goLogin()
             })
-            goMain.observe(this@SplashActivity, Observer {
-
+            goHome.observe(this@SplashActivity, Observer {
+                goHome()
             })
         }
     }
@@ -62,8 +63,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
         finish()
     }
 
-    private fun goMain() {
-        //startActivity(Intent(this, MainActivity::class.java))
+    private fun goHome() {
+        startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }
 }

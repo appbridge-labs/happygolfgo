@@ -5,6 +5,7 @@ import com.artilearn.happygolfgo.data.login.LoginResponse
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
+import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -24,6 +25,6 @@ interface ApiInterface {
     @POST("auth/common/uptodate")
     fun userSynchronized(
         @Body data: HashMap<String, SynchronizedDataModel>
-    ): Single
+    ): Single<SynchronizedResponse>
 
 }
