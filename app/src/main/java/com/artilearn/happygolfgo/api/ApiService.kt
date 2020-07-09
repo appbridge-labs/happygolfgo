@@ -22,7 +22,7 @@ object ApiService {
     }
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("")
+        .baseUrl("http://52.79.253.238/development/appClient/")
         .client(interceptor(ApiInterceptor()))
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
