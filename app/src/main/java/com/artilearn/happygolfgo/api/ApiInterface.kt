@@ -2,6 +2,8 @@ package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
+import com.artilearn.happygolfgo.data.splash.SplashTokenModel
+import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -12,5 +14,10 @@ interface ApiInterface {
     fun login(
         @Body data: HashMap<String, LoginDataModel>
     ): Single<LoginResponse>
+
+    @POST("common/auth/token")
+    fun getAccessToken(
+        @Body data: HashMap<String, SplashTokenModel>
+    ): Single<SplashTokenResponse>
 
 }
