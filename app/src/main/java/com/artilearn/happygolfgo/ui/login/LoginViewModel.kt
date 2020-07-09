@@ -34,22 +34,6 @@ class LoginViewModel(
 
     private var test: String? = null
 
-    init {
-        getToken()
-    }
-
-    private fun getToken() {
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    return@OnCompleteListener
-                }
-
-                test = task.result?.token
-            })
-    }
-
-
     fun onLoginClick() {
         currentPhone = phone.value.toString()
         currentPassword = password.value.toString()

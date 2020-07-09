@@ -6,6 +6,9 @@ import io.reactivex.Single
 
 interface LoginRepository {
 
+    var autoLogin: Boolean
+    val tutorial: Boolean
+
     fun repositoryLogin(
         data: HashMap<String, LoginDataModel>
     ): Single<LoginResponse>

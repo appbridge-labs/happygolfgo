@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.util
 
 import android.app.Application
+import android.content.Context
 import com.artilearn.happygolfgo.api.ApiInterface
 import com.artilearn.happygolfgo.api.ApiService
 import com.artilearn.happygolfgo.data.login.source.LoginRepository
@@ -32,6 +33,18 @@ class MyApplication : Application() {
         loginRemoteDataSource = LoginRemoteDataSourceImpl(apiInterface)
 
         loginRepository = LoginRepositoryImpl(loginRemoteDataSource, networkManager)
+    }
+
+    init {
+        instance = this
+    }
+
+    companion object {
+        private var instance: MyApplication? = null
+
+        fun getApplicationContext(): Context {
+            return instance!!.applicationContext
+        }
     }
 
 }
