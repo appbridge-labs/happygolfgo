@@ -45,6 +45,10 @@ class PreferenceManager(context: Context) {
         get() = prefs.getString(NICK_NAME, "") ?: ""
         set(value) = editor.putString(NICK_NAME, value).apply()
 
+    var dateOfBirth: String
+    get() = prefs.getString(DATE_OF_BIRTH, "") ?: ""
+    set(value) = editor.putString(DATE_OF_BIRTH, value).apply()
+
     var environmentMode: String
         get() = prefs.getString(DEFAULT_MODE, DEFAULT_MODE) ?: ""
         set(value) = editor.putString(DEFAULT_MODE, value).apply()

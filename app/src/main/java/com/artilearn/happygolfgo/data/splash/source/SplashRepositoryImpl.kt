@@ -1,6 +1,6 @@
 package com.artilearn.happygolfgo.data.splash.source
 
-import android.util.Log
+import com.artilearn.happygolfgo.data.User
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
@@ -15,7 +15,6 @@ class SplashRepositoryImpl(
     private val splashRemoteDataSource: SplashRemoteDataSource,
     private val networkManager: NetworkManager
 ) : SplashRepository {
-    private val TAG = javaClass.simpleName
 
     override var clientSecretKey: String
         get() = splashLocalDataSource.clientSecretKey
@@ -35,8 +34,7 @@ class SplashRepositoryImpl(
         return if (networkManager.networkState()) {
             splashRemoteDataSource.remoteGetAccessToken(data)
                 .flatMap {
-                    Log.d(TAG, "getAccessToken: $it")
-                    splashLocalDataSource.clientSecretKey = it.data.accessToken
+                    splashLocalDataSource.accessToken = it.data.accessToken
                     Single.just(it)
                 }
         } else {
@@ -50,11 +48,24 @@ class SplashRepositoryImpl(
         return if (networkManager.networkState()) {
             splashRemoteDataSource.remoteUserSynchronized(data)
                 .flatMap {
-                    Log.d(TAG, "userSynchronized: ???$it")
+                    userInfoSynchronized(it.data.user)
                     Single.just(it)
                 }
         } else {
             Single.error(IllegalStateException("Network Error"))
+        }
+    }
+
+    private fun userInfoSynchronized(user: User) {
+        with(splashLocalDataSource) {
+            name = user.name
+            profileImageURL = user.profileImageURL
+            nickname = user.nickname
+            phoneNumber = user.phoneNumber
+            clientSecretKey = user.clientSecretKey
+            fcmToken = user.fcmToken
+            accessToken = user.accessToken
+            dateOfBirth = user.dateOfBirth
         }
     }
 }

@@ -12,6 +12,7 @@ import io.reactivex.schedulers.Schedulers
 class LoginViewModel(
     private val loginRepository: LoginRepository
 ) : BaseViewModel() {
+    private val TAG = javaClass.simpleName
 
     val phone = MutableLiveData("")
     val password = MutableLiveData("")
@@ -30,8 +31,6 @@ class LoginViewModel(
     val failPassword: LiveData<Unit> get() = _failPassword
     val emptyUser: LiveData<Unit> get() = _emptyUser
     val loginSuccess: LiveData<Unit> get() = _loginSuccess
-
-    private var test: String? = null
 
     fun onLoginClick() {
         currentPhone = phone.value.toString()
@@ -70,7 +69,6 @@ class LoginViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({
-                    Log.d("Dddddddd", "requestLogin: $it")
                     _loginSuccess.value = Unit
                 }, {
                     when (it.message) {

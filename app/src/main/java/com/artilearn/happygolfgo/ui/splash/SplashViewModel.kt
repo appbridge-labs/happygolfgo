@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.splash
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -18,7 +17,6 @@ import java.util.concurrent.TimeUnit
 class SplashViewModel(
     private val splashRepository: SplashRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     private val applicationContext = MyApplication.getApplicationContext()
 
@@ -32,7 +30,6 @@ class SplashViewModel(
 
     init {
         getFcmToken()
-        Log.d(TAG, "key: ${PreferenceManager(applicationContext).clientScreetKey}")
 
         compositeDisposable.add(
             Completable.create { emitter ->
@@ -79,10 +76,8 @@ class SplashViewModel(
                 .doAfterTerminate {  }
                 .subscribe({
                     _goHome.value = Unit
-                    Log.d(TAG, "selectAccessToken: $it")
                 }, {
                     _goHome.value = Unit
-                    Log.d(TAG, "selectAccessToken: ${it.message}")
                 })
         )
     }

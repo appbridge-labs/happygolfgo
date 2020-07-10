@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityLoginBinding
+import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
@@ -56,7 +58,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 showFailPassword()
             })
             loginSuccess.observe(this@LoginActivity, Observer {
-
+                goHome()
             })
         }
     }
@@ -75,5 +77,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun showFailPassword() {
         binding.etPw.error = getString(R.string.login_fail_password)
+    }
+
+    private fun goHome() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
 }

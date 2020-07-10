@@ -24,12 +24,6 @@ class LoginLocalDataSourceImpl(
             preferenceManager.nickName = value
         }
 
-    override var phoneNumber: String
-        get() = preferenceManager.phoneNumber
-        set(value) {
-            preferenceManager.phoneNumber = value
-        }
-
     override var clientSecretKey: String
         get() = preferenceManager.clientScreetKey
         set(value) {
