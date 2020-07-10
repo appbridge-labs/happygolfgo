@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.artilearn.happygolfgo.R
@@ -22,9 +21,7 @@ import com.tlsolution.tlsmodules.Extensions.showTwoActionableAlert
 import com.tlsolution.tlsmodules.Network.RequestManager
 import com.tlsolution.tlsmodules.Network.RequestResult
 import kotlinx.android.synthetic.main.activity_confirm_reservation.*
-import kotlinx.android.synthetic.main.common_textview.view.*
 import kotlinx.android.synthetic.main.partial_bottom_button.view.*
-import kotlinx.android.synthetic.main.partial_text_section_view.view.*
 import kotlinx.android.synthetic.main.partial_toolbar.view.*
 
 class ConfirmReservationActivity : BaseActivity() {
@@ -40,7 +37,6 @@ class ConfirmReservationActivity : BaseActivity() {
     private var policy: Policy? = null
 
     private lateinit var ticket: Ticket
-    //private lateinit var lessonTime: LessonTime
 
     private lateinit var type: Any
     private lateinit var cancelType: Any
@@ -116,7 +112,6 @@ class ConfirmReservationActivity : BaseActivity() {
     }
 
     private fun bottomCheck(type: ClassType.ModelType, isCancellable: Boolean) {
-        Log.d("abc", "bottomCheck: $type")
         when (type) {
             ClassType.ModelType.PLATE_CANCEL, ClassType.ModelType.LESSON_CANCEL -> {
                 statusType = 1
@@ -149,34 +144,20 @@ class ConfirmReservationActivity : BaseActivity() {
 
         if (tk != null) ticket = tk as Ticket
 
-        val start: List<String>
-        val end: List<String>
-
-        tv_title.text_view_title.text = "예약명"
-        tv_date.text_view_title.text = "날짜"
-
         infor?.let {
             type = infor
             when (it) {
                 is PlateTime -> {
-                    bottomCheck(it.type, true)
-                    start = convertTime(it.startDate).trim().split(":")
-                    end = convertTime(it.endDate).trim().split(":")
-                    tv_title.text_view_content.text = ticket.name
-                    tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
-                    tv_time.text_view_title.text = "시간"
-                    tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
-                    tv_policy_content.tv_text.text = getString(R.string.plate_reserve_policy)
+                    platePolicyData()
                 }
                 is LessonTime -> {
                     bottomCheck(it.type, true)
-                    start = convertTime(it.startDate).trim().split(":")
-                    end = convertTime(it.endDate).trim().split(":")
-                    tv_title.text_view_content.text = ticket.name
-                    tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
-                    tv_time.text_view_title.text = "레슨 시간"
-                    tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
-                    tv_policy_content.tv_text.text = getString(R.string.lesson_reserve_policy)
+                    val start: List<String> = convertTime(it.startDate).trim().split(":")
+                    val end: List<String> = convertTime(it.endDate).trim().split(":")
+                    tv_lessonName.text = ticket.name
+                    tv_date.text = "${start[0]}. ${start[1]}. ${start[2]}"
+                    tv_time.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
+                    tv_policy.text = getString(R.string.lesson_reserve_policy)
                 }
             }
         }
@@ -197,23 +178,33 @@ class ConfirmReservationActivity : BaseActivity() {
                 bottomCheck(plateCancel!!.type, plateCancel?.isCancellable!!)
                 start = convertTime(plateCancel!!.startDate).trim().split(":")
                 end = convertTime(plateCancel!!.endDate).trim().split(":")
-                tv_title.text_view_content.text = plateCancel!!.name
-                tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
-                tv_time.text_view_title.text = "시간"
-                tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
-                tv_policy_content.tv_text.text = policy?.body
+                tv_lessonName.text = plateCancel!!.name
+                tv_date.text = "${start[0]}. ${start[1]}. ${start[2]}"
+                tv_time.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
+                tv_policy.text = policy?.body
             }
             is LessonReservation -> {
                 bottomCheck(lessonCancel!!.type, lessonCancel!!.isCancellable!!)
                 start = convertTime(lessonCancel!!.startDate).trim().split(":")
                 end = convertTime(lessonCancel!!.endDate).trim().split(":")
-                tv_title.text_view_content.text = lessonCancel!!.name
-                tv_date.text_view_content.text = "${start[0]}. ${start[1]}. ${start[2]}"
-                tv_time.text_view_title.text = "레슨 시간"
-                tv_time.text_view_content.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
-                tv_policy_content.tv_text.text = getString(R.string.lesson_reserve_policy)
+                tv_lessonName.text = lessonCancel!!.name
+                tv_date.text = "${start[0]}. ${start[1]}. ${start[2]}"
+                tv_time.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
+                tv_policy.text = getString(R.string.lesson_reserve_policy)
             }
         }
+    }
+
+    private fun reservePlatePolicy() {
+        val plateTime = type as PlateTime
+
+        bottomCheck(plateTime.type, true)
+        val start: List<String> = convertTime(plateTime.startDate).trim().split(":")
+        val end: List<String> = convertTime(plateTime.endDate).trim().split(":")
+        tv_lessonName.text = ticket.name
+        tv_date.text = "${start[0]}. ${start[1]}. ${start[2]}"
+        tv_time.text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
+        tv_policy.text = policy?.body
     }
 
     private fun deleteReady() {
@@ -520,6 +511,52 @@ class ConfirmReservationActivity : BaseActivity() {
                         showUnknownError()
                     }
                     return@request
+                }
+            }
+
+        }
+    }
+
+    private fun platePolicyData() {
+        allHide()
+        showLoading()
+
+        request = HappyGolfGoRequest.platePolicy
+        requestManager.request(request, userManager.user) { result, json ->
+
+            when (result) {
+                RequestResult.nSuccess -> {
+                    runOnUiThread {
+                        showUnknownError()
+                        hideLoading()
+                    }
+                }
+                RequestResult.pSuccess -> {
+                    when (result.statusCode) {
+                        201 -> {
+                            val policyData = json?.get("policy") as LinkedTreeMap<String, Any>
+                            policy = Policy.create(policyData)
+
+                            runOnUiThread {
+                                reservePlatePolicy()
+                                hideLoading()
+                            }
+                        }
+                    }
+                }
+                RequestResult.failure -> {
+                    if (result.errorMessage === "timeout") {
+                        runOnUiThread { showNetworkDelay() }
+                    } else {
+                        runOnUiThread { showUnknownError() }
+                    }
+                    runOnUiThread { hideLoading() }
+                }
+                else -> {
+                    runOnUiThread {
+                        showUnknownError()
+                        hideLoading()
+                    }
                 }
             }
 
