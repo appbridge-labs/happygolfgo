@@ -13,3 +13,4 @@ fun ticketDate(tv: TextView, startDate: String, endDate: String) {
 fun ticketCount(tv: TextView, total: Int, remaining: Int) {
     Log.d("binding", "ticketCount: $total, $remaining")
 }
+

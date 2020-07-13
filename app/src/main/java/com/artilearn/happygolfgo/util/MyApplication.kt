@@ -4,6 +4,10 @@ import android.app.Application
 import android.content.Context
 import com.artilearn.happygolfgo.api.ApiInterface
 import com.artilearn.happygolfgo.api.ApiService
+import com.artilearn.happygolfgo.data.home.source.HomeRepository
+import com.artilearn.happygolfgo.data.home.source.HomeRepositoryImpl
+import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSource
+import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.login.source.LoginRepository
 import com.artilearn.happygolfgo.data.login.source.LoginRepositoryImpl
 import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSource
@@ -33,10 +37,12 @@ class MyApplication : Application() {
     private lateinit var splashLocalDataSource: SplashLocalDataSource
     private lateinit var splashRemoteDataSource: SplashRemoteDataSource
     private lateinit var tutorialLocalDataSource: TutorialLocalDataSource
+    private lateinit var homeRemoteDataSource: HomeRemoteDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
     lateinit var tutorialRepository: TutorialRepository
+    lateinit var homeRepository: HomeRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -55,10 +61,12 @@ class MyApplication : Application() {
         splashLocalDataSource = SplashLocalDataSourceImpl(preferenceManager)
         splashRemoteDataSource = SplashRemoteDataSourceImpl(apiInterface)
         tutorialLocalDataSource = TutorialLocalDataSourceImpl(preferenceManager)
+        homeRemoteDataSource = HomeRemoteDataSourceImpl(apiInterface)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
         tutorialRepository = TutorialRepositoryImpl(tutorialLocalDataSource)
+        homeRepository = HomeRepositoryImpl(homeRemoteDataSource, networkManager)
     }
 
     init {
