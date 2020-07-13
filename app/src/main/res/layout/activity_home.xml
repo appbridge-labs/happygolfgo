@@ -91,19 +91,17 @@
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipeRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="12dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
                     android:clipToPadding="false"
-                    android:paddingTop="12dp"
-                    bind:setTickets="@{vm.tickets}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="3"
+                    bind:setTickets="@{vm.tickets}"
+                    tools:itemCount="5"
                     tools:listitem="@layout/item_home_ticket" />
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -165,10 +163,10 @@
             android:id="@+id/homeFrameLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/include_bottom_view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolBar"
-            app:layout_constraintBottom_toTopOf="@id/include_bottom_view" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolBar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

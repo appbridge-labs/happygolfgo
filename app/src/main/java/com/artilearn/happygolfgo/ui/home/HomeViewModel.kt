@@ -8,6 +8,7 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class HomeViewModel(
     private val homeRepository: HomeRepository
@@ -34,17 +35,26 @@ class HomeViewModel(
                 .subscribe({
                     val body = it.body()
                     if (it.isSuccessful) {
-                        if (body != null) {
+                        if (body != null && body.data.tickets.isNotEmpty()) {
                             _ticketEmpty.value = false
+                            _tickets.value = body.data.tickets as ArrayList<Ticket>
                             Log.d(TAG, "test: 아이템 있음, ${body.data}\n ${body.statusCode}")
                         } else {
                             _ticketEmpty.value = true
                         }
                     } else {
-                        Log.d(TAG, "test: 서버 통신 에러")
+                        _serverError.value = Unit
                     }
                 }, {
                     Log.d(TAG, "fail: $it\n${it.message}")
+                    when (it) {
+                        is HttpException -> {
+                            _networkError.value = Unit
+                        }
+                        else -> {
+                            _serverError.value = Unit
+                        }
+                    }
                 })
         )
     }

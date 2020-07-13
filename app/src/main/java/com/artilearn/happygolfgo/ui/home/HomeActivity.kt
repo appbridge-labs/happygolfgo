@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.home
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import com.artilearn.happygolfgo.util.MyApplication
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private val TAG = javaClass.simpleName
 
+    private lateinit var adapter: HomeAdapter
     private lateinit var myApplication: MyApplication
     private val viewModel: HomeViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -31,6 +33,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         inject()
         initViewModelObserve()
         initView()
+        initAdapter()
+        ticketRefresh()
     }
 
     private fun inject() {
@@ -48,9 +52,27 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         initBottomView(binding.includeBottomView, getString(R.string.home_bottomview_title), BottimViewType.DEFAULT_TYPE)
     }
 
+    private fun initAdapter() {
+        adapter = HomeAdapter { ticket ->
+            Toast.makeText(this, "$ticket", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.recyclerView.adapter = adapter
+    }
+
+    private fun ticketRefresh() {
+        with(binding.swipeRefresh) {
+            setOnRefreshListener {
+                viewModel.requestTicket()
+                isRefreshing = false
+            }
+            setColorSchemeColors(getColor(R.color.color_dark_green))
+        }
+    }
+
     override fun bottomAction() {
         super.bottomAction()
-        Log.d(TAG, "bottomAction: ")
+
     }
 
 
