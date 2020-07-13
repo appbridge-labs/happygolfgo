@@ -65,6 +65,12 @@ abstract class BaseActivity<B: ViewDataBinding>(
         }
     }
 
+    protected fun showCommonFragment(
+        frameLayoutId: Int,
+        message: String?,
+
+    )
+
     protected fun showNetworkFail(frameLayoutId: Int, msg: String) {
         val serverErrorFragment = ServerErrorFragment.newInstance(msg)
         supportFragmentManager.beginTransaction()
