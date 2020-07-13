@@ -61,7 +61,6 @@ class SplashRepositoryImpl(
             name = user.name
             profileImageURL = user.profileImageURL
             nickname = user.nickname
-            phoneNumber = user.phoneNumber
             clientSecretKey = user.clientSecretKey
             fcmToken = user.fcmToken
             accessToken = user.accessToken

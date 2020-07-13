@@ -49,7 +49,6 @@ class LoginRepositoryImpl(
             accessToken = user.accessToken
             clientSecretKey = user.clientSecretKey
             name = user.name
-            phoneNumber = user.phoneNumber
             profileImageURL = user.profileImageURL
             autoLogin = true
         }
