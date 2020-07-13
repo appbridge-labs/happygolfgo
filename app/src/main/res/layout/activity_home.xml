@@ -71,34 +71,25 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
+            android:id="@+id/include_bottom_view"
+            layout="@layout/custom_bottom_view"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" >
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" >
-                
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    tools:srcCompat="@android:drawable/btn_star_big_on"/>
-<!--todo 여기서 하지말고 바텀 커스텀으로 만들어야됨@@-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="8dp"
-                    tools:text="안녕하세요" />
-                
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:indeterminateTint="@color/color_sub_gray"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
