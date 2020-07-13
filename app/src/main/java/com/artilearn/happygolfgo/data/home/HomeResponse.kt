@@ -14,5 +14,5 @@ data class HomeResponse(
 
     @SerializedName("Data")
     @Expose
-    val data: Int
+    val data: HomeResponseInfo
 )
