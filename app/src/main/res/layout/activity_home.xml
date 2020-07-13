@@ -88,7 +88,7 @@
                     android:layout_height="28dp"
                     android:layout_gravity="center"
                     tools:srcCompat="@android:drawable/btn_star_big_on"/>
-
+<!--todo 여기서 하지말고 바텀 커스텀으로 만들어야됨@@-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
