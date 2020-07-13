@@ -39,7 +39,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            networkError.observe(this@LoginActivity, Observer {
+            networkFail.observe(this@LoginActivity, Observer {
+
+            })
+            networkDelay.observe(this@LoginActivity, Observer {
 
             })
             serverError.observe(this@LoginActivity, Observer {

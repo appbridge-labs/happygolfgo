@@ -37,8 +37,8 @@ class HomeViewModel(
                     val body = it.body()
                     if (it.isSuccessful) {
                         if (body != null && body.data.tickets.isNotEmpty()) {
-                            _ticketEmpty.value = false
-                            _tickets.value = body.data.tickets as ArrayList<Ticket>
+                            //_ticketEmpty.value = false
+                            //_tickets.value = body.data.tickets as ArrayList<Ticket>
                             Log.d(TAG, "test: 아이템 있음, ${body.data}\n ${body.statusCode}")
                         } else {
                             _ticketEmpty.value = true

@@ -43,7 +43,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/color_black"
             android:textSize="14dp"
-            android:text="@{vm.errorMessage}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_errorTitle"

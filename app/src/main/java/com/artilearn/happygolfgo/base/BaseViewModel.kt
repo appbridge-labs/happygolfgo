@@ -12,11 +12,16 @@ abstract class BaseViewModel : ViewModel() {
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    protected val _networkError: MutableLiveData<Unit> = MutableLiveData()
-    val networkError: MutableLiveData<Unit> get() = _networkError
-
     protected val _serverError: MutableLiveData<Unit> = MutableLiveData()
     val serverError: LiveData<Unit> get() = _serverError
+
+    protected val _networkFail: MutableLiveData<Unit> = MutableLiveData()
+    val networkFail: LiveData<Unit> get() = _networkFail
+
+    protected val _networkDelay: MutableLiveData<Unit> = MutableLiveData()
+    val networkDelay: LiveData<Unit> get() = _networkDelay
+
+
 
     protected fun showLoading() {
         _isLoading.value = true

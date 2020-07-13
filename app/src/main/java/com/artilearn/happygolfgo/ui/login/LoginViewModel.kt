@@ -79,7 +79,7 @@ class LoginViewModel(
                             _emptyUser.value = Unit
                         }
                         "Network Error" -> {
-                            _networkError.value = Unit
+                            _networkFail.value = Unit
                         }
                         else -> {
                             _serverError.value = Unit

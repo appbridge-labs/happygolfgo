@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.ui.common.ServerErrorFragment
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_login.view.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
@@ -62,6 +63,14 @@ abstract class BaseActivity<B: ViewDataBinding>(
                 bottomView.bottomLayout.setBackgroundColor(getColor(R.color.color_red))
             }
         }
+    }
+
+    protected fun showNetworkFail(frameLayoutId: Int, msg: String) {
+        val serverErrorFragment = ServerErrorFragment.newInstance(msg)
+        supportFragmentManager.beginTransaction()
+            .replace(frameLayoutId, serverErrorFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     open fun bottomAction() {}

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
@@ -44,7 +45,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initViewModelObserve() {
         with(viewModel) {
+            serverError.observe(this@HomeActivity, Observer {
 
+            })
+            networkFail.observe(this@HomeActivity, Observer {
+
+            })
+            networkDelay.observe(this@HomeActivity, Observer {
+
+            })
         }
     }
 
