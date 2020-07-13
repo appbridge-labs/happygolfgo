@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.api
 
+import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
@@ -7,7 +8,9 @@ import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
 import io.reactivex.Single
+import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiInterface {
@@ -26,5 +29,8 @@ interface ApiInterface {
     fun userSynchronized(
         @Body data: HashMap<String, SynchronizedDataModel>
     ): Single<SynchronizedResponse>
+
+    @GET("main/user")
+    fun mainHome(): Single<Response<HomeResponse>>
 
 }
