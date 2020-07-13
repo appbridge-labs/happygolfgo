@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.home
 
+import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -50,6 +51,9 @@ class HomeViewModel(
                     when (it) {
                         is HttpException -> {
                             _networkError.value = Unit
+                        }
+                        is NetworkErrorException -> {
+
                         }
                         else -> {
                             _serverError.value = Unit
