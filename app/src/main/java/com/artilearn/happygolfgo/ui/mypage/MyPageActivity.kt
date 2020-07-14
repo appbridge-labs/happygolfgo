@@ -61,7 +61,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
     }
 
     private fun initView() {
-        initToolbar(include_toolbar.toolBar, getString(R.string.mypage_toolbar_title), true)
+        initToolbar(mypage_toolbar.toolBar, getString(R.string.mypage_toolbar_title), true)
 
         with(binding) {
             includeLesson.tv_text.text = getString(R.string.mypage_lesson_title)
@@ -70,7 +70,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
             includeLogout.tv_text.text = getString(R.string.mypage_logout)
 
             includeLesson.setOnClickListener { it.snackbar("includeLesson") }
-            includeInfo.setOnClickListener { it.snackbar("includeInfo") }
+            includeInfo.setOnClickListener { goMyInfo() }
             includePassword.setOnClickListener { it.snackbar("includePassword") }
             includeLogout.setOnClickListener { logout() }
         }

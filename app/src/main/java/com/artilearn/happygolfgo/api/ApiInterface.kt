@@ -4,6 +4,7 @@ import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
 import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
+import com.artilearn.happygolfgo.data.myinfo.MyInfoResponse
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
@@ -42,6 +43,6 @@ interface ApiInterface {
     @PUT("mypage/profile")
     fun updateInfo(
         @Body data: HashMap<String, MyInfoModel>
-    )
+    ): Single<MyInfoResponse>
 
 }
