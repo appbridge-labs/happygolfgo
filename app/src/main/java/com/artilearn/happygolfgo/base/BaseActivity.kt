@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.base
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -103,6 +104,16 @@ abstract class BaseActivity<B: ViewDataBinding>(
     }
 
     open fun bottomAction() {}
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     override fun onDestroy() {
         compositeDisposable.clear()

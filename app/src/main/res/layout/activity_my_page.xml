@@ -12,5 +12,23 @@
         android:layout_height="match_parent"
         tools:context=".ui.mypage.MyPageActivity">
 
+        <include
+            android:id="@+id/include_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            layout="@layout/custom_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="zzz"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
