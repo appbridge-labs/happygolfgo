@@ -12,8 +12,8 @@ abstract class BaseViewModel : ViewModel() {
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    protected val _serverError: MutableLiveData<Unit> = MutableLiveData()
-    val serverError: LiveData<Unit> get() = _serverError
+    protected val _serverError: MutableLiveData<String> = MutableLiveData()
+    val serverError: LiveData<String> get() = _serverError
 
     protected val _networkFail: MutableLiveData<Unit> = MutableLiveData()
     val networkFail: LiveData<Unit> get() = _networkFail

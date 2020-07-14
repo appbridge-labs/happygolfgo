@@ -13,6 +13,7 @@ class ServerErrorFragment
     : BaseFragment<FragmentServerErrorBinding, ServerErrorViewModel>(R.layout.fragment_server_error) {
 
     companion object {
+
         fun newInstance(errorMsg: String?): ServerErrorFragment {
             val args = Bundle()
             args.putString(SERVER_ERROR_MESSAGE, errorMsg)
@@ -21,7 +22,6 @@ class ServerErrorFragment
             return fragment
         }
     }
-
 
     override val viewModel: ServerErrorViewModel by viewModels {
         object : ViewModelProvider.Factory {

@@ -82,7 +82,7 @@ class LoginViewModel(
                             _networkFail.value = Unit
                         }
                         else -> {
-                            _serverError.value = Unit
+                            _serverError.value = it.message
                         }
                     }
                 })

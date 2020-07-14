@@ -9,5 +9,6 @@ enum class BottimViewType {
 enum class CommonFragmentType {
     NETWORK_FAIL,
     NETWORK_DELAY,
-    SERVER_ERROR
+    SERVER_ERROR,
+    HOME
 }

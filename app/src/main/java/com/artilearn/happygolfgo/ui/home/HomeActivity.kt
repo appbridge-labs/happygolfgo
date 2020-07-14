@@ -11,6 +11,7 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.CommonFragmentType
 import com.artilearn.happygolfgo.util.MyApplication
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
@@ -34,8 +35,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         inject()
         initViewModelObserve()
         initView()
-        initAdapter()
-        ticketRefresh()
     }
 
     private fun inject() {
@@ -45,43 +44,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            serverError.observe(this@HomeActivity, Observer {
 
-            })
-            networkFail.observe(this@HomeActivity, Observer {
-
-            })
-            networkDelay.observe(this@HomeActivity, Observer {
-
-            })
         }
     }
 
     private fun initView() {
         initBottomView(binding.includeBottomView, getString(R.string.home_bottomview_title), BottimViewType.DEFAULT_TYPE)
-    }
-
-    private fun initAdapter() {
-        adapter = HomeAdapter { ticket ->
-            Toast.makeText(this, "$ticket", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.recyclerView.adapter = adapter
-    }
-
-    private fun ticketRefresh() {
-        with(binding.swipeRefresh) {
-            setOnRefreshListener {
-                viewModel.requestTicket()
-                isRefreshing = false
-            }
-            setColorSchemeColors(getColor(R.color.color_dark_green))
-        }
+        showCommonFragment(R.id.homeFrameLayout, null, CommonFragmentType.HOME)
     }
 
     override fun bottomAction() {
         super.bottomAction()
-
     }
 
 

@@ -1,19 +1,21 @@
 package com.artilearn.happygolfgo.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.CommonFragmentType
+import com.artilearn.happygolfgo.ui.common.NetworkDelayFragment
+import com.artilearn.happygolfgo.ui.common.NetworkFailFragment
 import com.artilearn.happygolfgo.ui.common.ServerErrorFragment
+import com.artilearn.happygolfgo.ui.home.HomeFragment
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.activity_login.view.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 
 abstract class BaseActivity<B: ViewDataBinding>(
@@ -21,10 +23,15 @@ abstract class BaseActivity<B: ViewDataBinding>(
 ) : AppCompatActivity() {
     private val TAG = javaClass.simpleName
 
-    protected val compositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
     lateinit var binding: B
 
-    protected var actionBar: Toolbar? = null
+    private var actionBar: Toolbar? = null
+
+    private lateinit var networkDelayFragment: NetworkDelayFragment
+    private lateinit var networkFailFragment: NetworkFailFragment
+    private lateinit var serverErrorFragment: ServerErrorFragment
+    private lateinit var homeFragment: HomeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,14 +75,30 @@ abstract class BaseActivity<B: ViewDataBinding>(
     protected fun showCommonFragment(
         frameLayoutId: Int,
         message: String?,
+        type: CommonFragmentType
+    ) {
+        when (type) {
+            CommonFragmentType.NETWORK_FAIL -> {
+                networkFailFragment = NetworkFailFragment.newInstance()
+                initFragment(frameLayoutId, networkFailFragment)
+            }
+            CommonFragmentType.NETWORK_DELAY -> {
 
-    )
+            }
+            CommonFragmentType.SERVER_ERROR -> {
+                serverErrorFragment = ServerErrorFragment.newInstance(message)
+                initFragment(frameLayoutId, serverErrorFragment)
+            }
+            CommonFragmentType.HOME -> {
+                homeFragment = HomeFragment.newInstance()
+                initFragment(frameLayoutId, homeFragment)
+            }
+        }
+    }
 
-    protected fun showNetworkFail(frameLayoutId: Int, msg: String) {
-        val serverErrorFragment = ServerErrorFragment.newInstance(msg)
+    private fun initFragment(frameLayoutId: Int, fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(frameLayoutId, serverErrorFragment)
-            .addToBackStack(null)
+            .replace(frameLayoutId, fragment)
             .commit()
     }
 
