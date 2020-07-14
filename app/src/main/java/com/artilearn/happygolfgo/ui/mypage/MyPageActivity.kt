@@ -2,9 +2,14 @@ package com.artilearn.happygolfgo.ui.mypage
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityMyPageBinding
+import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
 import kotlinx.android.synthetic.main.activity_my_page.*
 import kotlinx.android.synthetic.main.common_view.view.*
@@ -13,10 +18,35 @@ import kotlinx.android.synthetic.main.custom_toolbar.view.*
 class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
     private val TAG = javaClass.simpleName
 
+    private lateinit var myApplication: MyApplication
+    private val viewModel: MyPageViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return MyPageViewModel(
+                    myApplication.versionRepository
+                ) as T
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        inject()
+        initViewModelObserve()
         initView()
+    }
+
+    private fun inject() {
+        myApplication = application as MyApplication
+        binding.vm = viewModel
+    }
+
+    private fun initViewModelObserve() {
+        with(viewModel) {
+            serverVersion.observe(this@MyPageActivity, Observer {
+
+            })
+        }
     }
 
     private fun initView() {
@@ -33,8 +63,6 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
             includePassword.setOnClickListener { it.snackbar("includePassword") }
             includeLogout.setOnClickListener { it.snackbar("includeLogout") }
         }
-
     }
-
 
 }

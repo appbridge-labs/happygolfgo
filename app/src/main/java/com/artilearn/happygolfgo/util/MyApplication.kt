@@ -24,6 +24,10 @@ import com.artilearn.happygolfgo.data.tutorial.source.TutorialRepository
 import com.artilearn.happygolfgo.data.tutorial.source.TutorialRepositoryImpl
 import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSource
 import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSourceImpl
+import com.artilearn.happygolfgo.data.version.source.VersionRepository
+import com.artilearn.happygolfgo.data.version.source.VersionRepositoryImpl
+import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSource
+import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSourceImpl
 import com.facebook.stetho.Stetho
 
 class MyApplication : Application() {
@@ -38,11 +42,13 @@ class MyApplication : Application() {
     private lateinit var splashRemoteDataSource: SplashRemoteDataSource
     private lateinit var tutorialLocalDataSource: TutorialLocalDataSource
     private lateinit var homeRemoteDataSource: HomeRemoteDataSource
+    private lateinit var versionRemoteDataSource: VersionRemoteDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
     lateinit var tutorialRepository: TutorialRepository
     lateinit var homeRepository: HomeRepository
+    lateinit var versionRepository: VersionRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -62,11 +68,13 @@ class MyApplication : Application() {
         splashRemoteDataSource = SplashRemoteDataSourceImpl(apiInterface)
         tutorialLocalDataSource = TutorialLocalDataSourceImpl(preferenceManager)
         homeRemoteDataSource = HomeRemoteDataSourceImpl(apiInterface)
+        versionRemoteDataSource = VersionRemoteDataSourceImpl(apiInterface)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
         tutorialRepository = TutorialRepositoryImpl(tutorialLocalDataSource)
         homeRepository = HomeRepositoryImpl(homeRemoteDataSource, networkManager)
+        versionRepository = VersionRepositoryImpl(versionRemoteDataSource, networkManager)
     }
 
     init {
