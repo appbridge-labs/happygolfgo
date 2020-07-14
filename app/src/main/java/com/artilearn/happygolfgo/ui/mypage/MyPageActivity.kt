@@ -13,6 +13,7 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.APP_STORE_PATH
 import com.artilearn.happygolfgo.databinding.ActivityMyPageBinding
 import com.artilearn.happygolfgo.ui.login.LoginActivity
+import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.PreferenceManager
 import com.artilearn.happygolfgo.util.snackbar
@@ -101,6 +102,10 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
+    }
+
+    private fun goMyInfo() {
+        startActivity(Intent(this, MyInfoActivity::class.java))
     }
 
 }

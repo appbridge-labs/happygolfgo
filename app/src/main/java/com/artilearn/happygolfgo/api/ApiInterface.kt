@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.api
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
+import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
@@ -10,10 +11,7 @@ import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
 import com.artilearn.happygolfgo.data.version.VersionResponse
 import io.reactivex.Single
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiInterface {
 
@@ -40,5 +38,10 @@ interface ApiInterface {
         @Query("platform") platform: Int = 1,
         @Query("clientType") clientType: Int = 0
     ): Single<VersionResponse>
+
+    @PUT("mypage/profile")
+    fun updateInfo(
+        @Body data: HashMap<String, MyInfoModel>
+    )
 
 }
