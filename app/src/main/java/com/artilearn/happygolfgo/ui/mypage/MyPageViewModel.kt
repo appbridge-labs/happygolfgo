@@ -18,7 +18,6 @@ class MyPageViewModel(
     private val TAG = javaClass.simpleName
     private val myApplicationContext = MyApplication.getApplicationContext()
 
-
     private val _showUpdate: MutableLiveData<Unit> = MutableLiveData()
     private val _goPlayStore: MutableLiveData<Unit> = MutableLiveData()
 
@@ -54,7 +53,7 @@ class MyPageViewModel(
         }
     }
 
-    private fun loadAppVersion(): String? {
+    fun loadAppVersion(): String? {
         try {
             packageInfo = myApplicationContext.packageManager
                 .getPackageInfo(myApplicationContext.packageName, 0)

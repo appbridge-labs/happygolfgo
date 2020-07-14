@@ -1,7 +1,8 @@
 package com.artilearn.happygolfgo.ui.mypage
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.APP_STORE_PATH
 import com.artilearn.happygolfgo.databinding.ActivityMyPageBinding
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.custom_toolbar.view.*
 class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
     private val TAG = javaClass.simpleName
 
+    private var appVersion: String? = null
     private lateinit var myApplication: MyApplication
     private val viewModel: MyPageViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -29,6 +32,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,7 +52,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
                 showUpdate()
             })
             goPlayStore.observe(this@MyPageActivity, Observer {
-
+                updateAppStore()
             })
         }
     }
@@ -67,10 +71,22 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
             includePassword.setOnClickListener { it.snackbar("includePassword") }
             includeLogout.setOnClickListener { it.snackbar("includeLogout") }
         }
+
+        appVersion = viewModel.loadAppVersion()
+        appVersion?.let {
+            binding.tvVersion.text = it
+        }
+
     }
 
     private fun showUpdate() {
         binding.tvUpdate.visibility = View.VISIBLE
+    }
+
+    private fun updateAppStore() {
+        Intent(Intent.ACTION_VIEW, Uri.parse(APP_STORE_PATH)).takeIf {
+            it.resolveActivity(packageManager) != null
+        }?.run(this::startActivity)
     }
 
 }

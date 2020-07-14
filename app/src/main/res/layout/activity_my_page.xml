@@ -90,24 +90,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/include_logout" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/versionLayout"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:orientation="horizontal"
-            android:weightSum="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/e_v3">
 
             <TextView
+                android:id="@+id/tv_appName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginStart="20dp"
                 android:text="@string/mypage_version_name"
                 android:textColor="@color/color_black"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_version"
@@ -117,23 +118,28 @@
                 android:layout_marginStart="5dp"
                 android:textColor="@color/color_black"
                 android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_appName"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="1.0.0" />
 
             <TextView
                 android:id="@+id/tv_update"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginEnd="20dp"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:gravity="end"
-                android:text="@string/mypage_update"
                 android:onClick="@{() -> vm.onUpdateClick()}"
+                android:text="@string/mypage_update"
                 android:textColor="@color/color_red"
                 android:textSize="16dp"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:layout_width="0dp"
