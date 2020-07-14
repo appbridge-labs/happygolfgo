@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.mypage
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -43,7 +44,10 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            serverVersion.observe(this@MyPageActivity, Observer {
+            showUpdate.observe(this@MyPageActivity, Observer {
+                showUpdate()
+            })
+            goPlayStore.observe(this@MyPageActivity, Observer {
 
             })
         }
@@ -63,6 +67,10 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
             includePassword.setOnClickListener { it.snackbar("includePassword") }
             includeLogout.setOnClickListener { it.snackbar("includeLogout") }
         }
+    }
+
+    private fun showUpdate() {
+        binding.tvUpdate.visibility = View.VISIBLE
     }
 
 }

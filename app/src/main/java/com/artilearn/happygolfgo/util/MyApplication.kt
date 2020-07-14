@@ -26,6 +26,8 @@ import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSou
 import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.version.source.VersionRepository
 import com.artilearn.happygolfgo.data.version.source.VersionRepositoryImpl
+import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSource
+import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSource
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSourceImpl
 import com.facebook.stetho.Stetho
@@ -43,6 +45,7 @@ class MyApplication : Application() {
     private lateinit var tutorialLocalDataSource: TutorialLocalDataSource
     private lateinit var homeRemoteDataSource: HomeRemoteDataSource
     private lateinit var versionRemoteDataSource: VersionRemoteDataSource
+    private lateinit var versionLocalDataSource: VersionLocalDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -69,12 +72,13 @@ class MyApplication : Application() {
         tutorialLocalDataSource = TutorialLocalDataSourceImpl(preferenceManager)
         homeRemoteDataSource = HomeRemoteDataSourceImpl(apiInterface)
         versionRemoteDataSource = VersionRemoteDataSourceImpl(apiInterface)
+        versionLocalDataSource = VersionLocalDataSourceImpl(preferenceManager)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
         tutorialRepository = TutorialRepositoryImpl(tutorialLocalDataSource)
         homeRepository = HomeRepositoryImpl(homeRemoteDataSource, networkManager)
-        versionRepository = VersionRepositoryImpl(versionRemoteDataSource, networkManager)
+        versionRepository = VersionRepositoryImpl(versionRemoteDataSource, versionLocalDataSource, networkManager)
     }
 
     init {
