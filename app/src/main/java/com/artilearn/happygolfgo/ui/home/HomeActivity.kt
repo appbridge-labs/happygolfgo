@@ -1,8 +1,7 @@
 package com.artilearn.happygolfgo.ui.home
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -12,12 +11,12 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.CommonFragmentType
+import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private val TAG = javaClass.simpleName
 
-    private lateinit var adapter: HomeAdapter
     private lateinit var myApplication: MyApplication
     private val viewModel: HomeViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -44,13 +43,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initViewModelObserve() {
         with(viewModel) {
-
+            myPage.observe(this@HomeActivity, Observer {
+                goMyPage()
+            })
         }
     }
 
     private fun initView() {
         initBottomView(binding.includeBottomView, getString(R.string.home_bottomview_title), BottimViewType.DEFAULT_TYPE)
         showCommonFragment(R.id.homeFrameLayout, null, CommonFragmentType.HOME)
+    }
+
+    private fun goMyPage() {
+        startActivity(Intent(this, MyPageActivity::class.java))
     }
 
     override fun bottomAction() {
