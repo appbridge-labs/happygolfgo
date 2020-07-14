@@ -54,7 +54,17 @@ class PreferenceManager(context: Context) {
         set(value) = editor.putString(DEFAULT_MODE, value).apply()
 
     var appVersion: String
-        get() = prefs.getString(APP_VERSION, APP_VERSION) ?: ""
+        get() = prefs.getString(APP_VERSION, "1.0.0") ?: ""
         set(value) = editor.putString(APP_VERSION, value).apply()
+
+    fun userLogout() {
+        with(editor) {
+            remove(NAME).apply()
+            remove(FCM_TOKEN).apply()
+            remove(CLIENT_SECRETKEY).apply()
+            remove(AUTO_LOGIN).apply()
+            remove(ACCESS_TOKEN).apply()
+        }
+    }
 
 }

@@ -12,7 +12,9 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.APP_STORE_PATH
 import com.artilearn.happygolfgo.databinding.ActivityMyPageBinding
+import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.util.MyApplication
+import com.artilearn.happygolfgo.util.PreferenceManager
 import com.artilearn.happygolfgo.util.snackbar
 import kotlinx.android.synthetic.main.activity_my_page.*
 import kotlinx.android.synthetic.main.common_view.view.*
@@ -69,7 +71,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
             includeLesson.setOnClickListener { it.snackbar("includeLesson") }
             includeInfo.setOnClickListener { it.snackbar("includeInfo") }
             includePassword.setOnClickListener { it.snackbar("includePassword") }
-            includeLogout.setOnClickListener { it.snackbar("includeLogout") }
+            includeLogout.setOnClickListener { logout() }
         }
 
         appVersion = viewModel.loadAppVersion()
@@ -87,6 +89,18 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
         Intent(Intent.ACTION_VIEW, Uri.parse(APP_STORE_PATH)).takeIf {
             it.resolveActivity(packageManager) != null
         }?.run(this::startActivity)
+    }
+
+    private fun logout() {
+        PreferenceManager(this).userLogout()
+        goLogin()
+    }
+
+    private fun goLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 
 }
