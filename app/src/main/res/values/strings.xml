@@ -24,4 +24,5 @@
     <string name="fragment_network_fail_title">인터넷 연결 실패</string>
     <string name="fragment_network_fail_content">인터넷 연결 상태가 좋지 않습니다.\n 확인 후 다시한번 시도해 주세요.</string>
     <string name="fragment_network_fail_btn_text">다시 시도</string>
+    <string name="mypage_toolbar_title">마이페이지</string>
 </resources>

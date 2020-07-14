@@ -12,6 +12,9 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initToolbar(include_toolbar.toolBar, "Zzzzz", true)
+    }
+
+    private fun initView() {
+        initToolbar(include_toolbar.toolBar, getString(R.string.mypage_toolbar_title), true)
     }
 }
