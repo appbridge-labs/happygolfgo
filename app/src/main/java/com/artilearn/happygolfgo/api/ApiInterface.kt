@@ -7,11 +7,13 @@ import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
+import com.artilearn.happygolfgo.data.version.VersionResponse
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiInterface {
 
@@ -32,5 +34,11 @@ interface ApiInterface {
 
     @GET("main/user")
     fun mainHome(): Single<Response<HomeResponse>>
+
+    @GET("mypage/appversion")
+    fun getAppVersion(
+        @Query("platform") platform: Int = 1,
+        @Query("clientType") clientType: Int = 0
+    ): Single<VersionResponse>
 
 }
