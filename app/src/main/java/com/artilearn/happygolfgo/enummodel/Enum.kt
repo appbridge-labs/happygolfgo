@@ -24,3 +24,9 @@ enum class ToastType {
     WARNNING,
     ERROR
 }
+
+enum class PwAuthPhoneType {
+    EMPTY,
+    FAIL,
+    SUCCESS
+}

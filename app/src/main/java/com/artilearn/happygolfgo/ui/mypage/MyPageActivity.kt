@@ -14,6 +14,7 @@ import com.artilearn.happygolfgo.constants.APP_STORE_PATH
 import com.artilearn.happygolfgo.databinding.ActivityMyPageBinding
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
+import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.PreferenceManager
 import com.artilearn.happygolfgo.util.snackbar
@@ -71,7 +72,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
 
             includeLesson.setOnClickListener { it.snackbar("includeLesson") }
             includeInfo.setOnClickListener { goMyInfo() }
-            includePassword.setOnClickListener { it.snackbar("includePassword") }
+            includePassword.setOnClickListener { goPwAuth() }
             includeLogout.setOnClickListener { logout() }
         }
 
@@ -106,6 +107,10 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
 
     private fun goMyInfo() {
         startActivity(Intent(this, MyInfoActivity::class.java))
+    }
+
+    private fun goPwAuth() {
+        startActivity(Intent(this, PwAuthActivity::class.java))
     }
 
 }

@@ -45,4 +45,9 @@ interface ApiInterface {
         @Body data: HashMap<String, MyInfoModel>
     ): Single<MyInfoResponse>
 
+//    @POST("auth/common/verification/send")
+//    fun sendAuthNumber(
+//        @
+//    )
+
 }
