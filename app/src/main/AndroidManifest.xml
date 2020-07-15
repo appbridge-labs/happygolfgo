@@ -14,8 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.myinfo.MyInfoActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity android:name=".ui.pwauth.PwAuthActivity"></activity>
+        <activity
+            android:name=".ui.myinfo.MyInfoActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.mypage.MyPageActivity" />
         <activity android:name=".ui.home.HomeActivity" />
         <activity android:name=".ui.tutorial.TutorialActivity" />
