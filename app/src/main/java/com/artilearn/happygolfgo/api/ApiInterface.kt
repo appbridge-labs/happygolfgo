@@ -5,11 +5,13 @@ import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
 import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
 import com.artilearn.happygolfgo.data.myinfo.MyInfoResponse
+import com.artilearn.happygolfgo.data.pwauth.SendAuthModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
 import com.artilearn.happygolfgo.data.version.VersionResponse
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.*
@@ -45,9 +47,9 @@ interface ApiInterface {
         @Body data: HashMap<String, MyInfoModel>
     ): Single<MyInfoResponse>
 
-//    @POST("auth/common/verification/send")
-//    fun sendAuthNumber(
-//        @
-//    )
+    @POST("auth/common/verification/send")
+    fun sendAuthNumber(
+        @Body data: HashMap<String, SendAuthModel>
+    ): Completable
 
 }
