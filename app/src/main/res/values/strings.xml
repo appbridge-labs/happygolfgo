@@ -38,4 +38,7 @@
     <string name="myinfo_nickname_title">닉네임</string>
     <string name="myinfo_empty_nickname">닉네임을 입력해 주세요</string>
     <string name="myinfo_fail_nickname">2~8글자 사이로 입력해 주세요</string>
+    <string name="myinfo_upload_success">변경 되었습니다</string>
+    <string name="myinfo_upload_fail">네트워크 상태가 좋지 않습니다</string>
+    <string name="myinfo_upload_error">일시적인 오류로 변경에 실패 했습니다</string>
 </resources>

@@ -69,10 +69,8 @@ class MyInfoViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({
-                    Log.d(TAG, "uploadUserProfile: succeess $it")
                     _upload.value = UploadProfileType.SUCCESS
                 }, {
-                    Log.d(TAG, "uploadUserProfile: fail: ${it.message}")
                     when (it.message) {
                         "Network Error" -> {
                             _upload.value = UploadProfileType.NETWORK_FAIL

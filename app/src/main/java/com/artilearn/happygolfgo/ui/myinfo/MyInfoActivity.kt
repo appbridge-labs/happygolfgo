@@ -1,8 +1,6 @@
 package com.artilearn.happygolfgo.ui.myinfo
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -11,9 +9,9 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityMyInfoBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.enummodel.UploadProfileType
 import com.artilearn.happygolfgo.util.MyApplication
-import com.artilearn.happygolfgo.util.snackbar
 import kotlinx.android.synthetic.main.activity_my_info.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
@@ -94,9 +92,18 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
 
     private fun uploadType(type: UploadProfileType) {
         when (type) {
-            UploadProfileType.SUCCESS -> parentLayout.snackbar("tjdrhd")
-            UploadProfileType.NETWORK_FAIL -> parentLayout.snackbar("fail")
-            UploadProfileType.UNKNOW_ERROR -> parentLayout.snackbar("error")
+            UploadProfileType.SUCCESS -> showToast(
+                ToastType.SUCCESS,
+                getString(R.string.myinfo_upload_success)
+            )
+            UploadProfileType.NETWORK_FAIL -> showToast(
+                ToastType.WARNNING,
+                getString(R.string.myinfo_upload_fail)
+            )
+            UploadProfileType.UNKNOW_ERROR -> showToast(
+                ToastType.ERROR,
+                getString(R.string.myinfo_upload_error)
+            )
         }
         finish()
     }

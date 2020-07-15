@@ -7,7 +7,6 @@ import com.artilearn.happygolfgo.data.myinfo.source.local.MyInfoLocalDataSource
 import com.artilearn.happygolfgo.data.myinfo.source.remote.MyInfoRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Single
-import java.lang.IllegalStateException
 
 class MyInfoRepositoryImpl(
     private val myinfoLocalDataSource: MyInfoLocalDataSource,

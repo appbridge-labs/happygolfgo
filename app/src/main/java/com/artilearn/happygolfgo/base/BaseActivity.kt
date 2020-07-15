@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.base
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -12,10 +13,12 @@ import androidx.fragment.app.Fragment
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.CommonFragmentType
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.common.NetworkDelayFragment
 import com.artilearn.happygolfgo.ui.common.NetworkFailFragment
 import com.artilearn.happygolfgo.ui.common.ServerErrorFragment
 import com.artilearn.happygolfgo.ui.home.HomeFragment
+import es.dmoral.toasty.Toasty
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 
@@ -94,6 +97,14 @@ abstract class BaseActivity<B: ViewDataBinding>(
                 homeFragment = HomeFragment.newInstance()
                 initFragment(frameLayoutId, homeFragment)
             }
+        }
+    }
+
+    protected fun showToast(type: ToastType, message: String) {
+        when (type) {
+            ToastType.SUCCESS -> Toasty.success(this, message, Toast.LENGTH_SHORT).show()
+            ToastType.ERROR -> Toasty.error(this, message, Toast.LENGTH_SHORT).show()
+            ToastType.WARNNING -> Toasty.warning(this, message, Toast.LENGTH_SHORT).show()
         }
     }
 

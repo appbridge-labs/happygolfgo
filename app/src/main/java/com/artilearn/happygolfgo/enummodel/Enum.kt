@@ -18,3 +18,9 @@ enum class UploadProfileType {
     UNKNOW_ERROR,
     SUCCESS
 }
+
+enum class ToastType {
+    SUCCESS,
+    WARNNING,
+    ERROR
+}
