@@ -28,7 +28,17 @@ enum class ToastType {
 enum class PwAuthPhoneType {
     EMPTY,
     FAIL,
+    NETWORK_FAIL,
     LEGNTH_FAIL,
     EMPTY_USER,
+    SUCCESS
+}
+
+enum class PwAuthNumberType {
+    UNCREATE,
+    EMPTY,
+    FAIL,
+    AUTH_ERROR,
+    NETWORK_FAIL,
     SUCCESS
 }

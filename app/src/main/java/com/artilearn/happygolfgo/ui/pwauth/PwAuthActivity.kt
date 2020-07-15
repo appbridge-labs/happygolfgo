@@ -9,6 +9,7 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityPwAuthBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.PwAuthNumberType
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
@@ -48,6 +49,9 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             phoneNumber.observe(this@PwAuthActivity, Observer {
                 phoneType(it)
             })
+            authNumber.observe(this@PwAuthActivity, Observer {
+                authType(it)
+            })
         }
     }
 
@@ -58,6 +62,12 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             getString(R.string.pwauth_bottom_view),
             BottimViewType.DEFAULT_TYPE
         )
+
+        with(binding) {
+            pwauthBottomView.setOnClickListener {
+
+            }
+        }
     }
 
     private fun phoneType(type: PwAuthPhoneType) {
@@ -67,6 +77,19 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             PwAuthPhoneType.SUCCESS -> showToast(ToastType.SUCCESS, getString(R.string.pwauth_success_phone))
             PwAuthPhoneType.FAIL -> showToast(ToastType.ERROR, getString(R.string.pwauth_fail_phone))
             PwAuthPhoneType.EMPTY_USER -> showToast(ToastType.WARNNING, getString(R.string.pwauth_empty_user))
+            PwAuthPhoneType.NETWORK_FAIL -> showToast(ToastType.WARNNING, getString(R.string.pwauth_network_fail))
         }
     }
+
+    private fun authType(type: PwAuthNumberType) {
+        when (type) {
+            PwAuthNumberType.EMPTY -> binding.etAuth.error = getString(R.string.pwauth_empty_auth)
+            PwAuthNumberType.FAIL -> showToast(ToastType.ERROR, getString(R.string.pwauth_error_auth))
+            PwAuthNumberType.NETWORK_FAIL -> showToast(ToastType.WARNNING, getString(R.string.pwauth_network_fail))
+            PwAuthNumberType.SUCCESS -> showToast(ToastType.SUCCESS, getString(R.string.pwauth_success_auth))
+            PwAuthNumberType.UNCREATE -> showToast(ToastType.WARNNING, getString(R.string.pwauth_uncreate_auth))
+            PwAuthNumberType.AUTH_ERROR -> showToast(ToastType.ERROR, getString(R.string.pwauth_fail_auth))
+        }
+    }
+
 }

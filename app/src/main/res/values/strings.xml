@@ -55,4 +55,10 @@
     <string name="pwauth_toolbar_title">인증번호 발송</string>
     <string name="pwauth_bottom_view">확인</string>
     <string name="pwauth_empty_user">가입되지 않은 번호 입니다</string>
+    <string name="pwauth_network_fail">네트워크 상태가 좋지 않습니다</string>
+    <string name="pwauth_empty_auth">인증번호를 입력해 주세요</string>
+    <string name="pwauth_fail_auth">인증번호가 틀립니다</string>
+    <string name="pwauth_success_auth">인증완료</string>
+    <string name="pwauth_uncreate_auth">인증번호를 생성해 주세요</string>
+    <string name="pwauth_error_auth">일시적인 오류 발생</string>
 </resources>
