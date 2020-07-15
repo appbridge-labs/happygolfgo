@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.pwauth.PwAuthActivity"></activity>
+        <activity android:name=".ui.pwauth.PwAuthActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
             android:name=".ui.myinfo.MyInfoActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />

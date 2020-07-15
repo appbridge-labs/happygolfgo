@@ -4,9 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
+import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
+import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepository
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class PwAuthViewModel : BaseViewModel() {
+class PwAuthViewModel(
+    private val pwAuthRepository: PwAuthRepository
+) : BaseViewModel() {
     private val TAG = javaClass.simpleName
 
     val phone = MutableLiveData("")
@@ -27,15 +33,43 @@ class PwAuthViewModel : BaseViewModel() {
                 _phoneNumber.value = PwAuthPhoneType.EMPTY
             }
             currentPhone.length == 11 -> {
-                _phoneNumber.value = PwAuthPhoneType.SUCCESS
+                requestAuthNumber()
             }
             else -> {
-                _phoneNumber.value = PwAuthPhoneType.FAIL
+                _phoneNumber.value = PwAuthPhoneType.LEGNTH_FAIL
             }
         }
     }
 
     fun btnConfirmClick() {
 
+    }
+
+    private fun requestAuthNumber() {
+        val dataModel = GetAuthModel(currentPhone)
+        val hashMap = hashMapOf<String, GetAuthModel>()
+        hashMap["Data"] = dataModel
+
+        compositeDisposable.add(
+            pwAuthRepository.sendAuthNumber(hashMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
+                .subscribe({
+                    Log.d(TAG, "requestAuthNumber: success")
+                    _phoneNumber.value = PwAuthPhoneType.SUCCESS
+                }, {
+                    Log.d(TAG, "requestAuthNumber: fail: ${it.message}")
+                    when (it.message) {
+                        "HTTP 404 Not Found" -> {
+                            _phoneNumber.value = PwAuthPhoneType.EMPTY_USER
+                        }
+                        else -> {
+                            _phoneNumber.value = PwAuthPhoneType.FAIL
+                        }
+                    }
+                })
+        )
     }
 }

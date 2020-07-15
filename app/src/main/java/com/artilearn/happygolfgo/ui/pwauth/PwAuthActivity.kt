@@ -10,6 +10,7 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityPwAuthBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
 import kotlinx.android.synthetic.main.activity_pw_auth.*
@@ -23,7 +24,7 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return PwAuthViewModel(
-
+                    myApplication.pwAuthRepository
                 ) as T
             }
         }
@@ -62,8 +63,10 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
     private fun phoneType(type: PwAuthPhoneType) {
         when (type) {
             PwAuthPhoneType.EMPTY -> binding.etPhone.error = getString(R.string.pwauth_empty_phone)
-            PwAuthPhoneType.FAIL -> binding.etPhone.error = getString(R.string.pwauth_fail_phone)
-            PwAuthPhoneType.SUCCESS -> parentLayout.snackbar(getString(R.string.pwauth_success_phone))
+            PwAuthPhoneType.LEGNTH_FAIL -> binding.etPhone.error = getString(R.string.pwauth_fail_length)
+            PwAuthPhoneType.SUCCESS -> showToast(ToastType.SUCCESS, getString(R.string.pwauth_success_phone))
+            PwAuthPhoneType.FAIL -> showToast(ToastType.ERROR, getString(R.string.pwauth_fail_phone))
+            PwAuthPhoneType.EMPTY_USER -> showToast(ToastType.WARNNING, getString(R.string.pwauth_empty_user))
         }
     }
 }

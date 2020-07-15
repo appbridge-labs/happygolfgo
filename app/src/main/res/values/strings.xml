@@ -49,8 +49,10 @@
     <string name="pwauth_auth_hint">0000</string>
     <string name="pwauth_btn_confirm">확인</string>
     <string name="pwauth_empty_phone">핸드폰 번호를 입력해 주세요</string>
-    <string name="pwauth_fail_phone">핸드폰 번호를 올바르게 입력해 주세요</string>
+    <string name="pwauth_fail_length">핸드폰 번호를 올바르게 입력해 주세요</string>
     <string name="pwauth_success_phone">인증 번호가 발송 되었습니다</string>
+    <string name="pwauth_fail_phone">인증번호 발송에 실패 했습니다</string>
     <string name="pwauth_toolbar_title">인증번호 발송</string>
     <string name="pwauth_bottom_view">확인</string>
+    <string name="pwauth_empty_user">가입되지 않은 번호 입니다</string>
 </resources>

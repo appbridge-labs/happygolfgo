@@ -5,7 +5,8 @@ import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
 import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
 import com.artilearn.happygolfgo.data.myinfo.MyInfoResponse
-import com.artilearn.happygolfgo.data.pwauth.SendAuthModel
+import com.artilearn.happygolfgo.data.pwauth.ConfirmAuthModel
+import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
@@ -48,8 +49,13 @@ interface ApiInterface {
     ): Single<MyInfoResponse>
 
     @POST("auth/common/verification/send")
-    fun sendAuthNumber(
-        @Body data: HashMap<String, SendAuthModel>
+    fun getAuthNumber(
+        @Body data: HashMap<String, GetAuthModel>
+    ): Completable
+
+    @POST("auth/common/verification/check")
+    fun confirmAuthNumber(
+        @Body data: HashMap<String, ConfirmAuthModel>
     ): Completable
 
 }
