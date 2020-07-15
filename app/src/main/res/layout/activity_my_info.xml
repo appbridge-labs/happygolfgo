@@ -11,6 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_white"
@@ -38,39 +39,40 @@
             app:layout_constraintTop_toBottomOf="@id/myinfo_toolbar" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/nameLayout"
-        android:layout_width="0dp"
-        android:layout_height="92dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="39dp"
-        android:layout_marginEnd="20dp"
-        android:background="@color/color_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title">
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/myinfo_name_title"
-            android:textSize="14dp"
+            android:id="@+id/nameLayout"
+            android:layout_width="0dp"
+            android:layout_height="92dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="39dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/color_white"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
 
-        <EditText
-            android:id="@+id/et_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/color_black"
-            android:textSize="16dp"
-            android:clickable="false"
-            android:backgroundTint="@color/color_line_gray"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/myinfo_name_title"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/color_line_gray"
+                android:clickable="false"
+                android:enabled="false"
+                android:textColor="@color/color_black"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/nicknameLayout"
@@ -97,9 +99,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:backgroundTint="@color/color_line_gray"
+                android:maxLength="8"
                 android:maxLines="1"
                 android:text="@={vm.nickname}"
-                android:backgroundTint="@color/color_line_gray"
+                android:textColor="@color/color_black"
+                android:textColorHint="@color/color_lucky_gray"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_nickname" />
 

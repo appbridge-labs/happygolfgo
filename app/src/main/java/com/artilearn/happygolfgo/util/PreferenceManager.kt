@@ -6,7 +6,8 @@ import com.artilearn.happygolfgo.constants.*
 
 class PreferenceManager(context: Context) {
 
-    private val prefs: SharedPreferences = context.getSharedPreferences(HAPPY_GOLF_USER, Context.MODE_PRIVATE)
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences(HAPPY_GOLF_USER, Context.MODE_PRIVATE)
     private val editor = prefs.edit()
 
     var tutorial: Boolean
@@ -18,8 +19,8 @@ class PreferenceManager(context: Context) {
         set(value) = editor.putBoolean(AUTO_LOGIN, value).apply()
 
     var fcmToken: String?
-    get() = prefs.getString(FCM_TOKEN, "") ?: ""
-    set(value) = editor.putString(FCM_TOKEN, value).apply()
+        get() = prefs.getString(FCM_TOKEN, "") ?: ""
+        set(value) = editor.putString(FCM_TOKEN, value).apply()
 
     var accessToken: String
         get() = prefs.getString(ACCESS_TOKEN, "") ?: ""
@@ -46,8 +47,8 @@ class PreferenceManager(context: Context) {
         set(value) = editor.putString(NICK_NAME, value).apply()
 
     var dateOfBirth: String
-    get() = prefs.getString(DATE_OF_BIRTH, "") ?: ""
-    set(value) = editor.putString(DATE_OF_BIRTH, value).apply()
+        get() = prefs.getString(DATE_OF_BIRTH, "") ?: ""
+        set(value) = editor.putString(DATE_OF_BIRTH, value).apply()
 
     var environmentMode: String
         get() = prefs.getString(DEFAULT_MODE, DEFAULT_MODE) ?: ""

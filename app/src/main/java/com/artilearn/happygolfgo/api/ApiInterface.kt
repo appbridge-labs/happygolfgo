@@ -41,7 +41,7 @@ interface ApiInterface {
     ): Single<VersionResponse>
 
     @PUT("mypage/profile")
-    fun updateInfo(
+    fun updateProfile(
         @Body data: HashMap<String, MyInfoModel>
     ): Single<MyInfoResponse>
 

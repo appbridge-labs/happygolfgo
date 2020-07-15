@@ -12,3 +12,9 @@ enum class CommonFragmentType {
     SERVER_ERROR,
     HOME
 }
+
+enum class UploadProfileType {
+    NETWORK_FAIL,
+    UNKNOW_ERROR,
+    SUCCESS
+}

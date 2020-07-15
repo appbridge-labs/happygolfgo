@@ -14,6 +14,12 @@ import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSource
 import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.login.source.remote.LoginRemoteDataSource
 import com.artilearn.happygolfgo.data.login.source.remote.LoginRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.myinfo.source.MyInfoRepository
+import com.artilearn.happygolfgo.data.myinfo.source.MyInfoRepositoryImpl
+import com.artilearn.happygolfgo.data.myinfo.source.local.MyInfoLocalDataSource
+import com.artilearn.happygolfgo.data.myinfo.source.local.MyInfoLocalDataSourceImpl
+import com.artilearn.happygolfgo.data.myinfo.source.remote.MyInfoRemoteDataSource
+import com.artilearn.happygolfgo.data.myinfo.source.remote.MyInfoRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.splash.source.SplashRepository
 import com.artilearn.happygolfgo.data.splash.source.SplashRepositoryImpl
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
@@ -46,12 +52,15 @@ class MyApplication : Application() {
     private lateinit var homeRemoteDataSource: HomeRemoteDataSource
     private lateinit var versionRemoteDataSource: VersionRemoteDataSource
     private lateinit var versionLocalDataSource: VersionLocalDataSource
+    private lateinit var myinfoLocalDataSource: MyInfoLocalDataSource
+    private lateinit var myinfoRemoteDataSource: MyInfoRemoteDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
     lateinit var tutorialRepository: TutorialRepository
     lateinit var homeRepository: HomeRepository
     lateinit var versionRepository: VersionRepository
+    lateinit var myinfoRepository: MyInfoRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -73,12 +82,15 @@ class MyApplication : Application() {
         homeRemoteDataSource = HomeRemoteDataSourceImpl(apiInterface)
         versionRemoteDataSource = VersionRemoteDataSourceImpl(apiInterface)
         versionLocalDataSource = VersionLocalDataSourceImpl(preferenceManager)
+        myinfoLocalDataSource = MyInfoLocalDataSourceImpl(preferenceManager)
+        myinfoRemoteDataSource = MyInfoRemoteDataSourceImpl(apiInterface)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
         tutorialRepository = TutorialRepositoryImpl(tutorialLocalDataSource)
         homeRepository = HomeRepositoryImpl(homeRemoteDataSource, networkManager)
         versionRepository = VersionRepositoryImpl(versionRemoteDataSource, versionLocalDataSource, networkManager)
+        myinfoRepository = MyInfoRepositoryImpl(myinfoLocalDataSource, myinfoRemoteDataSource, networkManager)
     }
 
     init {

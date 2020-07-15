@@ -4,26 +4,44 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
-import java.util.function.IntUnaryOperator
+import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
+import com.artilearn.happygolfgo.data.myinfo.source.MyInfoRepository
+import com.artilearn.happygolfgo.enummodel.UploadProfileType
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class MyInfoViewModel : BaseViewModel() {
+class MyInfoViewModel(
+    private val myinfoRepository: MyInfoRepository
+) : BaseViewModel() {
     private val TAG = javaClass.simpleName
 
     val nickname = MutableLiveData("")
 
-    private val _success: MutableLiveData<Unit> = MutableLiveData()
     private val _emptyNickName: MutableLiveData<Unit> = MutableLiveData()
     private val _failNickName: MutableLiveData<Unit> = MutableLiveData()
+    private val _localName: MutableLiveData<String> = MutableLiveData()
+    private val _localNickName: MutableLiveData<String> = MutableLiveData()
+    private val _upload: MutableLiveData<UploadProfileType> = MutableLiveData()
 
-    val success: LiveData<Unit> get() = _success
     val emptyNickName: LiveData<Unit> get() = _emptyNickName
     val failNickName: LiveData<Unit> get() = _failNickName
+    val localName: LiveData<String> get() = _localName
+    val localNickName: LiveData<String> get() = _localNickName
+    val upload: LiveData<UploadProfileType> get() = _upload
 
     private var currentNickName = ""
 
+    init {
+        loadUserInfo()
+    }
+
+    private fun loadUserInfo() {
+        _localNickName.value = myinfoRepository.nickname
+        _localName.value = myinfoRepository.name
+    }
+
     fun onConfirm() {
         currentNickName = nickname.value.toString()
-        Log.d(TAG, "onConfirm: $currentNickName")
 
         when {
             currentNickName.isEmpty() -> {
@@ -34,8 +52,36 @@ class MyInfoViewModel : BaseViewModel() {
                 _failNickName.value = Unit
             }
             else -> {
-                _success.value = Unit
+                uploadUserProfile()
             }
         }
+    }
+
+    private fun uploadUserProfile() {
+        val myInfoModel = MyInfoModel(currentNickName)
+        val hashMap = hashMapOf<String, MyInfoModel>()
+        hashMap["Data"] = myInfoModel
+
+        compositeDisposable.add(
+            myinfoRepository.uploadProfile(hashMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
+                .subscribe({
+                    Log.d(TAG, "uploadUserProfile: succeess $it")
+                    _upload.value = UploadProfileType.SUCCESS
+                }, {
+                    Log.d(TAG, "uploadUserProfile: fail: ${it.message}")
+                    when (it.message) {
+                        "Network Error" -> {
+                            _upload.value = UploadProfileType.NETWORK_FAIL
+                        }
+                        else -> {
+                            _upload.value = UploadProfileType.UNKNOW_ERROR
+                        }
+                    }
+                })
+        )
     }
 }

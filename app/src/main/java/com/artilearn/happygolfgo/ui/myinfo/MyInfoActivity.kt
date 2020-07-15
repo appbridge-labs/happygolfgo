@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.myinfo
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -10,7 +11,9 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityMyInfoBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.UploadProfileType
 import com.artilearn.happygolfgo.util.MyApplication
+import com.artilearn.happygolfgo.util.snackbar
 import kotlinx.android.synthetic.main.activity_my_info.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
@@ -23,7 +26,7 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return MyInfoViewModel(
-
+                    myApplication.myinfoRepository
                 ) as T
             }
         }
@@ -35,7 +38,6 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
         inject()
         initViewModelObserve()
         initView()
-        initClickListener()
     }
 
     private fun inject() {
@@ -45,14 +47,20 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            success.observe(this@MyInfoActivity, Observer {
-                Log.d(TAG, "initViewModelObserve: success")
-            })
             emptyNickName.observe(this@MyInfoActivity, Observer {
                 showEmptyNickName()
             })
             failNickName.observe(this@MyInfoActivity, Observer {
                 showFailNickName()
+            })
+            localName.observe(this@MyInfoActivity, Observer { name ->
+                loadName(name)
+            })
+            localNickName.observe(this@MyInfoActivity, Observer { nickname ->
+                loadNickName(nickname)
+            })
+            upload.observe(this@MyInfoActivity, Observer {
+                uploadType(it)
             })
         }
     }
@@ -66,15 +74,35 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
         )
     }
 
-    private fun initClickListener() {
-        binding.myinfoBottomView.setOnClickListener { viewModel.onConfirm() }
-    }
-
     private fun showEmptyNickName() {
         binding.etNickname.error = getString(R.string.myinfo_empty_nickname)
     }
 
     private fun showFailNickName() {
         binding.etNickname.error = getString(R.string.myinfo_fail_nickname)
+    }
+
+    private fun loadName(name: String) {
+        binding.etName.setText(name)
+    }
+
+    private fun loadNickName(nickname: String?) {
+        nickname?.let {
+            binding.etNickname.hint = it
+        }
+    }
+
+    private fun uploadType(type: UploadProfileType) {
+        when (type) {
+            UploadProfileType.SUCCESS -> parentLayout.snackbar("tjdrhd")
+            UploadProfileType.NETWORK_FAIL -> parentLayout.snackbar("fail")
+            UploadProfileType.UNKNOW_ERROR -> parentLayout.snackbar("error")
+        }
+        finish()
+    }
+
+    override fun bottomAction() {
+        super.bottomAction()
+        viewModel.onConfirm()
     }
 }
