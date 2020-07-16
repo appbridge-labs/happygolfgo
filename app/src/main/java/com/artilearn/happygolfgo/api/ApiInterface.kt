@@ -7,6 +7,7 @@ import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
 import com.artilearn.happygolfgo.data.myinfo.MyInfoResponse
 import com.artilearn.happygolfgo.data.pwauth.ConfirmAuthModel
 import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
+import com.artilearn.happygolfgo.data.pwreset.PwrestModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
@@ -58,4 +59,8 @@ interface ApiInterface {
         @Body data: HashMap<String, ConfirmAuthModel>
     ): Completable
 
+    @PUT("auth/user/changePassword")
+    fun changePassword(
+        @Body data: HashMap<String, PwrestModel>
+    ): Completable
 }
