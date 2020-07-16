@@ -67,7 +67,7 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
         initToolbar(myinfo_toolbar.toolBar, getString(R.string.myinfo_toolbar_title), true)
         initBottomView(
             myinfo_bottom_view.bottomLayout,
-            getString(R.string.myinfo_bottom_title),
+            getString(R.string.bottom_view_default),
             BottimViewType.DEFAULT_TYPE
         )
     }

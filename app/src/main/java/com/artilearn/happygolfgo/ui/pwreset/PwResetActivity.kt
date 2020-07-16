@@ -1,7 +1,10 @@
 package com.artilearn.happygolfgo.ui.pwreset
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,12 +12,19 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityPwResetBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_pw_reset.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
+import java.util.concurrent.TimeUnit
 
 class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_pw_reset) {
+    private val TAG = javaClass.simpleName
+    private val pattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&]).{8,15}.\$"
 
     private lateinit var myApplication: MyApplication
     private val viewModel: PwResetViewModel by viewModels {
@@ -26,6 +36,7 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -46,7 +57,123 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
     }
 
     private fun initView() {
-        initToolbar(pwreset_toolbar.toolBar, "비밀번호 재설정", true)
-        initBottomView(pwreset_bottom_view.bottomLayout, "확인", BottimViewType.DEFAULT_TYPE)
+        initToolbar(pwreset_toolbar.toolBar, getString(R.string.pwreset_toolbar_title), true)
+        initBottomView(pwreset_bottom_view.bottomLayout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
+
+        rxPassword()
+        rxConfirmPassword()
+    }
+
+    private fun createPassword(): Observable<String> {
+        val text = Observable.create<String> { emitter ->
+            val textWatcher = object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) = Unit
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    s?.toString()?.let { emitter.onNext(it) }
+                }
+            }
+
+            binding.etPw.addTextChangedListener(textWatcher)
+
+            emitter.setCancellable {
+                binding.etPw.removeTextChangedListener(textWatcher)
+            }
+        }
+
+        return text
+            .debounce(500, TimeUnit.MILLISECONDS)
+    }
+
+    private fun createConfirmPassword(): Observable<String> {
+        val text = Observable.create<String> { emitter ->
+            val textWatcher = object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) = Unit
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    s?.toString()?.let { emitter.onNext(it) }
+                }
+            }
+
+            binding.etPwConfirm.addTextChangedListener(textWatcher)
+
+            emitter.setCancellable {
+                binding.etPwConfirm.removeTextChangedListener(textWatcher)
+            }
+        }
+
+        return text
+            .debounce(500, TimeUnit.MILLISECONDS)
+    }
+
+    private fun rxPassword() {
+        val textPassword = createPassword()
+            .toFlowable(BackpressureStrategy.BUFFER)
+
+        disposable = textPassword
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                with(it) {
+                    when {
+                        this.matches(pattern.toRegex()) -> {
+                            passwordStatus(true)
+                        }
+                        else -> {
+                            passwordStatus(false)
+                            showErrorPassword()
+                        }
+                    }
+                }
+            }, {
+                Log.d(TAG, "etpassword: ${it.message}")
+            })
+    }
+
+    private fun rxConfirmPassword() {
+        val textConfirmPassword = createConfirmPassword()
+            .toFlowable(BackpressureStrategy.BUFFER)
+
+        disposable = textConfirmPassword
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                with(it) {
+                    if (this == binding.etPw.text.toString()) {
+                        passwordConfirmStatus(true)
+                    } else {
+                        passwordConfirmStatus(false)
+                        showErrorConfirmPassword()
+                    }
+                }
+            }, {
+                Log.d(TAG, "etconfirmpassword: ${it.message}")
+            })
+    }
+
+    private fun showErrorPassword() {
+        binding.etPw.error = getString(R.string.pwreset_input_fail_password)
+    }
+
+    private fun showErrorConfirmPassword() {
+        binding.etPwConfirm.error = getString(R.string.pwreset_fail_password)
+    }
+
+    private fun passwordStatus(visible: Boolean) {
+        binding.ivPwSuccess.visibility = if (visible) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
+        }
+    }
+
+    private fun passwordConfirmStatus(visible: Boolean) {
+        binding.ivPwConfirmSuccess.visibility = if (visible) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
+        }
     }
 }
