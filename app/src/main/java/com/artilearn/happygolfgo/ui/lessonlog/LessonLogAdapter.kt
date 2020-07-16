@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.lessonlist
+package com.artilearn.happygolfgo.ui.lessonlog
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

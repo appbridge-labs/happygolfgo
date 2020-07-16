@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.lessonlist
+package com.artilearn.happygolfgo.ui.lessonlog
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -9,13 +9,13 @@
 
         <variable
             name="vm"
-            type="com.artilearn.happygolfgo.ui.lessonlist.LessonLogViewModel" />
+            type="com.artilearn.happygolfgo.ui.lessonlog.LessonLogViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.lessonlist.LessonLogActivity">
+        tools:context=".ui.lessonlog.LessonLogActivity">
 
         <include
             android:id="@+id/lessonlog_toolbar"

@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.home.HomeResponse
+import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
 import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
@@ -65,5 +66,5 @@ interface ApiInterface {
     ): Completable
 
     @GET("user/lessonlogs")
-    fun getLessonLogd()
+    fun getLessonLogs(): Single<LessonLogResponse>
 }

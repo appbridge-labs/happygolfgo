@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.lessonlist
+package com.artilearn.happygolfgo.ui.lessonlog
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -9,8 +9,6 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityLessonLogBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
-import kotlinx.android.synthetic.main.activity_lesson_log.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activity_lesson_log) {
     private val TAG = javaClass.simpleName
