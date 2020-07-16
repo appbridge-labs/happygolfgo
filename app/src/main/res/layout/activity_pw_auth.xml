@@ -88,8 +88,7 @@
                 android:text="@={vm.phone}"
                 android:textColor="@color/color_black"
                 android:textColorHint="@color/color_lucky_gray"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textSize="16dp" />
 
         </LinearLayout>
 
@@ -126,8 +125,7 @@
                 android:text="@={vm.auth}"
                 android:textColor="@color/color_black"
                 android:textColorHint="@color/color_lucky_gray"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textSize="16dp" />
 
         </LinearLayout>
 

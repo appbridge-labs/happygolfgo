@@ -8,6 +8,10 @@ import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.data.home.source.HomeRepositoryImpl
 import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSource
 import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.lessonlog.source.LessonLogRepository
+import com.artilearn.happygolfgo.data.lessonlog.source.LessonLogRepositoryImpl
+import com.artilearn.happygolfgo.data.lessonlog.source.remote.LessonLogRemoteDataSource
+import com.artilearn.happygolfgo.data.lessonlog.source.remote.LessonLogRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.login.source.LoginRepository
 import com.artilearn.happygolfgo.data.login.source.LoginRepositoryImpl
 import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSource
@@ -67,6 +71,7 @@ class MyApplication : Application() {
     private lateinit var pwAuthRemoteDataSource: PwAuthRemoteDataSource
     private lateinit var pwResetRemoteDataSource: PwrestRemoteDataSource
     private lateinit var pwResetLocalDataSource: PwrestLocalDataSource
+    private lateinit var lessonLogRemoteDataSource: LessonLogRemoteDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -76,6 +81,7 @@ class MyApplication : Application() {
     lateinit var myinfoRepository: MyInfoRepository
     lateinit var pwAuthRepository: PwAuthRepository
     lateinit var pwrestRepository: PwrestRepository
+    lateinit var lessonLogRepository: LessonLogRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -102,6 +108,7 @@ class MyApplication : Application() {
         pwAuthRemoteDataSource = PwAuthRemoteDataSourceImpl(apiInterface)
         pwResetRemoteDataSource = PwrestRemoteDataSourceImpl(apiInterface)
         pwResetLocalDataSource = PwrestLocalDataSourceImpl(preferenceManager)
+        lessonLogRemoteDataSource = LessonLogRemoteDataSourceImpl(apiInterface)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
@@ -111,6 +118,7 @@ class MyApplication : Application() {
         myinfoRepository = MyInfoRepositoryImpl(myinfoLocalDataSource, myinfoRemoteDataSource, networkManager)
         pwAuthRepository = PwAuthRepositoryImpl(pwAuthRemoteDataSource, networkManager)
         pwrestRepository = PwrestRepositoryImpl(pwResetRemoteDataSource, pwResetLocalDataSource, networkManager)
+        lessonLogRepository = LessonLogRepositoryImpl(lessonLogRemoteDataSource, networkManager)
     }
 
     init {

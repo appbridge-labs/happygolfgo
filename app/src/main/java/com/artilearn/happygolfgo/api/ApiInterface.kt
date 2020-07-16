@@ -66,5 +66,5 @@ interface ApiInterface {
     ): Completable
 
     @GET("user/lessonlogs")
-    fun getLessonLogs(): Single<LessonLogResponse>
+    fun getLessonLogs(): Single<Response<LessonLogResponse>>
 }

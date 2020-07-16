@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.lessonlog
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
@@ -9,6 +10,8 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityLessonLogBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
+import kotlinx.android.synthetic.main.activity_lesson_log.*
+import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activity_lesson_log) {
     private val TAG = javaClass.simpleName
@@ -19,7 +22,7 @@ class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activi
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return LessonLogViewModel(
-
+                    myApplication.lessonLogRepository
                 ) as T
             }
         }
@@ -41,12 +44,17 @@ class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activi
 
     private fun initViewModelObserve() {
         with(viewModel) {
-
+            networkFail.observe(this@LessonLogActivity, Observer {
+                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+            })
+            serverError.observe(this@LessonLogActivity, Observer {
+                showToast(ToastType.ERROR, it)
+            })
         }
     }
 
     private fun initView() {
-        initToolbar(lessonlist_toolbar.toolBar, "레슨 일지", true)
+        initToolbar(lessonlog_toolbar.toolBar, getString(R.string.lessonlog_toolbar_title), true)
     }
 
     private fun initAdapter() {
