@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.home
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.viewModels
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentHomeBinding
+import com.artilearn.happygolfgo.ui.calendar.CalendarActivity
 import com.artilearn.happygolfgo.ui.common.NetworkFailFragment
 import com.artilearn.happygolfgo.ui.common.ServerErrorFragment
 import com.artilearn.happygolfgo.util.MyApplication
@@ -58,6 +60,7 @@ class HomeFragment
     private fun initAdapter() {
         adapter = HomeAdapter { ticket ->
             Toast.makeText(activity, "$ticket", Toast.LENGTH_SHORT).show()
+            goCalendar()
         }
 
         binding.recyclerView.adapter = adapter
@@ -86,6 +89,10 @@ class HomeFragment
         activity?.supportFragmentManager!!.beginTransaction()
             .replace(R.id.homeFrameLayout, networkFail)
             .commit()
+    }
+
+    private fun goCalendar() {
+        startActivity(Intent(activity, CalendarActivity::class.java))
     }
 
 }

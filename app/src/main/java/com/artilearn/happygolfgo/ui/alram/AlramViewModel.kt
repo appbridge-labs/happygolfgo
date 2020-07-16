@@ -32,8 +32,8 @@ class AlramViewModel(
                     val body = it.body()
                     if (it.isSuccessful && body != null) {
                         if (body.data.notifications.isNotEmpty()) {
-                            _alramMessages.value = body.data.notifications as ArrayList<Alram>
                             hideEmptyAlramMessage()
+                            _alramMessages.value = body.data.notifications as ArrayList<Alram>
                         } else {
                             showEmptyAlramMessage()
                         }

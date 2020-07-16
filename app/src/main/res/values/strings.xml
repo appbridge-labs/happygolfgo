@@ -73,4 +73,5 @@
     <string name="lessonlog_toolbar_title">레슨 일지</string>
     <string name="alram_empty_message">알림이 없습니다</string>
     <string name="alram_toolbar_title">알림</string>
+    <string name="calendar_toolbar_title">날짜 선택</string>
 </resources>

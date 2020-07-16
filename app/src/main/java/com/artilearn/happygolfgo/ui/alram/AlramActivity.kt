@@ -1,8 +1,8 @@
 package com.artilearn.happygolfgo.ui.alram
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
@@ -44,7 +44,12 @@ class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram
 
     private fun initViewModelObserve() {
         with(viewModel) {
-
+            serverError.observe(this@AlramActivity, Observer {
+                showToast(ToastType.ERROR, it)
+            })
+            networkFail.observe(this@AlramActivity, Observer {
+                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+            })
         }
     }
 
