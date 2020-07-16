@@ -11,6 +11,7 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.CommonFragmentType
+import com.artilearn.happygolfgo.ui.alram.AlramActivity
 import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
@@ -46,6 +47,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             myPage.observe(this@HomeActivity, Observer {
                 goMyPage()
             })
+            alram.observe(this@HomeActivity, Observer {
+                goAlram()
+            })
         }
     }
 
@@ -56,6 +60,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun goMyPage() {
         startActivity(Intent(this, MyPageActivity::class.java))
+    }
+
+    private fun goAlram() {
+        startActivity(Intent(this, AlramActivity::class.java))
     }
 
     override fun bottomAction() {
