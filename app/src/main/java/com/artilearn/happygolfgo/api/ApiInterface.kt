@@ -67,4 +67,7 @@ interface ApiInterface {
 
     @GET("user/lessonlogs")
     fun getLessonLogs(): Single<Response<LessonLogResponse>>
+
+    @GET("main/user/notifications")
+    fun getAlramMessage()
 }
