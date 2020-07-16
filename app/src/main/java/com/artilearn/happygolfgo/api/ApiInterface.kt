@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.alram.AlramResponse
+import com.artilearn.happygolfgo.data.calendar.CalendarResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
@@ -71,4 +72,14 @@ interface ApiInterface {
 
     @GET("main/user/notifications")
     fun getAlramMessage(): Single<Response<AlramResponse>>
+
+    @GET("reservation/user/plateAvailableDates")
+    fun selectPlateDate(
+        @Query("ticketID") ticketId: Int
+    ): Single<Response<CalendarResponse>>
+
+    @GET("reservation/user/lessonAvailableDates")
+    fun selectLessonDate(
+        @Query("ticketID") ticketId: Int
+    ): Single<Response<CalendarResponse>>
 }
