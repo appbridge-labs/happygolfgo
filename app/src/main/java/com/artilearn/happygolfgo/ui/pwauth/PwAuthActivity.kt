@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.pwauth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.PwAuthNumberType
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
 import kotlinx.android.synthetic.main.activity_pw_auth.*
@@ -20,6 +22,7 @@ import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_auth) {
 
+    private var status = false
     private lateinit var myApplication: MyApplication
     private val viewModel: PwAuthViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -52,6 +55,9 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             authNumber.observe(this@PwAuthActivity, Observer {
                 authType(it)
             })
+            success.observe(this@PwAuthActivity, Observer {
+                status = it
+            })
         }
     }
 
@@ -62,12 +68,6 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             getString(R.string.pwauth_bottom_view),
             BottimViewType.DEFAULT_TYPE
         )
-
-        with(binding) {
-            pwauthBottomView.setOnClickListener {
-
-            }
-        }
     }
 
     private fun phoneType(type: PwAuthPhoneType) {
@@ -92,4 +92,15 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
         }
     }
 
+    private fun goPwReset() {
+        startActivity(Intent(this, PwResetActivity::class.java))
+        finish()
+    }
+
+    override fun bottomAction() {
+        super.bottomAction()
+        if (status) {
+            goPwReset()
+        }
+    }
 }
