@@ -4,6 +4,10 @@ import android.app.Application
 import android.content.Context
 import com.artilearn.happygolfgo.api.ApiInterface
 import com.artilearn.happygolfgo.api.ApiService
+import com.artilearn.happygolfgo.data.alram.source.AlramRepository
+import com.artilearn.happygolfgo.data.alram.source.AlramRepositoryImpl
+import com.artilearn.happygolfgo.data.alram.source.remote.AlramRemoteDataSource
+import com.artilearn.happygolfgo.data.alram.source.remote.AlramRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.data.home.source.HomeRepositoryImpl
 import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSource
@@ -72,6 +76,7 @@ class MyApplication : Application() {
     private lateinit var pwResetRemoteDataSource: PwrestRemoteDataSource
     private lateinit var pwResetLocalDataSource: PwrestLocalDataSource
     private lateinit var lessonLogRemoteDataSource: LessonLogRemoteDataSource
+    private lateinit var alramRemoteDataSource: AlramRemoteDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -82,6 +87,7 @@ class MyApplication : Application() {
     lateinit var pwAuthRepository: PwAuthRepository
     lateinit var pwrestRepository: PwrestRepository
     lateinit var lessonLogRepository: LessonLogRepository
+    lateinit var alramRepository: AlramRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -109,6 +115,7 @@ class MyApplication : Application() {
         pwResetRemoteDataSource = PwrestRemoteDataSourceImpl(apiInterface)
         pwResetLocalDataSource = PwrestLocalDataSourceImpl(preferenceManager)
         lessonLogRemoteDataSource = LessonLogRemoteDataSourceImpl(apiInterface)
+        alramRemoteDataSource = AlramRemoteDataSourceImpl(apiInterface)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
@@ -119,6 +126,7 @@ class MyApplication : Application() {
         pwAuthRepository = PwAuthRepositoryImpl(pwAuthRemoteDataSource, networkManager)
         pwrestRepository = PwrestRepositoryImpl(pwResetRemoteDataSource, pwResetLocalDataSource, networkManager)
         lessonLogRepository = LessonLogRepositoryImpl(lessonLogRemoteDataSource, networkManager)
+        alramRepository = AlramRepositoryImpl(alramRemoteDataSource, networkManager)
     }
 
     init {

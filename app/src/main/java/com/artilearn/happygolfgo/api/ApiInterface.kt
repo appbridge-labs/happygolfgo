@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.api
 
+import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
@@ -69,5 +70,5 @@ interface ApiInterface {
     fun getLessonLogs(): Single<Response<LessonLogResponse>>
 
     @GET("main/user/notifications")
-    fun getAlramMessage()
+    fun getAlramMessage(): Single<Response<AlramResponse>>
 }
