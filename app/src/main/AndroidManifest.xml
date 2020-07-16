@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.lessonlist.LessonListActivity"></activity>
+        <activity android:name=".ui.lessonlist.LessonLogActivity"></activity>
         <activity
             android:name=".ui.pwreset.PwResetActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />

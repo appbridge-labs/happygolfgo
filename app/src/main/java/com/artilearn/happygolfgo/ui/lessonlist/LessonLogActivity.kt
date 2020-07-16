@@ -1,27 +1,26 @@
 package com.artilearn.happygolfgo.ui.lessonlist
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.databinding.ActivityLessonListBinding
+import com.artilearn.happygolfgo.databinding.ActivityLessonLogBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
-import kotlinx.android.synthetic.main.activity_lesson_list.*
+import kotlinx.android.synthetic.main.activity_lesson_log.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
-class LessonListActivity : BaseActivity<ActivityLessonListBinding>(R.layout.activity_lesson_list) {
+class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activity_lesson_log) {
     private val TAG = javaClass.simpleName
 
-    private lateinit var adapter: LessonAdapter
+    private lateinit var adapter: LessonLogAdapter
     private lateinit var myApplication: MyApplication
-    private val viewModel: LessonListViewModel by viewModels {
+    private val viewModel: LessonLogViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return LessonListViewModel(
+                return LessonLogViewModel(
 
                 ) as T
             }
@@ -53,7 +52,7 @@ class LessonListActivity : BaseActivity<ActivityLessonListBinding>(R.layout.acti
     }
 
     private fun initAdapter() {
-        adapter = LessonAdapter { log ->
+        adapter = LessonLogAdapter { log ->
             showToast(ToastType.SUCCESS, "$log")
         }
 

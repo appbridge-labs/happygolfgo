@@ -8,9 +8,9 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.databinding.ItemLessonListBinding
 
-class LessonAdapter(
+class LessonLogAdapter(
     private val itemClick: (LessonLog) -> Unit
-) : RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
+) : RecyclerView.Adapter<LessonLogAdapter.LessonViewHolder>() {
 
     lateinit var binding: ItemLessonListBinding
     private val items: ArrayList<LessonLog> = arrayListOf()

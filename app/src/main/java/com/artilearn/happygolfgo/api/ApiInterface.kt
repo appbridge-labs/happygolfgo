@@ -63,4 +63,7 @@ interface ApiInterface {
     fun changePassword(
         @Body data: HashMap<String, PwrestModel>
     ): Completable
+
+    @GET("user/lessonlogs")
+    fun getLessonLogd()
 }
