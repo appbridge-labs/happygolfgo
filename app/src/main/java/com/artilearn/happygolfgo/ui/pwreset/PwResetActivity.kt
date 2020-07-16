@@ -31,7 +31,7 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return PwResetViewModel(
-
+                    myApplication.pwrestRepository
                 ) as T
             }
         }

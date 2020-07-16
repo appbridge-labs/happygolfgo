@@ -24,6 +24,12 @@ import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepository
 import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepositoryImpl
 import com.artilearn.happygolfgo.data.pwauth.source.remote.PwAuthRemoteDataSource
 import com.artilearn.happygolfgo.data.pwauth.source.remote.PwAuthRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.pwreset.source.PwrestRepository
+import com.artilearn.happygolfgo.data.pwreset.source.PwrestRepositoryImpl
+import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSource
+import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSourceImpl
+import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSource
+import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.splash.source.SplashRepository
 import com.artilearn.happygolfgo.data.splash.source.SplashRepositoryImpl
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
@@ -59,6 +65,8 @@ class MyApplication : Application() {
     private lateinit var myinfoLocalDataSource: MyInfoLocalDataSource
     private lateinit var myinfoRemoteDataSource: MyInfoRemoteDataSource
     private lateinit var pwAuthRemoteDataSource: PwAuthRemoteDataSource
+    private lateinit var pwResetRemoteDataSource: PwrestRemoteDataSource
+    private lateinit var pwResetLocalDataSource: PwrestLocalDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -67,6 +75,7 @@ class MyApplication : Application() {
     lateinit var versionRepository: VersionRepository
     lateinit var myinfoRepository: MyInfoRepository
     lateinit var pwAuthRepository: PwAuthRepository
+    lateinit var pwrestRepository: PwrestRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -91,6 +100,8 @@ class MyApplication : Application() {
         myinfoLocalDataSource = MyInfoLocalDataSourceImpl(preferenceManager)
         myinfoRemoteDataSource = MyInfoRemoteDataSourceImpl(apiInterface)
         pwAuthRemoteDataSource = PwAuthRemoteDataSourceImpl(apiInterface)
+        pwResetRemoteDataSource = PwrestRemoteDataSourceImpl(apiInterface)
+        pwResetLocalDataSource = PwrestLocalDataSourceImpl(preferenceManager)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
@@ -99,6 +110,7 @@ class MyApplication : Application() {
         versionRepository = VersionRepositoryImpl(versionRemoteDataSource, versionLocalDataSource, networkManager)
         myinfoRepository = MyInfoRepositoryImpl(myinfoLocalDataSource, myinfoRemoteDataSource, networkManager)
         pwAuthRepository = PwAuthRepositoryImpl(pwAuthRemoteDataSource, networkManager)
+        pwrestRepository = PwrestRepositoryImpl(pwResetRemoteDataSource, pwResetLocalDataSource, networkManager)
     }
 
     init {
