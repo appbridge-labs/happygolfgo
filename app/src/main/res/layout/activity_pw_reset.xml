@@ -13,6 +13,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_white"
@@ -67,6 +68,7 @@
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/color_line_gray"
                 android:hint="@string/pwreset_pw_hint"
+                android:inputType="textPassword"
                 android:maxLength="15"
                 android:maxLines="1"
                 android:text="@={vm.password}"
@@ -117,13 +119,14 @@
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/color_line_gray"
                 android:hint="@string/pwreset_pw_hint"
+                android:inputType="textPassword"
                 android:maxLength="15"
                 android:maxLines="1"
                 android:text="@={vm.passwordConfirm}"
                 android:textColor="@color/color_black"
                 android:textSize="16dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/iv_pw_confirm_success"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_pw_confirm" />
 
             <ImageView

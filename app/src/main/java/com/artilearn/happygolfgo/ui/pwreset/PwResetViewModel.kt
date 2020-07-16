@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.pwreset
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.pwreset.PwrestModel
@@ -16,6 +17,10 @@ class PwResetViewModel(
     val password = MutableLiveData("")
     val passwordConfirm = MutableLiveData("")
 
+    private val _changeSuccess: MutableLiveData<Unit> = MutableLiveData()
+
+    val changeSuccess: LiveData<Unit> get() = _changeSuccess
+
     private var currentPassword = ""
     private var phoneNumber = ""
 
@@ -25,7 +30,6 @@ class PwResetViewModel(
 
     fun updatePassword() {
         currentPassword = password.value.toString()
-        Log.d(TAG, "updatePassword: $currentPassword")
 
         val dataModel = PwrestModel(phoneNumber, currentPassword)
         val hashMap = hashMapOf<String, PwrestModel>()
@@ -38,9 +42,17 @@ class PwResetViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({
-                    Log.d(TAG, "updatePassword: success")
+                    _changeSuccess.value = Unit
                 }, {
                     Log.d(TAG, "updatePassword: ${it.message}")
+                    when (it.message) {
+                        "Network Error" -> {
+                            _networkFail.value = Unit
+                        }
+                        else -> {
+                            _serverError.value = it.message
+                        }
+                    }
                 })
         )
     }

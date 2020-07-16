@@ -20,8 +20,6 @@ import com.artilearn.happygolfgo.ui.common.ServerErrorFragment
 import com.artilearn.happygolfgo.ui.home.HomeFragment
 import es.dmoral.toasty.Toasty
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 
 abstract class BaseActivity<B: ViewDataBinding>(
@@ -30,7 +28,6 @@ abstract class BaseActivity<B: ViewDataBinding>(
     private val TAG = javaClass.simpleName
 
     protected val compositeDisposable = CompositeDisposable()
-    protected lateinit var disposable: Disposable
     lateinit var binding: B
 
     private var actionBar: Toolbar? = null
@@ -131,7 +128,6 @@ abstract class BaseActivity<B: ViewDataBinding>(
 
     override fun onDestroy() {
         compositeDisposable.clear()
-        disposable.dispose()
         super.onDestroy()
     }
 }

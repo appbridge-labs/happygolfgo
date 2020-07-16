@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
@@ -14,18 +15,23 @@ import com.artilearn.happygolfgo.databinding.ActivityPwResetBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
+import com.artilearn.happygolfgo.util.snackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_pw_reset.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 import java.util.concurrent.TimeUnit
 
+//todo 패스워드 최종확인만 하면됨
 class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_pw_reset) {
     private val TAG = javaClass.simpleName
     private val pattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&]).{8,15}.\$"
-
+    private lateinit var disposable: Disposable
+    private var passwordStatus = false
+    private var confirmStatus = false
     private lateinit var myApplication: MyApplication
     private val viewModel: PwResetViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -52,16 +58,22 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
 
     private fun initViewModelObserve() {
         with(viewModel) {
-
+            networkFail.observe(this@PwResetActivity, Observer {
+                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+            })
+            serverError.observe(this@PwResetActivity, Observer {
+                showToast(ToastType.ERROR, it)
+            })
+            changeSuccess.observe(this@PwResetActivity, Observer {
+                showToast(ToastType.SUCCESS, getString(R.string.pwreset_change_success))
+                finish()
+            })
         }
     }
 
     private fun initView() {
         initToolbar(pwreset_toolbar.toolBar, getString(R.string.pwreset_toolbar_title), true)
         initBottomView(pwreset_bottom_view.bottomLayout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
-
-        rxPassword()
-        rxConfirmPassword()
     }
 
     private fun createPassword(): Observable<String> {
@@ -118,13 +130,15 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 with(it) {
-                    when {
+                    passwordStatus = when {
                         this.matches(pattern.toRegex()) -> {
                             passwordStatus(true)
+                            true
                         }
                         else -> {
                             passwordStatus(false)
                             showErrorPassword()
+                            false
                         }
                     }
                 }
@@ -143,7 +157,9 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
                 with(it) {
                     if (this == binding.etPw.text.toString()) {
                         passwordConfirmStatus(true)
+                        confirmStatus = true
                     } else {
+                        confirmStatus = false
                         passwordConfirmStatus(false)
                         showErrorConfirmPassword()
                     }
@@ -175,5 +191,26 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
         } else {
             View.INVISIBLE
         }
+    }
+
+    override fun bottomAction() {
+        super.bottomAction()
+        if (passwordStatus && confirmStatus) {
+            viewModel.updatePassword()
+        } else {
+            parentLayout.snackbar(getString(R.string.pwreset_please_check_pw))
+            return
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        rxPassword()
+        rxConfirmPassword()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposable.dispose()
     }
 }

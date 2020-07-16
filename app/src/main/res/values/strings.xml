@@ -68,4 +68,6 @@
     <string name="pwreset_input_fail_password">비밀번호를 바르게 입력해 주세요</string>
     <string name="pwreset_unspecial_password">특수문자를 포함할 수 없습니다</string>
     <string name="pwauth_btn_confirm">확인</string>
+    <string name="pwreset_change_success">비밀번호가 변경 되었습니다</string>
+    <string name="pwreset_please_check_pw">비밀번호를 확인해 주세요</string>
 </resources>
