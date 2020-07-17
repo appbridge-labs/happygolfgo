@@ -1,13 +1,16 @@
 package com.artilearn.happygolfgo.ui.common
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
+import com.artilearn.happygolfgo.constants.LAYOUT_ID
 import com.artilearn.happygolfgo.databinding.FragmentNetworkFailBinding
+import com.artilearn.happygolfgo.ui.calendar.CalendarFragment
 import com.artilearn.happygolfgo.ui.home.HomeFragment
 
 class NetworkFailFragment
@@ -40,6 +43,8 @@ class NetworkFailFragment
     private fun initViewModelObserve() {
         with(viewModel) {
             btnRetry.observe(this@NetworkFailFragment, Observer {
+                //showHomeView(layoutId)
+                //showFragmentChange()
                 showHomeView()
             })
         }
@@ -47,6 +52,15 @@ class NetworkFailFragment
 
     private fun showHomeView() {
         val home = HomeFragment.newInstance()
+//        when (type) {
+//            NetworkFailButtonType.HOME -> {
+//                fragment = HomeFragment.newInstance()
+//            }
+//            NetworkFailButtonType.CALENDAR -> {
+//                fragment = CalendarFragment.newInstance()
+//            }
+//        }
+
         activity?.supportFragmentManager!!.beginTransaction()
             .replace(R.id.homeFrameLayout, home)
             .commit()

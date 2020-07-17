@@ -17,7 +17,7 @@
             android:id="@+id/calendarview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="@{vm.calendarLoading ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="@{vm.isCalendarLoading ? View.VISIBLE : View.INVISIBLE}"
             app:abbreviationsBarColor="@color/color_white"
             app:abbreviationsLabelsColor="@color/color_black"
             app:daysLabelsColor="@color/color_black"

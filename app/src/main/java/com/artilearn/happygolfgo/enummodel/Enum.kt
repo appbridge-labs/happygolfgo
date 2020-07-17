@@ -10,7 +10,8 @@ enum class CommonFragmentType {
     NETWORK_FAIL,
     NETWORK_DELAY,
     SERVER_ERROR,
-    HOME
+    HOME,
+    CALENDAR
 }
 
 enum class UploadProfileType {
@@ -41,9 +42,4 @@ enum class PwAuthNumberType {
     AUTH_ERROR,
     NETWORK_FAIL,
     SUCCESS
-}
-
-enum class SelectDateType {
-    PLATE,
-    LESSON
 }

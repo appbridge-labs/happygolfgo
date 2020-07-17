@@ -11,9 +11,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.CommonFragmentType
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.calendar.CalendarFragment
 import com.artilearn.happygolfgo.ui.common.NetworkDelayFragment
 import com.artilearn.happygolfgo.ui.common.NetworkFailFragment
 import com.artilearn.happygolfgo.ui.common.ServerErrorFragment
@@ -36,6 +38,7 @@ abstract class BaseActivity<B: ViewDataBinding>(
     private lateinit var networkFailFragment: NetworkFailFragment
     private lateinit var serverErrorFragment: ServerErrorFragment
     private lateinit var homeFragment: HomeFragment
+    private lateinit var calendarFragment: CalendarFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +82,8 @@ abstract class BaseActivity<B: ViewDataBinding>(
     protected fun showCommonFragment(
         frameLayoutId: Int,
         message: String?,
-        type: CommonFragmentType
+        type: CommonFragmentType,
+        item: Any? = null
     ) {
         when (type) {
             CommonFragmentType.NETWORK_FAIL -> {
@@ -96,6 +100,11 @@ abstract class BaseActivity<B: ViewDataBinding>(
             CommonFragmentType.HOME -> {
                 homeFragment = HomeFragment.newInstance()
                 initFragment(frameLayoutId, homeFragment)
+            }
+            CommonFragmentType.CALENDAR -> {
+                val ticket = item as Ticket
+                calendarFragment = CalendarFragment.newInstance(ticket)
+                initFragment(frameLayoutId, calendarFragment)
             }
         }
     }
