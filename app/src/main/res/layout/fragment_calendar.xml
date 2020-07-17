@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.artilearn.happygolfgo.ui.calendar.CalendarFragmentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.applandeo.materialcalendarview.CalendarView
+            android:id="@+id/calendarview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="@{vm.calendarLoading ? View.VISIBLE : View.INVISIBLE}"
+            app:abbreviationsBarColor="@color/color_white"
+            app:abbreviationsLabelsColor="@color/color_black"
+            app:daysLabelsColor="@color/color_black"
+            app:todayLabelColor="@color/color_dark_green"
+            app:disabledDaysLabelsColor="@color/color_primary"
+            app:eventsEnabled="true"
+            app:headerColor="@color/color_white"
+            app:headerLabelColor="@color/color_black"
+            app:highlightedDaysLabelsColor="#FFFF00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:forwardButtonSrc="@drawable/ic_calendar_forward"
+            app:previousButtonSrc="@drawable/ic_calendar_previous"
+            app:selectionColor="#FF00FF"
+            app:selectionLabelColor="@color/color_dark_red" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
