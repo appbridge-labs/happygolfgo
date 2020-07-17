@@ -73,13 +73,13 @@ interface ApiInterface {
     @GET("main/user/notifications")
     fun getAlramMessage(): Single<Response<AlramResponse>>
 
-    @GET("reservation/user/plateAvailableDates")
+    @GET("reservation/user/plateAvailableDates/{ticketID}")
     fun selectPlateDate(
-        @Query("ticketID") ticketId: Int
+        @Path("ticketID") ticketId: Int
     ): Single<Response<CalendarResponse>>
 
-    @GET("reservation/user/lessonAvailableDates")
+    @GET("reservation/user/lessonAvailableDates/{ticketID}")
     fun selectLessonDate(
-        @Query("ticketID") ticketId: Int
+        @Path("ticketID") ticketId: Int
     ): Single<Response<CalendarResponse>>
 }

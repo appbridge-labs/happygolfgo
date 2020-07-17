@@ -42,3 +42,8 @@ enum class PwAuthNumberType {
     NETWORK_FAIL,
     SUCCESS
 }
+
+enum class SelectDateType {
+    PLATE,
+    LESSON
+}

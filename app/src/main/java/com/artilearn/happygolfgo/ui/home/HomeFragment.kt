@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
+import com.artilearn.happygolfgo.constants.TICKET
+import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.FragmentHomeBinding
 import com.artilearn.happygolfgo.ui.calendar.CalendarActivity
 import com.artilearn.happygolfgo.ui.common.NetworkFailFragment
@@ -60,7 +62,7 @@ class HomeFragment
     private fun initAdapter() {
         adapter = HomeAdapter { ticket ->
             Toast.makeText(activity, "$ticket", Toast.LENGTH_SHORT).show()
-            goCalendar()
+            goCalendar(ticket)
         }
 
         binding.recyclerView.adapter = adapter
@@ -91,8 +93,10 @@ class HomeFragment
             .commit()
     }
 
-    private fun goCalendar() {
-        startActivity(Intent(activity, CalendarActivity::class.java))
+    private fun goCalendar(ticket: Ticket) {
+        val intent = Intent(activity, CalendarActivity::class.java)
+        intent.putExtra(TICKET, ticket)
+        startActivity(intent)
     }
 
 }
