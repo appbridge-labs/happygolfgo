@@ -15,6 +15,7 @@ import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
+import com.artilearn.happygolfgo.data.tickettime.TicketTimeResponse
 import com.artilearn.happygolfgo.data.version.VersionResponse
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -82,4 +83,16 @@ interface ApiInterface {
     fun selectLessonDate(
         @Path("ticketID") ticketId: Int
     ): Single<Response<TicketDateResponse>>
+
+    @GET("reservation/user/plateAvailability")
+    fun selectPlateTime(
+        @Query("startDate") startDate: String,
+        @Query("ticketID") ticketId: Int
+    ): Single<Response<TicketTimeResponse>>
+
+    @GET("reservation/user/lessonAvailability")
+    fun selectLessonTime(
+        @Query("startDate") startDate: String,
+        @Query("ticketID") ticketId: Int
+    ): Single<Response<TicketTimeResponse>>
 }
