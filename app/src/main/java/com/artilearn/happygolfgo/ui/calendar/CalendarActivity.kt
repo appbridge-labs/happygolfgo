@@ -1,8 +1,6 @@
 package com.artilearn.happygolfgo.ui.calendar
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -12,8 +10,6 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityCalendarBinding
-import com.artilearn.happygolfgo.ui.common.ErrorActivity
-import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.activity_calendar.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
@@ -77,7 +73,6 @@ class CalendarActivity : BaseActivity<ActivityCalendarBinding>(R.layout.activity
     private fun initView() {
         ticket = intent.getParcelableExtra(TICKET)
         initToolbar(calendar_toolbar.toolBar, getString(R.string.calendar_toolbar_title), true)
-        //showCommonFragment(R.id.calendarFrameLayout, null, CommonFragmentType.CALENDAR, ticket)
     }
 
 }

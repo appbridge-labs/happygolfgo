@@ -8,7 +8,6 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.artilearn.happygolfgo.ui.home.HomeFragment
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes val layoutId: Int
@@ -20,7 +19,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     //private lateinit var networkDelayFragment: NetworkDelayFragment
     //private lateinit var networkFailFragment: NetworkFailFragment
     //private lateinit var serverErrorFragment: ServerErrorFragment
-    private lateinit var homeFragment: HomeFragment
+    //private lateinit var homeFragment: HomeFragment
     //private lateinit var calendarFragment: CalendarFragment
 
     abstract fun init()

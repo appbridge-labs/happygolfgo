@@ -8,16 +8,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.TICKET
+import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.CommonFragmentType
 import com.artilearn.happygolfgo.ui.alram.AlramActivity
+import com.artilearn.happygolfgo.ui.calendar.CalendarActivity
 import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private val TAG = javaClass.simpleName
 
+    private lateinit var adapter: HomeAdapter
     private lateinit var myApplication: MyApplication
     private val viewModel: HomeViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -35,6 +39,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         inject()
         initViewModelObserve()
         initView()
+        initAdapter()
     }
 
     private fun inject() {
@@ -50,12 +55,26 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             alram.observe(this@HomeActivity, Observer {
                 goAlram()
             })
+            serverError.observe(this@HomeActivity, Observer {
+                showError(it)
+            })
+            networkFail.observe(this@HomeActivity, Observer {
+                showNetworkFail()
+            })
         }
     }
 
     private fun initView() {
         initBottomView(binding.includeBottomView, getString(R.string.home_bottomview_title), BottimViewType.DEFAULT_TYPE)
-        showCommonFragment(R.id.homeFrameLayout, null, CommonFragmentType.HOME)
+        //showCommonFragment(R.id.homeFrameLayout, null, CommonFragmentType.HOME)
+    }
+
+    private fun initAdapter() {
+        adapter = HomeAdapter { ticket ->
+            goCalendar(ticket)
+        }
+
+        binding.recyclerView.adapter = adapter
     }
 
     private fun goMyPage() {
@@ -64,6 +83,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun goAlram() {
         startActivity(Intent(this, AlramActivity::class.java))
+    }
+
+    private fun goCalendar(ticket: Ticket) {
+        val intent = Intent(this, CalendarActivity::class.java)
+        intent.putExtra(TICKET, ticket)
+        startActivity(intent)
     }
 
     override fun bottomAction() {

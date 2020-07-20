@@ -6,11 +6,11 @@
 
     <data>
 
-        <import type="android.view.View" />
+<!--        <import type="android.view.View" />-->
 
-        <variable
-            name="vm"
-            type="com.artilearn.happygolfgo.ui.home.HomeFragmentViewModel" />
+<!--        <variable-->
+<!--            name="vm"-->
+<!--            type="com.artilearn.happygolfgo.ui.home.HomeFragmentViewModel" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+<!--                bind:setTickets="@{vm.tickets}"-->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="0dp"
@@ -41,14 +42,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:setTickets="@{vm.tickets}"
                     tools:itemCount="5"
                     tools:listitem="@layout/item_home_ticket" />
 
+<!--                android:visibility="@{vm.emptyTicket ? View.VISIBLE : View.GONE}"-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:visibility="@{vm.emptyTicket ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -80,12 +80,12 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+<!--        android:visibility="@{vm.isLoading() ? View.VISIBLE : View.INVISIBLE}"-->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:indeterminateTint="@color/color_sub_gray"
-            android:visibility="@{vm.isLoading() ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

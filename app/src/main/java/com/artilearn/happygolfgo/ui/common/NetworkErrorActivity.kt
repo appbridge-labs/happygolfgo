@@ -7,6 +7,7 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.databinding.ActivityNetworkErrorBinding
 
+//todo 버튼클릭 시 애니메이션 및 버튼 색상 바꾸기
 class NetworkErrorActivity : BaseActivity<ActivityNetworkErrorBinding>(R.layout.activity_network_error) {
     private val lastActivityIntent by lazy { intent.getParcelableExtra<Intent>(EXTRA_INTENT) }
 

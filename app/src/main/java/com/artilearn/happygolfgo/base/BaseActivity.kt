@@ -20,7 +20,6 @@ import com.artilearn.happygolfgo.enummodel.CommonFragmentType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.common.ErrorActivity
 import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
-import com.artilearn.happygolfgo.ui.home.HomeFragment
 import es.dmoral.toasty.Toasty
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
@@ -36,11 +35,6 @@ abstract class BaseActivity<B: ViewDataBinding>(
     private var actionBar: Toolbar? = null
     private lateinit var bundle: Bundle
 
-    //private lateinit var networkDelayFragment: NetworkDelayFragment
-    //private lateinit var networkFailFragment: NetworkFailFragment
-    //private lateinit var serverErrorFragment: ServerErrorFragment
-    private lateinit var homeFragment: HomeFragment
-    //private lateinit var calendarFragment: CalendarFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,8 +100,8 @@ abstract class BaseActivity<B: ViewDataBinding>(
                 //initFragment(frameLayoutId, serverErrorFragment)
             }
             CommonFragmentType.HOME -> {
-                homeFragment = HomeFragment.newInstance()
-                initFragment(frameLayoutId, homeFragment)
+                //homeFragment = HomeFragment.newInstance()
+                //initFragment(frameLayoutId, homeFragment)
             }
             CommonFragmentType.CALENDAR -> {
                 val ticket = item as Ticket
@@ -146,9 +140,9 @@ abstract class BaseActivity<B: ViewDataBinding>(
 
     private fun initFragment(frameLayoutId: Int, fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(frameLayoutId, fragment)
-            .commit()
-    }
+    .replace(frameLayoutId, fragment)
+    .commit()
+}
 
     open fun bottomAction() {}
 
