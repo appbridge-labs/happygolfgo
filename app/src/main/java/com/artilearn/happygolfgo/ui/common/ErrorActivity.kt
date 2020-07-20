@@ -11,7 +11,6 @@ import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.databinding.ActivityErrorBinding
 
 class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error) {
-    private val TAG = javaClass.simpleName
 
     private val lastActivityIntent by lazy { intent.getParcelableExtra<Intent>(EXTRA_INTENT) }
     private val errorText by lazy { intent.getStringExtra(EXTRA_ERROR_TEXT) }

@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.calendar
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -14,11 +15,13 @@ import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityCalendarBinding
 import com.artilearn.happygolfgo.ui.common.ErrorActivity
+import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.activity_calendar.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class CalendarActivity : BaseActivity<ActivityCalendarBinding>(R.layout.activity_calendar) {
+    private val TAG = javaClass.simpleName
 
     private var ticket: Ticket? = null
     private lateinit var myApplication: MyApplication
@@ -51,6 +54,7 @@ class CalendarActivity : BaseActivity<ActivityCalendarBinding>(R.layout.activity
         }
 
         initViewModelObserve()
+
     }
 
     private fun initViewModelObserve() {
@@ -59,7 +63,7 @@ class CalendarActivity : BaseActivity<ActivityCalendarBinding>(R.layout.activity
 
             })
             networkFail.observe(this@CalendarActivity, Observer {
-
+                goNetworkError()
             })
             eventDayList.observe(this@CalendarActivity, Observer {
                 binding.calendarview.setEvents(it)
@@ -71,7 +75,6 @@ class CalendarActivity : BaseActivity<ActivityCalendarBinding>(R.layout.activity
                 binding.calendarview.setMaximumDate(it)
             })
         }
-
     }
 
     private fun initView() {
@@ -80,31 +83,13 @@ class CalendarActivity : BaseActivity<ActivityCalendarBinding>(R.layout.activity
         //showCommonFragment(R.id.calendarFrameLayout, null, CommonFragmentType.CALENDAR, ticket)
     }
 
-    private fun test() {
-        val errorActivity = Intent(this@CalendarActivity, ErrorActivity::class.java)
+    private fun goNetworkError() {
+        val networkErrorActivity = Intent(this, NetworkErrorActivity::class.java)
             .apply {
                 putExtra(EXTRA_INTENT, intent)
-                putExtra(EXTRA_ERROR_TEXT, "aaa")
             }
-        startActivity(errorActivity)
+        startActivity(networkErrorActivity)
+        finish()
     }
 
-//    fun showError(type: CommonFragmentType, errorMsg: String?) {
-//        when (type) {
-//            CommonFragmentType.NETWORK_FAIL -> {
-//                val bundle = Bundle()
-//                bundle.putInt("11", 1)
-//                val abc: NetworkFailFragment = NetworkFailFragment.newInstance()
-//                abc.arguments = bundle
-//
-//                //showCommonFragment(R.id.calendarFrameLayout, null, CommonFragmentType.NETWORK_FAIL)
-//            }
-//            CommonFragmentType.SERVER_ERROR -> {
-//                showCommonFragment(R.id.calendarFrameLayout, errorMsg, CommonFragmentType.SERVER_ERROR)
-//            }
-//            else -> {
-//
-//            }
-//        }
-//    }
 }
