@@ -34,6 +34,8 @@
             app:layout_constraintTop_toBottomOf="@id/tickettime_toolbar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="7"
+            tools:listitem="@layout/item_ticket_time"
             android:clipToPadding="false" />
 
         <ProgressBar

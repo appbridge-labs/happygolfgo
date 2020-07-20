@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.ticketdate
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -9,9 +10,11 @@ import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.SELECTION_DATE
 import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityTicketDateBinding
+import com.artilearn.happygolfgo.ui.tickettime.TicketTimeActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
 import kotlinx.android.synthetic.main.activity_ticket_date.*
@@ -21,7 +24,6 @@ import java.util.*
 class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.activity_ticket_date) {
     private val TAG = javaClass.simpleName
 
-    private var eventList: ArrayList<Calendar> = arrayListOf()
     private var ticket: Ticket? = null
     private lateinit var myApplication: MyApplication
     private val viewModel: TicketDateViewModel by viewModels {
@@ -97,7 +99,7 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
                         if (eventDay.isEnabled) {
                             binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
                         } else {
-                            binding.parentLayout.snackbar("else 예약가능\n$date")
+                            goSelectionTime(date, ticket)
                         }
                     }
                 }
@@ -105,8 +107,13 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
         )
     }
 
-
-
-
+    private fun goSelectionTime(date: String, ticket: Ticket?) {
+        val goActivity = Intent(this, TicketTimeActivity::class.java)
+            .apply {
+                putExtra(TICKET, ticket)
+                putExtra(SELECTION_DATE, date)
+            }
+        startActivity(goActivity)
+    }
 
 }

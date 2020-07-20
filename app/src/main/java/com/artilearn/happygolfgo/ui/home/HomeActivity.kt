@@ -70,7 +70,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initAdapter() {
         adapter = HomeAdapter { ticket ->
-            goCalendar(ticket)
+            goSelectionDate(ticket)
         }
 
         binding.recyclerView.adapter = adapter
@@ -84,7 +84,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         startActivity(Intent(this, AlramActivity::class.java))
     }
 
-    private fun goCalendar(ticket: Ticket) {
+    private fun goSelectionDate(ticket: Ticket) {
         val intent = Intent(this, TicketDateActivity::class.java)
         intent.putExtra(TICKET, ticket)
         startActivity(intent)

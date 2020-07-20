@@ -20,3 +20,4 @@ const val APP_STORE_PATH = "http://play.google.com/store/apps/details?id=com.art
 const val TICKET = "TICKET"
 const val EXTRA_INTENT = "EXTRA_INTENT"
 const val EXTRA_ERROR_TEXT = "EXTRA_ERROR_TEXT"
+const val SELECTION_DATE = "SELECTION_DATE"

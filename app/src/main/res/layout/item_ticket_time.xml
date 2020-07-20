@@ -56,5 +56,13 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_ticket_time"
             tools:text="예약가능(레슨) or 잔여 0석(타석)" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
