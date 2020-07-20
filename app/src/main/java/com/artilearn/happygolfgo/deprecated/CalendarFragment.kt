@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.calendar
+package com.artilearn.happygolfgo.deprecated
 
 //import android.app.Activity
 //import android.content.Context

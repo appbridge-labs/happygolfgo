@@ -56,9 +56,6 @@ class CalendarViewModel(
             5 -> { // other
 
             }
-            else -> {
-                Log.d(TAG, "selectDate: ????")
-            }
         }
     }
 

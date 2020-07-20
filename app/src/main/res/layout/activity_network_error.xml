@@ -4,11 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
 
-        <variable
-            name="vm"
-            type="com.artilearn.happygolfgo.ui.common.NetworkErrorViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,8 +66,8 @@
             android:id="@+id/progressBar"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:visibility="@{vm.isLoading() ? View.VISIBLE : View.INVISIBLE}"
             android:indeterminateTint="@color/color_sub_gray"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

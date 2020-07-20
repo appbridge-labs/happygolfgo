@@ -100,6 +100,7 @@ class MyApplication : Application() {
 
         Stetho.initializeWithDefaults(this)
         inject()
+        setCrashHandler()
     }
 
     private fun inject() {
@@ -124,14 +125,19 @@ class MyApplication : Application() {
         alramRemoteDataSource = AlramRemoteDataSourceImpl(apiInterface)
         calendarRemoteDataSource = CalendarRemoteDataSourceImpl(apiInterface)
 
-        loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
-        splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
+        loginRepository =
+            LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
+        splashRepository =
+            SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
         tutorialRepository = TutorialRepositoryImpl(tutorialLocalDataSource)
         homeRepository = HomeRepositoryImpl(homeRemoteDataSource, networkManager)
-        versionRepository = VersionRepositoryImpl(versionRemoteDataSource, versionLocalDataSource, networkManager)
-        myinfoRepository = MyInfoRepositoryImpl(myinfoLocalDataSource, myinfoRemoteDataSource, networkManager)
+        versionRepository =
+            VersionRepositoryImpl(versionRemoteDataSource, versionLocalDataSource, networkManager)
+        myinfoRepository =
+            MyInfoRepositoryImpl(myinfoLocalDataSource, myinfoRemoteDataSource, networkManager)
         pwAuthRepository = PwAuthRepositoryImpl(pwAuthRemoteDataSource, networkManager)
-        pwrestRepository = PwrestRepositoryImpl(pwResetRemoteDataSource, pwResetLocalDataSource, networkManager)
+        pwrestRepository =
+            PwrestRepositoryImpl(pwResetRemoteDataSource, pwResetLocalDataSource, networkManager)
         lessonLogRepository = LessonLogRepositoryImpl(lessonLogRemoteDataSource, networkManager)
         alramRepository = AlramRepositoryImpl(alramRemoteDataSource, networkManager)
         calendarRepository = CalendarRepositoryImpl(calendarRemoteDataSource, networkManager)
@@ -147,6 +153,22 @@ class MyApplication : Application() {
         fun getApplicationContext(): Context {
             return instance!!.applicationContext
         }
+    }
+
+    private fun setCrashHandler() {
+        val defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { _, _ ->
+            // Crashlytics에서 기본 handler를 호출하기 때문에 이중으로 호출되는것을 막기위해 빈 handler로 설정
+        }
+        //Fabric.with(this, Crashlytics())
+        val fabricExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler(
+            HappyGolfUserExceptionHandler(
+                this,
+                defaultExceptionHandler,
+                fabricExceptionHandler
+            )
+        )
     }
 
 }

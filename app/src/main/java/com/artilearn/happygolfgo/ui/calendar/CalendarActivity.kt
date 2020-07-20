@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
-import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityCalendarBinding
@@ -54,16 +52,15 @@ class CalendarActivity : BaseActivity<ActivityCalendarBinding>(R.layout.activity
         }
 
         initViewModelObserve()
-
     }
 
     private fun initViewModelObserve() {
         with(viewModel) {
             serverError.observe(this@CalendarActivity, Observer {
-
+                showError(it)
             })
             networkFail.observe(this@CalendarActivity, Observer {
-                goNetworkError()
+                showNetworkFail()
             })
             eventDayList.observe(this@CalendarActivity, Observer {
                 binding.calendarview.setEvents(it)
@@ -81,15 +78,6 @@ class CalendarActivity : BaseActivity<ActivityCalendarBinding>(R.layout.activity
         ticket = intent.getParcelableExtra(TICKET)
         initToolbar(calendar_toolbar.toolBar, getString(R.string.calendar_toolbar_title), true)
         //showCommonFragment(R.id.calendarFrameLayout, null, CommonFragmentType.CALENDAR, ticket)
-    }
-
-    private fun goNetworkError() {
-        val networkErrorActivity = Intent(this, NetworkErrorActivity::class.java)
-            .apply {
-                putExtra(EXTRA_INTENT, intent)
-            }
-        startActivity(networkErrorActivity)
-        finish()
     }
 
 }

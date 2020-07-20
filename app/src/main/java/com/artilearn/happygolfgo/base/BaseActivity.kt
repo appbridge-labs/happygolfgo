@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -11,10 +12,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
+import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.CommonFragmentType
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.common.ErrorActivity
+import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
 import com.artilearn.happygolfgo.ui.home.HomeFragment
 import es.dmoral.toasty.Toasty
 import io.reactivex.disposables.CompositeDisposable
@@ -118,6 +123,25 @@ abstract class BaseActivity<B: ViewDataBinding>(
             ToastType.ERROR -> Toasty.error(this, message, Toast.LENGTH_SHORT).show()
             ToastType.WARNNING -> Toasty.warning(this, message, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    protected fun showError(errorText: String) {
+        val errorActivity = Intent(this, ErrorActivity::class.java)
+            .apply {
+                putExtra(EXTRA_INTENT, intent)
+                putExtra(EXTRA_ERROR_TEXT, errorText)
+            }
+        startActivity(errorActivity)
+        finish()
+    }
+
+    protected fun showNetworkFail() {
+        val networkFailActivity = Intent(this, NetworkErrorActivity::class.java)
+            .apply {
+                putExtra(EXTRA_INTENT, intent)
+            }
+        startActivity(networkFailActivity)
+        finish()
     }
 
     private fun initFragment(frameLayoutId: Int, fragment: Fragment) {
