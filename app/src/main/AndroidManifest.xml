@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.common.NetworkErrorActivity"></activity>
         <activity android:name=".ui.common.ErrorActivity" />
-        <activity android:name=".ui.calendar.CalendarActivity" />
+        <activity android:name=".ui.ticketdate.TicketDateActivity" />
         <activity android:name=".ui.alram.AlramActivity" />
         <activity android:name=".ui.lessonlog.LessonLogActivity" />
         <activity

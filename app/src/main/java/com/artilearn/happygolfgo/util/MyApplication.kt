@@ -8,10 +8,10 @@ import com.artilearn.happygolfgo.data.alram.source.AlramRepository
 import com.artilearn.happygolfgo.data.alram.source.AlramRepositoryImpl
 import com.artilearn.happygolfgo.data.alram.source.remote.AlramRemoteDataSource
 import com.artilearn.happygolfgo.data.alram.source.remote.AlramRemoteDataSourceImpl
-import com.artilearn.happygolfgo.data.calendar.source.CalendarRepository
-import com.artilearn.happygolfgo.data.calendar.source.CalendarRepositoryImpl
-import com.artilearn.happygolfgo.data.calendar.source.remote.CalendarRemoteDataSource
-import com.artilearn.happygolfgo.data.calendar.source.remote.CalendarRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
+import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepositoryImpl
+import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSource
+import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.data.home.source.HomeRepositoryImpl
 import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSource
@@ -81,7 +81,7 @@ class MyApplication : Application() {
     private lateinit var pwResetLocalDataSource: PwrestLocalDataSource
     private lateinit var lessonLogRemoteDataSource: LessonLogRemoteDataSource
     private lateinit var alramRemoteDataSource: AlramRemoteDataSource
-    private lateinit var calendarRemoteDataSource: CalendarRemoteDataSource
+    private lateinit var ticketDateRemoteDataSource: TicketDateRemoteDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -93,7 +93,7 @@ class MyApplication : Application() {
     lateinit var pwrestRepository: PwrestRepository
     lateinit var lessonLogRepository: LessonLogRepository
     lateinit var alramRepository: AlramRepository
-    lateinit var calendarRepository: CalendarRepository
+    lateinit var ticketDateRepository: TicketDateRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -123,7 +123,7 @@ class MyApplication : Application() {
         pwResetLocalDataSource = PwrestLocalDataSourceImpl(preferenceManager)
         lessonLogRemoteDataSource = LessonLogRemoteDataSourceImpl(apiInterface)
         alramRemoteDataSource = AlramRemoteDataSourceImpl(apiInterface)
-        calendarRemoteDataSource = CalendarRemoteDataSourceImpl(apiInterface)
+        ticketDateRemoteDataSource = TicketDateRemoteDataSourceImpl(apiInterface)
 
         loginRepository =
             LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
@@ -140,7 +140,7 @@ class MyApplication : Application() {
             PwrestRepositoryImpl(pwResetRemoteDataSource, pwResetLocalDataSource, networkManager)
         lessonLogRepository = LessonLogRepositoryImpl(lessonLogRemoteDataSource, networkManager)
         alramRepository = AlramRepositoryImpl(alramRemoteDataSource, networkManager)
-        calendarRepository = CalendarRepositoryImpl(calendarRemoteDataSource, networkManager)
+        ticketDateRepository = TicketDateRepositoryImpl(ticketDateRemoteDataSource, networkManager)
     }
 
     init {

@@ -10,13 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
 import com.artilearn.happygolfgo.constants.EXTRA_INTENT
-import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.enummodel.BottimViewType
-import com.artilearn.happygolfgo.enummodel.CommonFragmentType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.common.ErrorActivity
 import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
@@ -24,7 +21,7 @@ import es.dmoral.toasty.Toasty
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 
-abstract class BaseActivity<B: ViewDataBinding>(
+abstract class BaseActivity<B : ViewDataBinding>(
     @LayoutRes val layoutId: Int
 ) : AppCompatActivity() {
     private val TAG = javaClass.simpleName
@@ -75,50 +72,6 @@ abstract class BaseActivity<B: ViewDataBinding>(
         }
     }
 
-    protected fun showCommonFragment(
-        frameLayoutId: Int,
-        message: String?,
-        type: CommonFragmentType,
-        item: Any? = null
-    ) {
-        bundle = Bundle()
-
-        when (type) {
-            CommonFragmentType.NETWORK_FAIL -> {
-//                val dd = Bundle()
-//                dd.putInt(ACTIVITY_ERROR, 1)
-//                //networkFailFragment = NetworkFailFragment.newInstance()
-//                val abc: NetworkFailFragment = NetworkFailFragment.newInstance()
-//                networkFailFragment = abc
-//                initFragment(frameLayoutId, abc)
-            }
-            CommonFragmentType.NETWORK_DELAY -> {
-
-            }
-            CommonFragmentType.SERVER_ERROR -> {
-                //serverErrorFragment = ServerErrorFragment.newInstance(message)
-                //initFragment(frameLayoutId, serverErrorFragment)
-            }
-            CommonFragmentType.HOME -> {
-                //homeFragment = HomeFragment.newInstance()
-                //initFragment(frameLayoutId, homeFragment)
-            }
-            CommonFragmentType.CALENDAR -> {
-                val ticket = item as Ticket
-                //calendarFragment = CalendarFragment.newInstance(ticket)
-                //initFragment(frameLayoutId, calendarFragment)
-            }
-        }
-    }
-
-    protected fun showToast(type: ToastType, message: String) {
-        when (type) {
-            ToastType.SUCCESS -> Toasty.success(this, message, Toast.LENGTH_SHORT).show()
-            ToastType.ERROR -> Toasty.error(this, message, Toast.LENGTH_SHORT).show()
-            ToastType.WARNNING -> Toasty.warning(this, message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     protected fun showError(errorText: String) {
         val errorActivity = Intent(this, ErrorActivity::class.java)
             .apply {
@@ -138,11 +91,13 @@ abstract class BaseActivity<B: ViewDataBinding>(
         finish()
     }
 
-    private fun initFragment(frameLayoutId: Int, fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-    .replace(frameLayoutId, fragment)
-    .commit()
-}
+    protected fun showToast(type: ToastType, message: String) {
+        when (type) {
+            ToastType.SUCCESS -> Toasty.success(this, message, Toast.LENGTH_SHORT).show()
+            ToastType.ERROR -> Toasty.error(this, message, Toast.LENGTH_SHORT).show()
+            ToastType.WARNNING -> Toasty.warning(this, message, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     open fun bottomAction() {}
 
@@ -160,4 +115,47 @@ abstract class BaseActivity<B: ViewDataBinding>(
         compositeDisposable.clear()
         super.onDestroy()
     }
+
 }
+
+//private fun initFragment(frameLayoutId: Int, fragment: Fragment) {
+//    supportFragmentManager.beginTransaction()
+//        .replace(frameLayoutId, fragment)
+//        .commit()
+//}
+//    protected fun showCommonFragment(
+//        frameLayoutId: Int,
+//        message: String?,
+//        type: CommonFragmentType,
+//        item: Any? = null
+//    ) {
+//        bundle = Bundle()
+//
+//        when (type) {
+//            CommonFragmentType.NETWORK_FAIL -> {
+////                val dd = Bundle()
+////                dd.putInt(ACTIVITY_ERROR, 1)
+////                //networkFailFragment = NetworkFailFragment.newInstance()
+////                val abc: NetworkFailFragment = NetworkFailFragment.newInstance()
+////                networkFailFragment = abc
+////                initFragment(frameLayoutId, abc)
+//            }
+//            CommonFragmentType.NETWORK_DELAY -> {
+//
+//            }
+//            CommonFragmentType.SERVER_ERROR -> {
+//                //serverErrorFragment = ServerErrorFragment.newInstance(message)
+//                //initFragment(frameLayoutId, serverErrorFragment)
+//            }
+//            CommonFragmentType.HOME -> {
+//                //homeFragment = HomeFragment.newInstance()
+//                //initFragment(frameLayoutId, homeFragment)
+//            }
+//            CommonFragmentType.CALENDAR -> {
+//                val ticket = item as Ticket
+//                //calendarFragment = CalendarFragment.newInstance(ticket)
+//                //initFragment(frameLayoutId, calendarFragment)
+//            }
+//        }
+//    }
+

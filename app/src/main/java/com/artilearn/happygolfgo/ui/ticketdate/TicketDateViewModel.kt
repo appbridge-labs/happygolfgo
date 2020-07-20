@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.calendar
+package com.artilearn.happygolfgo.ui.ticketdate
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,17 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import com.applandeo.materialcalendarview.EventDay
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseViewModel
-import com.artilearn.happygolfgo.data.calendar.source.CalendarRepository
+import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
 import com.artilearn.happygolfgo.util.convertCalendar
 import com.artilearn.happygolfgo.util.convertDate
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.io.PrintWriter
-import java.io.StringWriter
 import java.util.*
 
-class CalendarViewModel(
-    private val calendarRepository: CalendarRepository
+class TicketDateViewModel(
+    private val ticketDateRepository: TicketDateRepository
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
 
@@ -34,7 +32,7 @@ class CalendarViewModel(
     private var calendarMin: Calendar? = null
     private var calendarMax: Calendar? = null
     private var eventDays = mutableListOf<EventDay>()
-    private var eventList = arrayListOf<Calendar>()
+    var eventList = arrayListOf<Calendar>()
 
     fun selectDate(type: Int) {
         when (type) {
@@ -62,7 +60,7 @@ class CalendarViewModel(
     private fun selectPlateDate() {
         ticketId?.let {
             compositeDisposable.add(
-                calendarRepository.selectPlateDate(it)
+                ticketDateRepository.selectPlateDate(it)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
@@ -94,7 +92,7 @@ class CalendarViewModel(
     private fun selectLessonDate() {
         ticketId?.let {
             compositeDisposable.add(
-                calendarRepository.selectLessonDate(it)
+                ticketDateRepository.selectLessonDate(it)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }

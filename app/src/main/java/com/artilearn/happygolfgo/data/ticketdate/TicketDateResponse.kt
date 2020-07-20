@@ -1,9 +1,9 @@
-package com.artilearn.happygolfgo.data.calendar
+package com.artilearn.happygolfgo.data.ticketdate
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class CalendarResponse(
+data class TicketDateResponse(
     @SerializedName("statusCode")
     @Expose
     val statusCode: Int,
@@ -14,5 +14,5 @@ data class CalendarResponse(
 
     @SerializedName("Data")
     @Expose
-    val data: CalendarInfo
+    val data: TicketDateInfo
 )

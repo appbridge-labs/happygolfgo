@@ -12,9 +12,8 @@ import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
-import com.artilearn.happygolfgo.enummodel.CommonFragmentType
 import com.artilearn.happygolfgo.ui.alram.AlramActivity
-import com.artilearn.happygolfgo.ui.calendar.CalendarActivity
+import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
 import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
@@ -86,7 +85,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun goCalendar(ticket: Ticket) {
-        val intent = Intent(this, CalendarActivity::class.java)
+        val intent = Intent(this, TicketDateActivity::class.java)
         intent.putExtra(TICKET, ticket)
         startActivity(intent)
     }

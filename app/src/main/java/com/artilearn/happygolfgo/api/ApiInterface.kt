@@ -1,7 +1,7 @@
 package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.alram.AlramResponse
-import com.artilearn.happygolfgo.data.calendar.CalendarResponse
+import com.artilearn.happygolfgo.data.ticketdate.TicketDateResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
@@ -76,10 +76,10 @@ interface ApiInterface {
     @GET("reservation/user/plateAvailableDates/{ticketID}")
     fun selectPlateDate(
         @Path("ticketID") ticketId: Int
-    ): Single<Response<CalendarResponse>>
+    ): Single<Response<TicketDateResponse>>
 
     @GET("reservation/user/lessonAvailableDates/{ticketID}")
     fun selectLessonDate(
         @Path("ticketID") ticketId: Int
-    ): Single<Response<CalendarResponse>>
+    ): Single<Response<TicketDateResponse>>
 }
