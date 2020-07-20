@@ -19,7 +19,8 @@ import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.activity_ticket_time) {
     private val TAG = javaClass.simpleName
-    
+
+    private lateinit var adapter: TicketTimeAdapter
     private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
     private val date by lazy { intent.getStringExtra(SELECTION_DATE) }
 
@@ -36,10 +37,10 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        showToast(ToastType.SUCCESS, "${ticket}\n$date")
         inject()
         initViewModelObserve()
         initView()
+        initAdapter()
     }
 
     private fun inject() {
@@ -62,5 +63,12 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
         initToolbar(tickettime_toolbar.toolBar, getString(R.string.tickettime_toolbar_title), true)
 
         viewModel.selectTime(ticket.type, date, ticket.id)
+    }
+
+    private fun initAdapter() {
+        adapter = TicketTimeAdapter { ticketTime ->
+            showToast(ToastType.WARNNING, "$ticketTime")
+        }
+        binding.recyclerView.adapter = adapter
     }
 }

@@ -1,7 +1,10 @@
 package com.artilearn.happygolfgo.ui.tickettime
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
+import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.data.tickettime.source.TicketTimeRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -10,6 +13,10 @@ class TicketTimeViewModel(
     private val ticketTimeRepository: TicketTimeRepository
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
+
+    private val _ticketTime: MutableLiveData<ArrayList<TicketTime>> = MutableLiveData()
+
+    val ticketTime: LiveData<ArrayList<TicketTime>> get() = _ticketTime
 
     fun selectTime(type: Int, date: String, id: Int) {
         when (type) {
@@ -31,13 +38,10 @@ class TicketTimeViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({ response ->
-                    Log.d(TAG, "selectTicketPlateTime: ${response.message()}")
-                    Log.d(TAG, "selectTicketPlateTime: ${response.headers()}")
-                    Log.d(TAG, "selectTicketPlateTime: ${response.errorBody()}")
-                    Log.d(TAG, "selectTicketPlateTime: ${response.raw()}")
                     val body = response.body()
                     if (response.isSuccessful && body != null) {
                         Log.d(TAG, "selectTicketPlateTime: ${body.data.availableTimes}")
+                        _ticketTime.value = body.data.availableTimes as ArrayList<TicketTime>
                     } else {
                         _serverError.value = response.errorBody().toString()
                     }
@@ -55,7 +59,13 @@ class TicketTimeViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({ response ->
-                    Log.d(TAG, "ticketLesson: ${response.body()}")
+                    val body = response.body()
+                    if (response.isSuccessful && body != null) {
+                        Log.d(TAG, "ticketLesson: ${body.data.availableTimes}")
+                        _ticketTime.value = body.data.availableTimes as ArrayList<TicketTime>
+                    } else {
+                        _serverError.value = response.errorBody().toString()
+                    }
                 }, { t ->
                     Log.d(TAG, "ticketLesson: ${t.message}")
                 })

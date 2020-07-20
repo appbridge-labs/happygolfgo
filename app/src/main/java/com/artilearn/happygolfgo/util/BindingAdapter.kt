@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.Ticket
+import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.ui.alram.AlramAdapter
 import com.artilearn.happygolfgo.ui.home.HomeAdapter
 import com.artilearn.happygolfgo.ui.lessonlog.LessonLogAdapter
+import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
 import kotlin.math.log
 
 @BindingAdapter("setTicketStartDate", "setTicketEndDate")
@@ -74,3 +76,20 @@ fun setAlramBody(tv: TextView, body: String?) {
         tv.text = it
     }
 }
+
+@BindingAdapter("setTicketTime")
+fun RecyclerView.setTicketTimeItem(ticketTime: List<TicketTime>?) {
+    with(adapter as TicketTimeAdapter) {
+        this.clear()
+        ticketTime?.let { setItems(it) }
+    }
+}
+
+@BindingAdapter("setTicketTimeStart", "setTicketTimeEnd")
+fun setTicketTimeDate(tv: TextView, start: String, end: String) {
+    val startTime = convertTime(start).trim().split(":")
+    val endTime = convertTime(end).trim().split(":")
+
+    tv.text = "${startTime[3]}:${startTime[4]}~${endTime[3]}:${endTime[4]}"
+}
+

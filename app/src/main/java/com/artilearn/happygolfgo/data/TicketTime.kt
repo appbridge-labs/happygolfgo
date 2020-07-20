@@ -24,6 +24,10 @@ data class TicketTime(
     @Expose
     val endDate: String,
 
+    @SerializedName("totalCount")
+    @Expose
+    val totalCount: Int,
+
     @SerializedName("availableCount")
     @Expose
     val availableCount: Int
