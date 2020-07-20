@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.common.NetworkErrorActivity"></activity>
+        <activity android:name=".ui.tickettime.TicketTimeActivity"></activity>
+        <activity android:name=".ui.common.NetworkErrorActivity" />
         <activity android:name=".ui.common.ErrorActivity" />
         <activity android:name=".ui.ticketdate.TicketDateActivity" />
         <activity android:name=".ui.alram.AlramActivity" />

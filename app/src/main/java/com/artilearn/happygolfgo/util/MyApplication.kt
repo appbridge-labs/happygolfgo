@@ -48,6 +48,10 @@ import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSource
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.tickettime.source.TicketTimeRepository
+import com.artilearn.happygolfgo.data.tickettime.source.TicketTimeRepositoryImpl
+import com.artilearn.happygolfgo.data.tickettime.source.remote.TicketTimeRemoteDataSource
+import com.artilearn.happygolfgo.data.tickettime.source.remote.TicketTimeRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.tutorial.source.TutorialRepository
 import com.artilearn.happygolfgo.data.tutorial.source.TutorialRepositoryImpl
 import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSource
@@ -82,6 +86,7 @@ class MyApplication : Application() {
     private lateinit var lessonLogRemoteDataSource: LessonLogRemoteDataSource
     private lateinit var alramRemoteDataSource: AlramRemoteDataSource
     private lateinit var ticketDateRemoteDataSource: TicketDateRemoteDataSource
+    private lateinit var ticketTimeRemoteDataSource: TicketTimeRemoteDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -94,6 +99,7 @@ class MyApplication : Application() {
     lateinit var lessonLogRepository: LessonLogRepository
     lateinit var alramRepository: AlramRepository
     lateinit var ticketDateRepository: TicketDateRepository
+    lateinit var ticketTimeRepository: TicketTimeRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -124,23 +130,20 @@ class MyApplication : Application() {
         lessonLogRemoteDataSource = LessonLogRemoteDataSourceImpl(apiInterface)
         alramRemoteDataSource = AlramRemoteDataSourceImpl(apiInterface)
         ticketDateRemoteDataSource = TicketDateRemoteDataSourceImpl(apiInterface)
+        ticketTimeRemoteDataSource = TicketTimeRemoteDataSourceImpl(apiInterface)
 
-        loginRepository =
-            LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
-        splashRepository =
-            SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
+        loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
+        splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
         tutorialRepository = TutorialRepositoryImpl(tutorialLocalDataSource)
         homeRepository = HomeRepositoryImpl(homeRemoteDataSource, networkManager)
-        versionRepository =
-            VersionRepositoryImpl(versionRemoteDataSource, versionLocalDataSource, networkManager)
-        myinfoRepository =
-            MyInfoRepositoryImpl(myinfoLocalDataSource, myinfoRemoteDataSource, networkManager)
+        versionRepository = VersionRepositoryImpl(versionRemoteDataSource, versionLocalDataSource, networkManager)
+        myinfoRepository = MyInfoRepositoryImpl(myinfoLocalDataSource, myinfoRemoteDataSource, networkManager)
         pwAuthRepository = PwAuthRepositoryImpl(pwAuthRemoteDataSource, networkManager)
-        pwrestRepository =
-            PwrestRepositoryImpl(pwResetRemoteDataSource, pwResetLocalDataSource, networkManager)
+        pwrestRepository = PwrestRepositoryImpl(pwResetRemoteDataSource, pwResetLocalDataSource, networkManager)
         lessonLogRepository = LessonLogRepositoryImpl(lessonLogRemoteDataSource, networkManager)
         alramRepository = AlramRepositoryImpl(alramRemoteDataSource, networkManager)
         ticketDateRepository = TicketDateRepositoryImpl(ticketDateRemoteDataSource, networkManager)
+        ticketTimeRepository = TicketTimeRepositoryImpl(ticketTimeRemoteDataSource, networkManager)
     }
 
     init {
