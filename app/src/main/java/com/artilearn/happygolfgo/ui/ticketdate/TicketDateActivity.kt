@@ -78,7 +78,7 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
 
     private fun initView() {
         ticket = intent.getParcelableExtra(TICKET)
-        initToolbar(calendar_toolbar.toolBar, getString(R.string.calendar_toolbar_title), true)
+        initToolbar(calendar_toolbar.toolBar, getString(R.string.ticketdate_toolbar_title), true)
     }
 
     private fun initCalendarListener() {
@@ -92,10 +92,10 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
                         )}"
 
                     if (viewModel.eventList.contains(eventDay.calendar)) {
-                        binding.parentLayout.snackbar("당일 선택 불가\n$date")
+                        binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_ticket))
                     } else {
                         if (eventDay.isEnabled) {
-                            binding.parentLayout.snackbar("else 예약불가\n$date")
+                            binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
                         } else {
                             binding.parentLayout.snackbar("else 예약가능\n$date")
                         }

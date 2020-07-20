@@ -73,5 +73,7 @@
     <string name="lessonlog_toolbar_title">레슨 일지</string>
     <string name="alram_empty_message">알림이 없습니다</string>
     <string name="alram_toolbar_title">알림</string>
-    <string name="calendar_toolbar_title">날짜 선택</string>
+    <string name="ticketdate_toolbar_title">날짜 선택</string>
+    <string name="ticketdate_impossible_ticket">당일 중복 예약이 불가능한 이용권 입니다</string>
+    <string name="ticketdate_impossible_calendar">선택하신 날짜는 예약이 불가능 합니다</string>
 </resources>
