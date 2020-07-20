@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
-        <variable
-            name="vm"
-            type="com.artilearn.happygolfgo.ui.calendar.CalendarFragmentViewModel" />
+<!--        <import type="android.view.View"/>-->
+<!--        <variable-->
+<!--            name="vm"-->
+<!--            type="com.artilearn.happygolfgo.ui.calendar.CalendarFragmentViewModel" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+<!--        android:visibility="@{vm.isCalendarLoading ? View.VISIBLE : View.INVISIBLE}"-->
         <com.applandeo.materialcalendarview.CalendarView
             android:id="@+id/calendarview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="@{vm.isCalendarLoading ? View.VISIBLE : View.INVISIBLE}"
             app:abbreviationsBarColor="@color/color_white"
             app:abbreviationsLabelsColor="@color/color_black"
             app:daysLabelsColor="@color/color_black"
@@ -35,11 +35,11 @@
             app:selectionColor="#FF00FF"
             app:selectionLabelColor="@color/color_dark_red" />
 
+<!--        android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"-->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

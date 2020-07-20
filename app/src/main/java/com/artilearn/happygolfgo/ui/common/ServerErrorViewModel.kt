@@ -1,7 +1,7 @@
-package com.artilearn.happygolfgo.ui.common
+//package com.artilearn.happygolfgo.ui.common
 
-import com.artilearn.happygolfgo.base.BaseViewModel
-
-class ServerErrorViewModel : BaseViewModel() {
-
-}
+//import com.artilearn.happygolfgo.base.BaseViewModel
+//
+//class ServerErrorViewModel : BaseViewModel() {
+//
+//}

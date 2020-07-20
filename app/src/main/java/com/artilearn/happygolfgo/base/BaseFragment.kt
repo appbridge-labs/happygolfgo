@@ -8,10 +8,6 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.artilearn.happygolfgo.ui.calendar.CalendarFragment
-import com.artilearn.happygolfgo.ui.common.NetworkDelayFragment
-import com.artilearn.happygolfgo.ui.common.NetworkFailFragment
-import com.artilearn.happygolfgo.ui.common.ServerErrorFragment
 import com.artilearn.happygolfgo.ui.home.HomeFragment
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
@@ -21,11 +17,11 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     protected lateinit var binding: B
     protected abstract val viewModel: VM
 
-    private lateinit var networkDelayFragment: NetworkDelayFragment
-    private lateinit var networkFailFragment: NetworkFailFragment
-    private lateinit var serverErrorFragment: ServerErrorFragment
+    //private lateinit var networkDelayFragment: NetworkDelayFragment
+    //private lateinit var networkFailFragment: NetworkFailFragment
+    //private lateinit var serverErrorFragment: ServerErrorFragment
     private lateinit var homeFragment: HomeFragment
-    private lateinit var calendarFragment: CalendarFragment
+    //private lateinit var calendarFragment: CalendarFragment
 
     abstract fun init()
 

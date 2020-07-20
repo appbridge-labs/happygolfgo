@@ -15,10 +15,6 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.CommonFragmentType
 import com.artilearn.happygolfgo.enummodel.ToastType
-import com.artilearn.happygolfgo.ui.calendar.CalendarFragment
-import com.artilearn.happygolfgo.ui.common.NetworkDelayFragment
-import com.artilearn.happygolfgo.ui.common.NetworkFailFragment
-import com.artilearn.happygolfgo.ui.common.ServerErrorFragment
 import com.artilearn.happygolfgo.ui.home.HomeFragment
 import es.dmoral.toasty.Toasty
 import io.reactivex.disposables.CompositeDisposable
@@ -33,12 +29,13 @@ abstract class BaseActivity<B: ViewDataBinding>(
     lateinit var binding: B
 
     private var actionBar: Toolbar? = null
+    private lateinit var bundle: Bundle
 
-    private lateinit var networkDelayFragment: NetworkDelayFragment
-    private lateinit var networkFailFragment: NetworkFailFragment
-    private lateinit var serverErrorFragment: ServerErrorFragment
+    //private lateinit var networkDelayFragment: NetworkDelayFragment
+    //private lateinit var networkFailFragment: NetworkFailFragment
+    //private lateinit var serverErrorFragment: ServerErrorFragment
     private lateinit var homeFragment: HomeFragment
-    private lateinit var calendarFragment: CalendarFragment
+    //private lateinit var calendarFragment: CalendarFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,17 +82,23 @@ abstract class BaseActivity<B: ViewDataBinding>(
         type: CommonFragmentType,
         item: Any? = null
     ) {
+        bundle = Bundle()
+
         when (type) {
             CommonFragmentType.NETWORK_FAIL -> {
-                networkFailFragment = NetworkFailFragment.newInstance()
-                initFragment(frameLayoutId, networkFailFragment)
+//                val dd = Bundle()
+//                dd.putInt(ACTIVITY_ERROR, 1)
+//                //networkFailFragment = NetworkFailFragment.newInstance()
+//                val abc: NetworkFailFragment = NetworkFailFragment.newInstance()
+//                networkFailFragment = abc
+//                initFragment(frameLayoutId, abc)
             }
             CommonFragmentType.NETWORK_DELAY -> {
 
             }
             CommonFragmentType.SERVER_ERROR -> {
-                serverErrorFragment = ServerErrorFragment.newInstance(message)
-                initFragment(frameLayoutId, serverErrorFragment)
+                //serverErrorFragment = ServerErrorFragment.newInstance(message)
+                //initFragment(frameLayoutId, serverErrorFragment)
             }
             CommonFragmentType.HOME -> {
                 homeFragment = HomeFragment.newInstance()
@@ -103,8 +106,8 @@ abstract class BaseActivity<B: ViewDataBinding>(
             }
             CommonFragmentType.CALENDAR -> {
                 val ticket = item as Ticket
-                calendarFragment = CalendarFragment.newInstance(ticket)
-                initFragment(frameLayoutId, calendarFragment)
+                //calendarFragment = CalendarFragment.newInstance(ticket)
+                //initFragment(frameLayoutId, calendarFragment)
             }
         }
     }

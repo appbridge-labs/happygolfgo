@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.common
+//package com.artilearn.happygolfgo.ui.common
 
-class NetworkDelayFragment {
-}
+//class NetworkDelayFragment {
+//}

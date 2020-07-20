@@ -13,8 +13,6 @@ import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.FragmentHomeBinding
 import com.artilearn.happygolfgo.ui.calendar.CalendarActivity
-import com.artilearn.happygolfgo.ui.common.NetworkFailFragment
-import com.artilearn.happygolfgo.ui.common.ServerErrorFragment
 import com.artilearn.happygolfgo.util.MyApplication
 
 class HomeFragment
@@ -80,17 +78,17 @@ class HomeFragment
     }
 
     private fun showServerError(msg: String) {
-        val serverError = ServerErrorFragment.newInstance(msg)
-        activity?.supportFragmentManager!!.beginTransaction()
-            .replace(R.id.homeFrameLayout, serverError)
-            .commit()
+//        val serverError = ServerErrorFragment.newInstance(msg)
+//        activity?.supportFragmentManager!!.beginTransaction()
+//            .replace(R.id.homeFrameLayout, serverError)
+//            .commit()
     }
 
     private fun showNetworkFail() {
-        val networkFail = NetworkFailFragment.newInstance()
-        activity?.supportFragmentManager!!.beginTransaction()
-            .replace(R.id.homeFrameLayout, networkFail)
-            .commit()
+//        val networkFail = NetworkFailFragment.newInstance()
+//        activity?.supportFragmentManager!!.beginTransaction()
+//            .replace(R.id.homeFrameLayout, networkFail)
+//            .commit()
     }
 
     private fun goCalendar(ticket: Ticket) {

@@ -20,7 +20,7 @@
     <string name="home_toolbar_text">나의 이용권</string>
     <string name="home_empty_ticket_text">보유하고 있는 이용권이 없습니다.</string>
     <string name="home_bottomview_title">내 예약목록 보기</string>
-    <string name="fragment_server_title">알 수 없는 오류</string>
+    <string name="fragment_server_title">일시적인 오류입니다</string>
     <string name="fragment_network_fail_title">인터넷 연결 실패</string>
     <string name="fragment_network_fail_content">인터넷 연결 상태가 좋지 않습니다.\n 확인 후 다시한번 시도해 주세요.</string>
     <string name="fragment_network_fail_btn_text">다시 시도</string>

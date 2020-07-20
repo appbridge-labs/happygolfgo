@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.calendar.CalendarActivity"></activity>
+        <activity android:name=".ui.common.NetworkErrorActivity"></activity>
+        <activity android:name=".ui.common.ErrorActivity" />
+        <activity android:name=".ui.calendar.CalendarActivity" />
         <activity android:name=".ui.alram.AlramActivity" />
         <activity android:name=".ui.lessonlog.LessonLogActivity" />
         <activity

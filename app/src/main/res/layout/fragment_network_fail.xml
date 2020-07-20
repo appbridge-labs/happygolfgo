@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="android.view.View" />
+<!--        <import type="android.view.View" />-->
 
-        <variable
-            name="vm"
-            type="com.artilearn.happygolfgo.ui.common.NetworkFailViewModel" />
+<!--        <variable-->
+<!--            name="vm"-->
+<!--            type="com.artilearn.happygolfgo.ui.common.NetworkFailViewModel" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,6 +47,7 @@
                 android:textColor="@color/color_black"
                 android:textSize="14dp" />
 
+<!--            android:onClick="@{() -> vm.onRetryClick()}"-->
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -54,7 +55,6 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/bg_btn_retry"
-                android:onClick="@{() -> vm.onRetryClick()}"
                 android:stateListAnimator="@null"
                 android:text="@string/fragment_network_fail_btn_text"
                 android:textColor="@color/color_black"
@@ -64,12 +64,12 @@
                 app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
 
+<!--        android:visibility="@{vm.isLoading() ? View.VISIBLE : View.INVISIBLE}"-->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:indeterminateTint="@color/color_sub_gray"
-            android:visibility="@{vm.isLoading() ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

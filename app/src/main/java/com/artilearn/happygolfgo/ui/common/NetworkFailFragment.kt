@@ -1,68 +1,85 @@
-package com.artilearn.happygolfgo.ui.common
+//package com.artilearn.happygolfgo.ui.common
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.base.BaseFragment
-import com.artilearn.happygolfgo.constants.LAYOUT_ID
-import com.artilearn.happygolfgo.databinding.FragmentNetworkFailBinding
-import com.artilearn.happygolfgo.ui.calendar.CalendarFragment
-import com.artilearn.happygolfgo.ui.home.HomeFragment
-
-class NetworkFailFragment
-    : BaseFragment<FragmentNetworkFailBinding, NetworkFailViewModel>(R.layout.fragment_network_fail) {
-
-    companion object {
-
-        fun newInstance(): NetworkFailFragment {
-            val args = Bundle()
-            val fragment = NetworkFailFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
-
-    override val viewModel: NetworkFailViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return NetworkFailViewModel() as T
-            }
-        }
-    }
-
-    override fun init() {
-        binding.vm = viewModel
-
-        initViewModelObserve()
-    }
-
-    private fun initViewModelObserve() {
-        with(viewModel) {
-            btnRetry.observe(this@NetworkFailFragment, Observer {
-                //showHomeView(layoutId)
-                //showFragmentChange()
-                showHomeView()
-            })
-        }
-    }
-
-    private fun showHomeView() {
-        val home = HomeFragment.newInstance()
-//        when (type) {
-//            NetworkFailButtonType.HOME -> {
-//                fragment = HomeFragment.newInstance()
-//            }
-//            NetworkFailButtonType.CALENDAR -> {
-//                fragment = CalendarFragment.newInstance()
+//import android.app.Activity
+//import android.os.Bundle
+//import android.widget.Toast
+//import androidx.fragment.app.Fragment
+//import androidx.fragment.app.viewModels
+//import androidx.lifecycle.Observer
+//import androidx.lifecycle.ViewModel
+//import androidx.lifecycle.ViewModelProvider
+//import com.artilearn.happygolfgo.R
+//import com.artilearn.happygolfgo.base.BaseFragment
+//import com.artilearn.happygolfgo.constants.LAYOUT_ID
+//import com.artilearn.happygolfgo.databinding.FragmentNetworkFailBinding
+//import com.artilearn.happygolfgo.ui.calendar.CalendarActivity
+//import com.artilearn.happygolfgo.ui.calendar.CalendarFragment
+//import com.artilearn.happygolfgo.ui.home.HomeActivity
+//import com.artilearn.happygolfgo.ui.home.HomeFragment
+//
+//class NetworkFailFragment
+//    : BaseFragment<FragmentNetworkFailBinding, NetworkFailViewModel>(R.layout.fragment_network_fail) {
+//
+//    companion object {
+//
+//        fun newInstance(): NetworkFailFragment {
+////            val args = Bundle()
+////            val fragment = NetworkFailFragment()
+////            fragment.arguments = args
+////            return fragment
+//            return NetworkFailFragment()
+//        }
+//    }
+//
+//    override val viewModel: NetworkFailViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return NetworkFailViewModel() as T
 //            }
 //        }
-
-        activity?.supportFragmentManager!!.beginTransaction()
-            .replace(R.id.homeFrameLayout, home)
-            .commit()
-    }
-}
+//    }
+//
+//    override fun init() {
+//        binding.vm = viewModel
+//        //val activityView = arguments?.getString()
+//
+//        initViewModelObserve()
+//    }
+//
+//    private fun initViewModelObserve() {
+//        with(viewModel) {
+//            btnRetry.observe(this@NetworkFailFragment, Observer {
+//                //showHomeView(layoutId)
+//                //showFragmentChange()
+//                //retryStart()
+//            })
+//        }
+//    }
+//
+//    private fun retryStart(activity: Activity, item: Any?) {
+//        when (activity) {
+//            is HomeActivity -> {
+//                Toast.makeText(activity, "HomeActivity", Toast.LENGTH_SHORT).show()
+//            }
+//            is CalendarActivity -> {
+//                Toast.makeText(activity, "CalendarActivity", Toast.LENGTH_SHORT).show()
+//            }
+//            else -> {
+//                Toast.makeText(activity, "else", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//        //val home = HomeFragment.newInstance()
+////        when (type) {
+////            NetworkFailButtonType.HOME -> {
+////                fragment = HomeFragment.newInstance()
+////            }
+////            NetworkFailButtonType.CALENDAR -> {
+////                fragment = CalendarFragment.newInstance()
+////            }
+////        }
+//
+////        activity?.supportFragmentManager!!.beginTransaction()
+////            .replace(R.id.homeFrameLayout, home)
+////            .commit()
+//    }
+//}
