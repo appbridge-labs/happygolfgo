@@ -95,4 +95,9 @@ interface ApiInterface {
         @Query("startDate") startDate: String,
         @Query("ticketID") ticketId: Int
     ): Single<Response<TicketTimeResponse>>
+
+    @GET("reservation/user/plate/policy")
+    fun requestPolicy(
+
+    )
 }

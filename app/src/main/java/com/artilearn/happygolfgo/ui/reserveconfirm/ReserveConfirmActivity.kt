@@ -91,4 +91,7 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
         return dates
     }
 
+    override fun bottomAction() {
+        super.bottomAction()
+    }
 }
