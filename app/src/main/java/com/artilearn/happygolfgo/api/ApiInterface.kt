@@ -11,6 +11,7 @@ import com.artilearn.happygolfgo.data.myinfo.MyInfoResponse
 import com.artilearn.happygolfgo.data.pwauth.ConfirmAuthModel
 import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
 import com.artilearn.happygolfgo.data.pwreset.PwrestModel
+import com.artilearn.happygolfgo.data.reserveconfirm.PolicyResponse
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
@@ -97,7 +98,5 @@ interface ApiInterface {
     ): Single<Response<TicketTimeResponse>>
 
     @GET("reservation/user/plate/policy")
-    fun requestPolicy(
-
-    )
+    fun requestPolicy(): Single<Response<PolicyResponse>>
 }
