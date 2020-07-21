@@ -39,6 +39,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         initViewModelObserve()
         initView()
         initAdapter()
+        ticketRefresh()
     }
 
     private fun inject() {
@@ -65,7 +66,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initView() {
         initBottomView(binding.includeBottomView, getString(R.string.home_bottomview_title), BottimViewType.DEFAULT_TYPE)
-        //showCommonFragment(R.id.homeFrameLayout, null, CommonFragmentType.HOME)
     }
 
     private fun initAdapter() {
@@ -74,6 +74,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
 
         binding.recyclerView.adapter = adapter
+    }
+
+    private fun ticketRefresh() {
+        with(binding.swipeRefresh) {
+            setOnRefreshListener {
+                viewModel.requestTicket()
+                isRefreshing = false
+            }
+
+            setColorSchemeColors(resources.getColor(R.color.color_dark_green))
+        }
     }
 
     private fun goMyPage() {

@@ -36,7 +36,7 @@ class HomeViewModel(
         _alram.value = Unit
     }
 
-    private fun requestTicket() {
+    fun requestTicket() {
         compositeDisposable.add(
             homeRepository.requestHomeTicket()
                 .subscribeOn(Schedulers.io())

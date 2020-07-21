@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.tickettime.TicketTimeActivity"></activity>
+        <activity android:name=".ui.reserveconfirm.ReserveConfirmActivity"></activity>
+        <activity android:name=".ui.tickettime.TicketTimeActivity" />
         <activity android:name=".ui.common.NetworkErrorActivity" />
         <activity android:name=".ui.common.ErrorActivity" />
         <activity android:name=".ui.ticketdate.TicketDateActivity" />
@@ -52,7 +53,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_appnotifi" />
-
     </application>
 
 </manifest>

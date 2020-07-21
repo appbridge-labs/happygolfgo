@@ -67,7 +67,7 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
 
     private fun initAdapter() {
         adapter = TicketTimeAdapter { ticketTime ->
-            showToast(ToastType.WARNNING, "$ticketTime")
+            showToast(ToastType.SUCCESS, "$ticketTime")
         }
         binding.recyclerView.adapter = adapter
     }

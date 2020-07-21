@@ -15,8 +15,10 @@ class TicketTimeViewModel(
     private val TAG = javaClass.simpleName
 
     private val _ticketTime: MutableLiveData<ArrayList<TicketTime>> = MutableLiveData()
+    private val _emptyTicketTime: MutableLiveData<Boolean> = MutableLiveData()
 
     val ticketTime: LiveData<ArrayList<TicketTime>> get() = _ticketTime
+    val emptyTicketTime: LiveData<Boolean> get() = _emptyTicketTime
 
     fun selectTime(type: Int, date: String, id: Int) {
         when (type) {
@@ -40,13 +42,25 @@ class TicketTimeViewModel(
                 .subscribe({ response ->
                     val body = response.body()
                     if (response.isSuccessful && body != null) {
-                        Log.d(TAG, "selectTicketPlateTime: ${body.data.availableTimes}")
-                        _ticketTime.value = body.data.availableTimes as ArrayList<TicketTime>
+                        if (body.data.availableTimes.isNotEmpty()) {
+                            hideEmptyTicketTimeView()
+                            _ticketTime.value = body.data.availableTimes as ArrayList<TicketTime>
+                        } else {
+                            showEmptyTicketTimeView()
+                        }
                     } else {
                         _serverError.value = response.errorBody().toString()
                     }
                 }, { t ->
                     Log.d(TAG, "ticketPlate: ${t.message}")
+                    when (t.message) {
+                        "Network Error" -> {
+                            _networkFail.value = Unit
+                        }
+                        else -> {
+                            _serverError.value = t.message
+                        }
+                    }
                 })
         )
     }
@@ -61,14 +75,34 @@ class TicketTimeViewModel(
                 .subscribe({ response ->
                     val body = response.body()
                     if (response.isSuccessful && body != null) {
-                        Log.d(TAG, "ticketLesson: ${body.data.availableTimes}")
-                        _ticketTime.value = body.data.availableTimes as ArrayList<TicketTime>
+                        if (body.data.availableTimes.isNotEmpty()) {
+                            hideEmptyTicketTimeView()
+                            _ticketTime.value = body.data.availableTimes as ArrayList<TicketTime>
+                        } else {
+                            showEmptyTicketTimeView()
+                        }
                     } else {
                         _serverError.value = response.errorBody().toString()
                     }
                 }, { t ->
                     Log.d(TAG, "ticketLesson: ${t.message}")
+                    when (t.message) {
+                        "Network Error" -> {
+                            _networkFail.value = Unit
+                        }
+                        else -> {
+                            _serverError.value = t.message
+                        }
+                    }
                 })
         )
+    }
+
+    private fun showEmptyTicketTimeView() {
+        _emptyTicketTime.value = true
+    }
+
+    private fun hideEmptyTicketTimeView() {
+        _emptyTicketTime.value = false
     }
 }

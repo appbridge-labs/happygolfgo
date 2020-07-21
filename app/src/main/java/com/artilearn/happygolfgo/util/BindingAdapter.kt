@@ -1,8 +1,10 @@
 package com.artilearn.happygolfgo.util
 
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.Ticket
@@ -11,7 +13,6 @@ import com.artilearn.happygolfgo.ui.alram.AlramAdapter
 import com.artilearn.happygolfgo.ui.home.HomeAdapter
 import com.artilearn.happygolfgo.ui.lessonlog.LessonLogAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
-import kotlin.math.log
 
 @BindingAdapter("setTicketStartDate", "setTicketEndDate")
 fun ticketDate(tv: TextView, startDate: String, endDate: String) {
@@ -91,5 +92,30 @@ fun setTicketTimeDate(tv: TextView, start: String, end: String) {
     val endTime = convertTime(end).trim().split(":")
 
     tv.text = "${startTime[3]}:${startTime[4]}~${endTime[3]}:${endTime[4]}"
+}
+
+@BindingAdapter("setTicketLessonStatus", "setTicketPlateAllCount")
+fun setTicketTimeTitle(tv: TextView, lessonStauts: Int?, plateAllCount: Int?) {
+    lessonStauts?.let {
+        tv.text = "상태"
+    }
+    plateAllCount?.let {
+        tv.text = "총 ${plateAllCount}석"
+    }
+}
+
+@BindingAdapter("setTicketLessonNowStatus", "setTicketPlateAvailableCount")
+fun setTicketTimeDetail(tv: TextView, lessonStatus: Int?, plateAvailableCount: Int?) {
+    lessonStatus?.let {
+        tv.text = "예약가능"
+        tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_black))
+    }
+
+    plateAvailableCount?.let {
+        if (it != 0) {
+            tv.text = "잔여 ${it}석"
+            tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_black))
+        }
+    }
 }
 
