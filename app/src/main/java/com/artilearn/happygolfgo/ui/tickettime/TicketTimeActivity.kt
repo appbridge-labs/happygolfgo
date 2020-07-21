@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.tickettime
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -8,11 +9,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.SELECTION_DATE
-import com.artilearn.happygolfgo.constants.TICKET
+import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.data.Ticket
+import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityTicketTimeBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.common.ErrorActivity
+import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.activity_ticket_time.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
@@ -67,8 +70,18 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
 
     private fun initAdapter() {
         adapter = TicketTimeAdapter { ticketTime ->
-            showToast(ToastType.SUCCESS, "$ticketTime")
+            goReserConfirm(ticketTime)
         }
         binding.recyclerView.adapter = adapter
+    }
+
+    private fun goReserConfirm(ticketTime: TicketTime) {
+        val confirmIntent = Intent(this, ReserveConfirmActivity::class.java)
+            .apply {
+                putExtra(TICKET, ticket)
+                putExtra(SELECTION_DATE, date)
+                putExtra(TICKET_TIME, ticketTime)
+            }
+        startActivity(confirmIntent)
     }
 }
