@@ -1,9 +1,12 @@
 package com.artilearn.happygolfgo.data
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-class ReservationLesson(
+@Parcelize
+data class ReservationLesson(
     @SerializedName("id")
     @Expose
     val id: Int,
@@ -35,4 +38,4 @@ class ReservationLesson(
     @SerializedName("isUnlimited")
     @Expose
     val isUnlimited: Boolean
-)
+) : Parcelable

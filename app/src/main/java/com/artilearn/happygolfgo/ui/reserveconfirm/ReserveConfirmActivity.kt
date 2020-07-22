@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.reserveconfirm
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -7,13 +8,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.RESERVATION_LESSON
+import com.artilearn.happygolfgo.constants.RESERVATION_PLATE
 import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.constants.TICKET_TIME
+import com.artilearn.happygolfgo.data.ReservationLesson
+import com.artilearn.happygolfgo.data.ReservationPlate
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityReserveConfirmBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.reservesuccess.ReserveSuccessActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.convertTime
 import kotlinx.android.synthetic.main.activity_reserve_confirm.*
@@ -55,12 +61,10 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
                 setPolicy(it)
             })
             plateModel.observe(this@ReserveConfirmActivity, Observer { plateResponse ->
-                showToast(ToastType.SUCCESS, "$plateResponse")
-                // 화면 이동
+                goReserveSuccessPlate(plateResponse)
             })
             lessonModel.observe(this@ReserveConfirmActivity, Observer { lessonResponse ->
-                showToast(ToastType.SUCCESS, "$lessonResponse")
-                // 화면 이동
+                goReserveSuccessLesson(lessonResponse)
             })
             unKnowError.observe(this@ReserveConfirmActivity, Observer {
                 showToast(ToastType.ERROR, getString(R.string.default_error_toast))
@@ -115,6 +119,22 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
 
     private fun setPolicy(policy: String) {
         binding.tvTicketPolicy.text = policy
+    }
+
+    private fun goReserveSuccessPlate(plate: ReservationPlate) {
+        val plateIntent = Intent(this, ReserveSuccessActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_PLATE, plate)
+            }
+        startActivity(plateIntent)
+    }
+
+    private fun goReserveSuccessLesson(lesson: ReservationLesson) {
+        val lessonIntent = Intent(this, ReserveSuccessActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_LESSON, lesson)
+            }
+        startActivity(lessonIntent)
     }
 
     override fun bottomAction() {
