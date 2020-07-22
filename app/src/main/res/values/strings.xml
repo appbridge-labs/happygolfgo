@@ -83,5 +83,6 @@
     <string name="reserve_confirm_ticket_name">예약명</string>
     <string name="reserve_confirm_ticket_date">날짜</string>
     <string name="reserve_confirm_ticket_time">시간</string>
-    <string name="reserve_confirm_policy_title">정책사항</string>
+    <string name="reserve_confirm_policy_title">정책사항</string>는
+    <string name="default_error_toast">알 수 없는 오류 발생</string>
 </resources>

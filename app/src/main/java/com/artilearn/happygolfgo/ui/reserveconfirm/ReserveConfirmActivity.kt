@@ -13,6 +13,7 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityReserveConfirmBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.convertTime
 import kotlinx.android.synthetic.main.activity_reserve_confirm.*
@@ -52,6 +53,23 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
         with(viewModel) {
             policy.observe(this@ReserveConfirmActivity, Observer {
                 setPolicy(it)
+            })
+            plateModel.observe(this@ReserveConfirmActivity, Observer { plateResponse ->
+                showToast(ToastType.SUCCESS, "$plateResponse")
+                // 화면 이동
+            })
+            lessonModel.observe(this@ReserveConfirmActivity, Observer { lessonResponse ->
+                showToast(ToastType.SUCCESS, "$lessonResponse")
+                // 화면 이동
+            })
+            unKnowError.observe(this@ReserveConfirmActivity, Observer {
+                showToast(ToastType.ERROR, getString(R.string.default_error_toast))
+            })
+            networkFail.observe(this@ReserveConfirmActivity, Observer {
+                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+            })
+            serverError.observe(this@ReserveConfirmActivity, Observer { errorMsg ->
+                showToast(ToastType.ERROR, errorMsg)
             })
         }
     }

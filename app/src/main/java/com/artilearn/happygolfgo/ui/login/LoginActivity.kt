@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityLoginBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
@@ -40,13 +41,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun initViewModelObserve() {
         with(viewModel) {
             networkFail.observe(this@LoginActivity, Observer {
-
-            })
-            networkDelay.observe(this@LoginActivity, Observer {
-
+                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
             })
             serverError.observe(this@LoginActivity, Observer {
-
+                showToast(ToastType.ERROR, it)
             })
             emptyPhone.observe(this@LoginActivity, Observer {
                 showEmptyPhone()
