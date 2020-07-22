@@ -22,9 +22,26 @@ fun ticketDate(tv: TextView, startDate: String, endDate: String) {
     tv.text = "${startTime[1]}.${startTime[2]}~${endTime[1]}.${endTime[2]}"
 }
 
-@BindingAdapter("setTicketTotalCount", "setTicketRemainingCount")
-fun ticketCount(tv: TextView, total: Int, remaining: Int) {
-    tv.text = "${total}회 중 ${remaining}회 남음"
+@BindingAdapter(
+    "setTicketTotalCount",
+    "setTicketRemainingCount",
+    "setTicketIsUnLimited",
+    "setTicketOnlyOnceToday"
+)
+fun ticketCount(
+    tv: TextView,
+    total: Int,
+    remaining: Int,
+    isUnlimited: Boolean,
+    onceToday: Boolean
+) {
+    if (isUnlimited && onceToday) {
+        tv.text = "1일 1회 무제한 사용"
+    } else if (isUnlimited && !onceToday) {
+        tv.text = "무제한 사용"
+    } else {
+        tv.text = "${total}회 중 ${remaining}회 남음"
+    }
 }
 
 @BindingAdapter("setTickets")

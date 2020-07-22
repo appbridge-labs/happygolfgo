@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="ticket"
             type="com.artilearn.happygolfgo.data.Ticket" />
@@ -14,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/bg_ticket_card_view">
 
         <TextView
@@ -24,10 +25,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:text="@{ticket.name}"
             android:textColor="@color/color_black"
             android:textSize="16dp"
             android:textStyle="bold"
-            android:text="@{ticket.name}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="ticket name" />
@@ -42,10 +43,10 @@
             android:textColor="@color/color_black"
             android:textSize="32dp"
             android:textStyle="normal"
-            bind:setTicketStartDate="@{ticket.startDate}"
-            bind:setTicketEndDate="@{ticket.endDate}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_ticket_name"
+            bind:setTicketEndDate="@{ticket.endDate}"
+            bind:setTicketStartDate="@{ticket.startDate}"
             tools:text="00.00~00.00" />
 
         <TextView
@@ -57,11 +58,13 @@
             android:layout_marginBottom="19dp"
             android:textColor="@color/color_black"
             android:textSize="16dp"
-            bind:setTicketTotalCount="@{ticket.totalCount}"
-            bind:setTicketRemainingCount="@{ticket.remainingCount}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_ticket_date"
+            bind:setTicketIsUnLimited="@{ticket.unlimited}"
+            bind:setTicketOnlyOnceToday="@{ticket.onlyOnceToday}"
+            bind:setTicketRemainingCount="@{ticket.remainingCount}"
+            bind:setTicketTotalCount="@{ticket.totalCount}"
             tools:text="00회 중 0회 남음" />
 
         <ImageButton
