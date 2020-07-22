@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.reservesuccess.ReserveSuccessActivity"></activity>
+        <activity android:name=".ui.reservelist.ReserveListActivity"></activity>
+        <activity android:name=".ui.reservesuccess.ReserveSuccessActivity" />
         <activity android:name=".ui.reserveconfirm.ReserveConfirmActivity" />
         <activity android:name=".ui.tickettime.TicketTimeActivity" />
         <activity android:name=".ui.common.NetworkErrorActivity" />
