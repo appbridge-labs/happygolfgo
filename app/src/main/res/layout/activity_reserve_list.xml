@@ -27,9 +27,9 @@
             android:id="@+id/reserve_list_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextAppearance="@style/MyReservationTabView"
             app:tabIndicatorColor="@color/color_green"
             app:tabSelectedTextColor="@color/color_black"
+            app:tabTextAppearance="@style/MyReservationTabView"
             app:tabTextColor="@color/color_lucky_gray">
 
             <com.google.android.material.tabs.TabItem
@@ -44,6 +44,7 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

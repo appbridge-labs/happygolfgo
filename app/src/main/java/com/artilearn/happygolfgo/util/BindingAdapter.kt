@@ -136,3 +136,8 @@ fun setTicketTimeDetail(tv: TextView, lessonStatus: Int?, plateAvailableCount: I
     }
 }
 
+@BindingAdapter("test")
+fun test(tv:TextView, name: String) {
+    tv.text = name
+}
+

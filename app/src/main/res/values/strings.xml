@@ -89,4 +89,7 @@
     <string name="reserve_success_bottom_title">확인</string>
     <string name="reserve_list_plate_title">타석 예약</string>
     <string name="reserve_list_lesson_title">개인 레슨</string>
+    <string name="reserve_list_toolbar_title">내 예약목록</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
