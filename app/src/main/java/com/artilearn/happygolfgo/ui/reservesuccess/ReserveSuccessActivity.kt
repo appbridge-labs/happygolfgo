@@ -52,7 +52,11 @@ class ReserveSuccessActivity :
     }
 
     private fun convertToTitle(name: String, allCount: Int, count: Int): String {
-        return "$name ( ${allCount}회 중 ${count}남음 )"
+        return if (allCount != 0) {
+            "$name ( ${allCount}회 중 ${count}남음 )"
+        } else {
+            "$name ( 무제한 사용권 )"
+        }
     }
 
     private fun convertToTime(start: String, end: String): String {
