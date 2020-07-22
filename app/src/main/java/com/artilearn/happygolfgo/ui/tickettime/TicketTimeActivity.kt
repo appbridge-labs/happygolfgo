@@ -79,7 +79,6 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
         val confirmIntent = Intent(this, ReserveConfirmActivity::class.java)
             .apply {
                 putExtra(TICKET, ticket)
-                putExtra(SELECTION_DATE, date)
                 putExtra(TICKET_TIME, ticketTime)
             }
         startActivity(confirmIntent)

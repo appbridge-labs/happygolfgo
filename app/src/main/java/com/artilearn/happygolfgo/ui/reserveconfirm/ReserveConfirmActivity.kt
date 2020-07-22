@@ -1,23 +1,19 @@
 package com.artilearn.happygolfgo.ui.reserveconfirm
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.SELECTION_DATE
 import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.constants.TICKET_TIME
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityReserveConfirmBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
-import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
-import com.artilearn.happygolfgo.util.convertDate
 import com.artilearn.happygolfgo.util.convertTime
 import kotlinx.android.synthetic.main.activity_reserve_confirm.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
@@ -26,8 +22,6 @@ import kotlinx.android.synthetic.main.custom_toolbar.view.*
 class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.layout.activity_reserve_confirm) {
     private val TAG = javaClass.simpleName
 
-
-    private val date by lazy { intent.getStringExtra(SELECTION_DATE) }
     private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
     private val ticketTime by lazy { intent.getParcelableExtra<TicketTime>(TICKET_TIME) }
     private lateinit var myApplication: MyApplication
@@ -35,7 +29,7 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return ReserveConfirmViewModel(
-
+                    myApplication.reserveConfirmRepository
                 ) as T
             }
         }
@@ -55,7 +49,9 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
 
     private fun initViewModelObserve() {
         with(viewModel) {
-
+            policy.observe(this@ReserveConfirmActivity, Observer {
+                setPolicy(it)
+            })
         }
     }
 
@@ -71,6 +67,11 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
             tvTicketTime.text = datesList[1]
         }
 
+        if (ticketTime.plateAvailabilityId != null) {
+            viewModel.requestPolicy()
+        } else {
+            binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
+        }
 
     }
 
@@ -89,6 +90,10 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
         }
 
         return dates
+    }
+
+    private fun setPolicy(policy: String) {
+        binding.tvTicketPolicy.text = policy
     }
 
     override fun bottomAction() {

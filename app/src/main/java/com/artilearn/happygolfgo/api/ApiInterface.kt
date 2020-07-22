@@ -1,7 +1,6 @@
 package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.alram.AlramResponse
-import com.artilearn.happygolfgo.data.ticketdate.TicketDateResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
@@ -11,11 +10,12 @@ import com.artilearn.happygolfgo.data.myinfo.MyInfoResponse
 import com.artilearn.happygolfgo.data.pwauth.ConfirmAuthModel
 import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
 import com.artilearn.happygolfgo.data.pwreset.PwrestModel
-import com.artilearn.happygolfgo.data.reserveconfirm.PolicyResponse
+import com.artilearn.happygolfgo.data.reserveconfirm.*
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
+import com.artilearn.happygolfgo.data.ticketdate.TicketDateResponse
 import com.artilearn.happygolfgo.data.tickettime.TicketTimeResponse
 import com.artilearn.happygolfgo.data.version.VersionResponse
 import io.reactivex.Completable
@@ -99,4 +99,15 @@ interface ApiInterface {
 
     @GET("reservation/user/plate/policy")
     fun requestPolicy(): Single<Response<PolicyResponse>>
+
+    @POST("reservation/user/plate")
+    fun reservationPlate(
+        @Body data: HashMap<String, ReservePlateModel>
+    ): Single<Response<ReservePlateResponse>>
+
+    @POST("reservation/user/lessonReservation")
+    fun reservationLessn(
+        @Body data: HashMap<String, ReserveLessonModel>
+    ): Single<Response<ReserveLessonResponse>>
+
 }

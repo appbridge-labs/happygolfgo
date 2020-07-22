@@ -42,13 +42,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="17dp"
-                android:text="예약명"
+                android:text="@string/reserve_confirm_ticket_name"
                 android:textColor="@color/color_black"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_ticketName"
+                android:id="@+id/tv_ticket_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -80,13 +80,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="17dp"
-                android:text="날짜"
+                android:text="@string/reserve_confirm_ticket_date"
                 android:textColor="@color/color_black"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_ticketDate"
+                android:id="@+id/tv_ticket_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="17dp"
-                android:text="시간"
+                android:text="@string/reserve_confirm_ticket_time"
                 android:textColor="@color/color_black"
                 android:textSize="16dp"
                 android:textStyle="bold" />
@@ -140,6 +140,16 @@
             app:layout_constraintTop_toBottomOf="@id/ticketTimeLayout">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reserve_confirm_policy_title"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/color_black"
+                android:layout_marginStart="20dp" />
+
+            <TextView
+                android:id="@+id/tv_ticket_policy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"

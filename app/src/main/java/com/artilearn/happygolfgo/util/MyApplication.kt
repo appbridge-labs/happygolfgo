@@ -42,6 +42,10 @@ import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSource
 import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSource
 import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
+import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepositoryImpl
+import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReserveConfirmRemoteDataSource
+import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReserveConfirmRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.splash.source.SplashRepository
 import com.artilearn.happygolfgo.data.splash.source.SplashRepositoryImpl
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
@@ -89,6 +93,7 @@ class MyApplication : Application() {
     private lateinit var alramRemoteDataSource: AlramRemoteDataSource
     private lateinit var ticketDateRemoteDataSource: TicketDateRemoteDataSource
     private lateinit var ticketTimeRemoteDataSource: TicketTimeRemoteDataSource
+    private lateinit var reserveConfirmRemoteDataSource: ReserveConfirmRemoteDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -102,6 +107,7 @@ class MyApplication : Application() {
     lateinit var alramRepository: AlramRepository
     lateinit var ticketDateRepository: TicketDateRepository
     lateinit var ticketTimeRepository: TicketTimeRepository
+    lateinit var reserveConfirmRepository: ReserveConfirmRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -133,6 +139,7 @@ class MyApplication : Application() {
         alramRemoteDataSource = AlramRemoteDataSourceImpl(apiInterface)
         ticketDateRemoteDataSource = TicketDateRemoteDataSourceImpl(apiInterface)
         ticketTimeRemoteDataSource = TicketTimeRemoteDataSourceImpl(apiInterface)
+        reserveConfirmRemoteDataSource = ReserveConfirmRemoteDataSourceImpl(apiInterface)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
@@ -146,6 +153,7 @@ class MyApplication : Application() {
         alramRepository = AlramRepositoryImpl(alramRemoteDataSource, networkManager)
         ticketDateRepository = TicketDateRepositoryImpl(ticketDateRemoteDataSource, networkManager)
         ticketTimeRepository = TicketTimeRepositoryImpl(ticketTimeRemoteDataSource, networkManager)
+        reserveConfirmRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, networkManager)
     }
 
     init {
