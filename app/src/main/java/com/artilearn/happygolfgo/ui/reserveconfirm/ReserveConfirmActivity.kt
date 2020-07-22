@@ -29,7 +29,8 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return ReserveConfirmViewModel(
-                    myApplication.reserveConfirmRepository
+                    myApplication.reserveConfirmRepository,
+                    myApplication.reservationRepository
                 ) as T
             }
         }
@@ -69,10 +70,12 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
 
         if (ticketTime.plateAvailabilityId != null) {
             viewModel.requestPolicy()
+            viewModel.plateAvailabilityId = ticketTime.plateAvailabilityId
         } else {
             binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
+            viewModel.lessonAvailabilityId = ticketTime.lessonAvailabilityId
         }
-
+        viewModel.ticketId = ticket.id
     }
 
     private fun setTimeDate(ticketTime: TicketTime): List<String> {
@@ -98,5 +101,10 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
 
     override fun bottomAction() {
         super.bottomAction()
+        if (ticketTime.plateAvailabilityId != null) {
+            viewModel.reservationPlate()
+        } else {
+            viewModel.reservationLesson()
+        }
     }
 }
