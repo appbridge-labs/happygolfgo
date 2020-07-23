@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.ui.reserveconfirm
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -82,32 +81,45 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
 
         when (confirmType) {
             "reservation" -> {
-                initBottomView(reserve_confirm_bottomView.bottomLayout, getString(R.string.reserve_confirm_bottom_title), BottimViewType.DEFAULT_TYPE)
-                datesList = setTimeDate(ticketTime.startDate, ticketTime.endDate)
-                with(binding) {
-                    tvTicketName.text = ticket.name
-                    tvTicketDate.text = datesList[0]
-                    tvTicketTime.text = datesList[1]
-                }
+                reservationView()
+            }
+            "cancel_lesson" -> {
+                cancelView()
+                binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
+            }
+            "cancel_plate" -> {
+                viewModel.requestPolicy()
+                cancelView()
+            }
+        }
+    }
 
-                if (ticketTime.plateAvailabilityId != null) {
-                    viewModel.requestPolicy()
-                    viewModel.plateAvailabilityId = ticketTime.plateAvailabilityId
-                } else {
-                    binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
-                    viewModel.lessonAvailabilityId = ticketTime.lessonAvailabilityId
-                }
-                viewModel.ticketId = ticket.id
-            }
-            "cancel" -> {
-                initBottomView(reserve_confirm_bottomView.bottomLayout, getString(R.string.reserve_confirm_cancel_bottom_title), BottimViewType.CANCEL_TYPE)
-                datesList = setTimeDate(reservation.startDate, reservation.endDate)
-                with(binding) {
-                    tvTicketName.text = reservation.name
-                    tvTicketDate.text = datesList[0]
-                    tvTicketTime.text = datesList[1]
-                }
-            }
+    private fun reservationView() {
+        initBottomView(reserve_confirm_bottomView.bottomLayout, getString(R.string.reserve_confirm_bottom_title), BottimViewType.DEFAULT_TYPE)
+        datesList = setTimeDate(ticketTime.startDate, ticketTime.endDate)
+        with(binding) {
+            tvTicketName.text = ticket.name
+            tvTicketDate.text = datesList[0]
+            tvTicketTime.text = datesList[1]
+        }
+
+        if (ticketTime.plateAvailabilityId != null) {
+            viewModel.requestPolicy()
+            viewModel.plateAvailabilityId = ticketTime.plateAvailabilityId
+        } else {
+            binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
+            viewModel.lessonAvailabilityId = ticketTime.lessonAvailabilityId
+        }
+        viewModel.ticketId = ticket.id
+    }
+
+    private fun cancelView() {
+        initBottomView(reserve_confirm_bottomView.bottomLayout, getString(R.string.reserve_confirm_cancel_bottom_title), BottimViewType.CANCEL_TYPE)
+        datesList = setTimeDate(reservation.startDate, reservation.endDate)
+        with(binding) {
+            tvTicketName.text = reservation.name
+            tvTicketDate.text = datesList[0]
+            tvTicketTime.text = datesList[1]
         }
     }
 
@@ -127,23 +139,6 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
 
         return dates
     }
-
-//    private fun setTimeDate(ticketTime: TicketTime): List<String> {
-//        val dates = mutableListOf<String>()
-//
-//        try {
-//            val nowDate = convertTime(ticketTime.startDate).trim().split(":")
-//            val nowTime = convertTime(ticketTime.endDate).trim().split(":")
-//
-//            dates.add("${nowDate[0]}. ${nowDate[1]}. ${nowDate[2]}")
-//            dates.add("${nowDate[3]}:${nowDate[4]} ~ ${nowTime[3]}:${nowTime[4]}")
-//
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//
-//        return dates
-//    }
 
     private fun setPolicy(policy: String) {
         binding.tvTicketPolicy.text = policy

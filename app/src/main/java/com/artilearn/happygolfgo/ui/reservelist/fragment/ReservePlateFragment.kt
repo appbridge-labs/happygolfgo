@@ -23,7 +23,7 @@ class ReservePlateFragment
     private val TAG = javaClass.simpleName
 
     private lateinit var adapter: ReserveListAdapter
-    private val cancel = "cancel"
+    private val cancel = "cancel_plate"
 
     companion object {
 
