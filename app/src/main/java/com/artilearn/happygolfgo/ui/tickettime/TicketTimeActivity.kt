@@ -13,8 +13,6 @@ import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityTicketTimeBinding
-import com.artilearn.happygolfgo.enummodel.ToastType
-import com.artilearn.happygolfgo.ui.common.ErrorActivity
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.activity_ticket_time.*
@@ -26,6 +24,7 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
     private lateinit var adapter: TicketTimeAdapter
     private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
     private val date by lazy { intent.getStringExtra(SELECTION_DATE) }
+    private val reservation = "reservation"
 
     private lateinit var myApplication: MyApplication
     private val viewModel: TicketTimeViewModel by viewModels {
@@ -70,17 +69,19 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
 
     private fun initAdapter() {
         adapter = TicketTimeAdapter { ticketTime ->
-            goReserConfirm(ticketTime)
+            goReserveConfirm(ticketTime)
         }
         binding.recyclerView.adapter = adapter
     }
 
-    private fun goReserConfirm(ticketTime: TicketTime) {
+    private fun goReserveConfirm(ticketTime: TicketTime) {
         val confirmIntent = Intent(this, ReserveConfirmActivity::class.java)
             .apply {
                 putExtra(TICKET, ticket)
                 putExtra(TICKET_TIME, ticketTime)
+                putExtra(CONFIRM_TYPE, reservation)
             }
         startActivity(confirmIntent)
     }
+
 }

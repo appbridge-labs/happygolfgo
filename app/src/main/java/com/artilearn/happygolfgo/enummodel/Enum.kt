@@ -6,14 +6,6 @@ enum class BottimViewType {
     CANCEL_TYPE
 }
 
-enum class CommonFragmentType {
-    NETWORK_FAIL,
-    NETWORK_DELAY,
-    SERVER_ERROR,
-    HOME,
-    CALENDAR
-}
-
 enum class UploadProfileType {
     NETWORK_FAIL,
     UNKNOW_ERROR,

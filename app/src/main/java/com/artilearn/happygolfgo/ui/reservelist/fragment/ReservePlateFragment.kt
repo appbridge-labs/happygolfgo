@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.reservelist.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,9 +12,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
-import com.artilearn.happygolfgo.constants.RESERVATION_LIST
+import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.data.ReserveList
 import com.artilearn.happygolfgo.databinding.FragmentReservePlateBinding
+import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import kotlin.concurrent.fixedRateTimer
 
 class ReservePlateFragment
@@ -21,6 +23,7 @@ class ReservePlateFragment
     private val TAG = javaClass.simpleName
 
     private lateinit var adapter: ReserveListAdapter
+    private val cancel = "cancel"
 
     companion object {
 
@@ -52,8 +55,8 @@ class ReservePlateFragment
     }
 
     private fun initAdapter() {
-        adapter = ReserveListAdapter { reservationItem ->
-            Toast.makeText(activity, "$reservationItem", Toast.LENGTH_SHORT).show()
+        adapter = ReserveListAdapter { plateItem ->
+            goReservationConfirm(plateItem)
         }
 
         binding.recyclerView.adapter = adapter
@@ -64,5 +67,14 @@ class ReservePlateFragment
             clear()
             setItems(item)
         }
+    }
+
+    private fun goReservationConfirm(item: ReserveList) {
+        val confirmIntent = Intent(activity, ReserveConfirmActivity::class.java)
+            .apply {
+                putExtra(RESERVATION, item)
+                putExtra(CONFIRM_TYPE, cancel)
+            }
+        startActivity(confirmIntent)
     }
 }
