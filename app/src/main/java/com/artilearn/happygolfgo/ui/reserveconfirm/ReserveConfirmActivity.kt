@@ -34,7 +34,8 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return ReserveConfirmViewModel(
                     myApplication.reserveConfirmRepository,
-                    myApplication.reservationRepository
+                    myApplication.reservationRepository,
+                    myApplication.cancelRepository
                 ) as T
             }
         }

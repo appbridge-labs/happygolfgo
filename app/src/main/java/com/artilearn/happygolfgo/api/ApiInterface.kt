@@ -113,4 +113,15 @@ interface ApiInterface {
 
     @GET("reservation/user/myReservations")
     fun reservationList(): Single<Response<ReserveListResponse>>
+
+    @DELETE("reservation/user/lessonReservation/{lessonReservationID}")
+    fun reservationLessonCancel(
+        @Path("lessonReservationID") lessonId: Int
+    ): Completable
+
+    @DELETE("reservation/user/plateReservation/{plateReservationID}")
+    fun reservationPlateCancel(
+        @Path("plateReservationID") plateId: Int
+    ): Completable
+
 }

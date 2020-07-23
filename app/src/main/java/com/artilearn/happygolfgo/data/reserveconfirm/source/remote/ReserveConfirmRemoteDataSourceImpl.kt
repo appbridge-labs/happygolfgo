@@ -2,12 +2,13 @@ package com.artilearn.happygolfgo.data.reserveconfirm.source.remote
 
 import com.artilearn.happygolfgo.api.ApiInterface
 import com.artilearn.happygolfgo.data.reserveconfirm.*
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response
 
 class ReserveConfirmRemoteDataSourceImpl(
     private val apiInterface: ApiInterface
-) : ReserveConfirmRemoteDataSource, ReservationRemoteDataSource {
+) : ReserveConfirmRemoteDataSource, ReservationRemoteDataSource, CancelRemoteDataSource {
 
     override fun remoteRequestPolicy(): Single<Response<PolicyResponse>> {
         return apiInterface.requestPolicy()
@@ -32,5 +33,13 @@ class ReserveConfirmRemoteDataSourceImpl(
             .map {
                 it
             }
+    }
+
+    override fun remoteReservationPlateCancel(plateId: Int): Completable {
+        return apiInterface.reservationPlateCancel(plateId)
+    }
+
+    override fun remoteReservationLessonCancel(lessonId: Int): Completable {
+        return apiInterface.reservationLessonCancel(lessonId)
     }
 }

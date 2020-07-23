@@ -42,9 +42,11 @@ import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSource
 import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSource
 import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.reserveconfirm.source.CancelRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepositoryImpl
+import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.CancelRemoteDataSource
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReservationRemoteDataSource
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReserveConfirmRemoteDataSource
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReserveConfirmRemoteDataSourceImpl
@@ -102,6 +104,7 @@ class MyApplication : Application() {
     private lateinit var reserveConfirmRemoteDataSource: ReserveConfirmRemoteDataSource
     private lateinit var reservationRemoteDataSource: ReservationRemoteDataSource
     private lateinit var reserveListRemoteDataSource: ReserveListRemoteDataSource
+    private lateinit var cancelRemoteDataSource: CancelRemoteDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -118,6 +121,7 @@ class MyApplication : Application() {
     lateinit var reserveConfirmRepository: ReserveConfirmRepository
     lateinit var reservationRepository: ReservationRepository
     lateinit var reserveListRepository: ReserveListRepository
+    lateinit var cancelRepository: CancelRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -152,6 +156,7 @@ class MyApplication : Application() {
         reserveConfirmRemoteDataSource = ReserveConfirmRemoteDataSourceImpl(apiInterface)
         reservationRemoteDataSource = ReserveConfirmRemoteDataSourceImpl(apiInterface)
         reserveListRemoteDataSource = ReserveListRemoteDataSourceImpl(apiInterface)
+        cancelRemoteDataSource = ReserveConfirmRemoteDataSourceImpl(apiInterface)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
@@ -165,9 +170,10 @@ class MyApplication : Application() {
         alramRepository = AlramRepositoryImpl(alramRemoteDataSource, networkManager)
         ticketDateRepository = TicketDateRepositoryImpl(ticketDateRemoteDataSource, networkManager)
         ticketTimeRepository = TicketTimeRepositoryImpl(ticketTimeRemoteDataSource, networkManager)
-        reserveConfirmRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, networkManager)
-        reservationRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, networkManager)
+        reserveConfirmRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, networkManager)
+        reservationRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, networkManager)
         reserveListRepository = ReserveListRepositoryImpl(reserveListRemoteDataSource, networkManager)
+        cancelRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, networkManager)
     }
 
     init {

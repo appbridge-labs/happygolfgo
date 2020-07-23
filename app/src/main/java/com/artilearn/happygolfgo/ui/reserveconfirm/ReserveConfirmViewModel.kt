@@ -8,6 +8,7 @@ import com.artilearn.happygolfgo.data.ReservationLesson
 import com.artilearn.happygolfgo.data.ReservationPlate
 import com.artilearn.happygolfgo.data.reserveconfirm.ReserveLessonModel
 import com.artilearn.happygolfgo.data.reserveconfirm.ReservePlateModel
+import com.artilearn.happygolfgo.data.reserveconfirm.source.CancelRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,7 +16,8 @@ import io.reactivex.schedulers.Schedulers
 
 class ReserveConfirmViewModel(
     private val reserveConfirmRepository: ReserveConfirmRepository,
-    private val reservationRepository: ReservationRepository
+    private val reservationRepository: ReservationRepository,
+    private val cancelRepository: CancelRepository
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
 
