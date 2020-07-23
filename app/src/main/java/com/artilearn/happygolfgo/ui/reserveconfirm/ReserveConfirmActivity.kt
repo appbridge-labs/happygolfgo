@@ -74,6 +74,12 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
             serverError.observe(this@ReserveConfirmActivity, Observer { errorMsg ->
                 showToast(ToastType.ERROR, errorMsg)
             })
+            cancelSuccess.observe(this@ReserveConfirmActivity, Observer {
+                showToast(ToastType.SUCCESS, "성공")
+            })
+            cancelFail.observe(this@ReserveConfirmActivity, Observer {
+                showToast(ToastType.ERROR, "실패")
+            })
         }
     }
 
@@ -172,8 +178,11 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
                     viewModel.reservationLesson()
                 }
             }
-            "cancel" -> {
-
+            "cancel_lesson" -> {
+                viewModel.reservationLessonCancel(reservation.id)
+            }
+            "cancel_plate" -> {
+                viewModel.reservationPlateCancel(reservation.id)
             }
         }
     }

@@ -11,6 +11,7 @@ import com.artilearn.happygolfgo.data.reserveconfirm.ReservePlateModel
 import com.artilearn.happygolfgo.data.reserveconfirm.source.CancelRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
+import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -25,11 +26,15 @@ class ReserveConfirmViewModel(
     private val _plateModel: MutableLiveData<ReservationPlate> = MutableLiveData()
     private val _lessonModel: MutableLiveData<ReservationLesson> = MutableLiveData()
     private val _unKnowError: MutableLiveData<Unit> = MutableLiveData()
+    private val _cancelSuccess: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _cancelFail: MutableLiveData<Unit> = MutableLiveData()
 
     val policy: LiveData<String> get() = _policy
     val plateModel: LiveData<ReservationPlate> get() = _plateModel
     val lessonModel: LiveData<ReservationLesson> get() = _lessonModel
     val unKnowError: LiveData<Unit> get() = _unKnowError
+    val cancelSuccess: LiveData<Unit> get() = _cancelSuccess
+    val cancelFail: LiveData<Unit> get() = _cancelFail
 
     var ticketId: Int? = null
     var plateAvailabilityId: Int? = null
@@ -131,5 +136,39 @@ class ReserveConfirmViewModel(
         } else {
             _unKnowError.value = Unit
         }
+    }
+
+    fun reservationPlateCancel(plateId: Int) {
+        compositeDisposable.add(
+            cancelRepository.reservationPlateCancel(plateId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
+                .subscribe({
+                    Log.d(TAG, "reservationPlateCancel: 타석 취소 성공")
+                    _cancelSuccess.value = Unit
+                }, {
+                    Log.d(TAG, "reservationPlateCancel: ${it.message}")
+                    _cancelFail.value = Unit
+                })
+        )
+    }
+
+    fun reservationLessonCancel(lessonId: Int) {
+        compositeDisposable.add(
+            cancelRepository.reservationLessonCancel(lessonId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
+                .subscribe({
+                    Log.d(TAG, "reservationLessonCancel: 레슨 취소 성공")
+                    _cancelSuccess.value = Unit
+                }, {
+                    Log.d(TAG, "reservationLessonCancel: ${it.message}")
+                    _cancelFail.value = Unit
+                })
+        )
     }
 }

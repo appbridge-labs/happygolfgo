@@ -52,6 +52,7 @@ class ReserveLessonFragment
         reservationLesson?.let {
             setReservationLesson(it)
         }
+
     }
 
     private fun initAdapter() {
