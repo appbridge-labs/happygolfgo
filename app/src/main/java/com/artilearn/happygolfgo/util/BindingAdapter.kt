@@ -136,8 +136,25 @@ fun setTicketTimeDetail(tv: TextView, lessonStatus: Int?, plateAvailableCount: I
     }
 }
 
-@BindingAdapter("test")
-fun test(tv:TextView, name: String) {
+@BindingAdapter("setTicketName")
+fun setTicketName(tv:TextView, name: String) {
     tv.text = name
+}
+
+@BindingAdapter("setReservationDate")
+fun setReservationStartTime(tv: TextView, time: String) {
+    val start = convertTime(time).trim().split(":")
+    tv.text = "${start[1]}.${start[2]}"
+}
+
+@BindingAdapter("setTicketStatus")
+fun setReservationStatus(tv: TextView, status: Int) {
+    when (status) {
+        0 -> tv.text = "0번"
+        1 -> tv.text = "1번"
+        2 -> tv.text = "2번"
+        3 -> tv.text = "3번"
+        else -> tv.text = "else"
+    }
 }
 

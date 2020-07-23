@@ -45,18 +45,18 @@ class ReservePlateFragment
         initAdapter()
 
         val reservationPlate = arguments?.getParcelableArrayList<ReserveList>(RESERVATION_LIST)
-
         reservationPlate?.let {
             setReservationPlate(it)
         }
 
-        binding.recyclerView.adapter = adapter
     }
 
     private fun initAdapter() {
         adapter = ReserveListAdapter { reservationItem ->
             Toast.makeText(activity, "$reservationItem", Toast.LENGTH_SHORT).show()
         }
+
+        binding.recyclerView.adapter = adapter
     }
 
     private fun setReservationPlate(item: List<ReserveList>) {

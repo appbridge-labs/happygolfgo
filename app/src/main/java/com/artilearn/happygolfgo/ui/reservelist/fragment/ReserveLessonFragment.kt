@@ -19,6 +19,7 @@ class ReserveLessonFragment
     private val TAG = javaClass.simpleName
 
     private lateinit var adapter: ReserveListAdapter
+
     companion object {
 
         fun newInstance(reservation: ArrayList<ReserveList>): ReserveLessonFragment {
@@ -40,8 +41,8 @@ class ReserveLessonFragment
 
     override fun init() {
         initAdapter()
-        val reservationLesson = arguments?.getParcelableArrayList<ReserveList>(RESERVATION_LIST)
 
+        val reservationLesson = arguments?.getParcelableArrayList<ReserveList>(RESERVATION_LIST)
         reservationLesson?.let {
             setReservationLesson(it)
         }

@@ -57,6 +57,12 @@ class ReserveListActivity :
                         }
                     }).attach()
             })
+            networkFail.observe(this@ReserveListActivity, Observer {
+                showNetworkFail()
+            })
+            serverError.observe(this@ReserveListActivity, Observer {
+                showError(it)
+            })
         }
     }
 

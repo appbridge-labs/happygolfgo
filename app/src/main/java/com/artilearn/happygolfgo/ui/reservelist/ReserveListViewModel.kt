@@ -7,6 +7,7 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.ReserveList
 import com.artilearn.happygolfgo.data.reservelist.ReserveListResponse
 import com.artilearn.happygolfgo.data.reservelist.source.ReserveListRepository
+import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -30,21 +31,20 @@ class ReserveListViewModel(
                     if (response.isSuccessful && body != null) {
                         _reservationList.value = body
                     } else {
-                        // error
+                        _serverError.value = response.errorBody().toString()
                     }
                 }, { t ->
                     Log.d(TAG, "fail: ${t.message}")
                     when (t.message) {
                         "Network Error" -> {
-                            // error
+                            _networkFail.value = Unit
                         }
                         else -> {
-                            // error
+                            _serverError.value = t.message
                         }
                     }
                 })
         )
     }
-
 
 }
