@@ -1,0 +1,60 @@
+package com.artilearn.happygolfgo.ui.reservelist.fragment
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.data.ReserveList
+import com.artilearn.happygolfgo.databinding.ItemReserveListBinding
+
+class ReserveListAdapter(
+    private val itemClick: (ReserveList) -> Unit
+) : RecyclerView.Adapter<ReserveListAdapter.ListViewHolder>() {
+
+    lateinit var binding: ItemReserveListBinding
+    private val items: ArrayList<ReserveList> = arrayListOf()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.item_reserve_list,
+            parent,
+            false
+        )
+
+        return ListViewHolder(binding).also {
+            binding.root.setOnClickListener { position ->
+                itemClick(items[it.adapterPosition])
+            }
+        }
+    }
+
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+        holder.bind(items[position])
+
+    }
+
+    override fun getItemCount() = items.size
+
+    class ListViewHolder(
+        private val binding: ItemReserveListBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(lesson: ReserveList) {
+            binding.reservation = lesson
+            binding.executePendingBindings()
+        }
+
+    }
+
+    fun setItems(lesson: List<ReserveList>) {
+        this.items.addAll(lesson)
+        notifyDataSetChanged()
+    }
+
+    fun clear() {
+        this.items.clear()
+        notifyDataSetChanged()
+    }
+}

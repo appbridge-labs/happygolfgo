@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName
 data class ReserveListInfo(
     @SerializedName("plateReservations")
     @Expose
-    val plateReservations: List<ReserveList>,
+    val plateReservations: ArrayList<ReserveList>,
 
     @SerializedName("lessonReservations")
     @Expose
-    val lessonReservations: List<ReserveList>
+    val lessonReservations: ArrayList<ReserveList>
 )
