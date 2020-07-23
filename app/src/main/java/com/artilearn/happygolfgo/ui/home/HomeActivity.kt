@@ -104,6 +104,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     override fun bottomAction() {
         super.bottomAction()
+        //todo 티켓 없으면 못가게 해야됨
         val reserveListActivity = Intent(this, ReserveListActivity::class.java)
             .apply {
 

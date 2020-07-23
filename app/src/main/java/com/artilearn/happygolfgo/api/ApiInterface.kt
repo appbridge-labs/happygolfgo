@@ -11,6 +11,7 @@ import com.artilearn.happygolfgo.data.pwauth.ConfirmAuthModel
 import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
 import com.artilearn.happygolfgo.data.pwreset.PwrestModel
 import com.artilearn.happygolfgo.data.reserveconfirm.*
+import com.artilearn.happygolfgo.data.reservelist.ReserveListResponse
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
@@ -106,8 +107,10 @@ interface ApiInterface {
     ): Single<Response<ReservePlateResponse>>
 
     @POST("reservation/user/lessonReservation")
-    fun reservationLessn(
+    fun reservationLesson(
         @Body data: HashMap<String, ReserveLessonModel>
     ): Single<Response<ReserveLessonResponse>>
 
+    @GET("reservation/user/myReservations")
+    fun reservationList(): Single<Response<ReserveListResponse>>
 }
