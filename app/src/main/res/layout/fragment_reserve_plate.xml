@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.artilearn.happygolfgo.ui.reservelist.fragment.ReservePlateViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.reservelist.ReservePlateFragment">
+        android:background="@color/color_green"
+        tools:context=".ui.reservelist.fragment.ReservePlateFragment">
 
         <TextView
             android:layout_width="wrap_content"

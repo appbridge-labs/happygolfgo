@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.reservelist
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -9,8 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityReserveListBinding
+import com.artilearn.happygolfgo.ui.reservelist.fragment.ReserveLessonFragment
+import com.artilearn.happygolfgo.ui.reservelist.fragment.ReservePlateFragment
 import com.artilearn.happygolfgo.util.MyApplication
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_reserve_list.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.custom_toolbar.view.*
 class ReserveListActivity : BaseActivity<ActivityReserveListBinding>(R.layout.activity_reserve_list) {
 
     private val fragmentList: ArrayList<Fragment> = arrayListOf()
-    //private lateinit var adapter: ReserveListAdapter
+    private lateinit var adapter: ReserveListAdapter
     private lateinit var myApplication: MyApplication
     private val viewModel: ReserveListViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -45,21 +45,27 @@ class ReserveListActivity : BaseActivity<ActivityReserveListBinding>(R.layout.ac
     }
 
     private fun initViewModelObserve() {
+        with(viewModel) {
 
+        }
     }
 
     private fun initView() {
-        //fragmentList.add(ReservePlateFragment())
-        //fragmentList.add(ReserveLessonFragment())
+        fragmentList.add(ReservePlateFragment.newInstance())
+        fragmentList.add(ReserveLessonFragment.newInstance())
         initToolbar(reserve_list_toolbar.toolBar, getString(R.string.reserve_list_toolbar_title), true)
     }
 
     private fun initAdapter() {
-//        binding.viewPager.adapter = ReserveListAdapter(this, fragmentList)
-//        TabLayoutMediator(binding.reserveListTablayout, binding.viewPager,
-//            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-//                // styling each tab here
-//            }).attach()
+        binding.viewPager.adapter = ReserveListAdapter(this, fragmentList)
+        TabLayoutMediator(binding.reserveListTablayout, binding.viewPager,
+            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+                // styling each tab here
+                when (position) {
+                    0 -> tab.text = getString(R.string.reserve_list_plate_title)
+                    1 -> tab.text = getString(R.string.reserve_list_lesson_title)
+                }
+            }).attach()
 
     }
 

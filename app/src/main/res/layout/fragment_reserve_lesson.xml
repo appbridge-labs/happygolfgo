@@ -4,14 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.artilearn.happygolfgo.ui.reservelist.fragment.ReserveLessonViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/color_lucky_gray"
         android:orientation="vertical"
-        tools:context=".ui.reservelist.ReserveLessonFragment">
+        tools:context=".ui.reservelist.fragment.ReserveLessonFragment">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

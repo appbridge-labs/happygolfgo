@@ -18,10 +18,23 @@ class ReserveListViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
-                .subscribe({
-                    Log.d(TAG, "success: ${it.body()?.data}")
-                }, {
-                    Log.d(TAG, "fail: ${it.message}")
+                .subscribe({ response ->
+                    val body = response.body()
+                    if (response.isSuccessful && body != null) {
+
+                    } else {
+
+                    }
+                }, { t ->
+                    Log.d(TAG, "fail: ${t.message}")
+                    when (t.message) {
+                        "Network Error" -> {
+
+                        }
+                        else -> {
+
+                        }
+                    }
                 })
         )
     }
