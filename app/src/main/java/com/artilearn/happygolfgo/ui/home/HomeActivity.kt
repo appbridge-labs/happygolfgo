@@ -17,6 +17,7 @@ import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
 import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
 import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.util.MyApplication
+import com.artilearn.happygolfgo.util.snackbar
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private val TAG = javaClass.simpleName
@@ -104,12 +105,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     override fun bottomAction() {
         super.bottomAction()
-        //todo 티켓 없으면 못가게 해야됨
-        val reserveListActivity = Intent(this, ReserveListActivity::class.java)
-            .apply {
 
-            }
-        startActivity(reserveListActivity)
+        if (adapter.itemCount != 0) {
+            val reserveListActivity = Intent(this, ReserveListActivity::class.java)
+            startActivity(reserveListActivity)
+        } else {
+            binding.parentLayout.snackbar(getString(R.string.home_empty_ticket_go))
+        }
     }
 
 
