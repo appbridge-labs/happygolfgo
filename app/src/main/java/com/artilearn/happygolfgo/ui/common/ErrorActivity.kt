@@ -1,9 +1,7 @@
 package com.artilearn.happygolfgo.ui.common
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
@@ -18,8 +16,42 @@ class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.tvErrorMessage.text = errorText
+        showEvent()
+        initClickListener()
+    }
 
+    private fun showEvent() {
+        with(binding) {
+            tvErrorTitle.apply {
+                animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .startDelay = 1500L
+            }
+            tvErrorMessage.apply {
+                this.text = errorText
+                animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .startDelay = 1500L
+            }
+            btmReload.apply {
+                animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .startDelay = 1500L
+            }
+        }
+    }
+
+    private fun initClickListener() {
+        binding.btmReload.setOnClickListener {
+            startActivity(lastActivityIntent)
+            finish()
+        }
     }
 
 }
