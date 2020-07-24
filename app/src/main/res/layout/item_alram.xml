@@ -14,8 +14,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
+        android:background="@drawable/bg_unserline"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <TextView
             android:id="@+id/tv_date"
@@ -24,9 +25,9 @@
             android:layout_marginTop="16dp"
             android:textColor="@color/color_lucky_gray"
             android:textSize="16dp"
-            bind:setAlramDate="@{alram.createdAt}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            bind:setAlramDate="@{alram.createdAt}"
             tools:text="2020.05.09 15:40" />
 
         <TextView
@@ -37,9 +38,9 @@
             android:textColor="@color/color_black"
             android:textSize="16dp"
             android:textStyle="bold"
-            bind:setAlramTitle="@{alram.title}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_date"
+            bind:setAlramTitle="@{alram.title}"
             tools:text="제 목" />
 
         <TextView
@@ -50,19 +51,11 @@
             android:layout_marginBottom="16dp"
             android:textColor="@color/color_black"
             android:textSize="16dp"
-            bind:setAlramBody="@{alram.body}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
+            bind:setAlramBody="@{alram.body}"
             tools:text="내 용" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/color_line_gray"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
