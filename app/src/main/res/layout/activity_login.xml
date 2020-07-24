@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -142,12 +143,12 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/bg_btn_main"
+            android:onClick="@{() -> vm.onLoginClick()}"
             android:stateListAnimator="@null"
             android:text="@string/login_button_title"
             android:textColor="@color/color_white"
             android:textSize="16dp"
             android:textStyle="bold"
-            android:onClick="@{() -> vm.onLoginClick()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pwLayout" />
@@ -157,11 +158,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:onClick="@{() -> vm.onPasswordForgetClick()}"
             android:text="@string/login_password_forget_text"
             android:textColor="@color/color_sub_gray"
             android:textSize="12dp"
             android:textStyle="bold"
-            android:onClick="@{() -> vm.onPasswordForgetClick()}"
             app:layout_constraintStart_toStartOf="@+id/btn_login"
             app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 

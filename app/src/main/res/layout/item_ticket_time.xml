@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="ticketTime"
             type="com.artilearn.happygolfgo.data.TicketTime" />
@@ -24,26 +25,26 @@
             android:fontFamily="@font/roboto_light"
             android:textColor="@color/color_black"
             android:textSize="28dp"
-            bind:setTicketTimeStart="@{ticketTime.startDate}"
-            bind:setTicketTimeEnd="@{ticketTime.endDate}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="00:00 ~ 00:00"/>
+            bind:setTicketTimeEnd="@{ticketTime.endDate}"
+            bind:setTicketTimeStart="@{ticketTime.startDate}"
+            tools:text="00:00 ~ 00:00" />
 
         <TextView
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:textColor="@color/color_black"
             android:textSize="14dp"
-            bind:setTicketLessonStatus="@{ticketTime.lessonAvailabilityId}"
-            bind:setTicketPlateAllCount="@{ticketTime.totalCount}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_ticket_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_ticket_time"
-            app:layout_constraintBottom_toBottomOf="@id/tv_ticket_time"
+            bind:setTicketLessonStatus="@{ticketTime.lessonAvailabilityId}"
+            bind:setTicketPlateAllCount="@{ticketTime.totalCount}"
             tools:text="상태(레슨) or 총 6석(타석)" />
 
         <TextView
@@ -55,13 +56,12 @@
             android:textColor="@color/color_black"
             android:textSize="14dp"
             android:textStyle="bold"
-            bind:setTicketLessonNowStatus="@{ticketTime.status}"
-            bind:setTicketPlateAvailableCount="@{ticketTime.availableCount}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_ticket_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_ticket_time"
-            app:layout_constraintBottom_toBottomOf="@id/tv_ticket_time"
-            tools:text="예약가능(레슨) or 잔여 0석(타석)"
-             />
+            bind:setTicketLessonNowStatus="@{ticketTime.status}"
+            bind:setTicketPlateAvailableCount="@{ticketTime.availableCount}"
+            tools:text="예약가능(레슨) or 잔여 0석(타석)" />
 
         <View
             android:layout_width="0dp"
