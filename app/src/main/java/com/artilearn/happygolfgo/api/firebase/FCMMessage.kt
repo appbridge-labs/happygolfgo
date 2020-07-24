@@ -10,10 +10,12 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.ui.alram.AlramActivity
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
+//todo 알람 액션 테스트 중(task, stack 절차 중)
 class FCMMessage : FirebaseMessagingService() {
 
     private val CHANNEL_ID = "HappyGolf channel"
@@ -32,10 +34,10 @@ class FCMMessage : FirebaseMessagingService() {
     private fun sendNotification(body: MutableMap<String, String>) {
         createNotificationChannel()
 
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.putExtra("fcm", 9000)
-        intent.flags =
-            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        val intent = Intent(this, AlramActivity::class.java)
+//        intent.putExtra("fcm", 9000)
+//        intent.flags =
+//            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
 
         val sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
