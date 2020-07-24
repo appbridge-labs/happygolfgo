@@ -60,18 +60,6 @@ fun notificationCheck(context: Context): Int {
     else 0
 }
 
-fun noticeDialog(context: Context, title: String, message: String) {
-    val builder = AlertDialog.Builder(context)
-
-    builder.setTitle(title).setMessage(message)
-
-    builder.setPositiveButton("확인") { _, _ ->
-
-    }
-
-    builder.show()
-}
-
 fun loading(progressbar: ProgressBar, loading: Boolean) {
     progressbar.visibility = if (loading) {
         View.VISIBLE
@@ -91,9 +79,10 @@ fun imageLoadingProgress(context: Context): CircularProgressDrawable {
 fun ImageView.setImage(iv: ImageView, str: String?) {
     str?.let {
         Glide.with(iv).load(it)
-            .apply(RequestOptions()
-                .placeholder(imageLoadingProgress(iv.context))
-                .error(R.drawable.ic_error)
+            .apply(
+                RequestOptions()
+                    .placeholder(imageLoadingProgress(iv.context))
+                    .error(R.drawable.ic_error)
             )
             .into(iv)
     }

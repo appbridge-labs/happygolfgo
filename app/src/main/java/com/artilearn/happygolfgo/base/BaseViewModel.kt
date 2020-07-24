@@ -23,7 +23,6 @@ abstract class BaseViewModel : ViewModel() {
     val networkDelay: LiveData<Unit> get() = _networkDelay
 
 
-
     protected fun showLoading() {
         _isLoading.value = true
     }

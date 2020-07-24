@@ -16,12 +16,6 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     protected lateinit var binding: B
     protected abstract val viewModel: VM
 
-    //private lateinit var networkDelayFragment: NetworkDelayFragment
-    //private lateinit var networkFailFragment: NetworkFailFragment
-    //private lateinit var serverErrorFragment: ServerErrorFragment
-    //private lateinit var homeFragment: HomeFragment
-    //private lateinit var calendarFragment: CalendarFragment
-
     abstract fun init()
 
     override fun onCreateView(

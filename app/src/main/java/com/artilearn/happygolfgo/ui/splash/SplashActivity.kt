@@ -14,6 +14,7 @@ import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.tutorial.TutorialActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
+//todo 유저 동기화 했나??, isPushOn 함수(Utils) 사용 안하고 데이터 모델도 사용안했는데...?
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
 
     private lateinit var myApplication: MyApplication
