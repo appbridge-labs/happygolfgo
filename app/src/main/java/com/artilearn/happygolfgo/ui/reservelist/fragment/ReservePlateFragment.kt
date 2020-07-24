@@ -48,10 +48,14 @@ class ReservePlateFragment
         initAdapter()
 
         val reservationPlate = arguments?.getParcelableArrayList<ReserveList>(RESERVATION_LIST)
-        reservationPlate?.let {
-            setReservationPlate(it)
+        with(reservationPlate) {
+            if (this?.size != 0) {
+                emptyPlateView(false)
+                setReservationPlate(this!!)
+            } else {
+                emptyPlateView(true)
+            }
         }
-
     }
 
     private fun initAdapter() {
@@ -66,6 +70,14 @@ class ReservePlateFragment
         with(adapter) {
             clear()
             setItems(item)
+        }
+    }
+
+    private fun emptyPlateView(stauts: Boolean) {
+        binding.emptyPlateLayout.visibility = if (stauts) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
         }
     }
 

@@ -146,11 +146,17 @@ class ReserveConfirmViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({
-                    Log.d(TAG, "reservationPlateCancel: 타석 취소 성공")
                     _cancelSuccess.value = Unit
-                }, {
-                    Log.d(TAG, "reservationPlateCancel: ${it.message}")
-                    _cancelFail.value = Unit
+                }, { t ->
+                    Log.d(TAG, "reservationPlateCancel: ${t.message}")
+                    when (t.message) {
+                        "Network Error" -> {
+                            _networkFail.value = Unit
+                        }
+                        else -> {
+                            _cancelFail.value = Unit
+                        }
+                    }
                 })
         )
     }
@@ -163,11 +169,17 @@ class ReserveConfirmViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({
-                    Log.d(TAG, "reservationLessonCancel: 레슨 취소 성공")
                     _cancelSuccess.value = Unit
-                }, {
-                    Log.d(TAG, "reservationLessonCancel: ${it.message}")
-                    _cancelFail.value = Unit
+                }, { t ->
+                    Log.d(TAG, "reservationLessonCancel: ${t.message}")
+                    when (t.message) {
+                        "Network Error" -> {
+                            _networkFail.value = Unit
+                        }
+                        else -> {
+                            _cancelFail.value = Unit
+                        }
+                    }
                 })
         )
     }

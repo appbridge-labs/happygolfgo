@@ -29,14 +29,15 @@
                 app:srcCompat="@drawable/ic_check_green" />
 
             <TextView
+                android:id="@+id/tv_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="55dp"
-                android:text="@string/reserve_success_title"
                 android:textColor="@color/color_green"
                 android:textSize="32dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="예약 취소 혹은 완료"/>
 
             <TextView
                 android:id="@+id/tv_title"

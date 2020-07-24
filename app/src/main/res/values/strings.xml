@@ -86,10 +86,14 @@
     <string name="reserve_confirm_ticket_time">시간</string>
     <string name="reserve_confirm_policy_title">정책사항</string>
     <string name="default_error_toast">알 수 없는 오류 발생</string>
-    <string name="reserve_success_title">예약이 완료되었습니다</string>
+    <string name="reserve_success_title">예약이 완료 되었습니다</string>
+    <string name="reserve_cancel_success_title">예약이 취소 되었습니다</string>
     <string name="reserve_success_bottom_title">확인</string>
     <string name="reserve_list_plate_title">타석 예약</string>
     <string name="reserve_list_lesson_title">개인 레슨</string>
     <string name="reserve_list_toolbar_title">내 예약목록</string>
+    <string name="reserve_confirm_cancel_fail">취소하는데 오류가 발생 했습니다</string>
+    <string name="ticket_time_empty_time_text">예약가능한 시간이 없습니다</string>
+    <string name="fragment_reserve_lesson_empty">예약내역이 없습니다</string>
 
 </resources>

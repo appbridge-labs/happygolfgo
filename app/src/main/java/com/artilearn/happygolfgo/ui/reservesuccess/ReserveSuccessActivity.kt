@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.CONFIRM_TYPE
 import com.artilearn.happygolfgo.constants.RESERVATION_LESSON
 import com.artilearn.happygolfgo.constants.RESERVATION_PLATE
 import com.artilearn.happygolfgo.data.ReservationLesson
@@ -21,33 +22,44 @@ class ReserveSuccessActivity :
     private val TAG = javaClass.simpleName
     private val reservationPlate by lazy { intent.getParcelableExtra<ReservationPlate>(RESERVATION_PLATE) }
     private val reservationLesson by lazy { intent.getParcelableExtra<ReservationLesson>(RESERVATION_LESSON) }
+    private val successType by lazy { intent.getStringExtra(CONFIRM_TYPE) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initView()
-        setText()
     }
 
     private fun initView() {
-        initBottomView(
-            reserve_success_bottom_view.bottomLayout,
-            getString(R.string.reserve_success_bottom_title),
-            BottimViewType.DEFAULT_TYPE
-        )
+        initBottomView(reserve_success_bottom_view.bottomLayout, getString(R.string.reserve_success_bottom_title), BottimViewType.DEFAULT_TYPE)
+        when (successType) {
+            "reservation" -> {
+                setReservationText()
+            }
+            else -> {
+                setCancelText()
+            }
+        }
     }
 
-    private fun setText() {
+    private fun setReservationText() {
         with(binding) {
             reservationPlate?.let { plate ->
-                showToast(ToastType.SUCCESS, "$plate")
+                tvMain.text = getString(R.string.reserve_success_title)
                 tvTitle.text = convertToTitle(plate.name, plate.totalCount, plate.remainingCount)
                 tvSubtitle.text = convertToTime(plate.startDate, plate.endDate)
             }
             reservationLesson?.let { lesson ->
+                tvMain.text = getString(R.string.reserve_success_title)
                 tvTitle.text = convertToTitle(lesson.name, lesson.totalCount, lesson.remainingCount)
                 tvSubtitle.text = convertToTime(lesson.startDate, lesson.endDate)
             }
+        }
+    }
+
+    private fun setCancelText() {
+        with(binding) {
+            tvMain.text = getString(R.string.reserve_cancel_success_title)
         }
     }
 

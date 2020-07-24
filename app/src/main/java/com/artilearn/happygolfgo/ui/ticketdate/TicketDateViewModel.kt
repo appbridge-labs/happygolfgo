@@ -123,13 +123,17 @@ class TicketDateViewModel(
 
     private fun convertToEventDay(available: List<String>?, event: List<String>?) {
         available?.let {
-            val min = Collections.min(available)
-            val max = Collections.max(available)
-            val minDate = convertDate(min)
-            val maxDate = convertDate(max)
+            with(it) {
+                if (isNotEmpty()) {
+                    val min = Collections.min(available)
+                    val max = Collections.max(available)
+                    val minDate = convertDate(min)
+                    val maxDate = convertDate(max)
 
-            minDate?.let { calendarMin = convertCalendar(it) }
-            maxDate?.let { calendarMax = convertCalendar(it) }
+                    minDate?.let { calendarMin = convertCalendar(it) }
+                    maxDate?.let { calendarMax = convertCalendar(it) }
+                }
+            }
         }
 
         event?.let {

@@ -75,10 +75,10 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
                 showToast(ToastType.ERROR, errorMsg)
             })
             cancelSuccess.observe(this@ReserveConfirmActivity, Observer {
-                showToast(ToastType.SUCCESS, "성공")
+                goReservationCancelSuccess()
             })
             cancelFail.observe(this@ReserveConfirmActivity, Observer {
-                showToast(ToastType.ERROR, "실패")
+                showToast(ToastType.ERROR, getString(R.string.reserve_confirm_cancel_fail))
             })
         }
     }
@@ -155,6 +155,7 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
         val plateIntent = Intent(this, ReserveSuccessActivity::class.java)
             .apply {
                 putExtra(RESERVATION_PLATE, plate)
+                putExtra(CONFIRM_TYPE, confirmType)
             }
         startActivity(plateIntent)
     }
@@ -163,8 +164,18 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
         val lessonIntent = Intent(this, ReserveSuccessActivity::class.java)
             .apply {
                 putExtra(RESERVATION_LESSON, lesson)
+                putExtra(CONFIRM_TYPE, confirmType)
             }
         startActivity(lessonIntent)
+    }
+
+    private fun goReservationCancelSuccess() {
+        val cancelIntent = Intent(this, ReserveSuccessActivity::class.java)
+            .apply {
+                putExtra(CONFIRM_TYPE, confirmType)
+            }
+        startActivity(cancelIntent)
+        finish()
     }
 
     override fun bottomAction() {

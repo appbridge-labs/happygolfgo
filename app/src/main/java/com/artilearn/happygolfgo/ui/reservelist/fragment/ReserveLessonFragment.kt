@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.ui.reservelist.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -49,10 +50,14 @@ class ReserveLessonFragment
         initAdapter()
 
         val reservationLesson = arguments?.getParcelableArrayList<ReserveList>(RESERVATION_LIST)
-        reservationLesson?.let {
-            setReservationLesson(it)
+        with(reservationLesson) {
+            if (this?.size != 0) {
+                emptyLessonView(false)
+                setReservationLesson(this!!)
+            } else {
+                emptyLessonView(true)
+            }
         }
-
     }
 
     private fun initAdapter() {
@@ -67,6 +72,14 @@ class ReserveLessonFragment
         with(adapter) {
             clear()
             setItems(item)
+        }
+    }
+
+    private fun emptyLessonView(status: Boolean) {
+        binding.emptyLessonLayout.visibility = if (status) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
         }
     }
 

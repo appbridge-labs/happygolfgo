@@ -150,7 +150,7 @@ fun setReservationStartTime(tv: TextView, time: String) {
 @BindingAdapter("setTicketStatus")
 fun setReservationStatus(tv: TextView, status: Int) {
     when (status) {
-        0 -> tv.text = "0번"
+        0 -> tv.text = "예약완료"
         1 -> tv.text = "1번"
         2 -> tv.text = "2번"
         3 -> tv.text = "3번"
