@@ -31,7 +31,6 @@ class LogViewModel(
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
                     .subscribe({ response ->
-                        Log.d(TAG, "requestLessonLogDetail: ${response.body()?.data?.lessonLog}")
                         val body = response.body()
                         if (response.isSuccessful && body != null) {
                             _logDetail.value = body.data.lessonLog
@@ -54,7 +53,9 @@ class LogViewModel(
     }
 
     fun onVideoClick(videoUrl: String?) {
-        _videoUrl.value = videoUrl
+        videoUrl?.let {
+            _videoUrl.value = videoUrl
+        }
     }
 
 }
