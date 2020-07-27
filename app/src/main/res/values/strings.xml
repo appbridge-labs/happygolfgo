@@ -96,5 +96,5 @@
     <string name="reserve_confirm_cancel_fail">취소하는데 오류가 발생 했습니다</string>
     <string name="ticket_time_empty_time_text">예약가능한 시간이 없습니다</string>
     <string name="fragment_reserve_lesson_empty">예약내역이 없습니다</string>
-
+    <string name="log_toolbar_title">레슨 후기</string>
 </resources>
