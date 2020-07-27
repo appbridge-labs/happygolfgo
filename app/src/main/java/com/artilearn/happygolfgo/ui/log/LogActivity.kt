@@ -159,4 +159,9 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             startActivity(videoIntent)
         }
     }
+
+    override fun bottomAction() {
+        super.bottomAction()
+        
+    }
 }
