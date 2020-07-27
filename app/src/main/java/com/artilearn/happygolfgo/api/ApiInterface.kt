@@ -1,6 +1,8 @@
 package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.alram.AlramResponse
+import com.artilearn.happygolfgo.data.comment.CommentModel
+import com.artilearn.happygolfgo.data.comment.CommentResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.log.LogResponse
@@ -129,5 +131,10 @@ interface ApiInterface {
     fun lessonLogDetail(
         @Path("id") lessonLogId: Int
     ): Single<Response<LogResponse>>
+
+    @PUT("user/lessonlogs")
+    fun uploadLessonComment(
+        @Body data: HashMap<String, CommentModel>
+    ): Single<Response<CommentResponse>>
 
 }
