@@ -14,5 +14,5 @@ data class LogResponse(
 
     @SerializedName("Data")
     @Expose
-    val data: LogDetail
+    val data: LogInfo
 )

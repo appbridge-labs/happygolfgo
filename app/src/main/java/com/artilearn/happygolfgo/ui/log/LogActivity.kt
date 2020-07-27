@@ -1,16 +1,26 @@
 package com.artilearn.happygolfgo.ui.log
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.LESSON_LOG
 import com.artilearn.happygolfgo.data.LessonLog
+import com.artilearn.happygolfgo.data.LogDetail
 import com.artilearn.happygolfgo.databinding.ActivityLogBinding
+import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
+import com.artilearn.happygolfgo.util.convertTime
+import com.artilearn.happygolfgo.util.setImage
 import kotlinx.android.synthetic.main.activity_log.*
+import kotlinx.android.synthetic.main.common_default_view.view.*
+import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
@@ -32,6 +42,7 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
         inject()
         initViewModelObserve()
         initView()
+        setLessonLogText()
     }
 
     private fun inject() {
@@ -41,14 +52,91 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
 
     private fun initViewModelObserve() {
         with(viewModel) {
-
+            logDetail.observe(this@LogActivity, Observer {
+                binding.log = it
+                setLessonLogItem(it)
+            })
+            videoUrl.observe(this@LogActivity, Observer {
+                showToast(ToastType.SUCCESS, it)
+            })
         }
     }
 
     private fun initView() {
         initToolbar(log_toolbar.toolBar, getString(R.string.log_toolbar_title), true)
 
-        viewModel.requestLessonLogDetail(lessonLog.id)
+        lessonLog?.id.let {
+            viewModel.requestLessonLogDetail(it)
+        }
 
+    }
+
+    private fun setLessonLogText() {
+        with(binding) {
+            logName.tv_common.text = lessonLog.employeeName
+            logDate.tv_common.text = convertLessonLogTime()
+        }
+    }
+
+    private fun convertLessonLogTime(): String {
+        val calendar = convertTime(lessonLog.createdAt).trim().split(":")
+
+        return "${calendar[0]}.${calendar[1]}.${calendar[2]}"
+    }
+
+    //todo isReviewable 작성일로 3일 후 true 인데 false로만 테스트 해봤음!
+    private fun setLessonLogItem(log: LogDetail) {
+        with(log) {
+            loadThumbNail(log.thumbnailURL, log.body)
+
+            if (isReviewed) {
+                setMyCommet(log.comment)
+            } else {
+                if (isReviewable) {
+                    overIsReviewable()
+                } else {
+                    underIsReviewable()
+                }
+            }
+        }
+    }
+
+    private fun loadThumbNail(thumbNail: String?, body: String) {
+        if (thumbNail.isNullOrEmpty()) {
+            binding.videoLayout.visibility = View.GONE
+        } else {
+            with(binding.ivThumbnail) {
+                setImage(this, thumbNail)
+            }
+        }
+        binding.tvBody.text = body
+    }
+
+    private fun setMyCommet(commet: String?) {
+        commet?.let {
+            with(binding) {
+                logCommentTitle.tv_common.text = getString(R.string.log_comment_tile)
+                tvComment.text = commet
+                logBottomView.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun overIsReviewable() {
+        with(binding) {
+            tvComment.visibility = View.GONE
+            logBottomView.visibility = View.GONE
+            logCommentTitle.tv_common.apply {
+                setTextColor(ContextCompat.getColor(this.context, R.color.color_sub_gray))
+            }
+        }
+    }
+
+    private fun underIsReviewable() {
+        with(binding) {
+            initBottomView(logBottomView, getString(R.string.log_bottom_view_title), BottimViewType.DEFAULT_TYPE)
+            logCommentTitle.visibility = View.GONE
+            tvComment.visibility = View.GONE
+        }
     }
 }

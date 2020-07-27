@@ -97,4 +97,6 @@
     <string name="ticket_time_empty_time_text">예약가능한 시간이 없습니다</string>
     <string name="fragment_reserve_lesson_empty">예약내역이 없습니다</string>
     <string name="log_toolbar_title">레슨 후기</string>
+    <string name="log_comment_tile">나의 후기</string>
+    <string name="log_bottom_view_title">후기 남기기</string>
 </resources>

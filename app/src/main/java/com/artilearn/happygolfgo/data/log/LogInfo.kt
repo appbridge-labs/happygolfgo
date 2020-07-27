@@ -1,11 +1,11 @@
 package com.artilearn.happygolfgo.data.log
 
-import com.artilearn.happygolfgo.data.Log
+import com.artilearn.happygolfgo.data.LogDetail
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class LogDetail(
+data class LogInfo(
     @SerializedName("lessonLog")
     @Expose
-    val lessonLog: Log
+    val lessonLog: LogDetail
 )

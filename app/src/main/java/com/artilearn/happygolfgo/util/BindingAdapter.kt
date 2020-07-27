@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.util
 
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -155,6 +156,20 @@ fun setReservationStatus(tv: TextView, status: Int) {
         2 -> tv.text = "2번"
         3 -> tv.text = "3번"
         else -> tv.text = "else"
+    }
+}
+
+@BindingAdapter("setLogThumbNail")
+fun setLogThumbNail(iv: ImageView, thumbNail: String?) {
+    thumbNail?.let {
+        iv.setImage(iv, it)
+    }
+}
+
+@BindingAdapter("setLogComment")
+fun setLogComment(tv: TextView, comment: String?) {
+    comment?.let {
+        tv.text = it
     }
 }
 

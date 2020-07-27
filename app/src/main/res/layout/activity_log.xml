@@ -4,9 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.artilearn.happygolfgo.ui.log.LogViewModel" />
+        <variable
+            name="log"
+            type="com.artilearn.happygolfgo.data.LogDetail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <include
-            android:id="@+id/name"
+            android:id="@+id/log_name"
             layout="@layout/common_default_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -34,34 +38,38 @@
             app:layout_constraintTop_toBottomOf="@id/log_toolbar" />
 
         <include
-            android:id="@+id/date"
+            android:id="@+id/log_date"
             layout="@layout/common_default_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name" />
+            app:layout_constraintTop_toBottomOf="@id/log_name" />
 
         <LinearLayout
-            android:id="@+id/video_layout"
+            android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_unserline"
             android:orientation="vertical"
+            android:padding="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date">
+            app:layout_constraintTop_toBottomOf="@id/log_date">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/video_layout"
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
-                android:layout_margin="20dp">
+                android:layout_marginBottom="20dp">
 
                 <ImageView
+                    android:id="@+id/iv_thumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
+                    android:onClick="@{() -> vm.onVideoClick(log.videoURL)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -81,10 +89,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                style="@style/side_margin"
+                android:id="@+id/tv_body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
                 android:textColor="@color/color_black"
                 android:textSize="14dp"
                 tools:text="코치가 등록한 내용이 들어감!!!" />
@@ -92,13 +99,13 @@
         </LinearLayout>
 
         <include
-            android:id="@+id/include_comment_title"
+            android:id="@+id/log_comment_title"
             layout="@layout/common_default_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/video_layout" />
+            app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
         <TextView
             android:id="@+id/tv_comment"
@@ -109,8 +116,17 @@
             android:textColor="@color/color_black"
             android:textSize="14dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/include_comment_title"
+            app:layout_constraintTop_toBottomOf="@id/log_comment_title"
             tools:text="내가 작성한 후기 내용" />
+
+        <include
+            android:id="@+id/log_bottom_view"
+            layout="@layout/custom_bottom_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />.
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
