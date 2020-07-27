@@ -124,4 +124,9 @@ interface ApiInterface {
         @Path("plateReservationID") plateId: Int
     ): Completable
 
+    @GET("user/lessonlogs/detail/{id}")
+    fun lessonLogDetail(
+        @Path("id") lessonLogId: Int
+    ):
+
 }
