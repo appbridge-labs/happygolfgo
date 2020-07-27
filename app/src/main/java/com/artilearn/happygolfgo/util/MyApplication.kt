@@ -20,6 +20,10 @@ import com.artilearn.happygolfgo.data.lessonlog.source.LessonLogRepository
 import com.artilearn.happygolfgo.data.lessonlog.source.LessonLogRepositoryImpl
 import com.artilearn.happygolfgo.data.lessonlog.source.remote.LessonLogRemoteDataSource
 import com.artilearn.happygolfgo.data.lessonlog.source.remote.LessonLogRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.log.source.LogRepository
+import com.artilearn.happygolfgo.data.log.source.LogRepositoryImpl
+import com.artilearn.happygolfgo.data.log.source.remote.LogRemoteDataSource
+import com.artilearn.happygolfgo.data.log.source.remote.LogRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.login.source.LoginRepository
 import com.artilearn.happygolfgo.data.login.source.LoginRepositoryImpl
 import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSource
@@ -105,6 +109,7 @@ class MyApplication : Application() {
     private lateinit var reservationRemoteDataSource: ReservationRemoteDataSource
     private lateinit var reserveListRemoteDataSource: ReserveListRemoteDataSource
     private lateinit var cancelRemoteDataSource: CancelRemoteDataSource
+    private lateinit var logRemoteDataSource: LogRemoteDataSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -122,6 +127,7 @@ class MyApplication : Application() {
     lateinit var reservationRepository: ReservationRepository
     lateinit var reserveListRepository: ReserveListRepository
     lateinit var cancelRepository: CancelRepository
+    lateinit var logRespository: LogRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -157,6 +163,7 @@ class MyApplication : Application() {
         reservationRemoteDataSource = ReserveConfirmRemoteDataSourceImpl(apiInterface)
         reserveListRemoteDataSource = ReserveListRemoteDataSourceImpl(apiInterface)
         cancelRemoteDataSource = ReserveConfirmRemoteDataSourceImpl(apiInterface)
+        logRemoteDataSource = LogRemoteDataSourceImpl(apiInterface)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
@@ -174,6 +181,7 @@ class MyApplication : Application() {
         reservationRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, networkManager)
         reserveListRepository = ReserveListRepositoryImpl(reserveListRemoteDataSource, networkManager)
         cancelRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, networkManager)
+        logRespository = LogRepositoryImpl(logRemoteDataSource, networkManager)
     }
 
     init {

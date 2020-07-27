@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.LESSON_LOG
+import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.databinding.ActivityLogBinding
 import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.activity_log.*
@@ -13,12 +15,13 @@ import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
 
+    private val lessonLog by lazy { intent.getParcelableExtra<LessonLog>(LESSON_LOG) }
     private lateinit var myApplication: MyApplication
     private val viewModel: LogViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return LogViewModel(
-
+                    myApplication.logRespository
                 ) as T
             }
         }
@@ -44,5 +47,8 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
 
     private fun initView() {
         initToolbar(log_toolbar.toolBar, getString(R.string.log_toolbar_title), true)
+
+        viewModel.requestLessonLogDetail(lessonLog.id)
+
     }
 }

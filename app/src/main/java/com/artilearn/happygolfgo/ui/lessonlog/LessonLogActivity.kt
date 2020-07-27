@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.lessonlog
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -7,8 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.LESSON_LOG
+import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.databinding.ActivityLessonLogBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.activity_lesson_log.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
@@ -59,9 +63,17 @@ class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activi
 
     private fun initAdapter() {
         adapter = LessonLogAdapter { log ->
-            showToast(ToastType.SUCCESS, "$log")
+            goLog(log)
         }
 
         binding.recyclerView.adapter = adapter
+    }
+
+    private fun goLog(log: LessonLog) {
+        val logIntent = Intent(this, LogActivity::class.java)
+            .apply {
+                putExtra(LESSON_LOG, log)
+            }
+        startActivity(logIntent)
     }
 }

@@ -9,9 +9,3 @@ data class LogDetail(
     @Expose
     val lessonLog: Log
 )
-
-data class EmployeeDetail(
-    @SerializedName("name")
-    @Expose
-    val name: String
-)

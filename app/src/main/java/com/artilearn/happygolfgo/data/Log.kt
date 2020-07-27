@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.data
 
-import com.artilearn.happygolfgo.data.log.EmployeeDetail
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -44,10 +43,6 @@ data class Log(
     @SerializedName("createdAt")
     @Expose
     val createdAt: String,
-
-    @SerializedName("employee")
-    @Expose
-    val employee: EmployeeDetail,
 
     @SerializedName("isReviewable")
     @Expose

@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.api
 import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
+import com.artilearn.happygolfgo.data.log.LogResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
 import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
@@ -127,6 +128,6 @@ interface ApiInterface {
     @GET("user/lessonlogs/detail/{id}")
     fun lessonLogDetail(
         @Path("id") lessonLogId: Int
-    ):
+    ): Single<Response<LogResponse>>
 
 }
