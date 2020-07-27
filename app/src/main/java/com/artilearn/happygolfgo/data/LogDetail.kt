@@ -26,7 +26,7 @@ data class LogDetail(
 
     @SerializedName("ratings")
     @Expose
-    val ratings: Double?,
+    val ratings: Float?,
 
     @SerializedName("isReviewed")
     @Expose

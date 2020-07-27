@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.comment.CommetActivity"></activity>
+        <activity android:name=".ui.comment.CommentActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"></activity>
         <activity android:name=".ui.video.VideoActivity" />
         <activity android:name=".ui.log.LogActivity" />
         <activity android:name=".ui.reservelist.ReserveListActivity" />

@@ -135,6 +135,6 @@ interface ApiInterface {
     @PUT("user/lessonlogs")
     fun uploadLessonComment(
         @Body data: HashMap<String, CommentModel>
-    ): Single<Response<CommentResponse>>
+    ): Completable
 
 }

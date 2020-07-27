@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
 
         <variable
             name="vm"
             type="com.artilearn.happygolfgo.ui.comment.CommentViewModel" />
+
+        <variable
+            name="log"
+            type="com.artilearn.happygolfgo.data.LessonLog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/comment_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.comment.CommetActivity">
+        android:background="@color/color_white"
+        tools:context=".ui.comment.CommentActivity">
 
         <include
             android:id="@+id/comment_toolbar"
@@ -26,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <include
-            android:id="@+id/bottom_nav"
+            android:id="@+id/comment_bottom_view"
             layout="@layout/custom_bottom_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +47,7 @@
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+            app:layout_constraintBottom_toTopOf="@id/comment_bottom_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/comment_toolbar">
@@ -53,7 +61,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/tv_coach_name_date"
+                        android:id="@+id/tv_coach_info"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -63,6 +71,8 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        bind:setCommentCreatedAt="@{log.createdAt}"
+                        bind:setCommentEmplotyeeName="@{log.employeeName}"
                         tools:text="OOO 코치, 2020.05.28" />
 
                     <View
@@ -73,7 +83,7 @@
                         android:background="@color/color_line_gray"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_coach_name_date" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_coach_info" />
 
                     <TextView
                         android:id="@+id/tv_subtitle"
@@ -81,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="21dp"
-                        android:text="ㅋㅋㅋㅋㅋㅋ"
+                        android:text="@string/comment_subtitle_text"
                         android:textSize="14dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view_one" />
@@ -94,6 +104,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:numStars="5"
+                        android:rating="@={vm.rating}"
                         android:stepSize="1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_subtitle" />
@@ -114,7 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:text="ㅎㅎㅎㅎㅎㅎ"
+                        android:text="@string/comment_comment_title"
                         android:textSize="14dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view_two" />
@@ -127,8 +138,9 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/review_edittext_side"
-                        android:hint="힌트ㅋㅋㅋㅋㅋ"
+                        android:hint="@string/comment_comment_hint"
                         android:padding="8dp"
+                        android:text="@={vm.comment}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_comment_title" />

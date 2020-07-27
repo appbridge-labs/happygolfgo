@@ -16,14 +16,13 @@ import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.LogDetail
 import com.artilearn.happygolfgo.databinding.ActivityLogBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
-import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.comment.CommentActivity
 import com.artilearn.happygolfgo.ui.video.VideoActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.convertTime
 import com.artilearn.happygolfgo.util.setImage
 import kotlinx.android.synthetic.main.activity_log.*
 import kotlinx.android.synthetic.main.common_default_view.view.*
-import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
@@ -94,18 +93,18 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
         return "${calendar[0]}.${calendar[1]}.${calendar[2]}"
     }
 
-    //todo isReviewable 작성일로 3일 후 true 인데 false로만 테스트 해봤음!
     private fun setLessonLogItem(log: LogDetail) {
         with(log) {
             loadThumbNail(log.thumbnailURL, log.body)
 
+            //todo isReviewed 서버에서 false로 옴 계속
             if (isReviewed) {
                 setMyCommet(log.comment)
             } else {
                 if (isReviewable) {
-                    overIsReviewable()
-                } else {
                     underIsReviewable()
+                } else {
+                    overIsReviewable()
                 }
             }
         }
@@ -138,6 +137,7 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             logBottomView.visibility = View.GONE
             logCommentTitle.tv_common.apply {
                 setTextColor(ContextCompat.getColor(this.context, R.color.color_sub_gray))
+                text = getString(R.string.log_over_comment)
             }
         }
     }
@@ -160,8 +160,16 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
         }
     }
 
+    private fun goComment(lessonLog: LessonLog) {
+        val commentIntent = Intent(this, CommentActivity::class.java)
+            .apply {
+                putExtra(LESSON_LOG, lessonLog)
+            }
+        startActivity(commentIntent)
+    }
+
     override fun bottomAction() {
         super.bottomAction()
-        
+        goComment(lessonLog)
     }
 }

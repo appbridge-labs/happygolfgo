@@ -2,9 +2,7 @@ package com.artilearn.happygolfgo.data.comment.source.remote
 
 import com.artilearn.happygolfgo.api.ApiInterface
 import com.artilearn.happygolfgo.data.comment.CommentModel
-import com.artilearn.happygolfgo.data.comment.CommentResponse
-import io.reactivex.Single
-import retrofit2.Response
+import io.reactivex.Completable
 
 class CommentRemoteDataSourceImpl(
     private val apiInterface: ApiInterface
@@ -12,10 +10,7 @@ class CommentRemoteDataSourceImpl(
 
     override fun remoteUploadComment(
         data: HashMap<String, CommentModel>
-    ): Single<Response<CommentResponse>> {
+    ): Completable {
         return apiInterface.uploadLessonComment(data)
-            .map {
-                it
-            }
     }
 }
