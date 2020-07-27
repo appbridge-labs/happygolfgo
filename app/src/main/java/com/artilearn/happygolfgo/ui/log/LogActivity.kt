@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.log
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -10,11 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.LESSON_LOG
+import com.artilearn.happygolfgo.constants.VIDEO_URL
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.LogDetail
 import com.artilearn.happygolfgo.databinding.ActivityLogBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.video.VideoActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.convertTime
 import com.artilearn.happygolfgo.util.setImage
@@ -57,8 +60,8 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
                 binding.log = it
                 setLessonLogItem(it)
             })
-            videoUrl.observe(this@LogActivity, Observer {
-                showToast(ToastType.SUCCESS, it)
+            videoUrl.observe(this@LogActivity, Observer { url ->
+                goVideo(url)
             })
             serverError.observe(this@LogActivity, Observer {
 
@@ -144,6 +147,16 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             initBottomView(logBottomView, getString(R.string.log_bottom_view_title), BottimViewType.DEFAULT_TYPE)
             logCommentTitle.visibility = View.GONE
             tvComment.visibility = View.GONE
+        }
+    }
+
+    private fun goVideo(videoUrl: String?) {
+        videoUrl?.let {
+            val videoIntent = Intent(this, VideoActivity::class.java)
+                .apply {
+                    putExtra(VIDEO_URL, videoUrl)
+                }
+            startActivity(videoIntent)
         }
     }
 }
