@@ -67,7 +67,7 @@ class ReserveListActivity :
     }
 
     private fun initView() {
-        initToolbar(binding.reserveListToolbar.toolBar, getString(R.string.reserve_list_toolbar_title), true)
+        initToolbar(binding.reserveListToolbar.toolbar, getString(R.string.reserve_list_toolbar_title), true)
     }
 
 }

@@ -72,8 +72,8 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
     }
 
     private fun initView() {
-        initToolbar(binding.pwresetToolbar.toolBar, getString(R.string.pwreset_toolbar_title), true)
-        initBottomView(binding.pwresetBottomView.bottomLayout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
+        initToolbar(binding.pwresetToolbar.toolbar, getString(R.string.pwreset_toolbar_title), true)
+        initBottomView(binding.pwresetBottomView.bottom_layout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
     }
 
     private fun createPassword(): Observable<String> {

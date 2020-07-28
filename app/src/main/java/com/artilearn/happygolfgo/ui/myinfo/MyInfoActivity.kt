@@ -64,12 +64,8 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
     }
 
     private fun initView() {
-        initToolbar(binding.myinfoToolbar.toolBar, getString(R.string.myinfo_toolbar_title), true)
-        initBottomView(
-            binding.myinfoBottomView.bottomLayout,
-            getString(R.string.bottom_view_default),
-            BottimViewType.DEFAULT_TYPE
-        )
+        initToolbar(binding.myinfoToolbar.toolbar, getString(R.string.myinfo_toolbar_title), true)
+        initBottomView(binding.myinfoBottomView.bottom_layout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
     }
 
     private fun showEmptyNickName() {

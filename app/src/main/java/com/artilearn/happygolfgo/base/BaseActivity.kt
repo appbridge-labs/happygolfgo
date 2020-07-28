@@ -63,11 +63,11 @@ abstract class BaseActivity<B : ViewDataBinding>(
         when (type) {
             BottimViewType.DEFAULT_TYPE -> {
                 bottomView.iv_image.setImageResource(R.drawable.ic_flag_bottom_button)
-                bottomView.bottomLayout.setBackgroundColor(getColor(R.color.color_green))
+                bottomView.bottom_layout.setBackgroundColor(getColor(R.color.color_green))
             }
             BottimViewType.CANCEL_TYPE -> {
                 bottomView.iv_image.setImageResource(R.drawable.ic_cancel)
-                bottomView.bottomLayout.setBackgroundColor(getColor(R.color.color_red))
+                bottomView.bottom_layout.setBackgroundColor(getColor(R.color.color_red))
             }
         }
     }

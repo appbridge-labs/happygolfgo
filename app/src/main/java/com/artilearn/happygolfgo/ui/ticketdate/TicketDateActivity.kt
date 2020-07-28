@@ -80,7 +80,7 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
 
     private fun initView() {
         ticket = intent.getParcelableExtra(TICKET)
-        initToolbar(binding.calendarToolbar.toolBar, getString(R.string.ticketdate_toolbar_title), true)
+        initToolbar(binding.calendarToolbar.toolbar, getString(R.string.ticketdate_toolbar_title), true)
     }
 
     private fun initCalendarListener() {

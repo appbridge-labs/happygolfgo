@@ -78,12 +78,8 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
     }
 
     private fun initView() {
-        initToolbar(binding.commentToolbar.toolBar, getString(R.string.log_toolbar_title), true)
-        initBottomView(
-            binding.commentBottomView.bottomLayout,
-            getString(R.string.bottom_view_default),
-            BottimViewType.DEFAULT_TYPE
-        )
+        initToolbar(binding.commentToolbar.toolbar, getString(R.string.log_toolbar_title), true)
+        initBottomView(binding.commentBottomView.bottom_layout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
     }
 
     private fun showEmptyRating() {

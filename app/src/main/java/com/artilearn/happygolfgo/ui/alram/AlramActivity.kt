@@ -54,7 +54,7 @@ class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram
     }
 
     private fun initView() {
-        initToolbar(binding.alramToolbar.toolBar, getString(R.string.alram_toolbar_title), true)
+        initToolbar(binding.alramToolbar.toolbar, getString(R.string.alram_toolbar_title), true)
     }
 
     private fun initAdapter() {

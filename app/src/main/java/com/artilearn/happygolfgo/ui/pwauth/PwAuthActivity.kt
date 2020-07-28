@@ -62,12 +62,8 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
     }
 
     private fun initView() {
-        initToolbar(binding.pwauthToolbar.toolBar, getString(R.string.pwauth_toolbar_title), true)
-        initBottomView(
-            binding.pwauthBottomView.bottomLayout,
-            getString(R.string.bottom_view_default),
-            BottimViewType.DEFAULT_TYPE
-        )
+        initToolbar(binding.pwauthToolbar.toolbar, getString(R.string.pwauth_toolbar_title), true)
+        initBottomView(binding.pwauthBottomView.bottom_layout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
     }
 
     private fun phoneType(type: PwAuthPhoneType) {
