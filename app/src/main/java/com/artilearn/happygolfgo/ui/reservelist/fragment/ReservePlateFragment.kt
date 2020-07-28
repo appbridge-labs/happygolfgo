@@ -63,7 +63,7 @@ class ReservePlateFragment
             goReservationConfirm(plateItem)
         }
 
-        binding.recyclerView.adapter = adapter
+        binding.recyclerview.adapter = adapter
     }
 
     private fun setReservationPlate(item: List<ReserveList>) {

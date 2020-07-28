@@ -48,8 +48,8 @@ class ReserveListActivity :
             reservationList.observe(this@ReserveListActivity, Observer {
                 pagerAdaper = ReservePagerListAdapter(this@ReserveListActivity, it)
 
-                binding.viewPager.adapter = pagerAdaper
-                TabLayoutMediator(binding.reserveListTablayout, binding.viewPager,
+                binding.viewpager.adapter = pagerAdaper
+                TabLayoutMediator(binding.reserveListTablayout, binding.viewpager,
                     TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                         when (position) {
                             0 -> tab.text = getString(R.string.reserve_list_plate_title)

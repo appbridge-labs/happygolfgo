@@ -43,7 +43,7 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
+            android:id="@+id/viewpager"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
@@ -53,7 +53,7 @@
             app:layout_constraintTop_toBottomOf="@id/reserve_list_tablayout" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressbar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"

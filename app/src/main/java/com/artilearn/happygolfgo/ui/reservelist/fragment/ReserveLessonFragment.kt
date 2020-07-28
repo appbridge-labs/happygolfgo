@@ -65,7 +65,7 @@ class ReserveLessonFragment
             goReservationConfirm(lessonItem)
         }
 
-        binding.recyclerView.adapter = adapter
+        binding.recyclerview.adapter = adapter
     }
 
     private fun setReservationLesson(item: List<ReserveList>) {

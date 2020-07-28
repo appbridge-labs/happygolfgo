@@ -16,7 +16,7 @@
         tools:context=".ui.reservelist.fragment.ReservePlateFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="20dp"
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/iv_emptyReservation"
+                android:id="@+id/iv_empty_reservation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -54,9 +54,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:text="@string/fragment_reserve_lesson_empty"
-                app:layout_constraintEnd_toStartOf="@id/iv_emptyReservation"
-                app:layout_constraintStart_toEndOf="@id/iv_emptyReservation"
-                app:layout_constraintTop_toBottomOf="@id/iv_emptyReservation" />
+                app:layout_constraintEnd_toStartOf="@id/iv_empty_reservation"
+                app:layout_constraintStart_toEndOf="@id/iv_empty_reservation"
+                app:layout_constraintTop_toBottomOf="@id/iv_empty_reservation" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
