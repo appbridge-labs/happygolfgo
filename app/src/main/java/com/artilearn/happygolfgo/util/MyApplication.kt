@@ -12,6 +12,10 @@ import com.artilearn.happygolfgo.data.comment.source.CommentRepository
 import com.artilearn.happygolfgo.data.comment.source.CommentRepositoryImpl
 import com.artilearn.happygolfgo.data.comment.source.remote.CommentRemoteDataSource
 import com.artilearn.happygolfgo.data.comment.source.remote.CommentRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.developeroption.source.DeveloperOptionRepository
+import com.artilearn.happygolfgo.data.developeroption.source.DeveloperOptionRepositoryImpl
+import com.artilearn.happygolfgo.data.developeroption.source.local.DeveloperOptionDataSoucre
+import com.artilearn.happygolfgo.data.developeroption.source.local.DeveloperOptionDataSoucreImpl
 import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
 import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepositoryImpl
 import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSource
@@ -115,6 +119,7 @@ class MyApplication : Application() {
     private lateinit var cancelRemoteDataSource: CancelRemoteDataSource
     private lateinit var logRemoteDataSource: LogRemoteDataSource
     private lateinit var commentRemoteDataSource: CommentRemoteDataSource
+    private lateinit var developerOptionDataSoucre: DeveloperOptionDataSoucre
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -134,6 +139,7 @@ class MyApplication : Application() {
     lateinit var cancelRepository: CancelRepository
     lateinit var logRespository: LogRepository
     lateinit var commentRepository: CommentRepository
+    lateinit var developerOptionRepository: DeveloperOptionRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -171,6 +177,7 @@ class MyApplication : Application() {
         cancelRemoteDataSource = ReserveConfirmRemoteDataSourceImpl(apiInterface)
         logRemoteDataSource = LogRemoteDataSourceImpl(apiInterface)
         commentRemoteDataSource = CommentRemoteDataSourceImpl(apiInterface)
+        developerOptionDataSoucre = DeveloperOptionDataSoucreImpl(preferenceManager)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
@@ -190,6 +197,7 @@ class MyApplication : Application() {
         cancelRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, networkManager)
         logRespository = LogRepositoryImpl(logRemoteDataSource, networkManager)
         commentRepository = CommentRepositoryImpl(commentRemoteDataSource, networkManager)
+        developerOptionRepository = DeveloperOptionRepositoryImpl(developerOptionDataSoucre)
     }
 
     init {

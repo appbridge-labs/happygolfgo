@@ -16,6 +16,7 @@ class LoginViewModel(
 
     val phone = MutableLiveData("")
     val password = MutableLiveData("")
+    private var count = 0
 
     private var currentPhone = ""
     private var currentPassword = ""
@@ -25,12 +26,16 @@ class LoginViewModel(
     private val _emptyPhone: MutableLiveData<Unit> = MutableLiveData()
     private val _emptyPassword: MutableLiveData<Unit> = MutableLiveData()
     private val _loginSuccess: MutableLiveData<Unit> = MutableLiveData()
+    private val _developerOption: MutableLiveData<Unit> = MutableLiveData()
+    private val _passwordClick: MutableLiveData<Unit> = MutableLiveData()
 
     val emptyPassword: LiveData<Unit> get() = _emptyPassword
     val emptyPhone: LiveData<Unit> get() = _emptyPhone
     val failPassword: LiveData<Unit> get() = _failPassword
     val emptyUser: LiveData<Unit> get() = _emptyUser
     val loginSuccess: LiveData<Unit> get() = _loginSuccess
+    val developerOption: LiveData<Unit> get() = _developerOption
+    val passwordClick: LiveData<Unit> get() = _passwordClick
 
     fun onLoginClick() {
         currentPhone = phone.value.toString()
@@ -51,7 +56,15 @@ class LoginViewModel(
     }
 
     fun onPasswordForgetClick() {
+        _passwordClick.value = Unit
+    }
 
+    fun onDeveloperOption() {
+        count++
+        if (count >= 10) {
+            count = 0
+            _developerOption.value = Unit
+        }
     }
 
     private fun requestLogin() {
@@ -88,6 +101,5 @@ class LoginViewModel(
                 })
         )
     }
-
 
 }

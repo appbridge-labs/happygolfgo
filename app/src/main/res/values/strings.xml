@@ -110,4 +110,8 @@
     <string name="comment_fail_length">100자 이내로 작성해 주세요</string>
     <string name="default_notification_channel_id" translatable="false">행복골프_기본채널</string>
     <string name="default_notification_text">행복골프 기본 채널입니다</string>
+    <string name="fragment_developer_title">개발자 옵션</string>
+    <string name="fragment_developer_prodution">Prodution Mode</string>
+    <string name="fragment_developer_test">Test Mode</string>
+    <string name="fragment_developer_developer">Developer Mode</string>
 </resources>

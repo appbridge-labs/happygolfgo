@@ -10,7 +10,9 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityLoginBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.common.DeveloperOptionFragment
 import com.artilearn.happygolfgo.ui.home.HomeActivity
+import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
@@ -61,6 +63,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             loginSuccess.observe(this@LoginActivity, Observer {
                 goHome()
             })
+            passwordClick.observe(this@LoginActivity, Observer {
+                goPasswordAuth()
+            })
+            developerOption.observe(this@LoginActivity, Observer {
+                openDeveloperOption()
+            })
         }
     }
 
@@ -83,5 +91,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun goHome() {
         startActivity(Intent(this, HomeActivity::class.java))
         finish()
+    }
+
+    private fun goPasswordAuth() {
+        startActivity(Intent(this, PwAuthActivity::class.java))
+    }
+
+    private fun openDeveloperOption() {
+        val bottom = DeveloperOptionFragment()
+        bottom.show(supportFragmentManager, bottom.tag)
     }
 }
