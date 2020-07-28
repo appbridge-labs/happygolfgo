@@ -78,7 +78,6 @@ class SplashViewModel(
                 .doOnSubscribe {  }
                 .doAfterTerminate {  }
                 .subscribe({
-                    Log.d(TAG, "selectAccessToken success: $it")
                     userSynchronized()
                 }, { t ->
                     Log.d(TAG, "selectAccessToken fail: ${t.message}")
@@ -106,7 +105,6 @@ class SplashViewModel(
                 .doOnSubscribe {  }
                 .doAfterTerminate {  }
                 .subscribe({
-                    Log.d(TAG, "userSynchronized success: $it")
                     _goHome.value = Unit
                 }, { t ->
                     Log.d(TAG, "userSynchronized fail: ${t.message}")

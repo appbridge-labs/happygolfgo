@@ -10,16 +10,14 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.constants.CHANNEL_ID
+import com.artilearn.happygolfgo.constants.NOTIFICATION_ID
 import com.artilearn.happygolfgo.ui.alram.AlramActivity
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
-//todo 알람 액션 테스트 중(task, stack 절차 중)
 class FCMMessage : FirebaseMessagingService() {
-
-    private val CHANNEL_ID = "HappyGolf channel"
-    private val NOTIFICATION_ID = 9000
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.data.let {
@@ -34,7 +32,10 @@ class FCMMessage : FirebaseMessagingService() {
     private fun sendNotification(body: MutableMap<String, String>) {
         createNotificationChannel()
 
-        val intent = Intent(this, AlramActivity::class.java)
+        val alramIntent = Intent(this, AlramActivity::class.java)
+            .apply {
+
+            }
 //        intent.putExtra("fcm", 9000)
 //        intent.flags =
 //            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -44,7 +45,7 @@ class FCMMessage : FirebaseMessagingService() {
         val pendingIntent = PendingIntent.getActivity(
             this,
             NOTIFICATION_ID,
-            intent,
+            alramIntent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)

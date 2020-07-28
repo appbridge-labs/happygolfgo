@@ -29,3 +29,5 @@ const val RESERVATION = "RESERVATION"
 const val CONFIRM_TYPE = "CONFIRM_TYPE"
 const val LESSON_LOG = "LESSON_LOG"
 const val VIDEO_URL = "VIDEO_URL"
+const val CHANNEL_ID = "CHANNEL_ID"
+const val NOTIFICATION_ID = 9000
