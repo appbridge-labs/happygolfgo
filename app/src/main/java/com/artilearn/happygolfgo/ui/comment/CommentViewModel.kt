@@ -1,5 +1,7 @@
 package com.artilearn.happygolfgo.ui.comment
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +9,7 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.comment.CommentModel
 import com.artilearn.happygolfgo.data.comment.source.CommentRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -16,7 +19,7 @@ class CommentViewModel(
     private val TAG = javaClass.simpleName
 
     val rating = MutableLiveData(0f)
-    val comment = MutableLiveData("")
+    var comment = MutableLiveData("")
     var lessonId: Int? = null
 
     private val _emptyRating: MutableLiveData<Unit> = MutableLiveData()
@@ -69,4 +72,5 @@ class CommentViewModel(
             }
         }
     }
+
 }

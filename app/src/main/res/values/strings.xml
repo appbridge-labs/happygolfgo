@@ -107,4 +107,5 @@
     <string name="comment_empty_comment">후기를 작성해 주세요</string>
     <string name="comment_upload_fail">서버오류로 인해 업로드에 실패했습니다</string>
     <string name="comment_upload_success">후기 남기기 성공</string>
+    <string name="comment_fail_length">100자 이내로 작성해 주세요</string>
 </resources>
