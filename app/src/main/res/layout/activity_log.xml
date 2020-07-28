@@ -50,7 +50,7 @@
             app:layout_constraintTop_toBottomOf="@id/log_name" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linear_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_unserline"
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@id/linear_layout" />
 
         <TextView
             android:id="@+id/tv_comment"
@@ -129,10 +129,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />.
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressbar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"

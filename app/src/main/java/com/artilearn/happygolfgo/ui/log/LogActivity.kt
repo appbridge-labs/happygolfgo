@@ -71,7 +71,7 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
     }
 
     private fun initView() {
-        initToolbar(log_toolbar.toolBar, getString(R.string.log_toolbar_title), true)
+        initToolbar(binding.logToolbar.toolBar, getString(R.string.log_toolbar_title), true)
 
         lessonLog?.id.let {
             viewModel.requestLessonLogDetail(it)

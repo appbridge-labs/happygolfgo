@@ -55,7 +55,7 @@
                 android:textSize="14dp" />
 
             <Button
-                android:id="@+id/btn_Reload"
+                android:id="@+id/btn_reload"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginStart="20dp"

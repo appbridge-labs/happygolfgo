@@ -13,7 +13,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/parentLayout"
+        android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_white"
@@ -41,7 +41,7 @@
             app:layout_constraintTop_toBottomOf="@id/pwreset_toolbar" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/pwLayout"
+            android:id="@+id/pw_layout"
             android:layout_width="0dp"
             android:layout_height="92dp"
             android:layout_marginStart="20dp"
@@ -75,7 +75,7 @@
                 android:textColor="@color/color_black"
                 android:textSize="16dp"
                 app:layout_constraintEnd_toStartOf="@id/iv_pw_success"
-                app:layout_constraintStart_toStartOf="@id/pwLayout"
+                app:layout_constraintStart_toStartOf="@id/pw_layout"
                 app:layout_constraintTop_toBottomOf="@id/tv_pw" />
 
             <ImageView
@@ -85,14 +85,14 @@
                 android:src="@drawable/ic_pw_success"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/et_pw"
-                app:layout_constraintEnd_toEndOf="@id/pwLayout"
+                app:layout_constraintEnd_toEndOf="@id/pw_layout"
                 app:layout_constraintStart_toEndOf="@id/et_pw"
                 app:layout_constraintTop_toTopOf="@id/et_pw" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/pw_confirmLayout"
+            android:id="@+id/pw_confirm_layout"
             android:layout_width="0dp"
             android:layout_height="92dp"
             android:layout_marginStart="20dp"
@@ -101,7 +101,7 @@
             android:background="@color/color_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pwLayout">
+            app:layout_constraintTop_toBottomOf="@id/pw_layout">
 
             <TextView
                 android:id="@+id/tv_pw_confirm"
@@ -136,7 +136,7 @@
                 android:src="@drawable/ic_pw_success"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/et_pw_confirm"
-                app:layout_constraintEnd_toEndOf="@id/pw_confirmLayout"
+                app:layout_constraintEnd_toEndOf="@id/pw_confirm_layout"
                 app:layout_constraintStart_toEndOf="@id/et_pw_confirm"
                 app:layout_constraintTop_toTopOf="@id/et_pw_confirm" />
 
@@ -152,7 +152,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressbar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"

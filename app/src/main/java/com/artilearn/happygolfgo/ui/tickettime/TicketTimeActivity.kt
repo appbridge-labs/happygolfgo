@@ -62,7 +62,7 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
     }
 
     private fun initView() {
-        initToolbar(tickettime_toolbar.toolBar, getString(R.string.tickettime_toolbar_title), true)
+        initToolbar(binding.tickettimeToolbar.toolBar, getString(R.string.tickettime_toolbar_title), true)
 
         viewModel.selectTime(ticket.type, date, ticket.id)
     }

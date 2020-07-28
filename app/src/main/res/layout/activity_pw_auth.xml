@@ -13,7 +13,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/parentLayout"
+        android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_white"
@@ -51,12 +51,12 @@
             android:textColor="@color/color_white"
             android:textSize="16dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/phoneLyaout"
+            app:layout_constraintBottom_toBottomOf="@+id/phone_layout"
             app:layout_constraintEnd_toEndOf="@id/pwauth_toolbar"
-            app:layout_constraintTop_toTopOf="@id/phoneLyaout" />
+            app:layout_constraintTop_toTopOf="@id/phone_layout" />
 
         <LinearLayout
-            android:id="@+id/phoneLyaout"
+            android:id="@+id/phone_layout"
             android:layout_width="0dp"
             android:layout_height="92dp"
             android:layout_marginStart="20dp"
@@ -93,7 +93,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/authLyaout"
+            android:id="@+id/auth_layout"
             android:layout_width="0dp"
             android:layout_height="92dp"
             android:layout_marginStart="20dp"
@@ -102,7 +102,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toStartOf="@id/btn_send"
             app:layout_constraintStart_toStartOf="@id/pwauth_toolbar"
-            app:layout_constraintTop_toBottomOf="@id/phoneLyaout">
+            app:layout_constraintTop_toBottomOf="@id/phone_layout">
 
             <TextView
                 android:id="@+id/tv_auth"
@@ -140,9 +140,9 @@
             android:textColor="@color/color_white"
             android:textSize="16dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/authLyaout"
+            app:layout_constraintBottom_toBottomOf="@+id/auth_layout"
             app:layout_constraintEnd_toEndOf="@id/pwauth_toolbar"
-            app:layout_constraintTop_toTopOf="@id/authLyaout" />
+            app:layout_constraintTop_toTopOf="@id/auth_layout" />
 
         <include
             android:id="@+id/pwauth_bottom_view"
@@ -154,7 +154,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressbar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"

@@ -14,7 +14,7 @@
         tools:context=".ui.common.ErrorActivity">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -32,7 +32,7 @@
                 android:src="@drawable/ic_error" />
 
             <TextView
-                android:id="@+id/tv_errorTitle"
+                android:id="@+id/tv_error_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -46,7 +46,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/btm_reload"
+                android:id="@+id/btn_reload"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -68,7 +68,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout">
+            app:layout_constraintTop_toBottomOf="@id/linear_layout">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_errorMessage"
+                    android:id="@+id/tv_error_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

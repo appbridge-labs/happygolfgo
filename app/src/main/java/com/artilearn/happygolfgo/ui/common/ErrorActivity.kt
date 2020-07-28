@@ -37,7 +37,7 @@ class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error
                     .scaleY(1f)
                     .startDelay = 1500L
             }
-            btmReload.apply {
+            btnReload.apply {
                 animate()
                     .alpha(1f)
                     .scaleX(1f)
@@ -48,7 +48,7 @@ class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error
     }
 
     private fun initClickListener() {
-        binding.btmReload.setOnClickListener {
+        binding.btnReload.setOnClickListener {
             startActivity(lastActivityIntent)
             finish()
         }

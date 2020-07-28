@@ -54,7 +54,7 @@ class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram
     }
 
     private fun initView() {
-        initToolbar(alram_toolbar.toolBar, getString(R.string.alram_toolbar_title), true)
+        initToolbar(binding.alramToolbar.toolBar, getString(R.string.alram_toolbar_title), true)
     }
 
     private fun initAdapter() {
@@ -62,6 +62,6 @@ class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram
             showToast(ToastType.SUCCESS, "$alram")
         }
 
-        binding.recyclerView.adapter = adapter
+        binding.recyclerview.adapter = adapter
     }
 }

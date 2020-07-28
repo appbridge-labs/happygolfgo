@@ -72,8 +72,8 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
     }
 
     private fun initView() {
-        initToolbar(pwreset_toolbar.toolBar, getString(R.string.pwreset_toolbar_title), true)
-        initBottomView(pwreset_bottom_view.bottomLayout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
+        initToolbar(binding.pwresetToolbar.toolBar, getString(R.string.pwreset_toolbar_title), true)
+        initBottomView(binding.pwresetBottomView.bottomLayout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
     }
 
     private fun createPassword(): Observable<String> {
@@ -198,7 +198,7 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
         if (passwordStatus && confirmStatus) {
             viewModel.updatePassword()
         } else {
-            parentLayout.snackbar(getString(R.string.pwreset_please_check_pw))
+            binding.parentLayout.snackbar(getString(R.string.pwreset_please_check_pw))
             return
         }
     }

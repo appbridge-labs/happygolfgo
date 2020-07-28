@@ -75,7 +75,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             goSelectionDate(ticket)
         }
 
-        binding.recyclerView.adapter = adapter
+        binding.recyclerview.adapter = adapter
     }
 
     private fun ticketRefresh() {

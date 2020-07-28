@@ -31,7 +31,7 @@ class ReserveSuccessActivity :
     }
 
     private fun initView() {
-        initBottomView(reserve_success_bottom_view.bottomLayout, getString(R.string.reserve_success_bottom_title), BottimViewType.DEFAULT_TYPE)
+        initBottomView(binding.reserveSuccessBottomView.bottomLayout, getString(R.string.reserve_success_bottom_title), BottimViewType.DEFAULT_TYPE)
         when (successType) {
             "reservation" -> {
                 setReservationText()

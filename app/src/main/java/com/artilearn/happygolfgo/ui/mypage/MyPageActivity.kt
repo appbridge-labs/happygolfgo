@@ -63,7 +63,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
     }
 
     private fun initView() {
-        initToolbar(mypage_toolbar.toolBar, getString(R.string.mypage_toolbar_title), true)
+        initToolbar(binding.mypageToolbar.toolBar, getString(R.string.mypage_toolbar_title), true)
 
         with(binding) {
             includeLesson.tv_text.text = getString(R.string.mypage_lesson_title)

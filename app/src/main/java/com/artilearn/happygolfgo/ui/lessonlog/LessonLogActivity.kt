@@ -58,7 +58,7 @@ class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activi
     }
 
     private fun initView() {
-        initToolbar(lessonlog_toolbar.toolBar, getString(R.string.lessonlog_toolbar_title), true)
+        initToolbar(binding.lessonlogToolbar.toolBar, getString(R.string.lessonlog_toolbar_title), true)
     }
 
     private fun initAdapter() {
@@ -66,7 +66,7 @@ class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activi
             goLog(log)
         }
 
-        binding.recyclerView.adapter = adapter
+        binding.recyclerview.adapter = adapter
     }
 
     private fun goLog(log: LessonLog) {

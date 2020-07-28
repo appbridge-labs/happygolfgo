@@ -97,7 +97,7 @@
                         app:layout_constraintTop_toBottomOf="@id/view_one" />
 
                     <RatingBar
-                        android:id="@+id/ratingBar"
+                        android:id="@+id/ratingbar"
                         style="@style/Widget.AppCompat.RatingBar"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                         android:background="@color/color_line_gray"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ratingBar" />
+                        app:layout_constraintTop_toBottomOf="@id/ratingbar" />
 
                     <TextView
                         android:id="@+id/tv_comment_title"
@@ -162,7 +162,7 @@
         </LinearLayout>
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressbar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:visibility="@{vm.isLoading() ? View.VISIBLE : View.INVISIBLE}"
