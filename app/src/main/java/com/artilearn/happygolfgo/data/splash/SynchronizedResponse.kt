@@ -10,7 +10,7 @@ data class SynchronizedResponse(
 
     @SerializedName("message")
     @Expose
-    val message: Int,
+    val message: String,
 
     @SerializedName("Data")
     @Expose

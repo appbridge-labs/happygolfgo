@@ -13,7 +13,6 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 
-//todo 실 비디오 틀면 양옆위아래 흰색배경으로 약간 짤리는데 나중에 확인해 볼것
 class VideoActivity : BaseActivity<ActivityVideoBinding>(R.layout.activity_video) {
 
     private val videoUrl by lazy { intent.getStringExtra(VIDEO_URL) }

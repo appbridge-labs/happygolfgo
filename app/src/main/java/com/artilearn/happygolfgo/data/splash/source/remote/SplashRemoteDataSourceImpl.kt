@@ -6,14 +6,14 @@ import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
 import io.reactivex.Single
+import retrofit2.Response
 
 class SplashRemoteDataSourceImpl(
     private val apiInterface: ApiInterface
 ) : SplashRemoteDataSource {
-
     override fun remoteGetAccessToken(
         data: HashMap<String, SplashTokenModel>
-    ): Single<SplashTokenResponse> {
+    ): Single<Response<SplashTokenResponse>> {
         return apiInterface.getAccessToken(data)
             .map {
                 it
@@ -22,10 +22,11 @@ class SplashRemoteDataSourceImpl(
 
     override fun remoteUserSynchronized(
         data: HashMap<String, SynchronizedDataModel>
-    ): Single<SynchronizedResponse> {
+    ): Single<Response<SynchronizedResponse>> {
         return apiInterface.userSynchronized(data)
             .map {
                 it
             }
     }
+
 }

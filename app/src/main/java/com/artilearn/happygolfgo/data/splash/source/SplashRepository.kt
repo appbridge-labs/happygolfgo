@@ -5,19 +5,21 @@ import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
 import io.reactivex.Single
+import retrofit2.Response
 
 interface SplashRepository {
 
     var clientSecretKey: String
     val autoLogin: Boolean
     val tutorial: Boolean
+    val fcmToken: String?
 
     fun getAccessToken(
         data: HashMap<String, SplashTokenModel>
-    ): Single<SplashTokenResponse>
+    ): Single<Response<SplashTokenResponse>>
 
     fun userSynchronized(
         data: HashMap<String, SynchronizedDataModel>
-    ): Single<SynchronizedResponse>
+    ): Single<Response<SynchronizedResponse>>
 
 }

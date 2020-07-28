@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.comment.CommentModel
-import com.artilearn.happygolfgo.data.comment.CommentResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.log.LogResponse
@@ -37,12 +36,12 @@ interface ApiInterface {
     @POST("auth/common/token")
     fun getAccessToken(
         @Body data: HashMap<String, SplashTokenModel>
-    ): Single<SplashTokenResponse>
+    ): Single<Response<SplashTokenResponse>>
 
     @POST("auth/common/uptodate")
     fun userSynchronized(
         @Body data: HashMap<String, SynchronizedDataModel>
-    ): Single<SynchronizedResponse>
+    ): Single<Response<SynchronizedResponse>>
 
     @GET("main/user")
     fun mainHome(): Single<Response<HomeResponse>>

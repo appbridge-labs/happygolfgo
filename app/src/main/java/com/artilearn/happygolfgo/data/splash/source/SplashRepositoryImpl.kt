@@ -9,6 +9,7 @@ import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Single
+import retrofit2.Response
 
 class SplashRepositoryImpl(
     private val splashLocalDataSource: SplashLocalDataSource,
@@ -28,14 +29,20 @@ class SplashRepositoryImpl(
     override val tutorial: Boolean
         get() = splashLocalDataSource.tutorial
 
+    override val fcmToken: String?
+        get() = splashLocalDataSource.fcmToken
+
     override fun getAccessToken(
         data: HashMap<String, SplashTokenModel>
-    ): Single<SplashTokenResponse> {
+    ): Single<Response<SplashTokenResponse>> {
         return if (networkManager.networkState()) {
             splashRemoteDataSource.remoteGetAccessToken(data)
                 .flatMap {
-                    splashLocalDataSource.accessToken = it.data.accessToken
-                    Single.just(it)
+                    if (it.isSuccessful) {
+                        Single.just(it)
+                    } else {
+                        Single.error(IllegalStateException("Server Error"))
+                    }
                 }
         } else {
             Single.error(IllegalStateException("Network Error"))
@@ -44,12 +51,17 @@ class SplashRepositoryImpl(
 
     override fun userSynchronized(
         data: HashMap<String, SynchronizedDataModel>
-    ): Single<SynchronizedResponse> {
+    ): Single<Response<SynchronizedResponse>> {
         return if (networkManager.networkState()) {
             splashRemoteDataSource.remoteUserSynchronized(data)
                 .flatMap {
-                    userInfoSynchronized(it.data.user)
-                    Single.just(it)
+                    val body = it.body()
+                    if (it.isSuccessful && body != null) {
+                        userInfoSynchronized(body.data.user)
+                        Single.just(it)
+                    } else {
+                        Single.error(IllegalStateException("Server Error"))
+                    }
                 }
         } else {
             Single.error(IllegalStateException("Network Error"))
