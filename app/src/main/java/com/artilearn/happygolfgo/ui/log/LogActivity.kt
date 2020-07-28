@@ -96,7 +96,6 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
         with(log) {
             loadThumbNail(log.thumbnailURL, log.body)
 
-            //todo isReviewed 서버에서 false로 옴 계속
             if (isReviewed) {
                 setMyCommet(log.comment)
             } else {
