@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
@@ -43,7 +43,7 @@
             tools:listitem="@layout/item_ticket_time" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressbar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@id/tickettime_toolbar">
 
             <ImageView
-                android:id="@+id/iv_emptyTicketTime"
+                android:id="@+id/iv_empty_ticket_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -76,9 +76,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:text="@string/ticket_time_empty_time_text"
-                app:layout_constraintEnd_toStartOf="@id/iv_emptyTicketTime"
-                app:layout_constraintStart_toEndOf="@id/iv_emptyTicketTime"
-                app:layout_constraintTop_toBottomOf="@id/iv_emptyTicketTime" />
+                app:layout_constraintEnd_toStartOf="@id/iv_empty_ticket_time"
+                app:layout_constraintStart_toEndOf="@id/iv_empty_ticket_time"
+                app:layout_constraintTop_toBottomOf="@id/iv_empty_ticket_time" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

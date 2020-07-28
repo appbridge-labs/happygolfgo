@@ -71,7 +71,7 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
         adapter = TicketTimeAdapter { ticketTime ->
             goReserveConfirm(ticketTime)
         }
-        binding.recyclerView.adapter = adapter
+        binding.recyclerview.adapter = adapter
     }
 
     private fun goReserveConfirm(ticketTime: TicketTime) {
