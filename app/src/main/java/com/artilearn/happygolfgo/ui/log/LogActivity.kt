@@ -52,7 +52,6 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
         binding.vm = viewModel
     }
 
-    //todo server,network error 생각해보기
     private fun initViewModelObserve() {
         with(viewModel) {
             logDetail.observe(this@LogActivity, Observer {
@@ -62,11 +61,11 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             videoUrl.observe(this@LogActivity, Observer { url ->
                 goVideo(url)
             })
-            serverError.observe(this@LogActivity, Observer {
-
+            serverError.observe(this@LogActivity, Observer { errorMsg ->
+                showError(errorMsg)
             })
             networkFail.observe(this@LogActivity, Observer {
-
+                showNetworkFail()
             })
         }
     }

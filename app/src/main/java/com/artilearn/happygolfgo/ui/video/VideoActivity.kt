@@ -29,7 +29,7 @@ class VideoActivity : BaseActivity<ActivityVideoBinding>(R.layout.activity_video
 
     private fun initializePlayer(path: String) {
         player = ExoPlayerFactory.newSimpleInstance(this)
-        binding.exoplayerView.player = player
+        binding.exoplayer.player = player
 
         val uri = path.toUri()
         val mediaSource = buildMediaSource(uri)
