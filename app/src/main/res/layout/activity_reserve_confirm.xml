@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/ticketNameLayout"
+            android:id="@+id/ticketname_layout"
             android:layout_width="0dp"
             android:layout_height="83dp"
             android:background="@drawable/bg_unserline"
@@ -66,14 +66,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ticketDateLayout"
+            android:id="@+id/ticketdate_layout"
             android:layout_width="0dp"
             android:layout_height="83dp"
             android:background="@drawable/bg_unserline"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ticketNameLayout">
+            app:layout_constraintTop_toBottomOf="@id/ticketname_layout">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,14 +98,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ticketTimeLayout"
+            android:id="@+id/tickettime_layout"
             android:layout_width="0dp"
             android:layout_height="83dp"
             android:background="@drawable/bg_unserline"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ticketDateLayout">
+            app:layout_constraintTop_toBottomOf="@id/ticketdate_layout">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ticketTimeLayout">
+            app:layout_constraintTop_toBottomOf="@id/tickettime_layout">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -162,7 +162,7 @@
         </LinearLayout>
 
         <include
-            android:id="@+id/reserve_confirm_bottomView"
+            android:id="@+id/reserve_confirm_bottom_view"
             layout="@layout/custom_bottom_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

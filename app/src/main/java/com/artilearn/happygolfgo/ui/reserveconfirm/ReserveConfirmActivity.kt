@@ -102,7 +102,7 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
     }
 
     private fun reservationView() {
-        initBottomView(reserve_confirm_bottomView.bottomLayout, getString(R.string.reserve_confirm_bottom_title), BottimViewType.DEFAULT_TYPE)
+        initBottomView(binding.reserveConfirmBottomView.bottomLayout, getString(R.string.reserve_confirm_bottom_title), BottimViewType.DEFAULT_TYPE)
         datesList = setTimeDate(ticketTime.startDate, ticketTime.endDate)
         with(binding) {
             tvTicketName.text = ticket.name
@@ -121,7 +121,7 @@ class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.lay
     }
 
     private fun cancelView() {
-        initBottomView(reserve_confirm_bottomView.bottomLayout, getString(R.string.reserve_confirm_cancel_bottom_title), BottimViewType.CANCEL_TYPE)
+        initBottomView(binding.reserveConfirmBottomView.bottomLayout, getString(R.string.reserve_confirm_cancel_bottom_title), BottimViewType.CANCEL_TYPE)
         datesList = setTimeDate(reservation.startDate, reservation.endDate)
         with(binding) {
             tvTicketName.text = reservation.name
