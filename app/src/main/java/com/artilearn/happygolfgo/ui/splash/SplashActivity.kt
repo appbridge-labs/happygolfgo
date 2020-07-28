@@ -2,10 +2,9 @@ package com.artilearn.happygolfgo.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivitySplashBinding
@@ -67,4 +66,5 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
         startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }
+
 }
