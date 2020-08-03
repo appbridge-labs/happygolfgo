@@ -12,6 +12,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+//todo 개발자 옵션만 마무리하면 끝!
 object ApiService {
     private var applicationContext: Context = MyApplication.getApplicationContext()
 
@@ -24,9 +25,9 @@ object ApiService {
         addInterceptor(interceptor)
         build()
     }
-
+//http://52.79.253.238/development/appClient/
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://52.79.253.238/development/appClient/")
+        .baseUrl(PreferenceManager(applicationContext).environmentMode)
         .client(interceptor(ApiInterceptor()))
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

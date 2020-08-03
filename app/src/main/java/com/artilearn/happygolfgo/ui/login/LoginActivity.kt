@@ -1,8 +1,12 @@
 package com.artilearn.happygolfgo.ui.login
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +20,7 @@ import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
-
+    private val TAG = javaClass.simpleName
     private lateinit var myApplication: MyApplication
     private val viewModel: LoginViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -100,5 +104,41 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun openDeveloperOption() {
         val bottom = DeveloperOptionFragment()
         bottom.show(supportFragmentManager, bottom.tag)
+//        val ddd = Dialog(this)
+//        ddd.setContentView(R.layout.fragment_developer_option)
+//        ddd.setTitle("sibal")
+//        val t1 = ddd.findViewById<TextView>(R.id.tv_production)
+//        val t2 = ddd.findViewById<TextView>(R.id.tv_test)
+//        val t3 = ddd.findViewById<TextView>(R.id.tv_developer)
+//        ddd.show()
+//        t1.setOnClickListener { v -> ddd.dismiss() }
+//        t2.setOnClickListener { v -> ddd.dismiss() }
+//        t3.setOnClickListener { v -> ddd.dismiss() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart: ")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d(TAG, "onRestart: ")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: ")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop: ")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause: ")
+        //myApplication = application as MyApplication
     }
 }

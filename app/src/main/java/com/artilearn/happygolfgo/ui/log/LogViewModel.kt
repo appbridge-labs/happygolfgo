@@ -15,7 +15,7 @@ class LogViewModel(
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
 
-    private val _logDetail: MutableLiveData<LogDetail> = MutableLiveData()
+    private val _logDetail: SingleLiveEvent<LogDetail> = SingleLiveEvent()
     private val _videoUrl: SingleLiveEvent<String> = SingleLiveEvent()
 
     val logDetail: LiveData<LogDetail> get() = _logDetail

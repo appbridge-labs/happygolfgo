@@ -77,8 +77,4 @@ class DeveloperOptionFragment : BottomSheetDialogFragment() {
         dismiss()
     }
 
-    override fun onStart() {
-        super.onStart()
-        myApplication = activity?.applicationContext as MyApplication
-    }
 }

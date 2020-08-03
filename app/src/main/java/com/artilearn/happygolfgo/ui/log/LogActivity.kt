@@ -142,9 +142,10 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
 
     private fun underIsReviewable() {
         with(binding) {
-            initBottomView(logBottomView, getString(R.string.log_bottom_view_title), BottimViewType.DEFAULT_TYPE)
+            logBottomView.visibility = View.VISIBLE
             logCommentTitle.visibility = View.GONE
             tvComment.visibility = View.GONE
+            initBottomView(logBottomView, getString(R.string.log_bottom_view_title), BottimViewType.DEFAULT_TYPE)
         }
     }
 
