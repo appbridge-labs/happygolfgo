@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.ui.pwauth
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -15,13 +16,17 @@ import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
 import com.artilearn.happygolfgo.util.MyApplication
-import com.artilearn.happygolfgo.util.snackbar
-import kotlinx.android.synthetic.main.activity_pw_auth.*
+import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
+import java.util.concurrent.TimeUnit
 
 class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_auth) {
 
+    private val phonePublishSubject = PublishSubject.create<String>()
+    private val authPulishSubject = PublishSubject.create<String>()
     private var status = false
     private lateinit var myApplication: MyApplication
     private val viewModel: PwAuthViewModel by viewModels {
@@ -40,6 +45,8 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
         inject()
         initViewModelObserve()
         initView()
+        rxPhoneNumber()
+        rxAuthNumber()
     }
 
     private fun inject() {
@@ -57,6 +64,7 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             })
             success.observe(this@PwAuthActivity, Observer {
                 status = it
+                rxDelayGoPwReset()
             })
         }
     }
@@ -85,12 +93,46 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             PwAuthNumberType.SUCCESS -> showToast(ToastType.SUCCESS, getString(R.string.pwauth_success_auth))
             PwAuthNumberType.UNCREATE -> showToast(ToastType.WARNNING, getString(R.string.pwauth_uncreate_auth))
             PwAuthNumberType.AUTH_ERROR -> showToast(ToastType.ERROR, getString(R.string.pwauth_fail_auth))
+            PwAuthNumberType.MODEL_FAIL -> showToast(ToastType.ERROR, getString(R.string.pwauth_model_fail))
         }
     }
 
     private fun goPwReset() {
         startActivity(Intent(this, PwResetActivity::class.java))
         finish()
+    }
+
+    private fun rxPhoneNumber() {
+        binding.etPhone.doOnTextChanged { phone, _, _, _ ->
+            phonePublishSubject.onNext(phone.toString())
+        }
+        phonePublishSubject.observeOn(AndroidSchedulers.mainThread())
+            .subscribe { phone ->
+                viewModel.currentPhone = phone
+            }.addTo(compositeDisposable)
+    }
+
+    private fun rxAuthNumber() {
+        binding.etAuth.doOnTextChanged { auth, _, _, _ ->
+            authPulishSubject.onNext(auth.toString())
+        }
+        authPulishSubject.observeOn(AndroidSchedulers.mainThread())
+            .subscribe { auth ->
+                viewModel.currentAuth = auth
+            }.addTo(compositeDisposable)
+    }
+
+    private fun rxDelayGoPwReset() {
+        compositeDisposable.add(
+            Completable.create { emitter ->
+                emitter.onComplete()
+            }
+                .delay(700L, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    goPwReset()
+                }
+        )
     }
 
     override fun bottomAction() {

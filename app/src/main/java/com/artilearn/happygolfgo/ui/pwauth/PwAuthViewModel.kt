@@ -17,9 +17,6 @@ class PwAuthViewModel(
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
 
-    val phone = MutableLiveData("")
-    val auth = MutableLiveData("")
-
     private val _phoneNumber: MutableLiveData<PwAuthPhoneType> = MutableLiveData()
     private val _authNumber: MutableLiveData<PwAuthNumberType> = MutableLiveData()
     private val _success: MutableLiveData<Boolean> = MutableLiveData()
@@ -28,13 +25,12 @@ class PwAuthViewModel(
     val authNumber: LiveData<PwAuthNumberType> get() = _authNumber
     val success: LiveData<Boolean> get() = _success
 
-    private var currentPhone: String = ""
-    private var currentAuth: String = ""
+    var currentPhone: String = ""
+    var currentAuth: String = ""
+    private var successPhone: String = ""
     private var status = false
 
     fun btnSendClick() {
-        currentPhone = phone.value.toString()
-
         when {
             currentPhone.isEmpty() -> {
                 _phoneNumber.value = PwAuthPhoneType.EMPTY
@@ -68,8 +64,8 @@ class PwAuthViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({
-                    Log.d(TAG, "requestAuthNumber: success")
                     _phoneNumber.value = PwAuthPhoneType.SUCCESS
+                    successPhone = currentPhone
                     status = true
                 }, {
                     Log.d(TAG, "requestAuthNumber: fail: ${it.message}")
@@ -88,8 +84,6 @@ class PwAuthViewModel(
     }
 
     private fun confirmAuthNumber() {
-        currentAuth = auth.value.toString()
-
         when {
             currentAuth.isEmpty() -> {
                 _authNumber.value = PwAuthNumberType.EMPTY
@@ -101,35 +95,37 @@ class PwAuthViewModel(
     }
 
     private fun confirmAuthDataModel() {
-        val dataModel = ConfirmAuthModel(currentPhone, currentAuth)
-        val hashMap = hashMapOf<String, ConfirmAuthModel>()
-        hashMap["Data"] = dataModel
+        if (currentPhone == successPhone) {
+            val dataModel = ConfirmAuthModel(currentPhone, currentAuth)
+            val hashMap = hashMapOf<String, ConfirmAuthModel>()
+            hashMap["Data"] = dataModel
 
-        compositeDisposable.add(
-            pwAuthRepository.confirmAuthNumber(hashMap)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showLoading() }
-                .doAfterTerminate { hideLoading() }
-                .subscribe({
-                    Log.d(TAG, "confirmAuthDataModel: success")
-                    _authNumber.value = PwAuthNumberType.SUCCESS
-                    status = false
-                    _success.value = true
-                }, {
-                    Log.d(TAG, "confirmAuthDataModel: fail: ${it.message}")
-                    when (it.message) {
-                        "Network Error" -> {
-                            _authNumber.value = PwAuthNumberType.NETWORK_FAIL
+            compositeDisposable.add(
+                pwAuthRepository.confirmAuthNumber(hashMap)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe { showLoading() }
+                    .doAfterTerminate { hideLoading() }
+                    .subscribe({
+                        _authNumber.value = PwAuthNumberType.SUCCESS
+                        _success.value = true
+                    }, {
+                        Log.d(TAG, "confirmAuthDataModel: fail: ${it.message}")
+                        when (it.message) {
+                            "Network Error" -> {
+                                _authNumber.value = PwAuthNumberType.NETWORK_FAIL
+                            }
+                            "HTTP 406 Not Acceptable" -> {
+                                _authNumber.value = PwAuthNumberType.AUTH_ERROR
+                            }
+                            else -> {
+                                _authNumber.value = PwAuthNumberType.FAIL
+                            }
                         }
-                        "HTTP 406 Not Acceptable" -> {
-                            _authNumber.value = PwAuthNumberType.AUTH_ERROR
-                        }
-                        else -> {
-                            _authNumber.value = PwAuthNumberType.FAIL
-                        }
-                    }
-                })
-        )
+                    })
+            )
+        } else {
+            _authNumber.value = PwAuthNumberType.MODEL_FAIL
+        }
     }
 }
