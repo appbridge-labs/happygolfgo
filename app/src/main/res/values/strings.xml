@@ -18,6 +18,7 @@
     <string name="tutorial_nfc_title">NFC 체크인</string>
     <string name="tutorial_btn_text">시작하기</string>
     <string name="home_toolbar_text">나의 이용권</string>
+    <string name="home_fail_ticket">사용할 수 없는 티켓입니다</string>
     <string name="home_empty_ticket_go">보유하고 있는 이용권이 없습니다\n이용권을 구매해 주세요</string>
     <string name="home_empty_ticket_text">보유하고 있는 이용권이 없습니다.</string>
     <string name="home_bottomview_title">내 예약목록 보기</string>
@@ -65,7 +66,7 @@
     <string name="pwreset_pw_hint">********</string>
     <string name="pwrest_pw_title">비밀번호</string>
     <string name="pwreset_pw_text">비밀번호 확인</string>
-    <string name="pwreset_title">영문과 숫자, 특수문자를 포함해 8자리 이상을 입력하세요</string>
+    <string name="pwreset_title">영문과 숫자를 사용해 8자리 이상을 입력하세요</string>
     <string name="pwreset_fail_password">비밀번호가 같지 않습니다</string>
     <string name="pwreset_input_fail_password">비밀번호를 바르게 입력해 주세요</string>
     <string name="pwreset_unspecial_password">특수문자를 포함할 수 없습니다</string>

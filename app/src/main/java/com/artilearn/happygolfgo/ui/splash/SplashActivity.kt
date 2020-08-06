@@ -10,6 +10,7 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivitySplashBinding
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
+import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
 import com.artilearn.happygolfgo.ui.tutorial.TutorialActivity
 import com.artilearn.happygolfgo.util.MyApplication
 

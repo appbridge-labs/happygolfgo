@@ -12,6 +12,7 @@ import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.alram.AlramActivity
 import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
 import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
@@ -72,7 +73,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initAdapter() {
         adapter = HomeAdapter { ticket ->
-            goSelectionDate(ticket)
+            with(ticket) {
+                if (!isUnlimited && !onlyOnceToday && remainingCount == 0) {
+                    binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
+                } else {
+                    goSelectionDate(ticket)
+                }
+            }
         }
 
         binding.recyclerview.adapter = adapter

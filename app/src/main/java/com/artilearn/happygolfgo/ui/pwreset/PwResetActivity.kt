@@ -20,14 +20,12 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_pw_reset.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
 import java.util.concurrent.TimeUnit
 
-//todo 패스워드 최종확인만 하면됨
 class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_pw_reset) {
     private val TAG = javaClass.simpleName
+
     private val pattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&]).{8,15}.\$"
     private lateinit var disposable: Disposable
     private var passwordStatus = false
@@ -128,8 +126,8 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
 
         disposable = textPassword
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                with(it) {
+            .subscribe({ password ->
+                with(password) {
                     passwordStatus = when {
                         this.matches(pattern.toRegex()) -> {
                             passwordStatus(true)
