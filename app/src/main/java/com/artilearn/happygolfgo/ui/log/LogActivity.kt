@@ -1,33 +1,45 @@
 package com.artilearn.happygolfgo.ui.log
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.LESSON_LOG
-import com.artilearn.happygolfgo.constants.VIDEO_URL
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.LogDetail
 import com.artilearn.happygolfgo.databinding.ActivityLogBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.ui.comment.CommentActivity
-import com.artilearn.happygolfgo.ui.video.VideoActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.convertTime
 import com.artilearn.happygolfgo.util.setImage
-import kotlinx.android.synthetic.main.activity_log.*
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import kotlinx.android.synthetic.main.common_default_view.view.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
 
-    private val lessonLog by lazy { intent.getParcelableExtra<LessonLog>(LESSON_LOG) }
+    private var playWhenReady = true
+    private var player: SimpleExoPlayer? = null
+    private var currentWindow = 0
+    private var playbackPosition = 0L
+    private var log: LogDetail? = null
+
+    private val lessonLog by lazy {
+        intent.getParcelableExtra<LessonLog>(LESSON_LOG)
+    }
+
     private lateinit var myApplication: MyApplication
     private val viewModel: LogViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -38,6 +50,7 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,10 +70,14 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             logDetail.observe(this@LogActivity, Observer {
                 binding.log = it
                 setLessonLogItem(it)
+
+                log = it
+                log?.videoURL?.let { path ->
+                    initializePlayer(path)
+                }
             })
             videoUrl.observe(this@LogActivity, Observer { url ->
-
-                //goVideo(url)
+                showVideoView()
             })
             serverError.observe(this@LogActivity, Observer { errorMsg ->
                 showError(errorMsg)
@@ -68,6 +85,42 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             networkFail.observe(this@LogActivity, Observer {
                 showNetworkFail()
             })
+        }
+    }
+
+    private fun showVideoView() {
+        with(binding) {
+            ivThumbnail.visibility = View.GONE
+            ivVideoStart.visibility = View.GONE
+            exoplayer.visibility = View.VISIBLE
+        }
+    }
+
+    private fun initializePlayer(path: String) {
+        player = ExoPlayerFactory.newSimpleInstance(this)
+        binding.exoplayer.player = player
+
+        val uri = path.toUri()
+        val mediaSource = buildMediaSource(uri)
+
+        player?.playWhenReady = playWhenReady
+        player?.seekTo(currentWindow, playbackPosition)
+        player?.prepare(mediaSource, false, false)
+    }
+
+    private fun buildMediaSource(uri: Uri): MediaSource {
+        val dataSourceFactory = DefaultDataSourceFactory(this, "happygolf_pro")
+
+        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
+    }
+
+    private fun releasePlayer() {
+        if (player != null) {
+            playWhenReady = player!!.playWhenReady
+            playbackPosition = player!!.currentPosition
+            currentWindow = player!!.currentWindowIndex
+            player!!.release()
+            player = null
         }
     }
 
@@ -146,17 +199,11 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             logBottomView.visibility = View.VISIBLE
             logCommentTitle.visibility = View.GONE
             tvComment.visibility = View.GONE
-            initBottomView(logBottomView, getString(R.string.log_bottom_view_title), BottimViewType.DEFAULT_TYPE)
-        }
-    }
-
-    private fun goVideo(videoUrl: String?) {
-        videoUrl?.let {
-            val videoIntent = Intent(this, VideoActivity::class.java)
-                .apply {
-                    putExtra(VIDEO_URL, videoUrl)
-                }
-            startActivity(videoIntent)
+            initBottomView(
+                logBottomView,
+                getString(R.string.log_bottom_view_title),
+                BottimViewType.DEFAULT_TYPE
+            )
         }
     }
 
@@ -171,5 +218,22 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
     override fun bottomAction() {
         super.bottomAction()
         goComment(lessonLog)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        log?.videoURL?.let {
+            initializePlayer(it)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        releasePlayer()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        releasePlayer()
     }
 }
