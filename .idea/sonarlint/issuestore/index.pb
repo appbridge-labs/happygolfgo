@@ -21,3 +21,15 @@ r
 Bapp/src/main/java/com/artilearn/happygolfgo/util/BindingAdapter.kt,4/e/4e7f2279b20bca018cb4caafcffbeba29c5ba115
 s
 Capp/src/main/java/com/artilearn/happygolfgo/ui/home/HomeActivity.kt,5/0/5052dd691d1ebe38051104d4beb0a021a84451c6
+€
+Papp/src/main/java/com/artilearn/happygolfgo/ui/ticketdate/TicketDateViewModel.kt,9/7/972f371f08e25232b4ee6702cf6a4b356288af2d
+€
+Papp/src/main/java/com/artilearn/happygolfgo/ui/tickettime/TicketTimeViewModel.kt,9/5/9521a1b803eb09fc8ed5a2e0e05938cc78736c58
+
+Oapp/src/main/java/com/artilearn/happygolfgo/ui/tickettime/TicketTimeActivity.kt,6/6/662e68565c13c3cc3b8037afe21e192f0cdc7c17
+
+Oapp/src/main/java/com/artilearn/happygolfgo/ui/ticketdate/TicketDateActivity.kt,0/7/07f2a43bc89acb0fc87f0a3324cfa03e92eaab38
+‡
+Wapp/src/main/java/com/artilearn/happygolfgo/ui/reserveconfirm/ReserveConfirmActivity.kt,f/a/fa704d6dcf2a0ae6821cd66f1bb886722993cf68
+ˆ
+Xapp/src/main/java/com/artilearn/happygolfgo/ui/reserveconfirm/ReserveConfirmViewModel.kt,a/5/a561d58ad1bccb3c5f8f8ecb33d420fdcb9ba5c3

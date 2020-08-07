@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.ticketdate
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -17,14 +18,12 @@ import com.artilearn.happygolfgo.databinding.ActivityTicketDateBinding
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
-import kotlinx.android.synthetic.main.activity_ticket_date.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
 import java.util.*
 
 class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.activity_ticket_date) {
     private val TAG = javaClass.simpleName
 
-    private var ticket: Ticket? = null
+    private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
     private lateinit var myApplication: MyApplication
     private val viewModel: TicketDateViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -48,14 +47,6 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
     private fun inject() {
         myApplication = application as MyApplication
         binding.vm = viewModel
-
-        ticket = intent?.getParcelableExtra(TICKET)
-        ticket?.let {
-            viewModel.ticketId = it.id
-            viewModel.selectDate(it.type)
-        }
-
-        initViewModelObserve()
     }
 
     private fun initViewModelObserve() {
@@ -79,8 +70,12 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
     }
 
     private fun initView() {
-        ticket = intent.getParcelableExtra(TICKET)
         initToolbar(binding.calendarToolbar.toolbar, getString(R.string.ticketdate_toolbar_title), true)
+
+        ticket?.let {
+            viewModel.ticketId = it.id
+            viewModel.selectDate(it.type)
+        }
     }
 
     private fun initCalendarListener() {
@@ -94,7 +89,11 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
                         )}"
 
                     if (viewModel.eventList.contains(eventDay.calendar)) {
-                        binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_ticket))
+                        if (ticket.onlyOnceToday) {
+                            binding.parentLayout.snackbar(getString(R.string.ticketdate_onlyoncetoday_ticket))
+                        } else {
+                            goSelectionTime(date, ticket)
+                        }
                     } else {
                         if (eventDay.isEnabled) {
                             binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
@@ -102,6 +101,7 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
                             goSelectionTime(date, ticket)
                         }
                     }
+
                 }
             }
         )

@@ -18,7 +18,7 @@ class CommentViewModel(
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
 
-    val rating = MutableLiveData(0f)
+    val rating = MutableLiveData(1f)
     var comment = MutableLiveData("")
     var lessonId: Int? = null
 

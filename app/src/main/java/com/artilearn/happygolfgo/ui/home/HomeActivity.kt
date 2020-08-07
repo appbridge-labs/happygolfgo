@@ -74,7 +74,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun initAdapter() {
         adapter = HomeAdapter { ticket ->
             with(ticket) {
-                if (!isUnlimited && !onlyOnceToday && remainingCount == 0) {
+                if (!isUnlimited && remainingCount == 0) {
                     binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
                 } else {
                     goSelectionDate(ticket)
@@ -105,9 +105,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun goSelectionDate(ticket: Ticket) {
-        val intent = Intent(this, TicketDateActivity::class.java)
-        intent.putExtra(TICKET, ticket)
-        startActivity(intent)
+        val selectIntent = Intent(this, TicketDateActivity::class.java)
+            .apply {
+                putExtra(TICKET, ticket)
+            }
+        startActivity(selectIntent)
     }
 
     override fun bottomAction() {

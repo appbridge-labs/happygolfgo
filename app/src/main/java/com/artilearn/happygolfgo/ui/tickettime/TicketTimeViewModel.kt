@@ -49,7 +49,7 @@ class TicketTimeViewModel(
                             showEmptyTicketTimeView()
                         }
                     } else {
-                        _serverError.value = response.errorBody().toString()
+                        _serverError.value = response.message()
                     }
                 }, { t ->
                     Log.d(TAG, "ticketPlate: ${t.message}")

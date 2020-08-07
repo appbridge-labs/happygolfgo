@@ -59,7 +59,8 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
                 setLessonLogItem(it)
             })
             videoUrl.observe(this@LogActivity, Observer { url ->
-                goVideo(url)
+
+                //goVideo(url)
             })
             serverError.observe(this@LogActivity, Observer { errorMsg ->
                 showError(errorMsg)

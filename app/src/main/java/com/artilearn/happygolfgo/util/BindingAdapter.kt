@@ -37,7 +37,7 @@ fun ticketCount(
     onceToday: Boolean
 ) {
     if (isUnlimited && onceToday) {
-        tv.text = "1일 1회 무제한 사용"
+        tv.text = "1일 1회 사용"
     } else if (isUnlimited && !onceToday) {
         tv.text = "무제한 사용"
     } else {
