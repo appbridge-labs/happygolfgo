@@ -22,7 +22,6 @@ import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 
 class ReserveLessonFragment
     : BaseFragment<FragmentReserveLessonBinding, ReserveLessonViewModel>(R.layout.fragment_reserve_lesson) {
-    private val TAG = javaClass.simpleName
 
     private lateinit var adapter: ReserveListAdapter
     private val cancel = "cancel_lesson"

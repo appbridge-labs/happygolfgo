@@ -20,7 +20,6 @@ import kotlin.concurrent.fixedRateTimer
 
 class ReservePlateFragment
     : BaseFragment<FragmentReservePlateBinding, ReservePlateViewModel>(R.layout.fragment_reserve_plate) {
-    private val TAG = javaClass.simpleName
 
     private lateinit var adapter: ReserveListAdapter
     private val cancel = "cancel_plate"

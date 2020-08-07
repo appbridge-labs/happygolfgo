@@ -1,8 +1,6 @@
 package com.artilearn.happygolfgo.ui.log
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.LogDetail
 import com.artilearn.happygolfgo.data.log.source.LogRepository
@@ -13,7 +11,6 @@ import io.reactivex.schedulers.Schedulers
 class LogViewModel(
     private val logRepository: LogRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     private val _logDetail: SingleLiveEvent<LogDetail> = SingleLiveEvent()
     private val _videoUrl: SingleLiveEvent<String> = SingleLiveEvent()
@@ -37,7 +34,6 @@ class LogViewModel(
                             _serverError.value = response.errorBody().toString()
                         }
                     }, { t ->
-                        Log.d(TAG, "requestLessonLogDetail: ${t.message}")
                         when (t.message) {
                             "Network Error" -> {
                                 _networkFail.value = Unit

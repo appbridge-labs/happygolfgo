@@ -18,10 +18,10 @@ import kotlinx.android.synthetic.main.activity_lesson_log.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activity_lesson_log) {
-    private val TAG = javaClass.simpleName
 
     private lateinit var adapter: LessonLogAdapter
     private lateinit var myApplication: MyApplication
+
     private val viewModel: LessonLogViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {

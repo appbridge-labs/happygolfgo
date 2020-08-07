@@ -17,9 +17,9 @@ import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_info) {
-    private val TAG = javaClass.simpleName
 
     private lateinit var myApplication: MyApplication
+
     private val viewModel: MyInfoViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.tickettime
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -12,7 +11,6 @@ import io.reactivex.schedulers.Schedulers
 class TicketTimeViewModel(
     private val ticketTimeRepository: TicketTimeRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     private val _ticketTime: MutableLiveData<ArrayList<TicketTime>> = MutableLiveData()
     private val _emptyTicketTime: MutableLiveData<Boolean> = MutableLiveData()
@@ -52,7 +50,6 @@ class TicketTimeViewModel(
                         _serverError.value = response.message()
                     }
                 }, { t ->
-                    Log.d(TAG, "ticketPlate: ${t.message}")
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit
@@ -85,7 +82,6 @@ class TicketTimeViewModel(
                         _serverError.value = response.errorBody().toString()
                     }
                 }, { t ->
-                    Log.d(TAG, "ticketLesson: ${t.message}")
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit

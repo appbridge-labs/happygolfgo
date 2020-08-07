@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class ReserveListActivity :
     BaseActivity<ActivityReserveListBinding>(R.layout.activity_reserve_list) {
-    private val TAG = javaClass.simpleName
 
     private lateinit var pagerAdaper: ReservePagerListAdapter
     private lateinit var myApplication: MyApplication
+
     private val viewModel: ReserveListViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {

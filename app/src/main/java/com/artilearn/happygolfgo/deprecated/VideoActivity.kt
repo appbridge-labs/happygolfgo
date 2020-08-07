@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.video
+package com.artilearn.happygolfgo.deprecated
 
 import android.net.Uri
 import android.os.Bundle

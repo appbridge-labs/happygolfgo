@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.reserveconfirm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -20,7 +19,6 @@ class ReserveConfirmViewModel(
     private val reservationRepository: ReservationRepository,
     private val cancelRepository: CancelRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     private val _policy: MutableLiveData<String> = MutableLiveData()
     private val _plateModel: MutableLiveData<ReservationPlate> = MutableLiveData()
@@ -55,7 +53,6 @@ class ReserveConfirmViewModel(
                         _serverError.value = response.errorBody().toString()
                     }
                 }, { t ->
-                    Log.d(TAG, "fail: ${t.message}")
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit
@@ -87,7 +84,6 @@ class ReserveConfirmViewModel(
                             _serverError.value = response.errorBody().toString()
                         }
                     }, { t ->
-                        Log.d(TAG, "reservationPlate: ${t.message}")
                         when (t.message) {
                             "Network Error" -> {
                                 _networkFail.value = Unit
@@ -122,7 +118,6 @@ class ReserveConfirmViewModel(
                             _serverError.value = response.errorBody().toString()
                         }
                     }, { t ->
-                        Log.d(TAG, "reservationLesson: ${t.message}")
                         when (t.message) {
                             "Network Error" -> {
                                 _networkFail.value = Unit
@@ -148,7 +143,6 @@ class ReserveConfirmViewModel(
                 .subscribe({
                     _cancelSuccess.value = Unit
                 }, { t ->
-                    Log.d(TAG, "reservationPlateCancel: ${t.message}")
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit
@@ -171,7 +165,6 @@ class ReserveConfirmViewModel(
                 .subscribe({
                     _cancelSuccess.value = Unit
                 }, { t ->
-                    Log.d(TAG, "reservationLessonCancel: ${t.message}")
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit

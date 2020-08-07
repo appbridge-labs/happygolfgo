@@ -17,6 +17,7 @@ import com.artilearn.happygolfgo.util.MyApplication
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
 
     private lateinit var myApplication: MyApplication
+
     private val viewModel: SplashViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -3,7 +3,6 @@ package com.artilearn.happygolfgo.ui.pwreset
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -24,7 +23,6 @@ import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import java.util.concurrent.TimeUnit
 
 class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_pw_reset) {
-    private val TAG = javaClass.simpleName
 
     private val pattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&]).{8,15}.\$"
     private lateinit var disposable: Disposable
@@ -140,9 +138,7 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
                         }
                     }
                 }
-            }, {
-                Log.d(TAG, "etpassword: ${it.message}")
-            })
+            }, {})
     }
 
     private fun rxConfirmPassword() {
@@ -162,9 +158,7 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
                         showErrorConfirmPassword()
                     }
                 }
-            }, {
-                Log.d(TAG, "etconfirmpassword: ${it.message}")
-            })
+            }, {})
     }
 
     private fun showErrorPassword() {

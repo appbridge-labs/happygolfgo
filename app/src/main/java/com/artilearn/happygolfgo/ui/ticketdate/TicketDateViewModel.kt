@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.ticketdate
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.applandeo.materialcalendarview.EventDay
@@ -16,7 +15,6 @@ import java.util.*
 class TicketDateViewModel(
     private val ticketDateRepository: TicketDateRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     private val _isCalendarLoading: MutableLiveData<Boolean> = MutableLiveData()
     private val _eventDayList: MutableLiveData<List<EventDay>> = MutableLiveData()
@@ -75,7 +73,6 @@ class TicketDateViewModel(
                             }
                         }
                     }, { t ->
-                        Log.d(TAG, "selectPlateDate: ${t.message}")
                         when (t.message) {
                             "Network Error" -> {
                                 _networkFail.value = Unit
@@ -107,7 +104,6 @@ class TicketDateViewModel(
                             }
                         }
                     }, { t ->
-                        Log.d(TAG, "selectLessonDate: ${t.message}")
                         when (t.message) {
                             "Network Error" -> {
                                 _networkFail.value = Unit

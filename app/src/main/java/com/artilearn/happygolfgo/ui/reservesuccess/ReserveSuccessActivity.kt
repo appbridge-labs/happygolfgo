@@ -11,18 +11,24 @@ import com.artilearn.happygolfgo.data.ReservationLesson
 import com.artilearn.happygolfgo.data.ReservationPlate
 import com.artilearn.happygolfgo.databinding.ActivityReserveSuccessBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
-import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.util.convertTime
-import kotlinx.android.synthetic.main.activity_reserve_success.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 
 class ReserveSuccessActivity :
     BaseActivity<ActivityReserveSuccessBinding>(R.layout.activity_reserve_success) {
-    private val TAG = javaClass.simpleName
-    private val reservationPlate by lazy { intent.getParcelableExtra<ReservationPlate>(RESERVATION_PLATE) }
-    private val reservationLesson by lazy { intent.getParcelableExtra<ReservationLesson>(RESERVATION_LESSON) }
-    private val successType by lazy { intent.getStringExtra(CONFIRM_TYPE) }
+
+    private val reservationPlate by lazy {
+        intent.getParcelableExtra<ReservationPlate>(RESERVATION_PLATE)
+    }
+
+    private val reservationLesson by lazy {
+        intent.getParcelableExtra<ReservationLesson>(RESERVATION_LESSON)
+    }
+
+    private val successType by lazy {
+        intent.getStringExtra(CONFIRM_TYPE)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

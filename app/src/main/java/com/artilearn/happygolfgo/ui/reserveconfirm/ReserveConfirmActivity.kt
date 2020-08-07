@@ -21,14 +21,26 @@ import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class ReserveConfirmActivity : BaseActivity<ActivityReserveConfirmBinding>(R.layout.activity_reserve_confirm) {
-    private val TAG = javaClass.simpleName
 
-    private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
-    private val ticketTime by lazy { intent.getParcelableExtra<TicketTime>(TICKET_TIME) }
-    private val reservation by lazy { intent.getParcelableExtra<ReserveList>(RESERVATION) }
-    private val confirmType by lazy { intent.getStringExtra(CONFIRM_TYPE) }
     private lateinit var datesList: List<String>
     private lateinit var myApplication: MyApplication
+
+    private val ticket by lazy {
+        intent.getParcelableExtra<Ticket>(TICKET)
+    }
+
+    private val ticketTime by lazy {
+        intent.getParcelableExtra<TicketTime>(TICKET_TIME)
+    }
+
+    private val reservation by lazy {
+        intent.getParcelableExtra<ReserveList>(RESERVATION)
+    }
+
+    private val confirmType by lazy {
+        intent.getStringExtra(CONFIRM_TYPE)
+    }
+
     private val viewModel: ReserveConfirmViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -29,6 +29,7 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
     private val authPulishSubject = PublishSubject.create<String>()
     private var status = false
     private lateinit var myApplication: MyApplication
+
     private val viewModel: PwAuthViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {

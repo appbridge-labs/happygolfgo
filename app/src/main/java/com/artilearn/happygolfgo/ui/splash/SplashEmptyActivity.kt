@@ -11,6 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
 class SplashEmptyActivity : BaseActivity<ActivitySplashEmptyBinding>(R.layout.activity_splash_empty) {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

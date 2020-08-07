@@ -1,19 +1,16 @@
 package com.artilearn.happygolfgo.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
-import com.crashlytics.android.Crashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel(
     private val homeRepository: HomeRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     private val _myPage: MutableLiveData<Unit> = MutableLiveData()
     private val _alram: MutableLiveData<Unit> = MutableLiveData()
@@ -57,7 +54,6 @@ class HomeViewModel(
                         _serverError.value = it.message()
                     }
                 }, {
-                    Log.d(TAG, "fail: $it\n${it.message}")
                     when (it.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit

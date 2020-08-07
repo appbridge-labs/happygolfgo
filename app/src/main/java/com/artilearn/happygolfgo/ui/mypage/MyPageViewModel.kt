@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.ui.mypage
 
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -15,9 +14,8 @@ import io.reactivex.schedulers.Schedulers
 class MyPageViewModel(
     private val versionRepository: VersionRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
-    private val myApplicationContext = MyApplication.getApplicationContext()
 
+    private val myApplicationContext = MyApplication.getApplicationContext()
     private val _showUpdate: MutableLiveData<Unit> = MutableLiveData()
     private val _goPlayStore: MutableLiveData<Unit> = MutableLiveData()
 

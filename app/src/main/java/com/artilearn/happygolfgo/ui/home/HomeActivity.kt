@@ -21,10 +21,10 @@ import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
-    private val TAG = javaClass.simpleName
 
     private lateinit var adapter: HomeAdapter
     private lateinit var myApplication: MyApplication
+
     private val viewModel: HomeViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {

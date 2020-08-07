@@ -15,6 +15,7 @@ import com.artilearn.happygolfgo.util.MyApplication
 class TutorialActivity : BaseActivity<ActivityTutorialBinding>(R.layout.activity_tutorial) {
 
     private lateinit var myApplication: MyApplication
+
     private val viewModel: TutorialViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {

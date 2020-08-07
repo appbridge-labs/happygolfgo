@@ -24,10 +24,10 @@ import kotlinx.android.synthetic.main.common_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
-    private val TAG = javaClass.simpleName
 
     private var appVersion: String? = null
     private lateinit var myApplication: MyApplication
+
     private val viewModel: MyPageViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {

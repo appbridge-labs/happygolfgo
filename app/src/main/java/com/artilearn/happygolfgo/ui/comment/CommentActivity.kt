@@ -27,11 +27,14 @@ import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import java.util.concurrent.TimeUnit
 
 class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_commet) {
-    private val TAG = javaClass.simpleName
 
     private lateinit var disposable: Disposable
-    private val lessonLog by lazy { intent.getParcelableExtra<LessonLog>(LESSON_LOG) }
     private lateinit var myApplication: MyApplication
+
+    private val lessonLog by lazy {
+        intent.getParcelableExtra<LessonLog>(LESSON_LOG)
+    }
+
     private val viewModel: CommentViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -137,9 +140,7 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
                 if (comment.length > 100) {
                     binding.etComment.error = getString(R.string.comment_fail_length)
                 }
-            }, { t ->
-                Log.d(TAG, "rxComment: ${t.message}")
-            })
+            }, {  })
     }
 
     override fun onStart() {

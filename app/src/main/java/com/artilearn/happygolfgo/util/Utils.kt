@@ -2,11 +2,9 @@ package com.artilearn.happygolfgo.util
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationManagerCompat
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.artilearn.happygolfgo.R

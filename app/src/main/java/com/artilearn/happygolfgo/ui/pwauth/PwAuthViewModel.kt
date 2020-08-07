@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.pwauth
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -15,7 +14,6 @@ import io.reactivex.schedulers.Schedulers
 class PwAuthViewModel(
     private val pwAuthRepository: PwAuthRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     private val _phoneNumber: MutableLiveData<PwAuthPhoneType> = MutableLiveData()
     private val _authNumber: MutableLiveData<PwAuthNumberType> = MutableLiveData()
@@ -68,7 +66,6 @@ class PwAuthViewModel(
                     successPhone = currentPhone
                     status = true
                 }, {
-                    Log.d(TAG, "requestAuthNumber: fail: ${it.message}")
                     when (it.message) {
                         "HTTP 404 Not Found" -> {
                             _phoneNumber.value = PwAuthPhoneType.EMPTY_USER
@@ -110,7 +107,6 @@ class PwAuthViewModel(
                         _authNumber.value = PwAuthNumberType.SUCCESS
                         _success.value = true
                     }, {
-                        Log.d(TAG, "confirmAuthDataModel: fail: ${it.message}")
                         when (it.message) {
                             "Network Error" -> {
                                 _authNumber.value = PwAuthNumberType.NETWORK_FAIL

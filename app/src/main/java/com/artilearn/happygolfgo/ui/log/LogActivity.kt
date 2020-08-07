@@ -35,12 +35,12 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
     private var currentWindow = 0
     private var playbackPosition = 0L
     private var log: LogDetail? = null
+    private lateinit var myApplication: MyApplication
 
     private val lessonLog by lazy {
         intent.getParcelableExtra<LessonLog>(LESSON_LOG)
     }
 
-    private lateinit var myApplication: MyApplication
     private val viewModel: LogViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -199,11 +199,7 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             logBottomView.visibility = View.VISIBLE
             logCommentTitle.visibility = View.GONE
             tvComment.visibility = View.GONE
-            initBottomView(
-                logBottomView,
-                getString(R.string.log_bottom_view_title),
-                BottimViewType.DEFAULT_TYPE
-            )
+            initBottomView(logBottomView, getString(R.string.log_bottom_view_title), BottimViewType.DEFAULT_TYPE)
         }
     }
 

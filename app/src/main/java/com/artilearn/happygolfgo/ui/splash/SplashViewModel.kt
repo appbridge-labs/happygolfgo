@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.splash
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -20,7 +19,7 @@ import java.util.concurrent.TimeUnit
 class SplashViewModel(
     private val splashRepository: SplashRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
+
     private val applicationContext = MyApplication.getApplicationContext()
 
     private val _goHome: MutableLiveData<Unit> = MutableLiveData()
@@ -80,7 +79,6 @@ class SplashViewModel(
                 .subscribe({
                     userSynchronized()
                 }, { t ->
-                    Log.d(TAG, "selectAccessToken fail: ${t.message}")
                     _goHome.value = Unit
                 })
         )
@@ -107,7 +105,6 @@ class SplashViewModel(
                 .subscribe({
                     _goHome.value = Unit
                 }, { t ->
-                    Log.d(TAG, "userSynchronized fail: ${t.message}")
                     _goHome.value = Unit
                 })
         )

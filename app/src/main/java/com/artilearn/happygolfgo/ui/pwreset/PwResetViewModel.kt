@@ -12,7 +12,6 @@ import io.reactivex.schedulers.Schedulers
 class PwResetViewModel(
     private val pwrestRepository: PwrestRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     val password = MutableLiveData("")
     val passwordConfirm = MutableLiveData("")
@@ -44,7 +43,6 @@ class PwResetViewModel(
                 .subscribe({
                     _changeSuccess.value = Unit
                 }, {
-                    Log.d(TAG, "updatePassword: ${it.message}")
                     when (it.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit

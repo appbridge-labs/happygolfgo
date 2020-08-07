@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_alram.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram) {
-    private val TAG = javaClass.simpleName
 
     private lateinit var adapter: AlramAdapter
     private lateinit var myApplication: MyApplication
@@ -59,7 +58,7 @@ class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram
 
     private fun initAdapter() {
         adapter = AlramAdapter { alram ->
-            showToast(ToastType.SUCCESS, "$alram")
+
         }
 
         binding.recyclerview.adapter = adapter

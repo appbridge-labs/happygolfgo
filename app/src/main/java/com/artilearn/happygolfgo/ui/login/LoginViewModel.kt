@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -12,7 +11,6 @@ import io.reactivex.schedulers.Schedulers
 class LoginViewModel(
     private val loginRepository: LoginRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     val phone = MutableLiveData("")
     val password = MutableLiveData("")

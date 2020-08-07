@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.ui.ticketdate
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -21,10 +20,13 @@ import com.artilearn.happygolfgo.util.snackbar
 import java.util.*
 
 class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.activity_ticket_date) {
-    private val TAG = javaClass.simpleName
 
-    private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
     private lateinit var myApplication: MyApplication
+
+    private val ticket by lazy {
+        intent.getParcelableExtra<Ticket>(TICKET)
+    }
+
     private val viewModel: TicketDateViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {

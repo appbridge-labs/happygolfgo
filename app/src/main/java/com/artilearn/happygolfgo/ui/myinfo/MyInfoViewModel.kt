@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.myinfo
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -13,7 +12,6 @@ import io.reactivex.schedulers.Schedulers
 class MyInfoViewModel(
     private val myinfoRepository: MyInfoRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     val nickname = MutableLiveData("")
 

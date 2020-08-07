@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.lessonlog
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -12,7 +11,6 @@ import io.reactivex.schedulers.Schedulers
 class LessonLogViewModel(
     private val lessonLogRepository: LessonLogRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     private val _emptyLessonLog: MutableLiveData<Boolean> = MutableLiveData()
     private val _lessonLog: MutableLiveData<ArrayList<LessonLog>> = MutableLiveData()
@@ -40,7 +38,6 @@ class LessonLogViewModel(
                         _serverError.value = it.message()
                     }
                 }, {
-                    Log.d(TAG, "fail: ${it.message}")
                     when (it.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit
