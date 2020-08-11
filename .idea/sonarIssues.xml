@@ -3,7 +3,107 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="$USER_HOME$/MyselfProjects/SJApp/app/src/main/java/com/jay/sjapp/base/BaseFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/SJApp/app/src/main/java/com/jay/sjapp/ui/home/HomeViewPagerAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/SJApp/app/src/main/java/com/jay/sjapp/ui/home/HomeViewPagerFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/constants/Constants.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/login/LoginRequest.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/enummodel/Enums.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/login/LoginActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/mypage/MyPageActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/pwreset/PwResetActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/pwreset/PwResetViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/pwverify/PwVerifyActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/pwverify/PwVerifyViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/splash/SplashActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/res/layout/activity_pw_reset.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/res/layout/activity_pw_verify.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/res/values/strings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/res/values/styles.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/enummodel/Enum.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/alram/AlramActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/alram/AlramViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/comment/CommentActivity.kt">
           <value>
             <set />
           </value>
@@ -13,12 +113,72 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/common/ErrorActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/common/NetworkErrorActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/home/HomeActivity.kt">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/home/HomeViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/lessonlog/LessonLogActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/lessonlog/LessonLogViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/log/LogActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/log/LogViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/login/LoginActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/login/LoginViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/myinfo/MyInfoActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/myinfo/MyInfoViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/mypage/MyPageActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/mypage/MyPageViewModel.kt">
           <value>
             <set />
           </value>
@@ -38,7 +198,57 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/pwreset/PwResetViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/reserveconfirm/ReserveConfirmActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/reserveconfirm/ReserveConfirmViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/reservelist/ReserveListActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/reservelist/ReserveListViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/reservelist/fragment/ReserveLessonFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/reservelist/fragment/ReservePlateFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/reservesuccess/ReserveSuccessActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/splash/SplashActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/splash/SplashEmptyActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/splash/SplashViewModel.kt">
           <value>
             <set />
           </value>
@@ -53,12 +263,27 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/tickettime/TicketTimeActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/tickettime/TicketTimeViewModel.kt">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/tutorial/TutorialActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/util/BindingAdapter.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/util/Utils.kt">
           <value>
             <set />
           </value>

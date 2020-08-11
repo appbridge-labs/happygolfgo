@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.PHONE_NUMBER
 import com.artilearn.happygolfgo.databinding.ActivityPwAuthBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.PwAuthNumberType
@@ -98,11 +99,6 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
         }
     }
 
-    private fun goPwReset() {
-        startActivity(Intent(this, PwResetActivity::class.java))
-        finish()
-    }
-
     private fun rxPhoneNumber() {
         binding.etPhone.doOnTextChanged { phone, _, _, _ ->
             phonePublishSubject.onNext(phone.toString())
@@ -128,12 +124,21 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             Completable.create { emitter ->
                 emitter.onComplete()
             }
-                .delay(700L, TimeUnit.MILLISECONDS)
+                .delay(500L, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     goPwReset()
                 }
         )
+    }
+
+    private fun goPwReset() {
+        val resetIntent = Intent(this, PwResetActivity::class.java)
+            .apply {
+                putExtra(PHONE_NUMBER, viewModel.currentPhone)
+            }
+        startActivity(resetIntent)
+        finish()
     }
 
     override fun bottomAction() {

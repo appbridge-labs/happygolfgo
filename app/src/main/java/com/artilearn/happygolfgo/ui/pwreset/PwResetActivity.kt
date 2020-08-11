@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.PHONE_NUMBER
 import com.artilearn.happygolfgo.databinding.ActivityPwResetBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
@@ -24,11 +25,16 @@ import java.util.concurrent.TimeUnit
 
 class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_pw_reset) {
 
-    private val pattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&]).{8,15}.\$"
+    private val pattern = "^[A-Za-z0-9+]{8,20}\$"
     private lateinit var disposable: Disposable
     private var passwordStatus = false
     private var confirmStatus = false
     private lateinit var myApplication: MyApplication
+
+    private val phone by lazy {
+        intent.getStringExtra(PHONE_NUMBER)
+    }
+
     private val viewModel: PwResetViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -68,8 +74,12 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
     }
 
     private fun initView() {
-        initToolbar(binding.pwresetToolbar.toolbar, getString(R.string.pwreset_toolbar_title), true)
-        initBottomView(binding.pwresetBottomView.bottom_layout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
+        with(binding) {
+            initToolbar(pwresetToolbar.toolbar, getString(R.string.pwreset_toolbar_title), true)
+            initBottomView(pwresetBottomView.bottom_layout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
+        }
+
+        phone?.let { viewModel.currentPhone = it }
     }
 
     private fun createPassword(): Observable<String> {

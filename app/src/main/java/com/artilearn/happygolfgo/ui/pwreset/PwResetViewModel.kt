@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.pwreset
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -20,6 +19,7 @@ class PwResetViewModel(
 
     val changeSuccess: LiveData<Unit> get() = _changeSuccess
 
+    var currentPhone = ""
     private var currentPassword = ""
     private var phoneNumber = ""
 
@@ -30,10 +30,18 @@ class PwResetViewModel(
     fun updatePassword() {
         currentPassword = password.value.toString()
 
-        val dataModel = PwrestModel(phoneNumber, currentPassword)
+        if (phoneNumber.isEmpty()) {
+            phoneNumber = currentPhone
+        }
+
+        putDataModel(phoneNumber)
+    }
+
+    private fun putDataModel(phone: String) {
+        val dataModel = PwrestModel(phone, currentPassword)
         val hashMap = hashMapOf<String, PwrestModel>()
         hashMap["Data"] = dataModel
-        
+
         compositeDisposable.add(
             pwrestRepository.changePassword(hashMap)
                 .subscribeOn(Schedulers.io())
