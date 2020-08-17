@@ -28,17 +28,6 @@
     <string name="fragment_network_fail_btn_text">새로고침</string>
     <string name="mypage_toolbar_title">마이페이지</string>
     <string name="mypage_lesson_title">레슨 일지</string>
-    <string name="mypage_lesson_empty_title">레슨 일지가 없습니다.</string>
-    <string name="lesson_review_out_day">후기를 남길 수 있는 기간이 지났습니다.</string>
-    <string name="lesson_review_my_review_title">나의 후기</string>
-    <string name="lesson_review_write_subtitle">이번 레슨은 어떠셨나요?</string>
-    <string name="lesson_review_comment_title">후기 남기기</string>
-    <string name="lesson_review_comment_hint">최대 100자 까지 남길 수 있습니다.</string>
-    <string name="plate_reserve_policy">- 예약 취소 정책\n타석예약 취소는 예약시간 3시간 이전까지만 가능합니다.\n\n- 결석에 대한 정책\n타석예약에 대한 결석 시 타석 이용권이 1회 차감이 됩니다.</string>
-    <string name="lesson_reserve_policy">- 예약 취소 정책\n예약 취소는 레슨 당일 이전에만 가능합니다.\n\n- 결석 정책\n예약된 레슨에 결석 시 레슨 이용권이 1회 차감 됩니다.</string>
-    <string name="mypage_app_name">앱 버전</string>
-    <string name="mypage_app_version">%1$s</string>
-    <string name="mypage_app_update">업데이트 하기</string>
     <string name="mypage_info_change">개인정보 변경</string>
     <string name="mypage_password_change">비밀번호 재설정</string>
     <string name="mypage_logout">로그아웃</string>
