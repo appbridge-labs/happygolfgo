@@ -7,17 +7,16 @@
     <data>
 
         <variable
-            name="list"
-            type="com.artilearn.happygolfgo.models.LessonReviewList" />
+            name="log"
+            type="com.artilearn.happygolfgo.data.LessonLog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/bg_unserline">
+        android:background="@color/color_white">
 
         <TextView
-            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -26,12 +25,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:setCreateAt="@{list.createdAt}"
-            bind:setName="@{list.employeeName}"
-            tools:text="2020. 05. 30 / OOO 코치" />
+            bind:setLogCoachName="@{log.employeeName}"
+            bind:setLogTime="@{log.createdAt}"
+            tools:text="2020. 05. 28 / OOO 코치" />
 
         <ImageView
-            android:id="@+id/iv_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
@@ -39,6 +37,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_right" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

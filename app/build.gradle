@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 29
@@ -13,8 +14,13 @@ android {
         applicationId "com.artilearn.happygolfgo"
         minSdkVersion 23
         targetSdkVersion 29
+<<<<<<< HEAD
         versionCode 17
         versionName "1.9.6"
+=======
+        versionCode 18
+        versionName "1.10.0"
+>>>>>>> d3048c0ec13a1058792429427eb92f1a3c7c48be
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,25 +48,23 @@ android {
 }
 
 dependencies {
-    def preferencesVersion = '1.1.0'
-
     implementation "androidx.work:work-runtime-ktx:2.3.1"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.github.happygolfdev:TLSModules-Android:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
 
-    implementation "androidx.preference:preference:$preferencesVersion"
+    implementation "androidx.preference:preference:1.1.1"
 
     // retrofit, okhttp log
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
@@ -75,13 +79,14 @@ dependencies {
     // material calendar
     implementation 'com.applandeo:material-calendar-view:1.8.0-rc01'
 
-    // material design
-    implementation 'com.google.android.material:material:1.1.0'
-
     // firebase
     implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.5'
     implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
+    implementation 'com.google.firebase:firebase-core:17.0.1'
+
+    // crashlytics
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     // rxjava
     implementation "io.reactivex.rxjava2:rxjava:2.2.17"
@@ -98,4 +103,17 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-core:2.10.5'
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.10.5'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.5'
+
+    // lazy viewmodels
+    implementation 'androidx.fragment:fragment-ktx:1.2.5'
+
+    // stetho
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+
+    // navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
+
+    // toasy
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
 }
