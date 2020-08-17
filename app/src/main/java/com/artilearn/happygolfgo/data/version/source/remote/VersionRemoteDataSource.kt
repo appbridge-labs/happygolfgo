@@ -1,0 +1,12 @@
+package com.artilearn.happygolfgo.data.version.source.remote
+
+import com.artilearn.happygolfgo.data.version.VersionResponse
+import io.reactivex.Single
+
+interface VersionRemoteDataSource {
+
+    fun remoteGetAppVersion(
+        platform: Int = 1,
+        clientType: Int = 0
+    ): Single<VersionResponse>
+}
