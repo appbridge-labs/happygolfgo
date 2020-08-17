@@ -15,8 +15,6 @@ import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.models.LessonTime
 import com.artilearn.happygolfgo.models.PlateTime
 import com.artilearn.happygolfgo.models.Ticket
-import com.artilearn.happygolfgo.ui.BaseActivity
-import com.artilearn.happygolfgo.util.snackbar
 import com.google.gson.internal.LinkedTreeMap
 import com.tlsolution.tlsmodules.Network.RequestManager
 import com.tlsolution.tlsmodules.Network.RequestResult

@@ -28,7 +28,6 @@
     <string name="fragment_network_fail_btn_text">새로고침</string>
     <string name="mypage_toolbar_title">마이페이지</string>
     <string name="mypage_lesson_title">레슨 일지</string>
-<<<<<<< HEAD
     <string name="mypage_lesson_empty_title">레슨 일지가 없습니다.</string>
     <string name="lesson_review_out_day">후기를 남길 수 있는 기간이 지났습니다.</string>
     <string name="lesson_review_my_review_title">나의 후기</string>
@@ -40,9 +39,6 @@
     <string name="mypage_app_name">앱 버전</string>
     <string name="mypage_app_version">%1$s</string>
     <string name="mypage_app_update">업데이트 하기</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-=======
     <string name="mypage_info_change">개인정보 변경</string>
     <string name="mypage_password_change">비밀번호 재설정</string>
     <string name="mypage_logout">로그아웃</string>
@@ -132,5 +128,4 @@
     <string name="fragment_developer_prodution">Prodution Mode</string>
     <string name="fragment_developer_test">Test Mode</string>
     <string name="fragment_developer_developer">Developer Mode</string>
->>>>>>> d3048c0ec13a1058792429427eb92f1a3c7c48be
 </resources>

@@ -12,15 +12,11 @@ import com.artilearn.happygolfgo.enummodel.ClassType
 import com.artilearn.happygolfgo.library.HappyGolfGoRequest
 import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.models.*
-import com.artilearn.happygolfgo.ui.BaseActivity
 import com.artilearn.happygolfgo.util.convertTime
 import com.artilearn.happygolfgo.util.noticeDialog
-import com.artilearn.happygolfgo.util.snackbar
 import com.google.gson.internal.LinkedTreeMap
-import com.tlsolution.tlsmodules.Extensions.showTwoActionableAlert
 import com.tlsolution.tlsmodules.Network.RequestManager
 import com.tlsolution.tlsmodules.Network.RequestResult
-import kotlinx.android.synthetic.main.activity_confirm_reservation.*
 import kotlinx.android.synthetic.main.partial_bottom_button.view.*
 import kotlinx.android.synthetic.main.partial_toolbar.view.*
 

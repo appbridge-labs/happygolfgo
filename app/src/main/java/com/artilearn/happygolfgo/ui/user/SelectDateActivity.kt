@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.ui.user
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
@@ -10,13 +9,11 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.library.HappyGolfGoRequest
 import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.models.Ticket
-import com.artilearn.happygolfgo.ui.BaseActivity
 import com.artilearn.happygolfgo.util.convertCalendar
 import com.artilearn.happygolfgo.util.convertDate
 import com.artilearn.happygolfgo.util.noticeDialog
 import com.tlsolution.tlsmodules.Network.RequestManager
 import com.tlsolution.tlsmodules.Network.RequestResult
-import kotlinx.android.synthetic.main.activity_select_date.*
 import kotlinx.android.synthetic.main.partial_toolbar.view.*
 import java.util.*
 

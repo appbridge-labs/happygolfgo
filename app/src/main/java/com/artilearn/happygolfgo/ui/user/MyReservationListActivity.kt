@@ -11,8 +11,6 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.adapter.MyReservationListAdapter
 import com.artilearn.happygolfgo.library.HappyGolfGoRequest
 import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
-import com.artilearn.happygolfgo.ui.BaseActivity
-import com.artilearn.happygolfgo.util.snackbar
 import com.google.gson.internal.LinkedTreeMap
 import com.tlsolution.tlsmodules.Network.RequestManager
 import com.tlsolution.tlsmodules.Network.RequestResult

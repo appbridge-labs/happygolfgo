@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.artilearn.happygolfgo.R
@@ -13,14 +12,12 @@ import com.artilearn.happygolfgo.adapter.TicketAdapter
 import com.artilearn.happygolfgo.library.HappyGolfGoRequest
 import com.artilearn.happygolfgo.library.HappyGolfGoUserManager
 import com.artilearn.happygolfgo.models.Ticket
-import com.artilearn.happygolfgo.ui.BaseActivity
 import com.artilearn.happygolfgo.util.SharedPreferencesHelper
 import com.artilearn.happygolfgo.util.noticeDialog
 import com.google.gson.internal.LinkedTreeMap
 import com.tlsolution.tlsmodules.Network.RequestManager
 import com.tlsolution.tlsmodules.Network.RequestResult
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.RuntimeException
 
 
 class MainActivity : BaseActivity(), TicketAdapter.TicketClick {
