@@ -1,0 +1,20 @@
+package com.artilearn.happygolfgo.data.version.source.remote
+
+import com.artilearn.happygolfgo.api.ApiInterface
+import com.artilearn.happygolfgo.data.version.VersionResponse
+import io.reactivex.Single
+
+class VersionRemoteDataSourceImpl(
+    private val apiInterface: ApiInterface
+) : VersionRemoteDataSource {
+
+    override fun remoteGetAppVersion(
+        platform: Int,
+        clientType: Int
+    ): Single<VersionResponse> {
+        return apiInterface.getAppVersion()
+            .map {
+                it
+            }
+    }
+}

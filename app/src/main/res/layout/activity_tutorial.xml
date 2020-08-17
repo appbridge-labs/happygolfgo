@@ -5,20 +5,24 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.artilearn.happygolfgo.ui.tutorial.TutorialViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.TutorialActivity">
+        android:background="@color/color_white"
+        tools:context=".ui.tutorial.TutorialActivity">
 
         <TextView
-            android:id="@+id/text_view_welcome_tutorial"
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="120dp"
-            android:text="환영합니다!\n행복골프 GO 입니다."
+            android:text="@string/tutorial_title_text"
             android:textColor="@color/color_black"
             android:textSize="32dp"
             android:textStyle="bold"
@@ -26,17 +30,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/linear_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="32dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_welcome_tutorial">
+            app:layout_constraintTop_toBottomOf="@+id/tv_title">
 
             <ImageView
-                android:id="@+id/image_view_reservation_tutorial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,26 +48,22 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text_view_reservation_title_tutorial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/text_view_reservation_title_tutorial"
+                    android:text="@string/tutorial_reserve_title"
                     android:textColor="@color/color_black"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/text_view_reservation_detail_tutorial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="학교와 훈련소를 포함하여\n모든 지점을 여기서 예약하실 수 있습니다."
+                    android:text="@string/tutorial_reserve_text"
                     android:textColor="@color/color_black"
                     android:textSize="14dp" />
             </LinearLayout>
@@ -72,17 +71,16 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/secondlayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout">
 
             <ImageView
-                android:id="@+id/image_view_nfc_tutorial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -91,50 +89,47 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text_view_nfc_title_tutorial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/text_view_nfc_title_tutorial"
+                    android:text="@string/tutorial_nfc_title"
                     android:textColor="@color/color_black"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/text_view_nfc_detail_tutorial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="교통카드 처럼 \n간단하게 체크인하실 수 있습니다."
+                    android:text="@string/tutorial_nfc_text"
                     android:textColor="@color/color_black"
                     android:textSize="14dp" />
             </LinearLayout>
 
         </LinearLayout>
 
-
         <Button
-            android:id="@+id/button_start_tutorial"
+            android:id="@+id/btn_start"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="72dp"
+            android:alpha="0"
             android:background="@drawable/bg_btn_main"
-            android:text="@string/button_start_tutorial"
+            android:onClick="@{() -> vm.onStartClick()}"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:text="@string/tutorial_btn_text"
             android:textColor="@color/color_white"
             android:textSize="16dp"
             android:textStyle="bold"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:stateListAnimator="@null" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
