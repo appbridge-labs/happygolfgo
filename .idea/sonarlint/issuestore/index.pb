@@ -33,8 +33,6 @@ Oapp/src/main/java/com/artilearn/happygolfgo/ui/ticketdate/TicketDateActivity.kt
 Wapp/src/main/java/com/artilearn/happygolfgo/ui/reserveconfirm/ReserveConfirmActivity.kt,f/a/fa704d6dcf2a0ae6821cd66f1bb886722993cf68
 à
 Xapp/src/main/java/com/artilearn/happygolfgo/ui/reserveconfirm/ReserveConfirmViewModel.kt,a/5/a561d58ad1bccb3c5f8f8ecb33d420fdcb9ba5c3
-w
-Gapp/src/main/java/com/artilearn/happygolfgo/deprecated/VideoActivity.kt,3/7/3760755d0ff7cd2ebf812fbed384de74bf2e8e9f
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 v
@@ -153,3 +151,7 @@ m
 =app/src/main/java/com/artilearn/happygolfgo/data/LogDetail.kt,f/0/f01be27dc65762812d900cf939398fdce59ac476
 Å
 Qapp/src/main/java/com/artilearn/happygolfgo/ui/common/DeveloperOptionViewModel.kt,7/0/709ad2b105cb6c6e9b2e643ea7f8f06a2481b471
+<
+build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
+@
+app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164

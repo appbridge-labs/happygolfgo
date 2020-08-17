@@ -111,8 +111,6 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     s?.toString()?.let {
-                        val text = s.toString()
-                        binding.tvLength.text = "${text.length}/100"
                         emitter.onNext(it)
                     }
                 }
@@ -136,11 +134,7 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
 
         disposable = flowable
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ comment ->
-                if (comment.length > 100) {
-                    binding.etComment.error = getString(R.string.comment_fail_length)
-                }
-            }, {  })
+            .subscribe({ comment -> }, {  })
     }
 
     override fun onStart() {
