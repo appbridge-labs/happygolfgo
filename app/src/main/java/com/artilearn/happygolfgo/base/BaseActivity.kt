@@ -10,10 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ProcessLifecycleOwner
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
 import com.artilearn.happygolfgo.constants.EXTRA_INTENT
@@ -28,14 +24,12 @@ import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 abstract class BaseActivity<B : ViewDataBinding>(
     @LayoutRes val layoutId: Int
 ) : AppCompatActivity() {
-    private val TAG = javaClass.simpleName
 
     protected val compositeDisposable = CompositeDisposable()
     lateinit var binding: B
 
     private var actionBar: Toolbar? = null
     private lateinit var bundle: Bundle
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

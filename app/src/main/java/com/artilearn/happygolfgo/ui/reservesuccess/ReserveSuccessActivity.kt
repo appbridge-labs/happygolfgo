@@ -12,6 +12,7 @@ import com.artilearn.happygolfgo.data.ReservationPlate
 import com.artilearn.happygolfgo.databinding.ActivityReserveSuccessBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.ui.home.HomeActivity
+import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.util.convertTime
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 
@@ -85,13 +86,29 @@ class ReserveSuccessActivity :
                 "${startTime[3]}:${startTime[4]} ~ ${endTime[3]}:${endTime[4]}"
     }
 
-    override fun bottomAction() {
-        super.bottomAction()
+    private fun goHome() {
         val homeIntent = Intent(this, HomeActivity::class.java)
             .apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             }
         startActivity(homeIntent)
+    }
+
+    private fun goReservationList() {
+        val reservationIntent = Intent(this, ReserveListActivity::class.java)
+            .apply {
+                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }
+        startActivity(reservationIntent)
+    }
+
+    override fun bottomAction() {
+        super.bottomAction()
+
+        when (successType) {
+            "reservation" -> goHome()
+            else -> goReservationList()
+        }
     }
 
 }

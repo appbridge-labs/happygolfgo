@@ -19,10 +19,6 @@ abstract class BaseViewModel : ViewModel() {
     protected val _networkFail = SingleLiveEvent<Unit>()
     val networkFail: LiveData<Unit> get() = _networkFail
 
-    protected val _networkDelay: MutableLiveData<Unit> = MutableLiveData()
-    val networkDelay: LiveData<Unit> get() = _networkDelay
-
-
     protected fun showLoading() {
         _isLoading.value = true
     }

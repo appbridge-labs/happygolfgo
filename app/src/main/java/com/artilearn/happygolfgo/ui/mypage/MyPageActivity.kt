@@ -1,16 +1,12 @@
 package com.artilearn.happygolfgo.ui.mypage
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.APP_STORE_PATH
 import com.artilearn.happygolfgo.databinding.ActivityMyPageBinding
 import com.artilearn.happygolfgo.ui.lessonlog.LessonLogActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
@@ -18,10 +14,7 @@ import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.PreferenceManager
-import com.artilearn.happygolfgo.util.snackbar
-import kotlinx.android.synthetic.main.activity_my_page.*
 import kotlinx.android.synthetic.main.common_view.view.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
 
@@ -53,12 +46,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            showUpdate.observe(this@MyPageActivity, Observer {
-                showUpdate()
-            })
-            goPlayStore.observe(this@MyPageActivity, Observer {
-                updateAppStore()
-            })
+
         }
     }
 
@@ -82,16 +70,6 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
             binding.tvVersion.text = it
         }
 
-    }
-
-    private fun showUpdate() {
-        binding.tvUpdate.visibility = View.VISIBLE
-    }
-
-    private fun updateAppStore() {
-        Intent(Intent.ACTION_VIEW, Uri.parse(APP_STORE_PATH)).takeIf {
-            it.resolveActivity(packageManager) != null
-        }?.run(this::startActivity)
     }
 
     private fun logout() {

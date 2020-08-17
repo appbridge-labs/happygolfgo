@@ -51,8 +51,8 @@ class PreferenceManager(context: Context) {
         set(value) = editor.putString(DATE_OF_BIRTH, value).apply()
 
     var environmentMode: String
-        get() = prefs.getString(DEFAULT_MODE, DEFAULT_MODE) ?: ""
-        set(value) = editor.putString(DEFAULT_MODE, value).apply()
+        get() = prefs.getString(ENVIRONMENT_MODE, DEFAULT_MODE) ?: ""
+        set(value) = editor.putString(ENVIRONMENT_MODE, value).apply()
 
     var appVersion: String
         get() = prefs.getString(APP_VERSION, "1.0.0") ?: ""

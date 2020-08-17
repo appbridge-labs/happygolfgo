@@ -12,11 +12,10 @@ import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
-import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.alram.AlramActivity
-import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
 import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
 import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
+import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
 

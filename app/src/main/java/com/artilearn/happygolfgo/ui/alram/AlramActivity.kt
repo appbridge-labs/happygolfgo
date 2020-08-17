@@ -10,8 +10,6 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityAlramBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
-import kotlinx.android.synthetic.main.activity_alram.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram) {
 

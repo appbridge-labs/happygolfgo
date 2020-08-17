@@ -14,8 +14,6 @@ import com.artilearn.happygolfgo.databinding.ActivityLessonLogBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.util.MyApplication
-import kotlinx.android.synthetic.main.activity_lesson_log.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activity_lesson_log) {
 
@@ -52,7 +50,7 @@ class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activi
                 showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
             })
             serverError.observe(this@LessonLogActivity, Observer {
-                showToast(ToastType.ERROR, it)
+                showError(it)
             })
         }
     }

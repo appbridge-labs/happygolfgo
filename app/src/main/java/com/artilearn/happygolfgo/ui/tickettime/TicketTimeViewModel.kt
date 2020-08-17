@@ -79,7 +79,7 @@ class TicketTimeViewModel(
                             showEmptyTicketTimeView()
                         }
                     } else {
-                        _serverError.value = response.errorBody().toString()
+                        _serverError.value = response.message()
                     }
                 }, { t ->
                     when (t.message) {
