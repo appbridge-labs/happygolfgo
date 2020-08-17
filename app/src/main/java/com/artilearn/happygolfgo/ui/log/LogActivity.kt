@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.ui.log
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -17,11 +18,13 @@ import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.LogDetail
 import com.artilearn.happygolfgo.databinding.ActivityLogBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.comment.CommentActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.convertTime
 import com.artilearn.happygolfgo.util.setImage
 import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -29,8 +32,9 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import kotlinx.android.synthetic.main.common_default_view.view.*
 
 class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
+    private val TAG = javaClass.simpleName
 
-    private var playWhenReady = true
+    private var playReady = false
     private var player: SimpleExoPlayer? = null
     private var currentWindow = 0
     private var playbackPosition = 0L
@@ -89,11 +93,22 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
     }
 
     private fun showVideoView() {
+        playReady = true
+
+        playbackPosition = player!!.currentPosition
+        currentWindow = player!!.currentWindowIndex
+        player?.playWhenReady = playReady
+        player?.seekTo(currentWindow, playbackPosition)
+
         with(binding) {
             ivThumbnail.visibility = View.GONE
             ivVideoStart.visibility = View.GONE
             exoplayer.visibility = View.VISIBLE
         }
+    }
+
+    private fun videoStateReady() {
+        player?.playWhenReady = playReady
     }
 
     private fun initializePlayer(path: String) {
@@ -103,9 +118,23 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
         val uri = path.toUri()
         val mediaSource = buildMediaSource(uri)
 
-        player?.playWhenReady = playWhenReady
+        val exoEventListener = object : Player.EventListener {
+            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+                when (playbackState) {
+                    Player.STATE_BUFFERING -> videoStateReady()
+                    Player.STATE_READY -> Log.d(TAG, "onPlayerStateChanged: ")
+                    Player.STATE_ENDED -> videoStateEnd()
+                    Player.STATE_IDLE -> showToast(ToastType.ERROR, getString(R.string.log_video_start_fail))
+                }
+
+                super.onPlayerStateChanged(playWhenReady, playbackState)
+            }
+        }
+
+        player?.playWhenReady = playReady
         player?.seekTo(currentWindow, playbackPosition)
         player?.prepare(mediaSource, false, false)
+        player?.addListener(exoEventListener)
     }
 
     private fun buildMediaSource(uri: Uri): MediaSource {
@@ -114,9 +143,24 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
         return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
     }
 
+    private fun videoStateEnd() {
+        playReady = false
+        currentWindow = 0
+        playbackPosition = 0L
+
+        player?.playWhenReady = playReady
+        player?.seekTo(currentWindow, playbackPosition)
+
+        with(binding) {
+            ivThumbnail.visibility = View.VISIBLE
+            ivVideoStart.visibility = View.VISIBLE
+            exoplayer.visibility = View.INVISIBLE
+        }
+    }
+
     private fun releasePlayer() {
         if (player != null) {
-            playWhenReady = player!!.playWhenReady
+            playReady = player!!.playWhenReady
             playbackPosition = player!!.currentPosition
             currentWindow = player!!.currentWindowIndex
             player!!.release()

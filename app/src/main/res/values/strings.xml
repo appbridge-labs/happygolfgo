@@ -101,6 +101,7 @@
     <string name="fragment_reserve_lesson_empty">예약내역이 없습니다</string>
     <string name="log_toolbar_title">레슨 후기</string>
     <string name="log_comment_tile">나의 후기</string>
+    <string name="log_video_start_fail">오류로 인한 동영상 시작 실패</string>
     <string name="log_bottom_view_title">후기 남기기</string>
     <string name="log_over_comment">후기를 남길 수 있는 기간이 지났습니다</string>
     <string name="comment_subtitle_text">이번 레슨은 어떠셨나요?</string>

@@ -145,16 +145,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_comment_title" />
 
-                    <TextView
-                        android:id="@+id/tv_length"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="25dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/et_comment"
-                        tools:text="0/100" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </ScrollView>
