@@ -19,6 +19,7 @@
     <string name="tutorial_btn_text">시작하기</string>
     <string name="home_toolbar_text">나의 이용권</string>
     <string name="home_fail_ticket">사용할 수 없는 티켓입니다</string>
+    <string name="home_reservation_allowbook_fail">예약은 최대 3개 까지만 가능합니다</string>
     <string name="home_empty_ticket_go">보유하고 있는 이용권이 없습니다\n이용권을 구매해 주세요</string>
     <string name="home_empty_ticket_text">보유하고 있는 이용권이 없습니다.</string>
     <string name="home_bottomview_title">내 예약목록 보기</string>
@@ -78,7 +79,7 @@
     <string name="alram_toolbar_title">알림</string>
     <string name="ticketdate_toolbar_title">날짜 선택</string>
     <string name="ticketdate_impossible_ticket">당일 중복 예약이 불가능한 이용권 입니다</string>
-    <string name="ticketdate_impossible_calendar">선택하신 날짜는 예약이 불가능 합니다</string>
+    <string name="ticketdate_impossible_calendar">선택 하신 날짜는 예약이 불가능 합니다</string>
     <string name="ticketdate_onlyoncetoday_ticket">1일 1회 예약 가능합니다</string>
     <string name="tickettime_toolbar_title">시간 선택</string>
     <string name="reserve_confirm_toolbar_title">예약 확인</string>

@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.ticketdate
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -72,7 +73,11 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
     }
 
     private fun initView() {
-        initToolbar(binding.calendarToolbar.toolbar, getString(R.string.ticketdate_toolbar_title), true)
+        initToolbar(
+            binding.calendarToolbar.toolbar,
+            getString(R.string.ticketdate_toolbar_title),
+            true
+        )
 
         ticket?.let {
             viewModel.ticketId = it.id
@@ -84,23 +89,20 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
         binding.calendarview.setOnDayClickListener(
             object : OnDayClickListener {
                 override fun onDayClick(eventDay: EventDay) {
-                    val month = eventDay.calendar.get(Calendar.MONTH)
                     val date =
-                        "${eventDay.calendar.get(Calendar.YEAR)}-${month + 1}-${eventDay.calendar.get(
-                            Calendar.DAY_OF_MONTH
-                        )}"
+                        "${eventDay.calendar.get(Calendar.YEAR)}-${eventDay.calendar.get(Calendar.MONTH) + 1}" +
+                                "-${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}"
 
                     if (viewModel.eventList.contains(eventDay.calendar)) {
-                        if (ticket.onlyOnceToday) {
-                            binding.parentLayout.snackbar(getString(R.string.ticketdate_onlyoncetoday_ticket))
-                        } else {
-                            goSelectionTime(date, ticket)
+                        when {
+                            ticket.onlyOnceToday -> binding.parentLayout.snackbar(getString(R.string.ticketdate_onlyoncetoday_ticket))
+                            viewModel.availableList.contains(eventDay.calendar) -> goSelectionTime(date, ticket)
+                            else -> binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
                         }
                     } else {
-                        if (eventDay.isEnabled) {
-                            binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
-                        } else {
-                            goSelectionTime(date, ticket)
+                        when {
+                            viewModel.availableList.contains(eventDay.calendar) -> goSelectionTime(date, ticket)
+                            else -> binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
                         }
                     }
 
