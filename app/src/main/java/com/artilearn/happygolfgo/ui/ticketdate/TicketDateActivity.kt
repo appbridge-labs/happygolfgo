@@ -21,7 +21,7 @@ import com.artilearn.happygolfgo.util.snackbar
 import java.util.*
 
 class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.activity_ticket_date) {
-    private val TAG = javaClass.simpleName
+
     private lateinit var myApplication: MyApplication
 
     private val ticket by lazy {
@@ -89,11 +89,9 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
         binding.calendarview.setOnDayClickListener(
             object : OnDayClickListener {
                 override fun onDayClick(eventDay: EventDay) {
-                    val month = eventDay.calendar.get(Calendar.MONTH)
                     val date =
-                        "${eventDay.calendar.get(Calendar.YEAR)}-${month + 1}-${eventDay.calendar.get(
-                            Calendar.DAY_OF_MONTH
-                        )}"
+                        "${eventDay.calendar.get(Calendar.YEAR)}-${eventDay.calendar.get(Calendar.MONTH) + 1}" +
+                                "-${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}"
 
                     if (viewModel.eventList.contains(eventDay.calendar)) {
                         when {
