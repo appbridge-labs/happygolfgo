@@ -96,29 +96,15 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
                         )}"
 
                     if (viewModel.eventList.contains(eventDay.calendar)) {
-                        if (ticket.onlyOnceToday) {
-                            if (viewModel.availableList.contains(eventDay.calendar)) {
-                                goSelectionTime(date, ticket)
-                            } else {
-                                binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
-                                goSelectionTime(date, ticket)
-                            }
-                        } else {
-                            if (viewModel.availableList.contains(eventDay.calendar)) {
-                                goSelectionTime(date, ticket)
-                            } else {
-                                binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
-                            }
+                        when {
+                            ticket.onlyOnceToday -> binding.parentLayout.snackbar(getString(R.string.ticketdate_onlyoncetoday_ticket))
+                            viewModel.availableList.contains(eventDay.calendar) -> goSelectionTime(date, ticket)
+                            else -> binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
                         }
                     } else {
-                        if (eventDay.isEnabled) {
-                            binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
-                        } else {
-                            if (viewModel.availableList.contains(eventDay.calendar)) {
-                                goSelectionTime(date, ticket)
-                            } else {
-                                binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
-                            }
+                        when {
+                            viewModel.availableList.contains(eventDay.calendar) -> goSelectionTime(date, ticket)
+                            else -> binding.parentLayout.snackbar(getString(R.string.ticketdate_impossible_calendar))
                         }
                     }
 
