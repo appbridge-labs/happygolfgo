@@ -45,7 +45,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/calendar_toolbar"
-            app:layout_constraintTop_toTopOf="parent"
             app:previousButtonSrc="@drawable/ic_calendar_previous"
             app:selectionColor="#FF00FF"
             app:selectionLabelColor="@color/color_dark_red"

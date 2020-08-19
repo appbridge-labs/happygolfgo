@@ -31,6 +31,7 @@ class TicketDateViewModel(
     private var calendarMax: Calendar? = null
     private var eventDays = mutableListOf<EventDay>()
     var eventList = arrayListOf<Calendar>()
+    var availableList = arrayListOf<Calendar>()
 
     fun selectDate(type: Int) {
         when (type) {
@@ -126,8 +127,13 @@ class TicketDateViewModel(
                     val minDate = convertDate(min)
                     val maxDate = convertDate(max)
 
-                    minDate?.let { calendarMin = convertCalendar(it) }
-                    maxDate?.let { calendarMax = convertCalendar(it) }
+                    minDate?.let { calendarMin = convertCalendar(minDate) }
+                    maxDate?.let { calendarMax = convertCalendar(maxDate) }
+
+                    for (i in 0 until size) {
+                        val date = convertDate(this[i])
+                        date?.let { availableList.add(convertCalendar(date)) }
+                    }
                 }
             }
         }
@@ -137,7 +143,7 @@ class TicketDateViewModel(
                 if (isNotEmpty()) {
                     for (i in 0 until size) {
                         val date = convertDate(this[i])
-                        date?.let { eventList.add(convertCalendar(it)) }
+                        date?.let { eventList.add(convertCalendar(date)) }
                     }
                 }
             }

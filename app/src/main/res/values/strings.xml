@@ -19,6 +19,7 @@
     <string name="tutorial_btn_text">시작하기</string>
     <string name="home_toolbar_text">나의 이용권</string>
     <string name="home_fail_ticket">사용할 수 없는 티켓입니다</string>
+    <string name="home_reservation_allowbook_fail">예약은 최대 3개 까지만 가능합니다</string>
     <string name="home_empty_ticket_go">보유하고 있는 이용권이 없습니다\n이용권을 구매해 주세요</string>
     <string name="home_empty_ticket_text">보유하고 있는 이용권이 없습니다.</string>
     <string name="home_bottomview_title">내 예약목록 보기</string>
