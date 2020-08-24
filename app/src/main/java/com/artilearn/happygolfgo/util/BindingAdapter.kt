@@ -14,6 +14,7 @@ import com.artilearn.happygolfgo.ui.alram.AlramAdapter
 import com.artilearn.happygolfgo.ui.home.HomeAdapter
 import com.artilearn.happygolfgo.ui.lessonlog.LessonLogAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
+import java.util.*
 
 @BindingAdapter("setTicketStartDate", "setTicketEndDate")
 fun ticketDate(tv: TextView, startDate: String, endDate: String) {
@@ -78,8 +79,9 @@ fun RecyclerView.setAlramMessageItems(message: List<Alram>?) {
 
 @BindingAdapter("setAlramDate")
 fun setAlramDate(tv: TextView, time: String) {
-    val timeList = convertTime(time).trim().split(":")
-    tv.text = "${timeList[0]}.${timeList[1]}.${timeList[2]} ${timeList[3]}:${timeList[4]}"
+    val long = convertStringtoLong(time)
+    val realTime = Date(long).convertDateTime()
+    tv.text = realTime
 }
 
 @BindingAdapter("setAlramTitle")

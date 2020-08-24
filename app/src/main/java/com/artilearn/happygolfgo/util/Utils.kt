@@ -86,3 +86,24 @@ fun ImageView.setImage(iv: ImageView, str: String?) {
             .into(iv)
     }
 }
+
+fun convertStringtoLong(time: String): Long {
+    val defaultFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+    defaultFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+    val longTime = defaultFormat.parse(time)
+
+    return longTime.time
+}
+
+fun Date.convertDateTime(): String {
+    return when (val diff = (Date().time - this.time) / 1000) {
+        in 0 until 10 -> "지금 막"
+        in 10 until  60 -> "${diff}초 전"
+        in 60 until  60 * 60 -> "${diff / 60}분 전"
+        in 60 * 60 until 60 * 60 * 24 -> "${diff / (60 * 60)}시간 전"
+        in 60 * 60 * 24 until 60 * 60 * 48 -> "어제"
+        in 60 * 60 * 48 until 60 * 60 * 24 * 7 -> "${diff / (60 * 60 * 24)}일 전"
+        else -> SimpleDateFormat("yyy.MM.dd", Locale.getDefault()).format(this)
+    }
+}
