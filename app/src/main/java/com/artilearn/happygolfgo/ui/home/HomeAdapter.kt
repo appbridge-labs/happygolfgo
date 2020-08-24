@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +43,10 @@ class HomeAdapter(
 
         fun bind(ticket: Ticket) {
             binding.ticket = ticket
+            when (ticket.type) {
+                1 -> binding.ibTicket.visibility = View.INVISIBLE
+                else -> binding.ibTicket.visibility = View.VISIBLE
+            }
             binding.executePendingBindings()
         }
 
