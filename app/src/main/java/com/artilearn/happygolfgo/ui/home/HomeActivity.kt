@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -75,14 +74,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun initAdapter() {
         adapter = HomeAdapter { ticket ->
             with(ticket) {
-                if (!isUnlimited && remainingCount == 0) {
-                    binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
-                } else {
-                    if (allowToBook == possible) {
-                        binding.parentLayout.snackbar(getString(R.string.home_reservation_allowbook_fail))
-                    } else {
-                        goSelectionDate(ticket)
-                    }
+                when {
+                    !isUnlimited && remainingCount == 0 -> binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
+                    allowToBook == possible -> binding.parentLayout.snackbar(getString(R.string.home_reservation_allowbook_fail))
+                    ticket.type == 1 -> ""
+                    else -> goSelectionDate(ticket)
                 }
             }
         }

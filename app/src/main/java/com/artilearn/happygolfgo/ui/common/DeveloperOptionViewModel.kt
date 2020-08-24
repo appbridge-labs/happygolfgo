@@ -23,7 +23,7 @@ class DeveloperOptionViewModel(
     }
 
     fun onTest() {
-        developerOptionRepository.environmentMode = "http://172.30.1.17:8080/appClient/"
+        developerOptionRepository.environmentMode = " http://172.30.1.42:7000/appClient/"
         _test.value = Unit
     }
 
