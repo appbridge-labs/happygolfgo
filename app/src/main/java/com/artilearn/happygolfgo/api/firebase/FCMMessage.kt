@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Lifecycle
@@ -55,6 +56,7 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
     }
 
     private fun createNotification(body: MutableMap<String, String>, intent: Intent) {
+        Log.d("test", "body: $body")
         val sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val pendingIntent = PendingIntent.getActivity(

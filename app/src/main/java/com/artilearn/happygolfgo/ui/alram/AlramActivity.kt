@@ -1,6 +1,8 @@
 package com.artilearn.happygolfgo.ui.alram
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -56,9 +58,12 @@ class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram
 
     private fun initAdapter() {
         adapter = AlramAdapter { alram ->
-
+            when (alram.eventType) {
+                "3", "4", "6" -> showToast(ToastType.SUCCESS, "$alram")
+            }
         }
 
         binding.recyclerview.adapter = adapter
     }
+
 }
