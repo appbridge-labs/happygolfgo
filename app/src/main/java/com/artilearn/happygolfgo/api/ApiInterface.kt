@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.api
 
+import com.artilearn.happygolfgo.data.ReservationLesson
 import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.comment.CommentModel
 import com.artilearn.happygolfgo.data.home.HomeResponse
@@ -136,4 +137,13 @@ interface ApiInterface {
         @Body data: HashMap<String, CommentModel>
     ): Completable
 
+    @GET("reservation/user/lessonReservation/detail/{lessonReservationID}")
+    fun getReservationLessonDetail(
+        @Path("lessonReservationID") lessonId: Int
+    ): Single<Response<ReservationLessonDetail>>
+
+    @GET("reservation/user/plateReservation/detail/{plateReservationID}")
+    fun getReservationPlateDetail(
+        @Path("plateReservationID") plateId: Int
+    ): Single<Response<ReservationPlateDetail>>
 }

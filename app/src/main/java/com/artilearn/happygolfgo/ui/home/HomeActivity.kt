@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel

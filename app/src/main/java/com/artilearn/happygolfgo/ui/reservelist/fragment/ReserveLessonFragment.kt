@@ -10,10 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
-import com.artilearn.happygolfgo.constants.CONFIRM_TYPE
-import com.artilearn.happygolfgo.constants.RESERVATION
-import com.artilearn.happygolfgo.constants.RESERVATION_LESSON
-import com.artilearn.happygolfgo.constants.RESERVATION_LIST
+import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.data.ReserveList
 import com.artilearn.happygolfgo.data.reservelist.ReserveListResponse
 import com.artilearn.happygolfgo.databinding.FragmentReserveLessonBinding
@@ -85,8 +82,10 @@ class ReserveLessonFragment
     private fun goReservationConfirm(item: ReserveList) {
         val confirmIntent = Intent(activity, ReserveConfirmActivity::class.java)
             .apply {
-                putExtra(RESERVATION, item)
-                putExtra(CONFIRM_TYPE, cancel)
+//                putExtra(RESERVATION, item)
+//                putExtra(CONFIRM_TYPE, cancel)
+                putExtra(LESSON_ID, item.id)
+                putExtra(RESERVATION_TYPE, cancel)
             }
         startActivity(confirmIntent)
     }

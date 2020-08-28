@@ -1,22 +1,30 @@
 package com.artilearn.happygolfgo.ui.alram
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.LESSON_ID
+import com.artilearn.happygolfgo.constants.PLATE_ID
+import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.databinding.ActivityAlramBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.log.LogActivity
+import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
 class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram) {
 
     private lateinit var adapter: AlramAdapter
     private lateinit var myApplication: MyApplication
+    private val reservationPlate = "ReservationPlateFromAlram"
+    private val reservationLesson = "ReservationLessonFromAlram"
+
     private val viewModel: AlramViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -59,11 +67,45 @@ class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram
     private fun initAdapter() {
         adapter = AlramAdapter { alram ->
             when (alram.eventType) {
-                "3", "4", "6" -> showToast(ToastType.SUCCESS, "$alram")
+                "3" -> { // 타석 예약
+                    goReservaitonPlate(alram.eventValue.toInt())
+                    Log.d("Reserve", "initAdapter: ${alram.eventValue}")
+                }
+                "4" -> { // 레슨 예약
+                    goReservationLesson(alram.eventValue.toInt())
+                    Log.d("Reserve", "initAdapter: ${alram.eventValue}")
+                }
+                "6" -> goLessonLog(alram.eventValue.toInt())
             }
         }
 
         binding.recyclerview.adapter = adapter
+    }
+
+    private fun goReservationLesson(lessonId: Int) {
+        val lessonIntent = Intent(this, ReserveConfirmActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_TYPE, reservationLesson)
+                putExtra(LESSON_ID, lessonId)
+            }
+        startActivity(lessonIntent)
+    }
+
+    private fun goReservaitonPlate(plateId: Int) {
+        val plateIntent = Intent(this, ReserveConfirmActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_TYPE, reservationPlate)
+                putExtra(PLATE_ID, plateId)
+            }
+        startActivity(plateIntent)
+    }
+
+    private fun goLessonLog(lessonId: Int) {
+        val logIntent = Intent(this, LogActivity::class.java)
+            .apply {
+                putExtra(LESSON_ID, lessonId)
+            }
+        startActivity(logIntent)
     }
 
 }

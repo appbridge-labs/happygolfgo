@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.util
 
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -173,10 +174,4 @@ fun setLogComment(tv: TextView, comment: String?) {
     comment?.let {
         tv.text = it
     }
-}
-
-@BindingAdapter("setCommentEmplotyeeName", "setCommentCreatedAt")
-fun setCommentInfo(tv: TextView, coachName: String, date: String) {
-    val time = convertTime(date).trim().split(":")
-    tv.text = "$coachName, ${time[0]}.${time[1]}.${time[2]}"
 }
