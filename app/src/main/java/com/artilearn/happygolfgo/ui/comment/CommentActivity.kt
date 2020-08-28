@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -14,8 +13,6 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.COACH_NAME
 import com.artilearn.happygolfgo.constants.LESSON_DATE
 import com.artilearn.happygolfgo.constants.LESSON_ID
-import com.artilearn.happygolfgo.constants.LESSON_LOG
-import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.databinding.ActivityCommetBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType

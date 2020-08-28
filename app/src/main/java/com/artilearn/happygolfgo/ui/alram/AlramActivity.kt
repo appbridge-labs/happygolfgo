@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.ui.alram
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -67,13 +66,11 @@ class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram
     private fun initAdapter() {
         adapter = AlramAdapter { alram ->
             when (alram.eventType) {
-                "3" -> { // 타석 예약
+                "3" -> {
                     goReservaitonPlate(alram.eventValue.toInt())
-                    Log.d("Reserve", "initAdapter: ${alram.eventValue}")
                 }
-                "4" -> { // 레슨 예약
+                "4" -> {
                     goReservationLesson(alram.eventValue.toInt())
-                    Log.d("Reserve", "initAdapter: ${alram.eventValue}")
                 }
                 "6" -> goLessonLog(alram.eventValue.toInt())
             }

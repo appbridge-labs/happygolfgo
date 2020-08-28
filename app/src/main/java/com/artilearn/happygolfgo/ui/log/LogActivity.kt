@@ -16,11 +16,7 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.COACH_NAME
 import com.artilearn.happygolfgo.constants.LESSON_DATE
 import com.artilearn.happygolfgo.constants.LESSON_ID
-import com.artilearn.happygolfgo.constants.LESSON_LOG
-import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.LogDetail
-import com.artilearn.happygolfgo.data.lessonlog.LessonLogInfo
-import com.artilearn.happygolfgo.data.log.LogInfo
 import com.artilearn.happygolfgo.databinding.ActivityLogBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
