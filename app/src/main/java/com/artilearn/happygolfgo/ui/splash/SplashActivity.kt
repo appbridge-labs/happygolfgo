@@ -2,16 +2,19 @@ package com.artilearn.happygolfgo.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.FCM_EVENT_TYPE
+import com.artilearn.happygolfgo.constants.LESSON_ID
+import com.artilearn.happygolfgo.constants.PLATE_ID
+import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.databinding.ActivitySplashBinding
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
-import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
 import com.artilearn.happygolfgo.ui.tutorial.TutorialActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
@@ -19,8 +22,20 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
     private lateinit var myApplication: MyApplication
 
-    private val eventResult by lazy {
-        intent.getIntExtra(FCM_EVENT_TYPE, 0)
+    private val fcmEventType by lazy {
+        intent.getStringExtra(FCM_EVENT_TYPE)
+    }
+
+    private val reservationType by lazy {
+        intent.getStringExtra(RESERVATION_TYPE)
+    }
+
+    private val lessonId by lazy {
+        intent.getIntExtra(LESSON_ID, 0)
+    }
+
+    private val plateId by lazy {
+        intent.getIntExtra(PLATE_ID, 0)
     }
 
     private val viewModel: SplashViewModel by viewModels {
@@ -72,7 +87,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
     private fun goHome() {
         val homeIntent = Intent(this, HomeActivity::class.java)
             .apply {
-                putExtra(FCM_EVENT_TYPE, eventResult)
+                putExtra(FCM_EVENT_TYPE, fcmEventType)
+                putExtra(RESERVATION_TYPE, reservationType)
+                putExtra(LESSON_ID, lessonId)
+                putExtra(PLATE_ID, plateId)
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
         startActivity(homeIntent)
         finish()

@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.Lifecycle
@@ -16,12 +15,8 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.constants.*
-import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.ui.alram.AlramActivity
-import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.log.LogActivity
-import com.artilearn.happygolfgo.ui.login.LoginActivity
-import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import com.artilearn.happygolfgo.ui.splash.SplashActivity
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -32,7 +27,6 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
     private var fcmIntent: Intent? = null
     private var eventType: String? = null
     private var eventValue: String? = null
-    private var eventResult: Int = 0
     private var isRunning = false
 
     override fun onCreate() {
@@ -40,8 +34,8 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
-    
-    
+
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.data.let {
             sendNotification(remoteMessage.data)
@@ -63,7 +57,6 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
     private fun createTypePush(body: MutableMap<String, String>, type: String?) {
         when (type) {
             "3" -> {
-                eventResult = 3
                 if (isRunning) {
                     fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
                         .apply {
@@ -76,12 +69,11 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
                         .apply {
                             putExtra(RESERVATION_TYPE, reservationPlate)
                             putExtra(PLATE_ID, eventValue?.toInt())
-                            putExtra(FCM_EVENT_TYPE, eventResult)
+                            putExtra(FCM_EVENT_TYPE, eventType)
                         }
                 }
             }
             "4" -> {
-                eventResult = 4
                 if (isRunning) {
                     fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
                         .apply {
@@ -94,12 +86,11 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
                         .apply {
                             putExtra(RESERVATION_TYPE, reservationLesson)
                             putExtra(LESSON_ID, eventValue?.toInt())
-                            putExtra(FCM_EVENT_TYPE, eventResult)
+                            putExtra(FCM_EVENT_TYPE, eventType)
                         }
                 }
             }
             "6" -> {
-                eventResult = 6
                 if (isRunning) {
                     fcmIntent = Intent(this, LogActivity::class.java)
                         .apply {
@@ -110,22 +101,21 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
                     fcmIntent = Intent(this, SplashActivity::class.java)
                         .apply {
                             putExtra(LESSON_ID, eventValue?.toInt())
-                            putExtra(FCM_EVENT_TYPE, eventResult)
+                            putExtra(FCM_EVENT_TYPE, eventType)
                         }
                 }
             }
             else -> {
-                eventResult = 0
+                eventType = ""
                 if (isRunning) {
                     fcmIntent = Intent(this, AlramActivity::class.java)
                         .apply {
-                            putExtra(FCM_EVENT_TYPE, eventResult)
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         }
                 } else {
                     fcmIntent = Intent(this, SplashActivity::class.java)
                         .apply {
-                            putExtra(FCM_EVENT_TYPE, eventResult)
+                            putExtra(FCM_EVENT_TYPE, eventType)
                         }
                 }
             }
