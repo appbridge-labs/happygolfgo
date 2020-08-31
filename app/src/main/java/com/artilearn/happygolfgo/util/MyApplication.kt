@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.util
 
 import android.app.Application
+import android.content.ComponentCallbacks2
 import android.content.Context
 import com.artilearn.happygolfgo.api.ApiInterface
 import com.artilearn.happygolfgo.api.ApiService

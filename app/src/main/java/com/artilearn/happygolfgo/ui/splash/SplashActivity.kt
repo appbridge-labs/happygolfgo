@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.*
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.FCM_EVENT_TYPE
 import com.artilearn.happygolfgo.databinding.ActivitySplashBinding
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
@@ -17,6 +18,10 @@ import com.artilearn.happygolfgo.util.MyApplication
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
 
     private lateinit var myApplication: MyApplication
+
+    private val eventResult by lazy {
+        intent.getIntExtra(FCM_EVENT_TYPE, 0)
+    }
 
     private val viewModel: SplashViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -65,7 +70,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
     }
 
     private fun goHome() {
-        startActivity(Intent(this, HomeActivity::class.java))
+        val homeIntent = Intent(this, HomeActivity::class.java)
+            .apply {
+                putExtra(FCM_EVENT_TYPE, eventResult)
+            }
+        startActivity(homeIntent)
         finish()
     }
 

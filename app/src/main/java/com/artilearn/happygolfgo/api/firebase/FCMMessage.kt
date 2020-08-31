@@ -15,17 +15,25 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.constants.CHANNEL_ID
-import com.artilearn.happygolfgo.constants.NOTIFICATION_ID
+import com.artilearn.happygolfgo.constants.*
+import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.ui.alram.AlramActivity
-import com.artilearn.happygolfgo.ui.splash.SplashEmptyActivity
+import com.artilearn.happygolfgo.ui.home.HomeActivity
+import com.artilearn.happygolfgo.ui.log.LogActivity
+import com.artilearn.happygolfgo.ui.login.LoginActivity
+import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
+import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
+import com.artilearn.happygolfgo.ui.splash.SplashActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
 class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
 
     private var fcmIntent: Intent? = null
-    private var defaultIntent: Intent? = null
+    private var eventType: String? = null
+    private var eventValue: String? = null
+    private var eventResult: Int = 0
+    private var isRunning = false
 
     override fun onCreate() {
         super.onCreate()
@@ -47,16 +55,86 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
     private fun sendNotification(body: MutableMap<String, String>) {
         createNotificationChannel()
 
-        if (fcmIntent != null) {
-            createNotification(body, fcmIntent!!)
-        } else {
-            createNotification(body, defaultIntent!!)
+        eventType = body["eventType"]
+        eventValue = body["eventValue"]
+        createTypePush(body, eventType)
+    }
+
+    private fun createTypePush(body: MutableMap<String, String>, type: String?) {
+        when (type) {
+            "3" -> {
+                eventResult = 3
+                if (isRunning) {
+                    fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
+                        .apply {
+                            putExtra(RESERVATION_TYPE, reservationPlate)
+                            putExtra(PLATE_ID, eventValue?.toInt())
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
+                } else {
+                    fcmIntent = Intent(this, SplashActivity::class.java)
+                        .apply {
+                            putExtra(RESERVATION_TYPE, reservationPlate)
+                            putExtra(PLATE_ID, eventValue?.toInt())
+                            putExtra(FCM_EVENT_TYPE, eventResult)
+                        }
+                }
+            }
+            "4" -> {
+                eventResult = 4
+                if (isRunning) {
+                    fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
+                        .apply {
+                            putExtra(RESERVATION_TYPE, reservationLesson)
+                            putExtra(LESSON_ID, eventValue?.toInt())
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
+                } else {
+                    fcmIntent = Intent(this, SplashActivity::class.java)
+                        .apply {
+                            putExtra(RESERVATION_TYPE, reservationLesson)
+                            putExtra(LESSON_ID, eventValue?.toInt())
+                            putExtra(FCM_EVENT_TYPE, eventResult)
+                        }
+                }
+            }
+            "6" -> {
+                eventResult = 6
+                if (isRunning) {
+                    fcmIntent = Intent(this, LogActivity::class.java)
+                        .apply {
+                            putExtra(LESSON_ID, eventValue?.toInt())
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
+                } else {
+                    fcmIntent = Intent(this, SplashActivity::class.java)
+                        .apply {
+                            putExtra(LESSON_ID, eventValue?.toInt())
+                            putExtra(FCM_EVENT_TYPE, eventResult)
+                        }
+                }
+            }
+            else -> {
+                eventResult = 0
+                if (isRunning) {
+                    fcmIntent = Intent(this, AlramActivity::class.java)
+                        .apply {
+                            putExtra(FCM_EVENT_TYPE, eventResult)
+                            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
+                } else {
+                    fcmIntent = Intent(this, SplashActivity::class.java)
+                        .apply {
+                            putExtra(FCM_EVENT_TYPE, eventResult)
+                        }
+                }
+            }
         }
 
+        createNotification(body, fcmIntent!!)
     }
 
     private fun createNotification(body: MutableMap<String, String>, intent: Intent) {
-        Log.d("test", "body: $body")
         val sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val pendingIntent = PendingIntent.getActivity(
@@ -96,22 +174,17 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     private fun appCreate() {
-        fcmIntent = Intent(this, SplashEmptyActivity::class.java)
-            .apply {
-
-            }
-        defaultIntent = Intent(this, AlramActivity::class.java)
-            .apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            }
+        isRunning = false
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun appResume() {
-        fcmIntent = Intent(this, AlramActivity::class.java)
-            .apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            }
+        isRunning = true
+    }
+
+    companion object {
+        const val reservationPlate = "ReservationPlateFromAlram"
+        const val reservationLesson = "ReservationLessonFromAlram"
     }
 
 }
