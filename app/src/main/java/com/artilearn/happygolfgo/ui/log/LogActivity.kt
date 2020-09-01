@@ -3,7 +3,6 @@ package com.artilearn.happygolfgo.ui.log
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -33,7 +32,6 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import kotlinx.android.synthetic.main.common_default_view.view.*
 
 class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
-    private val TAG = javaClass.simpleName
 
     private var playReady = false
     private var player: SimpleExoPlayer? = null
@@ -124,7 +122,7 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
                 when (playbackState) {
                     Player.STATE_BUFFERING -> videoStateReady()
-                    Player.STATE_READY -> Log.d(TAG, "onPlayerStateChanged: ")
+                    Player.STATE_READY -> {}
                     Player.STATE_ENDED -> videoStateEnd()
                     Player.STATE_IDLE -> showToast(
                         ToastType.ERROR,

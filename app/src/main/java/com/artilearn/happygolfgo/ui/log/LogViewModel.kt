@@ -1,10 +1,8 @@
 package com.artilearn.happygolfgo.ui.log
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.LogDetail
-import com.artilearn.happygolfgo.data.log.LogInfo
 import com.artilearn.happygolfgo.data.log.source.LogRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers

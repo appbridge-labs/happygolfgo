@@ -16,9 +16,9 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.ui.alram.AlramActivity
+import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
-import com.artilearn.happygolfgo.ui.splash.SplashActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -65,7 +65,7 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         }
                 } else {
-                    fcmIntent = Intent(this, SplashActivity::class.java)
+                    fcmIntent = Intent(this, HomeActivity::class.java)
                         .apply {
                             putExtra(RESERVATION_TYPE, reservationPlate)
                             putExtra(PLATE_ID, eventValue?.toInt())
@@ -82,7 +82,7 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         }
                 } else {
-                    fcmIntent = Intent(this, SplashActivity::class.java)
+                    fcmIntent = Intent(this, HomeActivity::class.java)
                         .apply {
                             putExtra(RESERVATION_TYPE, reservationLesson)
                             putExtra(LESSON_ID, eventValue?.toInt())
@@ -98,7 +98,7 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         }
                 } else {
-                    fcmIntent = Intent(this, SplashActivity::class.java)
+                    fcmIntent = Intent(this, HomeActivity::class.java)
                         .apply {
                             putExtra(LESSON_ID, eventValue?.toInt())
                             putExtra(FCM_EVENT_TYPE, eventType)
@@ -113,7 +113,7 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         }
                 } else {
-                    fcmIntent = Intent(this, SplashActivity::class.java)
+                    fcmIntent = Intent(this, HomeActivity::class.java)
                         .apply {
                             putExtra(FCM_EVENT_TYPE, eventType)
                         }

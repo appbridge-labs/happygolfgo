@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.api
 
-import com.artilearn.happygolfgo.data.ReservationLesson
 import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.comment.CommentModel
 import com.artilearn.happygolfgo.data.home.HomeResponse
@@ -146,4 +145,5 @@ interface ApiInterface {
     fun getReservationPlateDetail(
         @Path("plateReservationID") plateId: Int
     ): Single<Response<ReservationPlateDetail>>
+
 }

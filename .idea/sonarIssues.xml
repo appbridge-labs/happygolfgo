@@ -38,6 +38,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/api/ApiInterface.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/api/firebase/FCMMessage.kt">
           <value>
             <set />
@@ -48,7 +53,47 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/base/BaseFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/constants/Constants.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/Alram.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/lessonconfirm/LessonConfirmDetail.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/lessonlead/LessonReadResponse.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/lessonlead/source/LessonReadRepository.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/lessonlead/source/LessonReadRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/lessonlead/source/remote/LessonReadRemoteDataSource.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/lessonlead/source/remote/LessonReadRemoteDataSourceImpl.kt">
           <value>
             <set />
           </value>
@@ -63,7 +108,27 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/module/RemoteDataModule.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/module/RepositoryModule.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/module/ViewModelModule.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/alram/AlramActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/alram/AlramAdapter.kt">
           <value>
             <set />
           </value>
@@ -79,6 +144,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/lessonconfirm/LessonConfirmActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/lessonconfirm/LessonConfirmViewModel.kt">
           <value>
             <set />
           </value>
@@ -104,6 +174,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/lessonread/LessonReadActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/lessonread/LessonReadViewModel.kt">
           <value>
             <set />
           </value>
@@ -193,6 +268,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/res/layout/activity_lesson_confirm.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/res/layout/activity_lesson_read.xml">
           <value>
             <set />
@@ -209,6 +289,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/res/layout/activity_pw_verify.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/res/layout/item_alram.xml">
           <value>
             <set />
           </value>
@@ -579,6 +664,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/util/Utils.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/util/test.kt">
           <value>
             <set />
           </value>
