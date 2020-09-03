@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/color_green</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
+
     <style name="Theme.AppCompat.Transparent.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -21,7 +22,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="MyReservationTabView" parent="TextAppearance.Design.CollapsingToolbar.Expanded" >
+    <style name="MyReservationTabView" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
         <item name="android:textSize">14dp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -35,6 +36,10 @@
     <style name="side_margin">
         <item name="android:layout_marginStart">20dp</item>
         <item name="android:layout_marginEnd">20dp</item>
+    </style>
+
+    <style name="custom_ratingbar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_star</item>
     </style>
 
 </resources>
