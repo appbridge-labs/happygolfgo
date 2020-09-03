@@ -115,8 +115,6 @@ Rapp/src/main/java/com/artilearn/happygolfgo/ui/reservelist/ReserveListViewModel
 Uapp/src/main/java/com/artilearn/happygolfgo/ui/reservelist/ReservePagerListAdapter.kt,5/2/523587d9c35861bcc6501427437006933db350d0
 ‡
 Wapp/src/main/java/com/artilearn/happygolfgo/ui/reservesuccess/ReserveSuccessActivity.kt,f/9/f934402b0f0ac2323da84fcde1762386e1af1a1d
-|
-Lapp/src/main/java/com/artilearn/happygolfgo/ui/splash/SplashEmptyActivity.kt,8/c/8cb4199c9c93f43d56fd605f195603b089ccc0b6
 ~
 Napp/src/main/java/com/artilearn/happygolfgo/ui/tickettime/TicketTimeAdapter.kt,4/c/4ce5ae488a885ecec6bdb16917b2fe71d79027cc
 |

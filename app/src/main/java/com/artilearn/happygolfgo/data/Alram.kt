@@ -30,5 +30,9 @@ data class Alram(
 
     @SerializedName("eventValue")
     @Expose
-    val eventValue: String
+    val eventValue: String,
+
+    @SerializedName("isRead")
+    @Expose
+    val isRead: Boolean
 )

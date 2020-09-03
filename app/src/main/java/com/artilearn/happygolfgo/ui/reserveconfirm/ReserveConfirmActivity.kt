@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.reserveconfirm
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -91,12 +92,26 @@ class ReserveConfirmActivity :
                 }
             })
             plateModel.observe(this@ReserveConfirmActivity, Observer {
+                if (it.plateReservation.isCancellable) {
+                    initBottomView(
+                        binding.reserveConfirmBottomView.bottom_layout,
+                        getString(R.string.reserve_confirm_cancel_bottom_title),
+                        BottimViewType.CANCEL_TYPE
+                    )
+                }
                 setReservationTicketName(it.plateReservation.name)
                 setReservationTicketDate(it.plateReservation.startDate)
                 setReservationTicketTime(it.plateReservation.startDate, it.plateReservation.endDate)
                 setReservationPolicy(it.policy.body)
             })
             lessonModel.observe(this@ReserveConfirmActivity, Observer {
+                if (it.lessonReservation.isCancellable) {
+                    initBottomView(
+                        binding.reserveConfirmBottomView.bottom_layout,
+                        getString(R.string.reserve_confirm_cancel_bottom_title),
+                        BottimViewType.CANCEL_TYPE
+                    )
+                }
                 setReservationTicketName(it.lessonReservation.name)
                 setReservationTicketDate(it.lessonReservation.startDate)
                 setReservationTicketTime(
@@ -129,37 +144,17 @@ class ReserveConfirmActivity :
         when (reservationType) {
             "ReservationPlateFromAlram" -> {
                 viewModel.getReservationPlateDetail(plateId)
-                initBottomView(
-                    binding.reserveConfirmBottomView.bottom_layout,
-                    getString(R.string.reserve_confirm_cancel_bottom_title),
-                    BottimViewType.CANCEL_TYPE
-                )
             }
             "ReservationLessonFromAlram" -> {
                 viewModel.getReservationLessonDetail(lessonId)
                 binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
-                initBottomView(
-                    binding.reserveConfirmBottomView.bottom_layout,
-                    getString(R.string.reserve_confirm_cancel_bottom_title),
-                    BottimViewType.CANCEL_TYPE
-                )
             }
             "cancel_plate" -> {
                 viewModel.getReservationPlateDetail(plateId)
-                initBottomView(
-                    binding.reserveConfirmBottomView.bottom_layout,
-                    getString(R.string.reserve_confirm_cancel_bottom_title),
-                    BottimViewType.CANCEL_TYPE
-                )
             }
             "cancel_lesson" -> {
                 viewModel.getReservationLessonDetail(lessonId)
                 binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
-                initBottomView(
-                    binding.reserveConfirmBottomView.bottom_layout,
-                    getString(R.string.reserve_confirm_cancel_bottom_title),
-                    BottimViewType.CANCEL_TYPE
-                )
             }
             "reservation" -> {
                 initBottomView(

@@ -3,6 +3,16 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="$USER_HOME$/MyselfProjects/NoMoneyTrip/NoMoneyTrip/app/src/main/java/com/mtjin/nomoneytrip/utils/Constants.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/NoMoneyTrip/NoMoneyTrip/app/src/main/java/com/mtjin/nomoneytrip/views/email_signup/EmailSignUpViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/MyselfProjects/SJApp/app/src/main/java/com/jay/sjapp/base/BaseFragment.kt">
           <value>
             <set />
@@ -133,6 +143,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/alram/AlramViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/common/ErrorActivity.kt">
           <value>
             <set />
@@ -239,6 +254,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/reviewwrite/ReviewWriteActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/reviewwrite/ReviewWriteViewModel.kt">
           <value>
             <set />
           </value>
@@ -719,6 +739,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/item_home_ticket.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/values/colors.xml">
           <value>
             <set />
           </value>

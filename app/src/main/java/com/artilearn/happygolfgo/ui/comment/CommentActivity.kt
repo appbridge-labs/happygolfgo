@@ -16,6 +16,7 @@ import com.artilearn.happygolfgo.constants.LESSON_ID
 import com.artilearn.happygolfgo.databinding.ActivityCommetBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.convertTime
@@ -104,7 +105,7 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
 
     private fun goMyPage() {
         showToast(ToastType.SUCCESS, getString(R.string.comment_upload_success))
-        val myPageIntent = Intent(this, MyPageActivity::class.java)
+        val myPageIntent = Intent(this, HomeActivity::class.java)
             .apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
