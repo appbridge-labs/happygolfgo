@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.data.log
 
 import com.artilearn.happygolfgo.data.LogDetail
+import com.artilearn.happygolfgo.data.ReservationLesson
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.ReservationLesson
 import com.artilearn.happygolfgo.data.ReservationPlate
+import com.artilearn.happygolfgo.data.reserveconfirm.LessonResponse
+import com.artilearn.happygolfgo.data.reserveconfirm.PlateResponse
 import com.artilearn.happygolfgo.data.reserveconfirm.ReserveLessonModel
 import com.artilearn.happygolfgo.data.reserveconfirm.ReservePlateModel
 import com.artilearn.happygolfgo.data.reserveconfirm.source.CancelRepository
@@ -12,6 +14,7 @@ import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepositor
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 
 class ReserveConfirmViewModel(
@@ -20,24 +23,26 @@ class ReserveConfirmViewModel(
     private val cancelRepository: CancelRepository
 ) : BaseViewModel() {
 
+    private val _status: MutableLiveData<ReservationStatus> = MutableLiveData()
+    private val _plateModel: MutableLiveData<PlateResponse> = MutableLiveData()
+    private val _lessonModel: MutableLiveData<LessonResponse> = MutableLiveData()
     private val _policy: MutableLiveData<String> = MutableLiveData()
-    private val _plateModel: MutableLiveData<ReservationPlate> = MutableLiveData()
-    private val _lessonModel: MutableLiveData<ReservationLesson> = MutableLiveData()
-    private val _unKnowError: MutableLiveData<Unit> = MutableLiveData()
-    private val _cancelSuccess: SingleLiveEvent<Unit> = SingleLiveEvent()
-    private val _cancelFail: MutableLiveData<Unit> = MutableLiveData()
+    private val _unKnowError: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _reservationPlate: MutableLiveData<ReservationPlate> = MutableLiveData()
+    private val _reservationLesson: MutableLiveData<ReservationLesson> = MutableLiveData()
 
+    val status: LiveData<ReservationStatus> get() = _status
+    val plateModel: LiveData<PlateResponse> get() = _plateModel
+    val lessonModel: LiveData<LessonResponse> get() = _lessonModel
     val policy: LiveData<String> get() = _policy
-    val plateModel: LiveData<ReservationPlate> get() = _plateModel
-    val lessonModel: LiveData<ReservationLesson> get() = _lessonModel
     val unKnowError: LiveData<Unit> get() = _unKnowError
-    val cancelSuccess: LiveData<Unit> get() = _cancelSuccess
-    val cancelFail: LiveData<Unit> get() = _cancelFail
+    val reservationPlate: LiveData<ReservationPlate> get() = _reservationPlate
+    val reservationLesson: LiveData<ReservationLesson> get() = _reservationLesson
 
-    var ticketId: Int? = null
     var plateAvailabilityId: Int? = null
     var lessonAvailabilityId: Int? = null
-    
+    var ticketId: Int? = null
+
     fun requestPolicy() {
         compositeDisposable.add(
             reserveConfirmRepository.requestPolicy()
@@ -50,7 +55,7 @@ class ReserveConfirmViewModel(
                     if (response.isSuccessful && body != null) {
                         _policy.value = body.data.policy.body
                     } else {
-                        _serverError.value = response.errorBody().toString()
+                        _serverError.value = response.message()
                     }
                 }, { t ->
                     when (t.message) {
@@ -79,9 +84,9 @@ class ReserveConfirmViewModel(
                     .subscribe({ response ->
                         val body = response.body()
                         if (response.isSuccessful && body != null) {
-                            _plateModel.value = body.data.plateReservation
+                            _reservationPlate.value = body.data.plateReservation
                         } else {
-                            _serverError.value = response.errorBody().toString()
+                            _serverError.value = response.message()
                         }
                     }, { t ->
                         when (t.message) {
@@ -95,7 +100,7 @@ class ReserveConfirmViewModel(
                     })
             )
         } else {
-            _unKnowError.value = Unit
+            _unKnowError.call()
         }
     }
 
@@ -113,9 +118,9 @@ class ReserveConfirmViewModel(
                     .subscribe({ response ->
                         val body = response.body()
                         if (response.isSuccessful && body != null) {
-                            _lessonModel.value = body.data.lessonReservaion
+                            _reservationLesson.value = body.data.lessonReservaion
                         } else {
-                            _serverError.value = response.errorBody().toString()
+                            _serverError.value = response.message()
                         }
                     }, { t ->
                         when (t.message) {
@@ -129,8 +134,58 @@ class ReserveConfirmViewModel(
                     })
             )
         } else {
-            _unKnowError.value = Unit
+            _unKnowError.call()
         }
+    }
+
+    fun getReservationLessonDetail(lessonId: Int) {
+        reserveConfirmRepository.getReservationLessonDetail(lessonId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .subscribe({ result ->
+                val body = result.body()
+                if (result.isSuccessful && body != null) {
+                    _lessonModel.value = body.data
+                } else {
+                    _serverError.value = result.message()
+                }
+            }, { t ->
+                when (t.message) {
+                    "Network Error" -> {
+                        _networkFail.value = Unit
+                    }
+                    else -> {
+                        _serverError.value = t.message
+                    }
+                }
+            }).addTo(compositeDisposable)
+    }
+
+    fun getReservationPlateDetail(plateId: Int) {
+        reserveConfirmRepository.getReservationPlateDetail(plateId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .subscribe({ result ->
+                val body = result.body()
+                if (result.isSuccessful && body != null) {
+                    _plateModel.value = body.data
+                } else {
+                    _serverError.value = result.message()
+                }
+            }, { t ->
+                when (t.message) {
+                    "Network Error" -> {
+                        _networkFail.value = Unit
+                    }
+                    else -> {
+                        _serverError.value = t.message
+                    }
+                }
+            }).addTo(compositeDisposable)
     }
 
     fun reservationPlateCancel(plateId: Int) {
@@ -141,14 +196,14 @@ class ReserveConfirmViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({
-                    _cancelSuccess.value = Unit
+                    _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit
                         }
                         else -> {
-                            _cancelFail.value = Unit
+                            _status.value = ReservationStatus.CANCEL_FAIL
                         }
                     }
                 })
@@ -163,17 +218,22 @@ class ReserveConfirmViewModel(
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
                 .subscribe({
-                    _cancelSuccess.value = Unit
+                    _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit
                         }
                         else -> {
-                            _cancelFail.value = Unit
+                            _status.value = ReservationStatus.CANCEL_FAIL
                         }
                     }
                 })
         )
+    }
+
+    enum class ReservationStatus {
+        CANCEL_SUCCESS,
+        CANCEL_FAIL
     }
 }

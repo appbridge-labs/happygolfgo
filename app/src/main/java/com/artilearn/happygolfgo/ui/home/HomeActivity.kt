@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.TICKET
+import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.ui.alram.AlramActivity
+import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
+import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
 import com.artilearn.happygolfgo.util.MyApplication
@@ -24,6 +26,22 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private lateinit var adapter: HomeAdapter
     private lateinit var myApplication: MyApplication
     private var possible = false
+
+    private val fcmEventType by lazy {
+        intent.getStringExtra(FCM_EVENT_TYPE)
+    }
+
+    private val reservationType by lazy {
+        intent.getStringExtra(RESERVATION_TYPE)
+    }
+
+    private val lessonId by lazy {
+        intent.getIntExtra(LESSON_ID, 0)
+    }
+
+    private val plateId by lazy {
+        intent.getIntExtra(PLATE_ID, 0)
+    }
 
     private val viewModel: HomeViewModel by viewModels {
         object : ViewModelProvider.Factory {
@@ -68,7 +86,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun initView() {
-        initBottomView(binding.includeBottomView, getString(R.string.home_bottomview_title), BottimViewType.DEFAULT_TYPE)
+        initBottomView(
+            binding.includeBottomView,
+            getString(R.string.home_bottomview_title),
+            BottimViewType.DEFAULT_TYPE
+        )
+
+        when (fcmEventType) {
+            "3" -> goReservaitonPlateFromFCM()
+            "4" -> goReservationLessonFromFCM()
+            "6" -> goLessonLogFromFCM()
+            "" -> goAlram()
+        }
     }
 
     private fun initAdapter() {
@@ -111,6 +140,32 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 putExtra(TICKET, ticket)
             }
         startActivity(selectIntent)
+    }
+
+    private fun goReservaitonPlateFromFCM() {
+        val fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_TYPE, reservationType)
+                putExtra(PLATE_ID, plateId)
+            }
+        startActivity(fcmIntent)
+    }
+
+    private fun goReservationLessonFromFCM() {
+        val fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_TYPE, reservationType)
+                putExtra(LESSON_ID, lessonId)
+            }
+        startActivity(fcmIntent)
+    }
+
+    private fun goLessonLogFromFCM() {
+        val logIntent = Intent(this, LogActivity::class.java)
+            .apply {
+                putExtra(LESSON_ID, lessonId)
+            }
+        startActivity(logIntent)
     }
 
     override fun bottomAction() {

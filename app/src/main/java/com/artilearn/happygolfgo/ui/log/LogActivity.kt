@@ -3,7 +3,6 @@ package com.artilearn.happygolfgo.ui.log
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -13,8 +12,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.LESSON_LOG
-import com.artilearn.happygolfgo.data.LessonLog
+import com.artilearn.happygolfgo.constants.COACH_NAME
+import com.artilearn.happygolfgo.constants.LESSON_DATE
+import com.artilearn.happygolfgo.constants.LESSON_ID
 import com.artilearn.happygolfgo.data.LogDetail
 import com.artilearn.happygolfgo.databinding.ActivityLogBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
@@ -32,7 +32,6 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import kotlinx.android.synthetic.main.common_default_view.view.*
 
 class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
-    private val TAG = javaClass.simpleName
 
     private var playReady = false
     private var player: SimpleExoPlayer? = null
@@ -41,8 +40,8 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
     private var log: LogDetail? = null
     private lateinit var myApplication: MyApplication
 
-    private val lessonLog by lazy {
-        intent.getParcelableExtra<LessonLog>(LESSON_LOG)
+    private val lessonId by lazy {
+        intent.getIntExtra(LESSON_ID, 0)
     }
 
     private val viewModel: LogViewModel by viewModels {
@@ -61,12 +60,12 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
         inject()
         initViewModelObserve()
         initView()
-        setLessonLogText()
     }
 
     private fun inject() {
         myApplication = application as MyApplication
         binding.vm = viewModel
+        viewModel.requestLessonLogDetail(lessonId)
     }
 
     private fun initViewModelObserve() {
@@ -74,6 +73,7 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             logDetail.observe(this@LogActivity, Observer {
                 binding.log = it
                 setLessonLogItem(it)
+                setLessonLogText(it)
 
                 log = it
                 log?.videoURL?.let { path ->
@@ -122,9 +122,12 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
                 when (playbackState) {
                     Player.STATE_BUFFERING -> videoStateReady()
-                    Player.STATE_READY -> Log.d(TAG, "onPlayerStateChanged: ")
+                    Player.STATE_READY -> {}
                     Player.STATE_ENDED -> videoStateEnd()
-                    Player.STATE_IDLE -> showToast(ToastType.ERROR, getString(R.string.log_video_start_fail))
+                    Player.STATE_IDLE -> showToast(
+                        ToastType.ERROR,
+                        getString(R.string.log_video_start_fail)
+                    )
                 }
 
                 super.onPlayerStateChanged(playWhenReady, playbackState)
@@ -170,22 +173,17 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
 
     private fun initView() {
         initToolbar(binding.logToolbar.toolbar, getString(R.string.log_toolbar_title), true)
-
-        lessonLog?.id.let {
-            viewModel.requestLessonLogDetail(it)
-        }
-
     }
 
-    private fun setLessonLogText() {
+    private fun setLessonLogText(log: LogDetail) {
         with(binding) {
-            logName.tv_common.text = lessonLog.employeeName
-            logDate.tv_common.text = convertLessonLogTime()
+            logName.tv_common.text = log.employee.name
+            logDate.tv_common.text = convertLessonLogTime(log.createdAt)
         }
     }
 
-    private fun convertLessonLogTime(): String {
-        val calendar = convertTime(lessonLog.createdAt).trim().split(":")
+    private fun convertLessonLogTime(logCreateTime: String): String {
+        val calendar = convertTime(logCreateTime).trim().split(":")
 
         return "${calendar[0]}.${calendar[1]}.${calendar[2]}"
     }
@@ -243,21 +241,29 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
             logBottomView.visibility = View.VISIBLE
             logCommentTitle.visibility = View.GONE
             tvComment.visibility = View.GONE
-            initBottomView(logBottomView, getString(R.string.log_bottom_view_title), BottimViewType.DEFAULT_TYPE)
+            initBottomView(
+                logBottomView,
+                getString(R.string.log_bottom_view_title),
+                BottimViewType.DEFAULT_TYPE
+            )
         }
     }
 
-    private fun goComment(lessonLog: LessonLog) {
+    private fun goComment(log: LogDetail) {
         val commentIntent = Intent(this, CommentActivity::class.java)
             .apply {
-                putExtra(LESSON_LOG, lessonLog)
+                putExtra(LESSON_ID, log.id)
+                putExtra(COACH_NAME, log.employee.name)
+                putExtra(LESSON_DATE, log.createdAt)
             }
         startActivity(commentIntent)
     }
 
     override fun bottomAction() {
         super.bottomAction()
-        goComment(lessonLog)
+        log?.let {
+            goComment(it)
+        }
     }
 
     override fun onStart() {

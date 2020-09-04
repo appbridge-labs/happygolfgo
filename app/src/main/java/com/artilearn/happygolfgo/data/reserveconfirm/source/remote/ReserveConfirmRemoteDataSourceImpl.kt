@@ -42,4 +42,22 @@ class ReserveConfirmRemoteDataSourceImpl(
     override fun remoteReservationLessonCancel(lessonId: Int): Completable {
         return apiInterface.reservationLessonCancel(lessonId)
     }
+
+    override fun remoteReservationLessonDetail(
+        lessonId: Int
+    ): Single<Response<ReservationLessonDetail>> {
+        return apiInterface.getReservationLessonDetail(lessonId)
+            .map {
+                it
+            }
+    }
+
+    override fun remoteReservationPlateDetail(
+        plateId: Int
+    ): Single<Response<ReservationPlateDetail>> {
+        return apiInterface.getReservationPlateDetail(plateId)
+            .map {
+                it
+            }
+    }
 }

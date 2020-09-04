@@ -1,7 +1,9 @@
 package com.artilearn.happygolfgo.ui.alram
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
@@ -42,6 +44,27 @@ class AlramAdapter(
 
         fun bind(alram: Alram) {
             binding.alram = alram
+
+            when (alram.eventType) {
+                "3", "4", "6" -> binding.ivArrow.visibility = View.VISIBLE
+                else -> binding.ivArrow.visibility = View.INVISIBLE
+            }
+
+            when (alram.isRead) {
+                false -> binding.rootLayout.setBackgroundColor(
+                    ContextCompat.getColor(
+                        binding.rootLayout.context,
+                        R.color.color_alram_read
+                    )
+                )
+                true -> binding.rootLayout.setBackgroundColor(
+                    ContextCompat.getColor(
+                        binding.rootLayout.context,
+                        R.color.color_white
+                    )
+                )
+            }
+
             binding.executePendingBindings()
         }
     }

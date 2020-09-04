@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.CONFIRM_TYPE
 import com.artilearn.happygolfgo.constants.RESERVATION_LESSON
 import com.artilearn.happygolfgo.constants.RESERVATION_PLATE
+import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.data.ReservationLesson
 import com.artilearn.happygolfgo.data.ReservationPlate
 import com.artilearn.happygolfgo.databinding.ActivityReserveSuccessBinding
@@ -28,7 +28,7 @@ class ReserveSuccessActivity :
     }
 
     private val successType by lazy {
-        intent.getStringExtra(CONFIRM_TYPE)
+        intent.getStringExtra(RESERVATION_TYPE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,11 @@ class ReserveSuccessActivity :
     }
 
     private fun initView() {
-        initBottomView(binding.reserveSuccessBottomView.bottom_layout, getString(R.string.reserve_success_bottom_title), BottimViewType.DEFAULT_TYPE)
+        initBottomView(
+            binding.reserveSuccessBottomView.bottom_layout,
+            getString(R.string.reserve_success_bottom_title),
+            BottimViewType.DEFAULT_TYPE
+        )
         when (successType) {
             "reservation" -> {
                 setReservationText()
@@ -106,7 +110,8 @@ class ReserveSuccessActivity :
         super.bottomAction()
 
         when (successType) {
-            "reservation" -> goHome()
+            "reservation", "ReservationLessonFromAlram",
+            "ReservationPlateFromAlram" -> goHome()
             else -> goReservationList()
         }
     }

@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.reserveconfirm.source
 
+import android.util.Log
 import com.artilearn.happygolfgo.data.reserveconfirm.*
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.CancelRemoteDataSource
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReservationRemoteDataSource
@@ -15,7 +16,8 @@ class ReserveConfirmRepositoryImpl(
     private val cancelRemoteDataSource: CancelRemoteDataSource,
     private val networkManager: NetworkManager
 ) : ReserveConfirmRepository, ReservationRepository, CancelRepository {
-
+    private val TAG = javaClass.simpleName
+    
     override fun requestPolicy(): Single<Response<PolicyResponse>> {
         return if (networkManager.networkState()) {
             reserveConfirmRemoteDataSource.remoteRequestPolicy()
@@ -78,6 +80,42 @@ class ReserveConfirmRepositoryImpl(
             cancelRemoteDataSource.remoteReservationLessonCancel(lessonId)
         } else {
             Completable.error(IllegalStateException("Network Error"))
+        }
+    }
+
+    override fun getReservationLessonDetail(
+        lessonId: Int
+    ): Single<Response<ReservationLessonDetail>> {
+        return if (networkManager.networkState()) {
+            reserveConfirmRemoteDataSource.remoteReservationLessonDetail(lessonId)
+                .flatMap {
+                    if (it.isSuccessful) {
+                        Log.d(TAG, "getReservationLessonDetail: ${it.body()}")
+                        Single.just(it)
+                    } else {
+                        Single.error(IllegalStateException("Server Error"))
+                    }
+                }
+        } else {
+            Single.error(IllegalStateException("Network Error"))
+        }
+    }
+
+    override fun getReservationPlateDetail(
+        lessonId: Int
+    ): Single<Response<ReservationPlateDetail>> {
+        return if (networkManager.networkState()) {
+            reserveConfirmRemoteDataSource.remoteReservationPlateDetail(lessonId)
+                .flatMap {
+                    if (it.isSuccessful) {
+                        Log.d(TAG, "getReservationPlateDetail: ${it.body()}")
+                        Single.just(it)
+                    } else {
+                        Single.error(IllegalStateException("Server Error"))
+                    }
+                }
+        } else {
+            Single.error(IllegalStateException("Network Error"))
         }
     }
 }

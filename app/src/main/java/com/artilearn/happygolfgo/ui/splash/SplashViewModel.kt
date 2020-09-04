@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
@@ -32,17 +33,18 @@ class SplashViewModel(
 
     init {
         getFcmToken()
+        splash()
+    }
 
-        compositeDisposable.add(
-            Completable.create { emitter ->
-                emitter.onComplete()
-            }
-                .delay(1200L, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    splashStatus()
-                }
-        )
+    private fun splash() {
+        Completable.create { emitter ->
+            emitter.onComplete()
+        }
+            .delay(1200L, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                splashStatus()
+            }.addTo(compositeDisposable)
     }
 
     private fun splashStatus() {
@@ -74,8 +76,8 @@ class SplashViewModel(
             splashRepository.getAccessToken(hashMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {  }
-                .doAfterTerminate {  }
+                .doOnSubscribe { }
+                .doAfterTerminate { }
                 .subscribe({
                     userSynchronized()
                 }, { t ->
@@ -100,8 +102,8 @@ class SplashViewModel(
             splashRepository.userSynchronized(hashMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {  }
-                .doAfterTerminate {  }
+                .doOnSubscribe { }
+                .doAfterTerminate { }
                 .subscribe({
                     _goHome.value = Unit
                 }, { t ->

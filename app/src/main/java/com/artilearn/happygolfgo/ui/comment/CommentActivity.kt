@@ -4,20 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.widget.RatingBar
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.LESSON_LOG
-import com.artilearn.happygolfgo.data.LessonLog
+import com.artilearn.happygolfgo.constants.COACH_NAME
+import com.artilearn.happygolfgo.constants.LESSON_DATE
+import com.artilearn.happygolfgo.constants.LESSON_ID
 import com.artilearn.happygolfgo.databinding.ActivityCommetBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
 import com.artilearn.happygolfgo.util.MyApplication
+import com.artilearn.happygolfgo.util.convertTime
 import com.artilearn.happygolfgo.util.snackbar
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
@@ -31,8 +34,16 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
     private lateinit var disposable: Disposable
     private lateinit var myApplication: MyApplication
 
-    private val lessonLog by lazy {
-        intent.getParcelableExtra<LessonLog>(LESSON_LOG)
+    private val lessonId by lazy {
+        intent.getIntExtra(LESSON_ID, 0)
+    }
+
+    private val coachName by lazy {
+        intent.getStringExtra(COACH_NAME)
+    }
+
+    private val lessonDate by lazy {
+        intent.getStringExtra(LESSON_DATE)
     }
 
     private val viewModel: CommentViewModel by viewModels {
@@ -56,8 +67,7 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
     private fun inject() {
         myApplication = application as MyApplication
         binding.vm = viewModel
-        binding.log = lessonLog
-        viewModel.lessonId = lessonLog.id
+        viewModel.lessonId = lessonId
     }
 
     private fun initViewModelObserve() {
@@ -83,6 +93,7 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
     private fun initView() {
         initToolbar(binding.commentToolbar.toolbar, getString(R.string.log_toolbar_title), true)
         initBottomView(binding.commentBottomView.bottom_layout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
+        setCoachNameLessonTime(coachName, lessonDate)
     }
 
     private fun showEmptyRating() {
@@ -95,7 +106,7 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
 
     private fun goMyPage() {
         showToast(ToastType.SUCCESS, getString(R.string.comment_upload_success))
-        val myPageIntent = Intent(this, MyPageActivity::class.java)
+        val myPageIntent = Intent(this, HomeActivity::class.java)
             .apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
@@ -135,6 +146,12 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
         disposable = flowable
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ comment -> }, {  })
+    }
+
+    private fun setCoachNameLessonTime(name: String, date: String) {
+        val time = convertTime(date).trim().split(":")
+        binding.tvCoachInfo.text =
+            "$coachName, ${time[0]}.${time[1]}.${time[2]}"
     }
 
     override fun onStart() {

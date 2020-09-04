@@ -174,9 +174,3 @@ fun setLogComment(tv: TextView, comment: String?) {
         tv.text = it
     }
 }
-
-@BindingAdapter("setCommentEmplotyeeName", "setCommentCreatedAt")
-fun setCommentInfo(tv: TextView, coachName: String, date: String) {
-    val time = convertTime(date).trim().split(":")
-    tv.text = "$coachName, ${time[0]}.${time[1]}.${time[2]}"
-}

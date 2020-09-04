@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.LESSON_LOG
+import com.artilearn.happygolfgo.constants.LESSON_ID
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.databinding.ActivityLessonLogBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
@@ -56,7 +56,11 @@ class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activi
     }
 
     private fun initView() {
-        initToolbar(binding.lessonlogToolbar.toolbar, getString(R.string.lessonlog_toolbar_title), true)
+        initToolbar(
+            binding.lessonlogToolbar.toolbar,
+            getString(R.string.lessonlog_toolbar_title),
+            true
+        )
     }
 
     private fun initAdapter() {
@@ -70,7 +74,7 @@ class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activi
     private fun goLog(log: LessonLog) {
         val logIntent = Intent(this, LogActivity::class.java)
             .apply {
-                putExtra(LESSON_LOG, log)
+                putExtra(LESSON_ID, log.id)
             }
         startActivity(logIntent)
     }

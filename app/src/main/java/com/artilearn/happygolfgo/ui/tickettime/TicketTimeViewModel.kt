@@ -20,11 +20,11 @@ class TicketTimeViewModel(
 
     fun selectTime(type: Int, date: String, id: Int) {
         when (type) {
-            0 -> { // lesson
+            0 -> {
                 selectTicketLessonTime(date, id)
             }
-            1 -> {  } // group lesson
-            2 -> { // plate
+            1 -> {}
+            2 -> {
                 selectTicketPlateTime(date, id)
             }
         }

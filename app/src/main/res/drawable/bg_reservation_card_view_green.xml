@@ -8,10 +8,8 @@
                 android:type="linear"
                 android:startColor="#40C057"
                 android:endColor="#49BBC4"/>
-            <corners android:bottomRightRadius="5dp"
-                android:bottomLeftRadius="5dp"
-                android:topLeftRadius="5dp"
-                android:topRightRadius="5dp"/>
+            <corners
+                android:radius="5dp"/>
 
         </shape>
     </item><!-- default -->

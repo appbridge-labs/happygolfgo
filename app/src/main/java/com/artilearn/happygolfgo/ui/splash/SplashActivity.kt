@@ -2,15 +2,15 @@ package com.artilearn.happygolfgo.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
-import androidx.lifecycle.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivitySplashBinding
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
-import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
 import com.artilearn.happygolfgo.ui.tutorial.TutorialActivity
 import com.artilearn.happygolfgo.util.MyApplication
 

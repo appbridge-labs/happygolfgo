@@ -83,8 +83,8 @@ class ReservePlateFragment
     private fun goReservationConfirm(item: ReserveList) {
         val confirmIntent = Intent(activity, ReserveConfirmActivity::class.java)
             .apply {
-                putExtra(RESERVATION, item)
-                putExtra(CONFIRM_TYPE, cancel)
+                putExtra(PLATE_ID, item.id)
+                putExtra(RESERVATION_TYPE, cancel)
             }
         startActivity(confirmIntent)
     }

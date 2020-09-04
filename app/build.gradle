@@ -14,10 +14,10 @@ android {
         applicationId "com.artilearn.happygolfgo"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 21
-        versionName "1.11.0"
+        versionCode 22
+        versionName "1.11.1"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.ratingbar_star.runner.AndroidJUnitRunner"
     }
 
     buildTypes {

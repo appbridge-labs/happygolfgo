@@ -46,5 +46,15 @@ data class LogDetail(
 
     @SerializedName("isReviewable")
     @Expose
-    val isReviewable: Boolean
+    val isReviewable: Boolean,
+
+    @SerializedName("employee")
+    @Expose
+    val employee: Employee
+)
+
+data class Employee(
+    @SerializedName("name")
+    @Expose
+    val name: String
 )

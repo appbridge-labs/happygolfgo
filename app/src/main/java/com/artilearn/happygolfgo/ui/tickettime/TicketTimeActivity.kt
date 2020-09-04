@@ -8,10 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.CONFIRM_TYPE
-import com.artilearn.happygolfgo.constants.SELECTION_DATE
-import com.artilearn.happygolfgo.constants.TICKET
-import com.artilearn.happygolfgo.constants.TICKET_TIME
+import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityTicketTimeBinding
@@ -84,7 +81,7 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
             .apply {
                 putExtra(TICKET, ticket)
                 putExtra(TICKET_TIME, ticketTime)
-                putExtra(CONFIRM_TYPE, reservation)
+                putExtra(RESERVATION_TYPE, reservation)
             }
         startActivity(confirmIntent)
     }
