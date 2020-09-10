@@ -85,7 +85,8 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="21dp"
                         android:text="@string/comment_subtitle_text"
-                        android:textSize="14dp"
+                        android:textSize="18dp"
+                        android:textColor="@color/color_black"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view_one" />
 
@@ -95,6 +96,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginTop="4dp"
+                        android:textSize="16dp"
                         android:textColor="@color/color_red"
                         app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
                         android:text="@string/comment_subtitle_content"

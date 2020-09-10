@@ -90,7 +90,6 @@ class ReserveConfirmRepositoryImpl(
             reserveConfirmRemoteDataSource.remoteReservationLessonDetail(lessonId)
                 .flatMap {
                     if (it.isSuccessful) {
-                        Log.d(TAG, "getReservationLessonDetail: ${it.body()}")
                         Single.just(it)
                     } else {
                         Single.error(IllegalStateException("Server Error"))
@@ -108,7 +107,6 @@ class ReserveConfirmRepositoryImpl(
             reserveConfirmRemoteDataSource.remoteReservationPlateDetail(lessonId)
                 .flatMap {
                     if (it.isSuccessful) {
-                        Log.d(TAG, "getReservationPlateDetail: ${it.body()}")
                         Single.just(it)
                     } else {
                         Single.error(IllegalStateException("Server Error"))

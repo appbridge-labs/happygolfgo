@@ -69,18 +69,12 @@ Fapp/src/main/java/com/artilearn/happygolfgo/ui/common/ErrorActivity.kt,a/1/a15
 Mapp/src/main/java/com/artilearn/happygolfgo/ui/common/NetworkErrorActivity.kt,7/5/75e11bfca901e38a6e5fa799e331e1c72aeb35c0
 r
 Bapp/src/main/java/com/artilearn/happygolfgo/ui/home/HomeAdapter.kt,4/3/43df165164b4bef1863799d3613353f057b6120f
-}
-Mapp/src/main/java/com/artilearn/happygolfgo/ui/lessonlog/LessonLogActivity.kt,b/1/b1368ad3fd9af07c1247df9fc53e99427df8e901
-|
-Lapp/src/main/java/com/artilearn/happygolfgo/ui/lessonlog/LessonLogAdapter.kt,5/9/599bb8937921c1201d84f7f6febe821d776724b6
 v
 Fapp/src/main/java/com/artilearn/happygolfgo/ui/alram/AlramViewModel.kt,5/d/5dd7e3c6f4cc10e90643b9ca737f4d2861ddd66b
 z
 Japp/src/main/java/com/artilearn/happygolfgo/ui/comment/CommentViewModel.kt,3/8/38399f41f3be7a6784a60d94b9e3678de94e6d7e
 t
 Dapp/src/main/java/com/artilearn/happygolfgo/ui/home/HomeViewModel.kt,4/2/42eeee6ad12480f6af69e07736c83b3678eeb7cb
-~
-Napp/src/main/java/com/artilearn/happygolfgo/ui/lessonlog/LessonLogViewModel.kt,3/d/3dba8a5907d99184b38fbf0b143668d44c8472e8
 r
 Bapp/src/main/java/com/artilearn/happygolfgo/ui/log/LogViewModel.kt,3/5/351a72247c2299979f0e484e0e44504201c477f3
 q
@@ -214,3 +208,9 @@ Rapp/src/main/java/com/artilearn/happygolfgo/data/splash/source/SplashRepository
 :
 
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+ˆ
+Xapp/src/main/java/com/artilearn/happygolfgo/ui/lessonpostlist/LessonPostListViewModel.kt,3/9/39e2c32303f35b3abb43dd0b3c0ad85200d6fde6
+‡
+Wapp/src/main/java/com/artilearn/happygolfgo/ui/lessonpostlist/LessonPostListActivity.kt,0/9/098324db823abb67e2bf328918db638c96795c56
+†
+Vapp/src/main/java/com/artilearn/happygolfgo/ui/lessonpostlist/LessonPostListAdapter.kt,f/0/f0834897c10fab35279ba3c8bcf7fc1308a167c7
