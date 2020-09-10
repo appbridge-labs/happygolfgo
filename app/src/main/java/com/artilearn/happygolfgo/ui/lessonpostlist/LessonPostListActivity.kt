@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.lessonlog
+package com.artilearn.happygolfgo.ui.lessonpostlist
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,20 +10,20 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.LESSON_ID
 import com.artilearn.happygolfgo.data.LessonLog
-import com.artilearn.happygolfgo.databinding.ActivityLessonLogBinding
+import com.artilearn.happygolfgo.databinding.ActivityLessonPostListBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
-class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activity_lesson_log) {
+class LessonPostListActivity : BaseActivity<ActivityLessonPostListBinding>(R.layout.activity_lesson_post_list) {
 
-    private lateinit var adapter: LessonLogAdapter
+    private lateinit var adapter: LessonPostListAdapter
     private lateinit var myApplication: MyApplication
 
-    private val viewModel: LessonLogViewModel by viewModels {
+    private val viewModel: LessonPostListViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return LessonLogViewModel(
+                return LessonPostListViewModel(
                     myApplication.lessonLogRepository
                 ) as T
             }
@@ -46,10 +46,10 @@ class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activi
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            networkFail.observe(this@LessonLogActivity, Observer {
+            networkFail.observe(this@LessonPostListActivity, Observer {
                 showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
             })
-            serverError.observe(this@LessonLogActivity, Observer {
+            serverError.observe(this@LessonPostListActivity, Observer {
                 showError(it)
             })
         }
@@ -57,14 +57,14 @@ class LessonLogActivity : BaseActivity<ActivityLessonLogBinding>(R.layout.activi
 
     private fun initView() {
         initToolbar(
-            binding.lessonlogToolbar.toolbar,
-            getString(R.string.lessonlog_toolbar_title),
+            binding.lessonPostListToolbar.toolbar,
+            getString(R.string.lesson_post_list_toolbar_title),
             true
         )
     }
 
     private fun initAdapter() {
-        adapter = LessonLogAdapter { log ->
+        adapter = LessonPostListAdapter { log ->
             goLog(log)
         }
 

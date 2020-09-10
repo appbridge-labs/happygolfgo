@@ -1,7 +1,6 @@
 package com.artilearn.happygolfgo.util
 
 import android.app.Application
-import android.content.ComponentCallbacks2
 import android.content.Context
 import com.artilearn.happygolfgo.api.ApiInterface
 import com.artilearn.happygolfgo.api.ApiService
@@ -17,10 +16,6 @@ import com.artilearn.happygolfgo.data.developeroption.source.DeveloperOptionRepo
 import com.artilearn.happygolfgo.data.developeroption.source.DeveloperOptionRepositoryImpl
 import com.artilearn.happygolfgo.data.developeroption.source.local.DeveloperOptionDataSoucre
 import com.artilearn.happygolfgo.data.developeroption.source.local.DeveloperOptionDataSoucreImpl
-import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
-import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepositoryImpl
-import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSource
-import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.data.home.source.HomeRepositoryImpl
 import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSource
@@ -73,6 +68,10 @@ import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSource
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
+import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepositoryImpl
+import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSource
+import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.tickettime.source.TicketTimeRepository
 import com.artilearn.happygolfgo.data.tickettime.source.TicketTimeRepositoryImpl
 import com.artilearn.happygolfgo.data.tickettime.source.remote.TicketTimeRemoteDataSource

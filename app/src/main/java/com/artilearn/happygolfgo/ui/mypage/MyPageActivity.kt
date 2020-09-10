@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityMyPageBinding
-import com.artilearn.happygolfgo.ui.lessonlog.LessonLogActivity
+import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
@@ -93,7 +93,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
     }
 
     private fun goLessonLog() {
-        startActivity(Intent(this, LessonLogActivity::class.java))
+        startActivity(Intent(this, LessonPostListActivity::class.java))
     }
 
 }

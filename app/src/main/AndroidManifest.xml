@@ -45,7 +45,7 @@
             android:name=".ui.alram.AlramActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.lessonlog.LessonLogActivity"
+            android:name=".ui.lessonpostlist.LessonPostListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.pwreset.PwResetActivity"

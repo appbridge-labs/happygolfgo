@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.lessonlog
+package com.artilearn.happygolfgo.ui.lessonpostlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,7 @@ import com.artilearn.happygolfgo.data.lessonlog.source.LessonLogRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class LessonLogViewModel(
+class LessonPostListViewModel(
     private val lessonLogRepository: LessonLogRepository
 ) : BaseViewModel() {
 

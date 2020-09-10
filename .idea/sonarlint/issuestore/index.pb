@@ -211,3 +211,6 @@ aapp/src/main/java/com/artilearn/happygolfgo/data/splash/source/local/SplashLoca
 Vapp/src/main/java/com/artilearn/happygolfgo/data/splash/source/SplashRepositoryImpl.kt,3/8/38068c60b12c630636601bd70cfe9bf1760fb2e8
 ‚
 Rapp/src/main/java/com/artilearn/happygolfgo/data/splash/source/SplashRepository.kt,f/f/ff838aa03b4de4f8fbac9a248cc5af40f30112c1
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
