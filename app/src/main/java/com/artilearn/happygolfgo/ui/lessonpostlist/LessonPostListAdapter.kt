@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.lessonlog
+package com.artilearn.happygolfgo.ui.lessonpostlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,19 +6,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.LessonLog
-import com.artilearn.happygolfgo.databinding.ItemLessonListBinding
+import com.artilearn.happygolfgo.databinding.ItemLessonPostListBinding
 
-class LessonLogAdapter(
+class LessonPostListAdapter(
     private val itemClick: (LessonLog) -> Unit
-) : RecyclerView.Adapter<LessonLogAdapter.LessonViewHolder>() {
+) : RecyclerView.Adapter<LessonPostListAdapter.LessonViewHolder>() {
 
-    lateinit var binding: ItemLessonListBinding
+    lateinit var binding: ItemLessonPostListBinding
     private val items: ArrayList<LessonLog> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_lesson_list,
+            R.layout.item_lesson_post_list,
             parent,
             false
         )
@@ -37,7 +37,7 @@ class LessonLogAdapter(
     override fun getItemCount() = items.size
 
     class LessonViewHolder(
-        private val binding: ItemLessonListBinding
+        private val binding: ItemLessonPostListBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(log: LessonLog) {

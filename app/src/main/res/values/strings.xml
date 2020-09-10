@@ -28,7 +28,7 @@
     <string name="fragment_network_fail_content">인터넷 연결 상태가 좋지 않습니다.\n 확인 후 다시한번 시도해 주세요.</string>
     <string name="fragment_network_fail_btn_text">새로고침</string>
     <string name="mypage_toolbar_title">마이페이지</string>
-    <string name="mypage_lesson_title">레슨 일지</string>
+    <string name="mypage_lesson_title">레슨 포스트</string>
     <string name="mypage_info_change">개인정보 변경</string>
     <string name="mypage_password_change">비밀번호 재설정</string>
     <string name="mypage_logout">로그아웃</string>
@@ -74,7 +74,7 @@
     <string name="pwauth_btn_confirm">확인</string>
     <string name="pwreset_change_success">비밀번호가 변경 되었습니다</string>
     <string name="pwreset_please_check_pw">비밀번호를 확인해 주세요</string>
-    <string name="lessonlog_toolbar_title">레슨 일지</string>
+    <string name="lesson_post_list_toolbar_title">레슨 포스트 목록</string>
     <string name="alram_empty_message">알림이 없습니다</string>
     <string name="alram_toolbar_title">알림</string>
     <string name="ticketdate_toolbar_title">날짜 선택</string>
@@ -100,18 +100,18 @@
     <string name="reserve_confirm_cancel_fail">취소하는데 오류가 발생 했습니다</string>
     <string name="ticket_time_empty_time_text">예약가능한 시간이 없습니다</string>
     <string name="fragment_reserve_lesson_empty">예약내역이 없습니다</string>
-    <string name="log_toolbar_title">레슨 후기</string>
-    <string name="log_comment_tile">나의 후기</string>
+    <string name="log_toolbar_title">레슨 포스트</string>
+    <string name="log_comment_tile">나의 코멘트</string>
     <string name="log_video_start_fail">오류로 인한 동영상 시작 실패</string>
-    <string name="log_bottom_view_title">후기 남기기</string>
+    <string name="log_bottom_view_title">코멘트 남기기</string>
     <string name="log_over_comment">후기를 남길 수 있는 기간이 지났습니다</string>
     <string name="comment_subtitle_text">이번 레슨은 어떠셨나요?</string>
-    <string name="comment_comment_title">후기 남기기</string>
-    <string name="comment_comment_hint">최대 100자 까지 남길 수 있습니다</string>
+    <string name="comment_comment_title">코멘트 남기기</string>
+    <string name="comment_comment_hint">코멘트를 남겨주세요</string>
     <string name="comment_empty_rating">평점을 등록해 주세요</string>
-    <string name="comment_empty_comment">후기를 작성해 주세요</string>
+    <string name="comment_empty_comment">코멘트를 작성해 주세요</string>
     <string name="comment_upload_fail">서버오류로 인해 업로드에 실패했습니다</string>
-    <string name="comment_upload_success">후기 남기기 성공</string>
+    <string name="comment_upload_success">포스트 업로드 성공</string>
     <string name="comment_fail_length">100자 이내로 작성해 주세요</string>
     <string name="default_notification_channel_id" translatable="false">행복골프_기본채널</string>
     <string name="default_notification_text">행복골프 기본 채널입니다</string>
@@ -119,4 +119,5 @@
     <string name="fragment_developer_prodution">Prodution Mode</string>
     <string name="fragment_developer_test">Test Mode</string>
     <string name="fragment_developer_developer">Developer Mode</string>
+    <string name="comment_subtitle_content">(남겨주신 별점은 레슨 프로님에게 공개되지 않습니다)</string>
 </resources>

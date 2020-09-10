@@ -151,7 +151,7 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
     private fun setCoachNameLessonTime(name: String, date: String) {
         val time = convertTime(date).trim().split(":")
         binding.tvCoachInfo.text =
-            "$coachName, ${time[0]}.${time[1]}.${time[2]}"
+            "$name, ${time[0]}.${time[1]}.${time[2]}"
     }
 
     override fun onStart() {

@@ -12,7 +12,7 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.ui.alram.AlramAdapter
 import com.artilearn.happygolfgo.ui.home.HomeAdapter
-import com.artilearn.happygolfgo.ui.lessonlog.LessonLogAdapter
+import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
 import java.util.*
 
@@ -56,7 +56,7 @@ fun RecyclerView.setTicketItems(tickes: List<Ticket>?) {
 
 @BindingAdapter("setLessonLog")
 fun RecyclerView.setLessonLogItems(logs: List<LessonLog>?) {
-    with(adapter as LessonLogAdapter) {
+    with(adapter as LessonPostListAdapter) {
         this.clear()
         logs?.let { this.setItems(it) }
     }

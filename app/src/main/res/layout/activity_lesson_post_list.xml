@@ -10,17 +10,17 @@
 
         <variable
             name="vm"
-            type="com.artilearn.happygolfgo.ui.lessonlog.LessonLogViewModel" />
+            type="com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_white"
-        tools:context=".ui.lessonlog.LessonLogActivity">
+        tools:context=".ui.lessonpostlist.LessonPostListActivity">
 
         <include
-            android:id="@+id/lessonlog_toolbar"
+            android:id="@+id/lesson_post_list_toolbar"
             layout="@layout/custom_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -37,10 +37,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lessonlog_toolbar"
+            app:layout_constraintTop_toBottomOf="@id/lesson_post_list_toolbar"
             bind:setLessonLog="@{vm.lessonLog}"
             tools:itemCount="10"
-            tools:listitem="@layout/item_lesson_list" />
+            tools:listitem="@layout/item_lesson_post_list" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -49,7 +49,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lessonlog_toolbar">
+            app:layout_constraintTop_toBottomOf="@id/lesson_post_list_toolbar">
 
             <ImageView
                 android:id="@+id/iv_image"

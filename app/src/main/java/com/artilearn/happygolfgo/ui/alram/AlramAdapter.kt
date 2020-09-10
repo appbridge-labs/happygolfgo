@@ -47,7 +47,7 @@ class AlramAdapter(
 
             when (alram.eventType) {
                 "3", "4", "6" -> binding.ivArrow.visibility = View.VISIBLE
-                else -> binding.ivArrow.visibility = View.INVISIBLE
+                else -> binding.ivArrow.visibility = View.GONE
             }
 
             when (alram.isRead) {

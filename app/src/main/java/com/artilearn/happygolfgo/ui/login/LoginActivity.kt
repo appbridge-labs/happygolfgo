@@ -102,4 +102,5 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         val bottom = DeveloperOptionFragment()
         bottom.show(supportFragmentManager, bottom.tag)
     }
+
 }
