@@ -146,4 +146,7 @@ interface ApiInterface {
         @Path("plateReservationID") plateId: Int
     ): Single<Response<ReservationPlateDetail>>
 
+    @PUT("mypage/signOut")
+    fun userLogout(): Completable
+
 }
