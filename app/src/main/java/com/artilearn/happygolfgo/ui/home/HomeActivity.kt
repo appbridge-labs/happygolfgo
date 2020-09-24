@@ -59,8 +59,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         inject()
         initViewModelObserve()
         initView()
-        initAdapter()
-        ticketRefresh()
+        //initAdapter()
+        //ticketRefresh()
     }
 
     private fun inject() {
@@ -71,10 +71,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun initViewModelObserve() {
         with(viewModel) {
             myPage.observe(this@HomeActivity, Observer {
-                goMyPage()
+                //goMyPage()
             })
             alram.observe(this@HomeActivity, Observer {
-                goAlram()
+                //goAlram()
             })
             serverError.observe(this@HomeActivity, Observer {
                 showError(it)
@@ -86,53 +86,54 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun initView() {
-        initBottomView(
-            binding.includeBottomView,
-            getString(R.string.home_bottomview_title),
-            BottimViewType.DEFAULT_TYPE
-        )
+        initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
+//        initBottomView(
+//            binding.includeBottomView,
+//            getString(R.string.home_bottomview_title),
+//            BottimViewType.DEFAULT_TYPE
+//        )
 
-        when (fcmEventType) {
-            "3" -> goReservaitonPlateFromFCM()
-            "4" -> goReservationLessonFromFCM()
-            "6" -> goLessonLogFromFCM()
-            "" -> goAlram()
-        }
+//        when (fcmEventType) {
+//            "3" -> goReservaitonPlateFromFCM()
+//            "4" -> goReservationLessonFromFCM()
+//            "6" -> goLessonLogFromFCM()
+//            "" -> goAlram()
+//        }
     }
 
-    private fun initAdapter() {
-        adapter = HomeAdapter { ticket ->
-            with(ticket) {
-                when {
-                    !isUnlimited && remainingCount == 0 -> binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
-                    allowToBook == possible -> binding.parentLayout.snackbar(getString(R.string.home_reservation_allowbook_fail))
-                    ticket.type == 1 -> ""
-                    else -> goSelectionDate(ticket)
-                }
-            }
-        }
+//    private fun initAdapter() {
+//        adapter = HomeAdapter { ticket ->
+//            with(ticket) {
+//                when {
+//                    !isUnlimited && remainingCount == 0 -> binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
+//                    allowToBook == possible -> binding.parentLayout.snackbar(getString(R.string.home_reservation_allowbook_fail))
+//                    ticket.type == 1 -> ""
+//                    else -> goSelectionDate(ticket)
+//                }
+//            }
+//        }
+//
+//        binding.recyclerview.adapter = adapter
+//    }
 
-        binding.recyclerview.adapter = adapter
-    }
+//    private fun ticketRefresh() {
+//        with(binding.swipeRefresh) {
+//            setOnRefreshListener {
+//                viewModel.requestTicket()
+//                isRefreshing = false
+//            }
+//
+//            setColorSchemeColors(resources.getColor(R.color.color_dark_green))
+//        }
+//    }
 
-    private fun ticketRefresh() {
-        with(binding.swipeRefresh) {
-            setOnRefreshListener {
-                viewModel.requestTicket()
-                isRefreshing = false
-            }
-
-            setColorSchemeColors(resources.getColor(R.color.color_dark_green))
-        }
-    }
-
-    private fun goMyPage() {
-        startActivity(Intent(this, MyPageActivity::class.java))
-    }
-
-    private fun goAlram() {
-        startActivity(Intent(this, AlramActivity::class.java))
-    }
+//    private fun goMyPage() {
+//        startActivity(Intent(this, MyPageActivity::class.java))
+//    }
+//
+//    private fun goAlram() {
+//        startActivity(Intent(this, AlramActivity::class.java))
+//    }
 
     private fun goSelectionDate(ticket: Ticket) {
         val selectIntent = Intent(this, TicketDateActivity::class.java)
