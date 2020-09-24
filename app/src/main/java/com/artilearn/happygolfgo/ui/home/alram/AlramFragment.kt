@@ -1,25 +1,66 @@
 package com.artilearn.happygolfgo.ui.home.alram
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentAlramBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.util.MyApplication
 
-class AlramFragment : Fragment() {
+class AlramFragment
+    : BaseFragment<FragmentAlramBinding, AlramViewModel>(R.layout.fragment_alram) {
 
-    lateinit var binding: FragmentAlramBinding
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alram, container, false)
-        return binding.root
+    private lateinit var adapter: AlramAdapter
+    private lateinit var myApplication: MyApplication
+
+    override val viewModel: AlramViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return AlramViewModel(
+                    myApplication.alramRepository
+                ) as T
+            }
+        }
     }
 
+    override fun init() {
 
+        inject()
+        initViewModelObserving()
+        initAdapter()
+    }
+
+    private fun inject() {
+        myApplication = activity?.application as MyApplication
+        binding.vm = viewModel
+    }
+
+    private fun initViewModelObserving() {
+        with(viewModel) {
+            serverError.observe(this@AlramFragment, Observer {
+                showFragmentToast(ToastType.ERROR, it)
+            })
+            networkFail.observe(this@AlramFragment, Observer {
+                showFragmentToast(
+                    ToastType.WARNNING,
+                    getString(R.string.fragment_network_fail_content)
+                )
+            })
+        }
+    }
+
+    private fun initAdapter() {
+        adapter = AlramAdapter { alram ->
+            when (alram.eventType) {
+                "3" -> ""
+                "4" -> ""
+                "6" -> ""
+            }
+        }
+
+        binding.recyclerview.adapter = adapter
+    }
 }

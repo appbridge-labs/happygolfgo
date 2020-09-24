@@ -10,8 +10,7 @@ import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
-import com.artilearn.happygolfgo.ui.alram.AlramAdapter
-import com.artilearn.happygolfgo.ui.home.HomeAdapter
+import com.artilearn.happygolfgo.ui.home.alram.AlramAdapter
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationAdapter
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter

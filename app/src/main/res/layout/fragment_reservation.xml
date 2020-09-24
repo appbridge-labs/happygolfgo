@@ -15,7 +15,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent_layout"
-        android:background="@color/color_line_gray"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
