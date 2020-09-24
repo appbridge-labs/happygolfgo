@@ -2,10 +2,12 @@ package com.artilearn.happygolfgo.ui.mypage
 
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.version.source.VersionRepository
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.PreferenceManager
+import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -16,6 +18,12 @@ class MyPageViewModel(
     private val myApplicationContext = MyApplication.getApplicationContext()
 
     private var packageInfo: PackageInfo? = null
+
+    private val _logout = SingleLiveEvent<Unit>()
+    private val _fail = SingleLiveEvent<String>()
+
+    val logout: LiveData<Unit> get() = _logout
+    val fail: LiveData<String> get() = _fail
 
     init {
         compositeDisposable.add(
@@ -51,6 +59,20 @@ class MyPageViewModel(
         val versionCode = packageInfo?.versionCode
 
         return packageInfo?.versionName
+    }
+
+    fun userLogout() {
+        versionRepository.userLogout()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .subscribe({
+                _logout.call()
+            }, {
+                _fail.value = it.message
+            }).let(compositeDisposable::add)
+
     }
 
 }

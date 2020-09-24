@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.data.version.source.remote
 
 import com.artilearn.happygolfgo.api.ApiInterface
 import com.artilearn.happygolfgo.data.version.VersionResponse
+import io.reactivex.Completable
 import io.reactivex.Single
 
 class VersionRemoteDataSourceImpl(
@@ -16,5 +17,9 @@ class VersionRemoteDataSourceImpl(
             .map {
                 it
             }
+    }
+
+    override fun userLogout(): Completable {
+        return apiInterface.userLogout()
     }
 }

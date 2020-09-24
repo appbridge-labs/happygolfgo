@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.data.version.source.remote
 
 import com.artilearn.happygolfgo.data.version.VersionResponse
+import io.reactivex.Completable
 import io.reactivex.Single
 
 interface VersionRemoteDataSource {
@@ -9,4 +10,6 @@ interface VersionRemoteDataSource {
         platform: Int = 1,
         clientType: Int = 0
     ): Single<VersionResponse>
+
+    fun userLogout(): Completable
 }

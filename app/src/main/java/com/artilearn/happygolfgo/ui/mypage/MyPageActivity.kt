@@ -3,11 +3,13 @@ package com.artilearn.happygolfgo.ui.mypage
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityMyPageBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
@@ -46,7 +48,12 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
 
     private fun initViewModelObserve() {
         with(viewModel) {
-
+            logout.observe(this@MyPageActivity, Observer {
+                goLogin()
+            })
+            fail.observe(this@MyPageActivity, Observer {
+                showToast(ToastType.ERROR, it)
+            })
         }
     }
 
@@ -73,13 +80,13 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
     }
 
     private fun logout() {
-        PreferenceManager(this).userLogout()
-        goLogin()
+        viewModel.userLogout()
     }
 
     private fun goLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val intent = Intent(this, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
         startActivity(intent)
         finish()
     }
