@@ -12,6 +12,7 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.ui.alram.AlramAdapter
 import com.artilearn.happygolfgo.ui.home.HomeAdapter
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationAdapter
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
 import java.util.*
@@ -48,7 +49,7 @@ fun ticketCount(
 
 @BindingAdapter("setTickets")
 fun RecyclerView.setTicketItems(tickes: List<Ticket>?) {
-    with(adapter as HomeAdapter) {
+    with(adapter as ReservationAdapter) {
         this.clear()
         tickes?.let { this.setItems(it) }
     }

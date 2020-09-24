@@ -17,6 +17,7 @@
     <string name="tutorial_reserve_title">행복골프 예약</string>
     <string name="tutorial_nfc_title">NFC 체크인</string>
     <string name="tutorial_btn_text">시작하기</string>
+    <string name="gamecenter_toolbar_title">게임센터</string>
     <string name="home_toolbar_text">나의 이용권</string>
     <string name="home_fail_ticket">사용할 수 없는 티켓입니다</string>
     <string name="home_reservation_allowbook_fail">예약은 최대 3개 까지만 가능합니다</string>

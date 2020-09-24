@@ -13,13 +13,13 @@ import com.artilearn.happygolfgo.ui.home.alram.AlramFragment
 import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterFragment
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageFragment
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationFragment
+import com.artilearn.happygolfgo.util.MyApplication
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     //    private lateinit var adapter: HomeAdapter
-//private lateinit var myApplication: MyApplication
-//    private var possible = false
+    //    private var possible = false
 //
 //    private val fcmEventType by lazy {
 //        intent.getStringExtra(FCM_EVENT_TYPE)
@@ -37,6 +37,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 //        intent.getIntExtra(PLATE_ID, 0)
 //    }
 //
+    private lateinit var myApplication: MyApplication
     private val vm: HomeViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -61,6 +62,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun initBinding() {
+        myApplication = application as MyApplication
         binding.vm = vm
     }
 
@@ -104,6 +106,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun showReservationFragment(visibile: Boolean) {
         if (visibile) {
+            initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
             reservation = ReservationFragment()
             loadFragment(reservation)
         }
@@ -111,6 +114,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun showGameCenterFragment(visibile: Boolean) {
         if (visibile) {
+            initToolbar(binding.homeToolbar.toolbar, getString(R.string.gamecenter_toolbar_title), false)
             gamecenter = GameCenterFragment()
             loadFragment(gamecenter)
         }
@@ -118,6 +122,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun showAlramFragment(visibile: Boolean) {
         if (visibile) {
+            initToolbar(binding.homeToolbar.toolbar, getString(R.string.alram_toolbar_title), false)
             alram = AlramFragment()
             loadFragment(alram)
         }
@@ -125,6 +130,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun showMyPageFragment(visibile: Boolean) {
         if (visibile) {
+            initToolbar(binding.homeToolbar.toolbar, getString(R.string.mypage_toolbar_title), false)
             mypage = MyPageFragment()
             loadFragment(mypage)
         }

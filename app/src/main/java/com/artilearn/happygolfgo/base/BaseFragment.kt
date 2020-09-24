@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,10 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
+import com.artilearn.happygolfgo.constants.EXTRA_INTENT
+import com.artilearn.happygolfgo.ui.common.ErrorActivity
+import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes val layoutId: Int
@@ -35,6 +40,23 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
         binding.lifecycleOwner = this
 
         init()
+    }
+
+    protected fun showFragmentError(errorText: String) {
+        val errorActivity = Intent(activity, ErrorActivity::class.java)
+            .apply {
+                putExtra(EXTRA_INTENT, this)
+                putExtra(EXTRA_ERROR_TEXT, errorText)
+            }
+        startActivity(errorActivity)
+    }
+
+    protected fun showFragmentNetworkFail() {
+        val networkFailActivity = Intent(activity, NetworkErrorActivity::class.java)
+            .apply {
+                putExtra(EXTRA_INTENT, this)
+            }
+        startActivity(networkFailActivity)
     }
 
 }

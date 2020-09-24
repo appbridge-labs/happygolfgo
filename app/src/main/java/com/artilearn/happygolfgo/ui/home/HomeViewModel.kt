@@ -11,7 +11,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 
-class HomeViewModel() : BaseViewModel() {
+class HomeViewModel : BaseViewModel() {
 
     private val reservation = BehaviorSubject.createDefault(false)
     private val gamecenter = BehaviorSubject.createDefault(false)

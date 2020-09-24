@@ -7,19 +7,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.Ticket
+import com.artilearn.happygolfgo.databinding.ItemHomeReservationTicketBinding
 import com.artilearn.happygolfgo.databinding.ItemHomeTicketBinding
 
 class HomeAdapter(
     private val itemClick: (Ticket) -> Unit
 ) : RecyclerView.Adapter<HomeAdapter.TicketViewHolder>() {
 
-    lateinit var binding: ItemHomeTicketBinding
+    lateinit var binding: ItemHomeReservationTicketBinding
     private val items: ArrayList<Ticket> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_home_ticket,
+            R.layout.item_home_reservation_ticket,
             parent,
             false
         )
@@ -38,14 +39,14 @@ class HomeAdapter(
     override fun getItemCount() = items.size
 
     class TicketViewHolder(
-        private val binding: ItemHomeTicketBinding
+        private val binding: ItemHomeReservationTicketBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(ticket: Ticket) {
             binding.ticket = ticket
             when (ticket.type) {
-                1 -> binding.ibTicket.visibility = View.INVISIBLE
-                else -> binding.ibTicket.visibility = View.VISIBLE
+                1 -> binding.ivArrow.visibility = View.INVISIBLE
+                else -> binding.ivArrow.visibility = View.VISIBLE
             }
             binding.executePendingBindings()
         }
