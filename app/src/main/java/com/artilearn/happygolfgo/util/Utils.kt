@@ -2,6 +2,10 @@ package com.artilearn.happygolfgo.util
 
 import android.content.Context
 import android.graphics.Color
+import android.media.MediaDrm
+import android.media.UnsupportedSchemeException
+import android.os.Build
+import android.provider.Settings
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
