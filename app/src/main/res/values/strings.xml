@@ -29,12 +29,12 @@
     <string name="fragment_network_fail_content">인터넷 연결 상태가 좋지 않습니다.\n 확인 후 다시한번 시도해 주세요.</string>
     <string name="fragment_network_fail_btn_text">새로고침</string>
     <string name="mypage_toolbar_title">마이페이지</string>
-    <string name="mypage_lesson_title">레슨 포스트</string>
+    <string name="mypage_lesson_title">레슨 일지</string>
     <string name="mypage_info_change">개인정보 변경</string>
-    <string name="mypage_password_change">비밀번호 재설정</string>
+    <string name="mypage_password_change">비밀번호 변경</string>
     <string name="mypage_logout">로그아웃</string>
     <string name="mypage_version_name">앱 버전</string>
-    <string name="mypage_update">업데이트</string>
+    <string name="mypage_update">최신 버전으로 업데이트</string>
     <string name="myinfo_toolbar_title">개인정보 변경</string>
     <string name="myinfo_show_title">사용하실 이름과 닉네임을 입력해 주세요.</string>
     <string name="myinfo_name_title">이름</string>
