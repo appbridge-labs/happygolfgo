@@ -2,6 +2,10 @@ package com.artilearn.happygolfgo.util
 
 import android.content.Context
 import android.graphics.Color
+import android.media.MediaDrm
+import android.media.UnsupportedSchemeException
+import android.os.Build
+import android.provider.Settings
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -107,3 +111,26 @@ fun Date.convertDateTime(): String {
         else -> SimpleDateFormat("yyy.MM.dd", Locale.getDefault()).format(this)
     }
 }
+
+fun getAndroidID(context: Context): String {
+    return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+}
+
+fun getWidevineID(): String {
+    val uuid = UUID(-0x121074568629b532L, -0x5c37d8232ae2de13L)
+
+    val wvDrm = try {
+        MediaDrm(uuid)
+    } catch (e: UnsupportedSchemeException) {
+        null
+    }
+
+    val widevineId = wvDrm!!.getPropertyByteArray(MediaDrm.PROPERTY_DEVICE_UNIQUE_ID)
+
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        Base64.getEncoder().encodeToString(widevineId).trim()
+    } else {
+        android.util.Base64.encodeToString(widevineId, android.util.Base64.DEFAULT);
+    }
+}
+

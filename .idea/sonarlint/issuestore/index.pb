@@ -228,3 +228,11 @@ Tapp/src/main/java/com/artilearn/happygolfgo/data/login/source/LoginRepositoryIm
 Rapp/src/main/java/com/artilearn/happygolfgo/data/myinfo/source/MyInfoRepository.kt,0/e/0e3d71ede5e8534fbbae512eedbae49c988ebe37
 †
 Vapp/src/main/java/com/artilearn/happygolfgo/data/myinfo/source/MyInfoRepositoryImpl.kt,c/f/cf32d5049d8f3f3eb9f552d7bbba6707025edc1a
+x
+Happ/src/main/java/com/artilearn/happygolfgo/data/login/LoginDataModel.kt,4/8/48782876d50c203f54413a8fd19115d659df7c80
+w
+Gapp/src/main/java/com/artilearn/happygolfgo/data/login/LoginResponse.kt,9/3/93a576f50d5999369a76c36ea4f4e6fd471cae51
+s
+Capp/src/main/java/com/artilearn/happygolfgo/data/login/LoginData.kt,3/3/33e2335d28cf049176a6ea69f7f59b1441de7d3c
+h
+8app/src/main/java/com/artilearn/happygolfgo/data/User.kt,7/c/7ce4690313fb93398c8595340b21ef2d8a0248a5

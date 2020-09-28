@@ -118,7 +118,6 @@ class SplashViewModel(
                 if (!task.isSuccessful) {
                     return@OnCompleteListener
                 }
-
                 PreferenceManager(applicationContext).fcmToken = task.result?.token
             })
     }

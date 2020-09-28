@@ -493,6 +493,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/User.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/log/Employee.kt">
           <value>
             <set />
@@ -504,6 +509,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/login/LoginData.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/login/LoginDataModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/login/source/LoginRepositoryImpl.kt">
           <value>
             <set />
           </value>
