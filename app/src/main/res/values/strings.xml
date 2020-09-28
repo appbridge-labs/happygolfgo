@@ -121,4 +121,7 @@
     <string name="fragment_developer_test">Test Mode</string>
     <string name="fragment_developer_developer">Developer Mode</string>
     <string name="comment_subtitle_content">(남겨주신 별점은 레슨 프로님에게 공개되지 않습니다)</string>
+    <string name="fragment_mypage_update_title">업데이트 필요</string>
+    <string name="fragment_mypage_record_title">개인 기록</string>
+    <string name="fragment_mypage_setting_title">설정</string>
 </resources>
