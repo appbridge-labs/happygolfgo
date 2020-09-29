@@ -88,6 +88,7 @@ import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSou
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSourceImpl
 import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
+import com.google.firebase.iid.FirebaseInstanceId
 import io.fabric.sdk.android.Fabric
 
 class MyApplication : Application() {
@@ -95,6 +96,7 @@ class MyApplication : Application() {
     private lateinit var networkManager: NetworkManager
     private lateinit var apiInterface: ApiInterface
     private lateinit var preferenceManager: PreferenceManager
+    private lateinit var firebaseInstanceId: FirebaseInstanceId
 
     private lateinit var loginRemoteDataSource: LoginRemoteDataSource
     private lateinit var loginLocalDataSource: LoginLocalDataSource
@@ -153,11 +155,12 @@ class MyApplication : Application() {
         networkManager = NetworkManager(this)
         apiInterface = ApiService.api
         preferenceManager = PreferenceManager(this)
+        firebaseInstanceId = FirebaseInstanceId.getInstance()
 
         loginRemoteDataSource = LoginRemoteDataSourceImpl(apiInterface)
         loginLocalDataSource = LoginLocalDataSourceImpl(preferenceManager)
         splashLocalDataSource = SplashLocalDataSourceImpl(preferenceManager)
-        splashRemoteDataSource = SplashRemoteDataSourceImpl(apiInterface)
+        splashRemoteDataSource = SplashRemoteDataSourceImpl(apiInterface, firebaseInstanceId)
         tutorialLocalDataSource = TutorialLocalDataSourceImpl(preferenceManager)
         homeRemoteDataSource = HomeRemoteDataSourceImpl(apiInterface)
         versionRemoteDataSource = VersionRemoteDataSourceImpl(apiInterface)
@@ -180,7 +183,7 @@ class MyApplication : Application() {
         developerOptionDataSoucre = DeveloperOptionDataSoucreImpl(preferenceManager)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
-        splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
+        splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, preferenceManager, networkManager)
         tutorialRepository = TutorialRepositoryImpl(tutorialLocalDataSource)
         homeRepository = HomeRepositoryImpl(homeRemoteDataSource, networkManager)
         versionRepository = VersionRepositoryImpl(versionRemoteDataSource, versionLocalDataSource, preferenceManager, networkManager)

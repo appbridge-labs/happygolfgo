@@ -4,9 +4,9 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class SplashTokenResponse(
-    @SerializedName("code")
+    @SerializedName("statusCode")
     @Expose
-    val code: Int,
+    val statusCode: Int,
 
     @SerializedName("message")
     @Expose

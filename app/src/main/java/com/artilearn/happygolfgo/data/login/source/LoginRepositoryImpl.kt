@@ -36,10 +36,6 @@ class LoginRepositoryImpl(
         return if (networkManager.networkState()) {
             loginRemoteDataSource.remoteLogin(data)
                 .flatMap {
-                    println("===impl : ${it.data.user}====")
-                    println("===impl : ${it.statusCode}====")
-                    println("===impl : ${it.resultCode}====")
-                    println("===impl : ${it.message}====")
                     saveLocalData(it.data.user)
                     Single.just(it)
                 }
@@ -49,13 +45,13 @@ class LoginRepositoryImpl(
     }
 
     private fun saveLocalData(user: User) {
-//        with(loginLocalDataSource) {
-//            accessToken = user.accessToken
-//            clientSecretKey = user.clientSecretKey
-//            name = user.name
-//            profileImageURL = user.profileImageURL
-//            autoLogin = true
-//            nickname = user.nickname
-//        }
+        with(loginLocalDataSource) {
+            accessToken = user.accessToken
+            clientSecretKey = user.clientSecretKey
+            name = user.name
+            profileImageURL = user.profileImageURL
+            autoLogin = true
+            nickname = user.nickname
+        }
     }
 }

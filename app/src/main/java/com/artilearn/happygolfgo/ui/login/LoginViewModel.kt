@@ -90,7 +90,6 @@ class LoginViewModel(
                 .subscribe({
                     _loginSuccess.value = Unit
                 }, {
-                    println("===== error: ${it.message}")
                     when (it.message) {
                         "HTTP 401 Unauthorized", "HTTP 401 " -> {
                             _failPassword.value = Unit

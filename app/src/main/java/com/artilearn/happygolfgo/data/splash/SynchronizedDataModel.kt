@@ -4,6 +4,7 @@ data class SynchronizedDataModel(
     val clientSecretKey: String,
     val fcmToken: String,
     val isPushOn: Int,
-    val operatingSystem: Int = 1,
+    val deviceIdentifier: String,
+    val deviceName: String,
     val clientType: Int = 0
 )

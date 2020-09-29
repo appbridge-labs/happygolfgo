@@ -498,6 +498,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/home/source/HomeRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/log/Employee.kt">
           <value>
             <set />
@@ -563,6 +568,36 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/splash/SplashTokenDetail.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/splash/SplashTokenModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/splash/SplashTokenResponse.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/splash/SynchronizedDataModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/splash/SynchronizedDetail.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/splash/SynchronizedResponse.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/splash/source/SplashRepository.kt">
           <value>
             <set />
@@ -579,6 +614,16 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/splash/source/local/SplashLocalDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/splash/source/remote/SplashRemoteDataSource.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/splash/source/remote/SplashRemoteDataSourceImpl.kt">
           <value>
             <set />
           </value>
