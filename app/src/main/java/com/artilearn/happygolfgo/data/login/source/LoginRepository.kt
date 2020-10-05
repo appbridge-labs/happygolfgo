@@ -13,4 +13,6 @@ interface LoginRepository {
     fun repositoryLogin(
         data: HashMap<String, LoginDataModel>
     ): Single<LoginResponse>
+
+    fun getFcmToken(): Single<String?>
 }

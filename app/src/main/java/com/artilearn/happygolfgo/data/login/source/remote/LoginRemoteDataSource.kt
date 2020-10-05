@@ -9,4 +9,6 @@ interface LoginRemoteDataSource {
     fun remoteLogin(
         data: HashMap<String, LoginDataModel>
     ): Single<LoginResponse>
+
+    fun getFcmToken(): Single<String?>
 }

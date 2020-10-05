@@ -128,6 +128,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/AndroidManifest.xml">
           <value>
             <set />
@@ -193,12 +198,127 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/login/Data.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/login/LoginRequest.kt">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/login/LoginResponse.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/login/source/LoginRepository.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/login/source/LoginRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/login/source/local/LoginLocalDataSource.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/login/source/local/LoginLocalDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/login/source/remote/LoginRemoteDataSource.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/login/source/remote/LoginRemoteDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/pwverifyreset/PasswordResetModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/pwverifyreset/source/PasswordRepository.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/pwverifyreset/source/PasswordRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/pwverifyreset/source/remote/PasswordRemoteDataSource.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/pwverifyreset/source/remote/PasswordRemoteDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/splash/RequestToken.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/splash/SplashRequest.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/splash/source/SplashRepository.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/splash/source/SplashRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/splash/source/local/SplashLocalDataSource.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/splash/source/local/SplashLocalDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/splash/source/remote/SplashRemoteDataSource.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/data/splash/source/remote/SplashRemoteDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/di/KoinApplication.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/enummodel/Enums.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/module/FirebaseModule.kt">
           <value>
             <set />
           </value>
@@ -433,6 +553,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../Pro/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/.gitignore">
           <value>
             <set />
@@ -523,7 +648,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/login/source/LoginRepository.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/login/source/LoginRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/login/source/remote/LoginRemoteDataSource.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/login/source/remote/LoginRemoteDataSourceImpl.kt">
           <value>
             <set />
           </value>
@@ -1004,6 +1144,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/build.gradle">
           <value>
             <set />
           </value>

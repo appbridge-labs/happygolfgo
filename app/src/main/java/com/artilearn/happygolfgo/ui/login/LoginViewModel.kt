@@ -41,6 +41,14 @@ class LoginViewModel(
     val developerOption: LiveData<Unit> get() = _developerOption
     val passwordClick: LiveData<Unit> get() = _passwordClick
 
+    init {
+        val token = loginRepository.fcmToken
+
+        if (token.isNullOrEmpty()) {
+            getFcmToken()
+        }
+    }
+
     fun onLoginClick() {
         currentPhone = phone.value.toString()
         currentPassword = password.value.toString()
@@ -106,6 +114,14 @@ class LoginViewModel(
                     }
                 })
         )
+    }
+
+    private fun getFcmToken() {
+        loginRepository.getFcmToken()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+            .let(compositeDisposable::add)
     }
 
 }

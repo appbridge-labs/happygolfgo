@@ -86,10 +86,9 @@ import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSourc
 import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSource
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSourceImpl
-import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.iid.FirebaseInstanceId
-import io.fabric.sdk.android.Fabric
 
 class MyApplication : Application() {
 
@@ -157,7 +156,7 @@ class MyApplication : Application() {
         preferenceManager = PreferenceManager(this)
         firebaseInstanceId = FirebaseInstanceId.getInstance()
 
-        loginRemoteDataSource = LoginRemoteDataSourceImpl(apiInterface)
+        loginRemoteDataSource = LoginRemoteDataSourceImpl(apiInterface, firebaseInstanceId)
         loginLocalDataSource = LoginLocalDataSourceImpl(preferenceManager)
         splashLocalDataSource = SplashLocalDataSourceImpl(preferenceManager)
         splashRemoteDataSource = SplashRemoteDataSourceImpl(apiInterface, firebaseInstanceId)
@@ -220,7 +219,9 @@ class MyApplication : Application() {
         Thread.setDefaultUncaughtExceptionHandler { _, _ ->
             // Crashlytics에서 기본 handler를 호출하기 때문에 이중으로 호출되는것을 막기위해 빈 handler로 설정
         }
-        Fabric.with(this, Crashlytics())
+
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
+
         val fabricExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler(
             HappyGolfUserExceptionHandler(
@@ -229,6 +230,17 @@ class MyApplication : Application() {
                 fabricExceptionHandler
             )
         )
+
+        // fabric deprecated 2020. 11까지 서비스 종료
+//        Fabric.with(this, Crashlytics())
+//        val fabricExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+//        Thread.setDefaultUncaughtExceptionHandler(
+//            HappyGolfUserExceptionHandler(
+//                this,
+//                defaultExceptionHandler,
+//                fabricExceptionHandler
+//            )
+//        )
     }
 
 }
