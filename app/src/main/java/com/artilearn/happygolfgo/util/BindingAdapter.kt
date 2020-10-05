@@ -1,7 +1,10 @@
 package com.artilearn.happygolfgo.util
 
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -140,7 +143,7 @@ fun setTicketTimeDetail(tv: TextView, lessonStatus: Int?, plateAvailableCount: I
 }
 
 @BindingAdapter("setTicketName")
-fun setTicketName(tv:TextView, name: String) {
+fun setTicketName(tv: TextView, name: String) {
     tv.text = name
 }
 
@@ -174,3 +177,54 @@ fun setLogComment(tv: TextView, comment: String?) {
         tv.text = it
     }
 }
+
+@BindingAdapter("setReservationMonth")
+fun setReservationMonth(tv: TextView, month: String) {
+    val month = convertTime(month).trim().split(":")
+    tv.text = "${month[1]}월"
+}
+
+@BindingAdapter("setReservationDay")
+fun setReservationDay(tv: TextView, day: String) {
+    val day = convertTime(day).trim().split(":")
+    tv.text = "${day[2]}"
+}
+
+@BindingAdapter("setReservationStartTime")
+fun setReservationStartTime(tv: TextView, startTime: String) {
+    val startTime = convertTime(startTime).trim().split(":")
+    tv.text = "${startTime[3]}:${startTime[4]}"
+}
+
+@BindingAdapter("setReservationEndTime")
+fun setReservationEndTime(tv: TextView, endTime: String) {
+    val endTime = convertTime(endTime).trim().split(":")
+    tv.text = "${endTime[3]}:${endTime[4]}"
+}
+
+@BindingAdapter("setReservationPoint")
+fun setReservationType(
+    iv: ImageView,
+    plateNumber: Int?
+) {
+    if (plateNumber == null) {
+        Log.d("binding", "lesson !!!")
+        iv.setImageResource(R.drawable.ic_reservation_lesson_point)
+    } else {
+        Log.d("binding", "plate !!!")
+        iv.setImageResource(R.drawable.ic_home_reservation_ticket_point)
+    }
+}
+
+@BindingAdapter("setReservationMonthColor")
+fun setReservationMonthColor(
+    cl: ConstraintLayout,
+    plateNumber: Int?
+) {
+    if (plateNumber == null) {
+        cl.setBackgroundResource(R.color.color_reservation_lesson)
+    } else {
+        cl.setBackgroundResource(R.color.color_reservation_plate)
+    }
+}
+

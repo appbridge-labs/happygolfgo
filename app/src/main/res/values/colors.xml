@@ -15,4 +15,6 @@
     <color name="color_reserve_color">#49BBC4</color>
     <color name="color_alram_read">#DDFFDD</color>
     <color name="color_yellow">#FFFF00</color>
+    <color name="color_reservation_lesson">#DBE3F0</color>
+    <color name="color_reservation_plate">#DBF0DF</color>
 </resources>
