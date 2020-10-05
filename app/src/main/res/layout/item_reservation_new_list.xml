@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="reservation"
+            type="com.artilearn.happygolfgo.data.ReserveList" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/parent_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="20dp">
+        android:layout_marginTop="12dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -36,6 +37,7 @@
                 android:layout_marginStart="8dp"
                 android:textColor="@color/color_black"
                 android:textSize="14dp"
+                bind:setTicketName="@{reservation.name}"
                 app:layout_constraintBottom_toBottomOf="@id/iv_point"
                 app:layout_constraintStart_toEndOf="@id/iv_point"
                 app:layout_constraintTop_toTopOf="@id/iv_point"
@@ -100,7 +102,7 @@
                         android:id="@+id/start_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="시작시간"
+                        android:text="@string/reservation_new_list_start_text"
                         android:textSize="12dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -128,7 +130,7 @@
                         android:id="@+id/end_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="종료시간"
+                        android:text="@string/reservation_new_list_end_text"
                         android:textSize="12dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

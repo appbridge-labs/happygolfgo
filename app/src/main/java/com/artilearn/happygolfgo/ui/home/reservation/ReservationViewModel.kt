@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.home.reservation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -11,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 class ReservationViewModel(
     private val repository: HomeRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _emptyTicket: MutableLiveData<Boolean> = MutableLiveData()
     private val _tickets: MutableLiveData<ArrayList<Ticket>> = MutableLiveData()
 

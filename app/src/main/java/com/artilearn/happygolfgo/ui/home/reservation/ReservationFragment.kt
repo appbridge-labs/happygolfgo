@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.home.reservation
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentReservationBinding
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.home.HomeAdapter
+import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
 import com.tlsolution.tlsmodules.Logger.Companion.showError
@@ -33,6 +35,7 @@ class ReservationFragment
         initViewModelObserving()
         initAdapter()
         initSwipeRefresh()
+        initClickLitener()
     }
 
     private fun inject() {
@@ -75,5 +78,16 @@ class ReservationFragment
 
             setColorSchemeColors(resources.getColor(R.color.color_dark_green))
         }
+    }
+
+    private fun initClickLitener() {
+        with(binding) {
+            btnReservationList.setOnClickListener { goReservationList() }
+        }
+    }
+
+    private fun goReservationList() {
+        val intent = Intent(activity, ReserveListActivity::class.java)
+        startActivity(intent)
     }
 }

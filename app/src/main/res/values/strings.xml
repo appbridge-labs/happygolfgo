@@ -124,4 +124,6 @@
     <string name="fragment_mypage_update_title">업데이트 필요</string>
     <string name="fragment_mypage_record_title">개인 기록</string>
     <string name="fragment_mypage_setting_title">설정</string>
+    <string name="reservation_new_list_start_text">시작시간</string>
+    <string name="reservation_new_list_end_text">종료시간</string>
 </resources>
