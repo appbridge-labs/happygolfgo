@@ -238,7 +238,7 @@ fun setReservationDay(
     plateNumber: Int?
 ) {
     val date = convertTime(startDate).trim().split(":")
-    tv.text = String.format("%s", date[1])
+    tv.text = String.format("%s", date[2])
 
     if (plateNumber == null) {
         tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_reservation_lesson_text_day))
@@ -253,10 +253,21 @@ fun setReservationCard(
     plateNumber: Int?,
     today: String
 ) {
-    if (plateNumber == null) {
-        cv.setBackgroundResource(R.drawable.bg_reservation_list_card_lesson)
-    } else {
+    val currentDate = getNowDate()
+    val reservationDate = convertDate(today)
 
+    if (plateNumber == null) {
+        if (currentDate.convertString() == reservationDate?.convertString()) {
+            cv.setBackgroundResource(R.drawable.bg_reservation_list_card_lesson)
+        } else {
+            cv.setBackgroundResource(R.drawable.bg_reservation_card_default)
+        }
+    } else {
+        if (currentDate.convertString() == reservationDate?.convertString()) {
+            cv.setBackgroundResource(R.drawable.bg_reservation_list_card_plate)
+        } else {
+            cv.setBackgroundResource(R.drawable.bg_reservation_card_default)
+        }
     }
 }
 

@@ -119,3 +119,13 @@ fun String.convertMonth(): String {
         this
     }
 }
+
+fun Date.convertString(): String {
+    val test = SimpleDateFormat("yyyy-MM-dd")
+    return test.format(this)
+}
+
+fun getNowDate(): Date {
+    val now = System.currentTimeMillis()
+    return Date(now)
+}
