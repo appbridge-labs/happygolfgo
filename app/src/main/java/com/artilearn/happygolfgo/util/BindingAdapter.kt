@@ -1,9 +1,7 @@
 package com.artilearn.happygolfgo.util
 
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -208,23 +206,56 @@ fun setReservationType(
     plateNumber: Int?
 ) {
     if (plateNumber == null) {
-        Log.d("binding", "lesson !!!")
         iv.setImageResource(R.drawable.ic_reservation_lesson_point)
     } else {
-        Log.d("binding", "plate !!!")
         iv.setImageResource(R.drawable.ic_home_reservation_ticket_point)
     }
 }
 
-@BindingAdapter("setReservationMonthColor")
-fun setReservationMonthColor(
+@BindingAdapter("setReservationCalendarColor")
+fun setReservationCalendarColor(
     cl: ConstraintLayout,
     plateNumber: Int?
 ) {
     if (plateNumber == null) {
-        cl.setBackgroundResource(R.color.color_reservation_lesson)
+        cl.setBackgroundResource(R.drawable.bg_reservation_list_calendar_lesson)
     } else {
-        cl.setBackgroundResource(R.color.color_reservation_plate)
+        cl.setBackgroundResource(R.drawable.bg_reservation_list_calendar_plate)
     }
 }
+
+@BindingAdapter("setReservationMonth", "setReservationMonthType")
+fun setReservationMonth(
+    tv: TextView,
+    startDate: String,
+    plateNumber: Int?
+) {
+    val date = convertTime(startDate).trim().split(":")
+    val month = date[1].convertMonth()
+    tv.text = String.format("%s월", month)
+
+    if (plateNumber == null) {
+        tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_reservation_lesson_text_month))
+    } else {
+        tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_reservation_plate_text_month))
+    }
+}
+
+@BindingAdapter("setReservationDay", "setReservationDayType")
+fun setReservationDay(
+    tv: TextView,
+    startDate: String,
+    plateNumber: Int?
+) {
+    val date = convertTime(startDate).trim().split(":")
+    val day = date[1].convertMonth()
+    tv.text = String.format("%s", day)
+
+    if (plateNumber == null) {
+        tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_reservation_lesson_text_day))
+    } else {
+        tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_reservation_plate_text_day))
+    }
+}
+
 

@@ -9,18 +9,13 @@
         <variable
             name="reservation"
             type="com.artilearn.happygolfgo.data.ReserveList" />
-        <variable
-            name="just"
-            type="Integer" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/parent_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:elevation="4dp"
-        app:cardCornerRadius="5dp">
+        android:layout_marginTop="12dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -70,11 +65,11 @@
                 app:layout_constraintTop_toBottomOf="@id/glide_view">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    bind:setReservationMonthColor="@{reservation.plateNumber}"
                     android:id="@+id/child_layout"
                     android:layout_width="68dp"
                     android:layout_height="68dp"
-                    android:paddingTop="8dp">
+                    android:paddingTop="8dp"
+                    bind:setReservationCalendarColor="@{reservation.plateNumber}">
 
                     <TextView
                         android:id="@+id/tv_month"
@@ -86,6 +81,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         bind:setReservationMonth="@{reservation.startDate}"
+                        bind:setReservationMonthType="@{reservation.plateNumber}"
                         tools:text="1월" />
 
                     <TextView
@@ -98,6 +94,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_month"
                         bind:setReservationDay="@{reservation.startDate}"
+                        bind:setReservationDayType="@{reservation.plateNumber}"
                         tools:text="20" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

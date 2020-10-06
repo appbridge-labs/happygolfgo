@@ -16,5 +16,9 @@
     <color name="color_alram_read">#DDFFDD</color>
     <color name="color_yellow">#FFFF00</color>
     <color name="color_reservation_lesson">#DBE3F0</color>
+    <color name="color_reservation_lesson_text_month">#4071C0</color>
+    <color name="color_reservation_lesson_text_day">#1B4383</color>
     <color name="color_reservation_plate">#DBF0DF</color>
+    <color name="color_reservation_plate_text_month">#2F9E44</color>
+    <color name="color_reservation_plate_text_day">#147126</color>
 </resources>

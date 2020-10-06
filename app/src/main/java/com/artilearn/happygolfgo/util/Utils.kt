@@ -111,3 +111,11 @@ fun Date.convertDateTime(): String {
         else -> SimpleDateFormat("yyy.MM.dd", Locale.getDefault()).format(this)
     }
 }
+
+fun String.convertMonth(): String {
+    return if (this.startsWith("0")) {
+        this.substring(1)
+    } else {
+        this
+    }
+}
