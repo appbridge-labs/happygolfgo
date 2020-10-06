@@ -15,7 +15,11 @@
         android:id="@+id/parent_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="12dp"
+        android:elevation="4dp"
+        app:cardCornerRadius="5dp"
+        bind:setReservationCard="@{reservation.plateNumber}"
+        bind:setReservationCardDay="@{reservation.startDate}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -39,6 +43,7 @@
                 android:layout_marginStart="8dp"
                 android:textColor="@color/color_black"
                 android:textSize="14dp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/iv_point"
                 app:layout_constraintStart_toEndOf="@id/iv_point"
                 app:layout_constraintTop_toTopOf="@id/iv_point"
@@ -152,7 +157,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/end_time"
-                        bind:setReservationEndTime="@{reservation.startDate}"
+                        bind:setReservationEndTime="@{reservation.endDate}"
                         tools:text="12:00" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

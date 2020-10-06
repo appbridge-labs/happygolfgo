@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.util
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -176,28 +177,17 @@ fun setLogComment(tv: TextView, comment: String?) {
     }
 }
 
-@BindingAdapter("setReservationMonth")
-fun setReservationMonth(tv: TextView, month: String) {
-    val month = convertTime(month).trim().split(":")
-    tv.text = "${month[1]}월"
-}
-
-@BindingAdapter("setReservationDay")
-fun setReservationDay(tv: TextView, day: String) {
-    val day = convertTime(day).trim().split(":")
-    tv.text = "${day[2]}"
-}
-
 @BindingAdapter("setReservationStartTime")
 fun setReservationStartTime(tv: TextView, startTime: String) {
-    val startTime = convertTime(startTime).trim().split(":")
-    tv.text = "${startTime[3]}:${startTime[4]}"
+    val time = convertTime(startTime).trim().split(":")
+    println("${time[3]}, ${time[4]}")
+    tv.text = String.format("%s:%s", time[3], time[4])
 }
 
 @BindingAdapter("setReservationEndTime")
 fun setReservationEndTime(tv: TextView, endTime: String) {
-    val endTime = convertTime(endTime).trim().split(":")
-    tv.text = "${endTime[3]}:${endTime[4]}"
+    val time = convertTime(endTime).trim().split(":")
+    tv.text = String.format("%s:%s", time[3], time[4])
 }
 
 @BindingAdapter("setReservationPoint")
@@ -248,8 +238,7 @@ fun setReservationDay(
     plateNumber: Int?
 ) {
     val date = convertTime(startDate).trim().split(":")
-    val day = date[1].convertMonth()
-    tv.text = String.format("%s", day)
+    tv.text = String.format("%s", date[1])
 
     if (plateNumber == null) {
         tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_reservation_lesson_text_day))
@@ -258,4 +247,16 @@ fun setReservationDay(
     }
 }
 
+@BindingAdapter("setReservationCard", "setReservationCardDay")
+fun setReservationCard(
+    cv: CardView,
+    plateNumber: Int?,
+    today: String
+) {
+    if (plateNumber == null) {
+        cv.setBackgroundResource(R.drawable.bg_reservation_list_card_lesson)
+    } else {
+
+    }
+}
 
