@@ -2,17 +2,16 @@ package com.artilearn.happygolfgo.ui.reservelist
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.data.ReserveList
 import com.artilearn.happygolfgo.databinding.ActivityReserveListBinding
 import com.artilearn.happygolfgo.util.MyApplication
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_reserve_list.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
 
 class ReserveListActivity :
     BaseActivity<ActivityReserveListBinding>(R.layout.activity_reserve_list) {
@@ -36,6 +35,7 @@ class ReserveListActivity :
         inject()
         initViewModelObserve()
         initView()
+        initTabListener()
     }
 
     private fun inject() {
@@ -68,6 +68,32 @@ class ReserveListActivity :
 
     private fun initView() {
         initToolbar(binding.reserveListToolbar.toolbar, getString(R.string.reserve_list_toolbar_title), true)
+    }
+
+    private fun initTabListener() {
+        with(binding) {
+            reserveListTablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+                override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when (tab?.position) {
+                        0 -> tab.parent?.setSelectedTabIndicatorColor(
+                            ContextCompat.getColor(
+                                this@ReserveListActivity,
+                                R.color.color_green
+                            )
+                        )
+                        1 -> tab.parent?.setSelectedTabIndicatorColor(
+                            ContextCompat.getColor(
+                                this@ReserveListActivity,
+                                R.color.color_reservation_lesson_text_month
+                            )
+                        )
+                    }
+                }
+            })
+        }
     }
 
 }

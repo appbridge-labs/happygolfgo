@@ -35,12 +35,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/reserve_list_toolbar"
-            app:tabIndicatorColor="@color/color_green"
             app:tabSelectedTextColor="@color/color_black"
             app:tabTextAppearance="@style/MyReservationTabView"
-            app:tabTextColor="@color/color_lucky_gray">
-
-        </com.google.android.material.tabs.TabLayout>
+            app:tabTextColor="@color/color_lucky_gray" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
