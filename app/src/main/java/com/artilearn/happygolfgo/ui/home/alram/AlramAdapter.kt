@@ -50,8 +50,8 @@ class AlramAdapter(
             }
 
             when (alram.isRead) {
-                false -> binding.parentLayout.setBackgroundResource(R.color.color_alram_read)
-                true -> binding.parentLayout.setBackgroundResource(R.color.color_white)
+                false -> binding.parentLayout.setBackgroundResource(R.drawable.bg_alram_unread)
+                true -> binding.parentLayout.setBackgroundResource(R.drawable.bg_alram_read)
             }
 
             binding.executePendingBindings()

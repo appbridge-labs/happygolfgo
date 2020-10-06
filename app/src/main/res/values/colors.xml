@@ -13,7 +13,7 @@
     <color name="color_blue">#4C7BE5</color>
     <color name="color_lucky_gray">#777777</color>
     <color name="color_reserve_color">#49BBC4</color>
-    <color name="color_alram_read">#DDFFDD</color>
+    <color name="color_alram_unread">#DDFFDD</color>
     <color name="color_yellow">#FFFF00</color>
     <color name="color_reservation_lesson">#DBE3F0</color>
     <color name="color_reservation_lesson_text_month">#4071C0</color>
