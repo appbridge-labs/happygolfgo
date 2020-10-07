@@ -1,24 +1,32 @@
 package com.artilearn.happygolfgo.ui.home.gamecenter
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentGamecenterBinding
+import com.artilearn.happygolfgo.util.MyApplication
 
-class GameCenterFragment : Fragment() {
+class GameCenterFragment : BaseFragment<FragmentGamecenterBinding, GameCenterViewModel>(R.layout.fragment_gamecenter) {
 
-    lateinit var binding: FragmentGamecenterBinding
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private lateinit var myApplication: MyApplication
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gamecenter, container, false)
-        return binding.root
+    override val viewModel: GameCenterViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return GameCenterViewModel() as T
+            }
+        }
+    }
+
+    override fun init() {
+
+        inject()
+    }
+
+    private fun inject() {
+        myApplication = activity?.application as MyApplication
+        binding.vm = viewModel
     }
 }
