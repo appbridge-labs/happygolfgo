@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.gamescore.GameScoreActivity"></activity>
+        <activity android:name=".ui.gamerank.GameRankActivity"></activity>
+        <activity android:name=".ui.gamescore.GameScoreActivity" />
         <activity
             android:name=".ui.comment.CommentActivity"
             android:screenOrientation="portrait"
