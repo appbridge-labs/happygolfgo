@@ -126,4 +126,8 @@
     <string name="fragment_mypage_setting_title">설정</string>
     <string name="reservation_new_list_start_text">시작시간</string>
     <string name="reservation_new_list_end_text">종료시간</string>
+    <string name="fragment_gamecenter_average_text">골프력 평균</string>
+    <string name="fragment_gamecenter_grade_text">등급</string>
+    <string name="fragment_gamecenter_rank_text">랭킹</string>
+    <string name="fragment_gamecenter_myinfo_text">나의 데이터</string>
 </resources>

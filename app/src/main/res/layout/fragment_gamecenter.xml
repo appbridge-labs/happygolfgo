@@ -12,8 +12,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_white">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -71,21 +70,24 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/golf_info_layout"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/bg_reservation_card_default"
                 android:elevation="4dp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/info_layout">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
+                    android:id="@+id/average_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/first_guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -93,95 +95,134 @@
                         android:id="@+id/average"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="골프력 평균"
-                        android:textSize="12dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/fragment_gamecenter_average_text"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/tv_average"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="4dp"
                         android:textSize="20dp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@id/average"
-                        app:layout_constraintStart_toStartOf="@id/average"
-                        app:layout_constraintTop_toBottomOf="@id/average"
                         tools:text="8.5" />
 
-                    <View
-                        android:id="@+id/first_guideline"
-                        android:layout_width="1dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@color/color_line_gray"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/average"
-                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/first_guideline"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/color_line_gray"
+                    app:layout_constraintBottom_toBottomOf="@id/average_layout"
+                    app:layout_constraintEnd_toStartOf="@id/grade_layout"
+                    app:layout_constraintStart_toEndOf="@id/average_layout"
+                    app:layout_constraintTop_toTopOf="@id/average_layout" />
+
+                <LinearLayout
+                    android:id="@+id/grade_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/second_guideline"
+                    app:layout_constraintStart_toEndOf="@id/first_guideline"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/grade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="등급"
-                        android:textSize="12dp"
-                        app:layout_constraintEnd_toEndOf="@id/second_guideline"
-                        app:layout_constraintStart_toEndOf="@id/first_guideline"
-                        app:layout_constraintTop_toTopOf="@id/average" />
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/fragment_gamecenter_grade_text"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/tv_grade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="4dp"
                         android:textSize="20dp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@id/grade"
-                        app:layout_constraintStart_toStartOf="@id/grade"
-                        app:layout_constraintTop_toBottomOf="@id/grade"
                         tools:text="상" />
 
-                    <View
-                        android:id="@+id/second_guideline"
-                        android:layout_width="1dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@color/color_line_gray"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/grade"
-                        app:layout_constraintTop_toTopOf="parent" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/second_guideline"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/color_line_gray"
+                    app:layout_constraintBottom_toBottomOf="@id/average_layout"
+                    app:layout_constraintEnd_toStartOf="@id/rank_layout"
+                    app:layout_constraintStart_toEndOf="@id/grade_layout"
+                    app:layout_constraintTop_toTopOf="@id/average_layout" />
+
+                <LinearLayout
+                    android:id="@+id/rank_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/second_guideline"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/rank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="랭킹"
-                        android:textSize="12dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/second_guideline"
-                        app:layout_constraintTop_toTopOf="@id/average" />
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/fragment_gamecenter_rank_text"
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/tv_rank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="4dp"
                         android:textSize="20dp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@id/rank"
-                        app:layout_constraintStart_toStartOf="@id/rank"
-                        app:layout_constraintTop_toBottomOf="@id/rank"
-                        tools:text="상" />
+                        tools:text="30" />
 
+                </LinearLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/my_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:text="@string/fragment_gamecenter_myinfo_text"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/golf_info_layout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:padding="17dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/my_info" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="골프력 게임 평균"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
