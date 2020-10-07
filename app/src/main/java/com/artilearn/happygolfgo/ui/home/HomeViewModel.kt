@@ -1,102 +1,54 @@
 package com.artilearn.happygolfgo.ui.home
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
-import com.artilearn.happygolfgo.data.Ticket
-import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
+import java.util.concurrent.TimeUnit
 
 class HomeViewModel : BaseViewModel() {
 
-    private val reservation = BehaviorSubject.createDefault(false)
-    private val gamecenter = BehaviorSubject.createDefault(false)
-    private val alram = BehaviorSubject.createDefault(false)
-    private val mypage = BehaviorSubject.createDefault(false)
+    private val bottomNavigation: Subject<BottomNavigationEvent> = PublishSubject.create()
 
-    private val _bottomReservation = SingleLiveEvent<Boolean>()
-    val bottomReservation: LiveData<Boolean>
-        get() = _bottomReservation
+    private val _bottomNavigationButton: SingleLiveEvent<BottomNavigationEvent> = SingleLiveEvent()
 
-    private val _bottomGameCenter = SingleLiveEvent<Boolean>()
-    val bottomGameCenter: LiveData<Boolean>
-        get() = _bottomGameCenter
-
-    private val _bottomAlram = SingleLiveEvent<Boolean>()
-    val bottomAlram: LiveData<Boolean>
-        get() = _bottomAlram
-
-    private val _bottomMyPage = SingleLiveEvent<Boolean>()
-    val bottomMyPage: LiveData<Boolean>
-        get() = _bottomMyPage
+    val bottomNavigationButton: LiveData<BottomNavigationEvent> get() = _bottomNavigationButton
 
     init {
         rxBind()
     }
 
-    fun reservationOnNext() {
-        with(reservation) {
-            if (this.value!!) {
-                onNext(false)
-            } else {
-                onNext(true)
-            }
-        }
-    }
-
-    fun gamecenterOnNext() {
-        with(gamecenter) {
-            if (this.value!!) {
-                onNext(false)
-            } else {
-                onNext(true)
-            }
-        }
-    }
-
-    fun alramOnNext() {
-        with(alram) {
-            if (this.value!!) {
-                onNext(false)
-            } else {
-                onNext(true)
-            }
-        }
-    }
-
-    fun mypageOnNext() {
-        with(mypage) {
-            if (this.value!!) {
-                onNext(false)
-            } else {
-                onNext(true)
-            }
-        }
-    }
-
     private fun rxBind() {
-        reservation.observeOn(AndroidSchedulers.mainThread())
-            .skip(1)
-            .subscribe { _bottomReservation.value = it }
-            .addTo(compositeDisposable)
-
-        gamecenter.observeOn(AndroidSchedulers.mainThread())
-            .subscribe { _bottomGameCenter.value = it }
-            .addTo(compositeDisposable)
-
-        alram.observeOn(AndroidSchedulers.mainThread())
-            .subscribe { _bottomAlram.value = it }
-            .addTo(compositeDisposable)
-
-        mypage.observeOn(AndroidSchedulers.mainThread())
-            .subscribe { _bottomMyPage.value = it }
+        bottomNavigation
+            .startWith(BottomNavigationEvent.RESERVATION)
+            .distinctUntilChanged()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { _bottomNavigationButton.value = it }
             .addTo(compositeDisposable)
     }
 
+    fun bottomNavigation(name: String) {
+        when (name) {
+            HomeActivity.RESERVATION -> bottomNavigation.onNext(BottomNavigationEvent.RESERVATION)
+            HomeActivity.GAME_CENTER -> bottomNavigation.onNext(BottomNavigationEvent.GAME_CENTER)
+            HomeActivity.ALRAM -> bottomNavigation.onNext(BottomNavigationEvent.ALRAM)
+            HomeActivity.MY_PAGE -> bottomNavigation.onNext(BottomNavigationEvent.MY_PAGE)
+        }
+    }
+
+    enum class BottomNavigationEvent {
+        RESERVATION,
+        GAME_CENTER,
+        ALRAM,
+        MY_PAGE
+    }
+
+    /**
+     * v2 이전
+     */
 //    private val _myPage: MutableLiveData<Unit> = MutableLiveData()
 //    private val _alram: MutableLiveData<Unit> = MutableLiveData()
 //    private val _emptyTicket: MutableLiveData<Boolean> = MutableLiveData()

@@ -46,10 +46,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
     }
 
-    private lateinit var reservation: ReservationFragment
-    private lateinit var gamecenter: GameCenterFragment
-    private lateinit var alram: AlramFragment
-    private lateinit var mypage: MyPageFragment
+//    private lateinit var reservation: ReservationFragment
+//    private lateinit var gamecenter: GameCenterFragment
+//    private lateinit var alram: AlramFragment
+//    private lateinit var mypage: MyPageFragment
     private lateinit var bottomNavigation: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,18 +68,26 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initViewModelObserving() {
         with(vm) {
-            bottomReservation.observe(this@HomeActivity, Observer {
-                if (it) { showReservationFragment(it) }
+            bottomNavigationButton.observe(this@HomeActivity, Observer {
+                when (bottomNavigationButton.value) {
+                    HomeViewModel.BottomNavigationEvent.RESERVATION -> println("reservaiton")
+                    HomeViewModel.BottomNavigationEvent.GAME_CENTER -> println("game")
+                    HomeViewModel.BottomNavigationEvent.ALRAM -> println("alram")
+                    HomeViewModel.BottomNavigationEvent.MY_PAGE -> println("mypage")
+                }
             })
-            bottomGameCenter.observe(this@HomeActivity, Observer {
-                if (it) { showGameCenterFragment(it) }
-            })
-            bottomAlram.observe(this@HomeActivity, Observer {
-                if (it) { showAlramFragment(it) }
-            })
-            bottomMyPage.observe(this@HomeActivity, Observer {
-                if (it) { showMyPageFragment(it) }
-            })
+//            bottomReservation.observe(this@HomeActivity, Observer {
+//                if (it) { showReservationFragment(it) }
+//            })
+//            bottomGameCenter.observe(this@HomeActivity, Observer {
+//                if (it) { showGameCenterFragment(it) }
+//            })
+//            bottomAlram.observe(this@HomeActivity, Observer {
+//                if (it) { showAlramFragment(it) }
+//            })
+//            bottomMyPage.observe(this@HomeActivity, Observer {
+//                if (it) { showMyPageFragment(it) }
+//            })
         }
     }
 
@@ -87,17 +95,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
         bottomNavigation = binding.bottomNavigation
 
-        reservation = ReservationFragment()
-        loadFragment(reservation)
+        //reservation = ReservationFragment()
+        //loadFragment(reservation)
     }
 
     private fun bottomNavigationListener() {
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.reservation -> { vm.reservationOnNext() }
-                R.id.gamecenter -> { vm.gamecenterOnNext() }
-                R.id.alram -> { vm.alramOnNext() }
-                R.id.mypage -> { vm.mypageOnNext() }
+                R.id.reservation -> { vm.bottomNavigation(RESERVATION) }
+                R.id.gamecenter -> { vm.bottomNavigation(GAME_CENTER) }
+                R.id.alram -> { vm.bottomNavigation(ALRAM) }
+                R.id.mypage -> { vm.bottomNavigation(MY_PAGE) }
             }
 
             true
@@ -105,43 +113,56 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun showReservationFragment(visibile: Boolean) {
-        if (visibile) {
-            initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
-            reservation = ReservationFragment()
-            loadFragment(reservation)
-        }
+//        if (visibile) {
+//            initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
+//            reservation = ReservationFragment()
+//            loadFragment(reservation)
+//        }
     }
 
     private fun showGameCenterFragment(visibile: Boolean) {
-        if (visibile) {
-            initToolbar(binding.homeToolbar.toolbar, getString(R.string.gamecenter_toolbar_title), false)
-            gamecenter = GameCenterFragment()
-            loadFragment(gamecenter)
-        }
+//        if (visibile) {
+//            initToolbar(binding.homeToolbar.toolbar, getString(R.string.gamecenter_toolbar_title), false)
+//            gamecenter = GameCenterFragment()
+//            loadFragment(gamecenter)
+//        }
     }
 
     private fun showAlramFragment(visibile: Boolean) {
-        if (visibile) {
-            initToolbar(binding.homeToolbar.toolbar, getString(R.string.alram_toolbar_title), false)
-            alram = AlramFragment()
-            loadFragment(alram)
-        }
+//        if (visibile) {
+//            initToolbar(binding.homeToolbar.toolbar, getString(R.string.alram_toolbar_title), false)
+//            alram = AlramFragment()
+//            loadFragment(alram)
+//        }
     }
 
     private fun showMyPageFragment(visibile: Boolean) {
-        if (visibile) {
-            initToolbar(binding.homeToolbar.toolbar, getString(R.string.mypage_toolbar_title), false)
-            mypage = MyPageFragment()
-            loadFragment(mypage)
-        }
+//        if (visibile) {
+//            initToolbar(binding.homeToolbar.toolbar, getString(R.string.mypage_toolbar_title), false)
+//            mypage = MyPageFragment()
+//            loadFragment(mypage)
+//        }
     }
 
     private fun loadFragment(fragment: Fragment) {
-        val manager = supportFragmentManager.beginTransaction()
-        manager.replace(R.id.frame_layout, fragment)
-        manager.addToBackStack(null)
-        manager.commit()
+//        val manager = supportFragmentManager.beginTransaction()
+//        manager.replace(R.id.frame_layout, fragment)
+//        manager.addToBackStack(null)
+//        manager.commit()
     }
+
+
+    companion object {
+        const val RESERVATION = "예약"
+        const val GAME_CENTER = "림게임센터"
+        const val ALRAM = "알"
+        const val MY_PAGE = "마이페이지"
+    }
+
+
+
+
+
 
 //    private fun inject() {
 //        myApplication = application as MyApplication
