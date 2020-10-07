@@ -135,4 +135,7 @@
     <string name="fragment_gamecenter_iron_text">IRON</string>
     <string name="fragment_gamecenter_sw_text">S/W</string>
     <string name="fragment_gamecenter_putt_text">PUTT</string>
+    <string name="game_rank_toolbar_title">골프력 게임 스코어</string>
+    <string name="game_rank_tab_title_allgroup">전체</string>
+    <string name="game_rank_tab_title_mygroup">훈련소</string>
 </resources>
