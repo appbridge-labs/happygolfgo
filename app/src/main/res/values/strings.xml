@@ -138,4 +138,7 @@
     <string name="game_rank_toolbar_title">골프력 게임 스코어</string>
     <string name="game_rank_tab_title_allgroup">전체</string>
     <string name="game_rank_tab_title_mygroup">훈련소</string>
+    <string name="fragment_gamecenter_detail">자세히 보기</string>
+    <string name="fragment_gamecenter_all_rank">전체 랭킹</string>
+    <string name="fragment_gamecenter_score_average">골프력 게임 평균</string>
 </resources>

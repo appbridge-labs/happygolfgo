@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterViewModel" />
@@ -224,7 +226,7 @@
                     android:id="@+id/golf_game_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="골프력 게임 평균"
+                    android:text="@string/fragment_gamecenter_score_average"
                     android:textColor="@color/color_black"
                     android:textSize="14dp"
                     android:textStyle="bold"
@@ -232,9 +234,11 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/score_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="자세히 보기"
+                    android:onClick="@{() -> vm.onGameDetail()}"
+                    android:text="@string/fragment_gamecenter_detail"
                     android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -416,7 +420,7 @@
                     android:id="@+id/golf_rank_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="전체 랭킹"
+                    android:text="@string/fragment_gamecenter_all_rank"
                     android:textColor="@color/color_black"
                     android:textSize="14dp"
                     android:textStyle="bold"
@@ -424,14 +428,15 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/rank_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="자세히 보기"
+                    android:onClick="@{() -> vm.onRankDetail()}"
+                    android:text="@string/fragment_gamecenter_detail"
                     android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- rank -->
                 <View
                     android:id="@+id/five_guideline"
                     android:layout_width="0dp"
@@ -470,6 +475,15 @@
                     app:layout_constraintTop_toBottomOf="@id/me" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
