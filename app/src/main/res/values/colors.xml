@@ -21,4 +21,9 @@
     <color name="color_reservation_plate">#DBF0DF</color>
     <color name="color_reservation_plate_text_month">#2F9E44</color>
     <color name="color_reservation_plate_text_day">#147126</color>
+    <color name="color_dr_text_color">#CC5DE8</color>
+    <color name="color_wu_text_color">#845EF7</color>
+    <color name="color_iron_text_color">#5C7CFA</color>
+    <color name="color_sw_text_color">#22B8CF</color>
+    <color name="color_putt_text_color">#51CF66</color>
 </resources>

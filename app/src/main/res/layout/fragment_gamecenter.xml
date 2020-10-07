@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
+            android:layout_marginEnd="20dp"
+            android:paddingBottom="20dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/info_layout"
@@ -208,21 +209,265 @@
                 app:layout_constraintTop_toBottomOf="@id/golf_info_layout" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/golf_game_layout"
                 android:layout_width="0dp"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_reservation_card_default"
+                android:elevation="4dp"
                 android:padding="17dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/my_info" >
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/my_info">
 
                 <TextView
+                    android:id="@+id/golf_game_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="골프력 게임 평균"
+                    android:textColor="@color/color_black"
                     android:textSize="14dp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자세히 보기"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/three_guideline"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/color_line_gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/golf_game_text" />
+
+                <TextView
+                    android:id="@+id/tv_dr_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/tv_wu_score"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/three_guideline"
+                    tools:text="45" />
+
+                <TextView
+                    android:id="@+id/tv_wu_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_dr_score"
+                    app:layout_constraintEnd_toStartOf="@id/tv_iron_score"
+                    app:layout_constraintStart_toEndOf="@id/tv_dr_score"
+                    app:layout_constraintTop_toTopOf="@id/tv_dr_score"
+                    tools:text="70" />
+
+                <TextView
+                    android:id="@+id/tv_iron_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_dr_score"
+                    app:layout_constraintEnd_toStartOf="@id/tv_sw_score"
+                    app:layout_constraintStart_toEndOf="@id/tv_wu_score"
+                    app:layout_constraintTop_toTopOf="@id/tv_dr_score"
+                    tools:text="55" />
+
+                <TextView
+                    android:id="@+id/tv_sw_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_dr_score"
+                    app:layout_constraintEnd_toStartOf="@id/tv_putt_score"
+                    app:layout_constraintStart_toEndOf="@id/tv_iron_score"
+                    app:layout_constraintTop_toTopOf="@id/tv_dr_score"
+                    tools:text="38" />
+
+                <TextView
+                    android:id="@+id/tv_putt_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_dr_score"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_sw_score"
+                    app:layout_constraintTop_toTopOf="@id/tv_dr_score"
+                    tools:text="19" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/graph_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_putt_score"
+                    app:layout_constraintStart_toStartOf="@id/tv_dr_score"
+                    app:layout_constraintTop_toBottomOf="@id/tv_dr_score">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="그래프가 들어감"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/four_guideline"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/color_line_gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/graph_layout" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/fragment_gamecenter_dr_text"
+                    android:textColor="@color/color_dr_text_color"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_dr_score"
+                    app:layout_constraintStart_toStartOf="@id/tv_dr_score"
+                    app:layout_constraintTop_toBottomOf="@id/four_guideline" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/fragment_gamecenter_wu_text"
+                    android:textColor="@color/color_wu_text_color"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_wu_score"
+                    app:layout_constraintStart_toStartOf="@id/tv_wu_score"
+                    app:layout_constraintTop_toBottomOf="@id/four_guideline" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/fragment_gamecenter_iron_text"
+                    android:textColor="@color/color_iron_text_color"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_iron_score"
+                    app:layout_constraintStart_toStartOf="@id/tv_iron_score"
+                    app:layout_constraintTop_toBottomOf="@id/four_guideline" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/fragment_gamecenter_sw_text"
+                    android:textColor="@color/color_sw_text_color"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_sw_score"
+                    app:layout_constraintStart_toStartOf="@id/tv_sw_score"
+                    app:layout_constraintTop_toBottomOf="@id/four_guideline" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/fragment_gamecenter_putt_text"
+                    android:textColor="@color/color_putt_text_color"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/tv_putt_score"
+                    app:layout_constraintStart_toStartOf="@id/tv_putt_score"
+                    app:layout_constraintTop_toBottomOf="@id/four_guideline" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_reservation_card_default"
+                android:elevation="4dp"
+                android:padding="17dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/golf_game_layout">
+
+                <TextView
+                    android:id="@+id/golf_rank_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전체 랭킹"
+                    android:textColor="@color/color_black"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자세히 보기"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- rank -->
+                <View
+                    android:id="@+id/five_guideline"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/color_line_gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/golf_rank_text" />
+
+                <include
+                    android:id="@+id/before"
+                    layout="@layout/gamecenter_rank_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/five_guideline" />
+
+                <include
+                    android:id="@+id/me"
+                    layout="@layout/gamecenter_rank_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/before" />
+
+                <include
+                    android:id="@+id/after"
+                    layout="@layout/gamecenter_rank_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/me" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

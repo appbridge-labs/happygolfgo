@@ -130,4 +130,9 @@
     <string name="fragment_gamecenter_grade_text">등급</string>
     <string name="fragment_gamecenter_rank_text">랭킹</string>
     <string name="fragment_gamecenter_myinfo_text">나의 데이터</string>
+    <string name="fragment_gamecenter_dr_text">DR</string>
+    <string name="fragment_gamecenter_wu_text">WU</string>
+    <string name="fragment_gamecenter_iron_text">IRON</string>
+    <string name="fragment_gamecenter_sw_text">S/W</string>
+    <string name="fragment_gamecenter_putt_text">PUTT</string>
 </resources>
