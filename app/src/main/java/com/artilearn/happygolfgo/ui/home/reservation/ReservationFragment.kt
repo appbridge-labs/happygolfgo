@@ -8,12 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentReservationBinding
-import com.artilearn.happygolfgo.ui.home.HomeActivity
-import com.artilearn.happygolfgo.ui.home.HomeAdapter
 import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
-import com.tlsolution.tlsmodules.Logger.Companion.showError
 
 class ReservationFragment
     : BaseFragment<FragmentReservationBinding, ReservationViewModel>(R.layout.fragment_reservation) {

@@ -22,9 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
-    //    private lateinit var adapter: HomeAdapter
-    //    private var possible = false
-//
 //    private val fcmEventType by lazy {
 //        intent.getStringExtra(FCM_EVENT_TYPE)
 //    }

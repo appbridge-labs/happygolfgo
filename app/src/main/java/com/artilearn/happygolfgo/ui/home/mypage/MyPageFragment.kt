@@ -26,6 +26,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
             }
         }
     }
+
     override fun init() {
 
         inject()
