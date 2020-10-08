@@ -9,6 +9,7 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentGamecenterBinding
 import com.artilearn.happygolfgo.ui.gamerank.GameRankActivity
+import com.artilearn.happygolfgo.ui.gamescore.GameScoreActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
 class GameCenterFragment :
@@ -39,16 +40,21 @@ class GameCenterFragment :
         with(viewModel) {
             button.observe(this@GameCenterFragment, Observer {
                 when (button.value) {
-                    GameCenterViewModel.ButtonType.RANK -> goRank()
-                    GameCenterViewModel.ButtonType.GAME -> ""
+                    GameCenterViewModel.ButtonType.RANK -> goGameRank()
+                    GameCenterViewModel.ButtonType.GAME -> goGameScore()
                 }
             })
         }
     }
 
-    private fun goRank() {
+    private fun goGameRank() {
         val rankIntent = Intent(activity, GameRankActivity::class.java)
         startActivity(rankIntent)
+    }
+
+    private fun goGameScore() {
+        val scoreIntent = Intent(activity, GameScoreActivity::class.java)
+        startActivity(scoreIntent)
     }
 
 }
