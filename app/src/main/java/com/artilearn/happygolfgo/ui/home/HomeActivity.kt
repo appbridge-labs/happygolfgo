@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.ui.home
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -42,7 +43,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 //
     private val TAG = javaClass.simpleName
     private lateinit var myApplication: MyApplication
-    private lateinit var fragmentManager: FragmentTransaction
     private val vm: HomeViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -51,10 +51,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
     }
 
-//    private lateinit var reservation: ReservationFragment
-//    private lateinit var gamecenter: GameCenterFragment
-//    private lateinit var alram: AlramFragment
-//    private lateinit var mypage: MyPageFragment
     private lateinit var fragment: Fragment
     private lateinit var bottomNavigation: BottomNavigationView
 
@@ -74,13 +70,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initViewModelObserving() {
         with(vm) {
-            bottomNavigationButton.observe(this@HomeActivity, Observer {
-                when (bottomNavigationButton.value) {
-                    HomeViewModel.BottomNavigationEvent.RESERVATION -> loadFragment(it)
-                    HomeViewModel.BottomNavigationEvent.GAME_CENTER -> loadFragment(it)
-                    HomeViewModel.BottomNavigationEvent.ALRAM -> loadFragment(it)
-                    HomeViewModel.BottomNavigationEvent.MY_PAGE -> loadFragment(it)
-                }
+            bottomNavigationButton.observe(this@HomeActivity, Observer { event ->
+                initFragment(event)
+            })
+            backPressedEvent.observe(this@HomeActivity, Observer {
+                val dialog = AlertDialog.Builder(this@HomeActivity)
+                dialog.setTitle("zzz")
+                    .setPositiveButton("ok") { _, _ ->
+
+                    }
+
+                dialog.create()
+                dialog.show()
             })
         }
     }
@@ -101,82 +102,106 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             true
         }
     }
-
-//    private fun showReservation(type: HomeViewModel.BottomNavigationEvent) {
-//        Log.d(TAG, "showReservation: ")
-//        fragment = ReservationFragment()
-//        loadFragment(type)
-//        initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
-//    }
-//
-//    private fun showGameCenter() {
-//        Log.d(TAG, "showGameCenter: ")
-//        initToolbar(binding.homeToolbar.toolbar, getString(R.string.gamecenter_toolbar_title), false)
-//        loadFragment(fragment)
-//    }
-//
-//    private fun showAlram() {
-//        Log.d(TAG, "showAlram: ")
-//        initToolbar(binding.homeToolbar.toolbar, getString(R.string.alram_toolbar_title), false)
-//        loadFragment(fragment)
-//    }
-//
-//    private fun showMyPage() {
-//        Log.d(TAG, "showMyPage: ")
-//        initToolbar(binding.homeToolbar.toolbar, getString(R.string.mypage_toolbar_title), false)
-//        loadFragment(fragment)
-//    }
-
-    /**
-     * 프래그먼트 스택 찾아서 확인중!!!!!
-     */
-    private fun loadFragment(type: HomeViewModel.BottomNavigationEvent) {
+    
+    private fun initFragment(type: HomeViewModel.BottomNavigationEvent) {
         when (type) {
             HomeViewModel.BottomNavigationEvent.RESERVATION -> {
-                Log.d(TAG, "loadFragment: RESERVATION")
+                initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
                 fragment = ReservationFragment()
-
+                loadFragment(fragment)
             }
             HomeViewModel.BottomNavigationEvent.GAME_CENTER -> {
-                Log.d(TAG, "loadFragment: GAME_CENTER")
+                initToolbar(binding.homeToolbar.toolbar, getString(R.string.gamecenter_toolbar_title), false)
+                fragment = GameCenterFragment()
+                loadFragment(fragment)
             }
             HomeViewModel.BottomNavigationEvent.ALRAM -> {
-                Log.d(TAG, "loadFragment: ALRAM")
+                initToolbar(binding.homeToolbar.toolbar, getString(R.string.alram_toolbar_title), false)
+                fragment = AlramFragment()
+                loadFragment(fragment)
             }
             HomeViewModel.BottomNavigationEvent.MY_PAGE -> {
-                Log.d(TAG, "loadFragment: MY_PAGE")
+                initToolbar(binding.homeToolbar.toolbar, getString(R.string.mypage_toolbar_title), false)
+                fragment = MyPageFragment()
+                loadFragment(fragment)
             }
         }
-//        fragmentManager = supportFragmentManager.beginTransaction()
-//
-//        when (fragment) {
-//            is ReservationFragment -> {
-//                Log.d(TAG, "loadFragment reservation ")
-//            }
-//            is GameCenterFragment -> {
-//                Log.d(TAG, "loadFragment game ")
-//            }
-//            is AlramFragment -> {
-//                Log.d(TAG, "loadFragment alram")
-//            }
-//            is MyPageFragment -> {
-//                Log.d(TAG, "loadFragment mypage")
-//            }
-//            else -> {
-//                Log.d(TAG, "loadFragment else: reservation")
-//                //fragment = ReservationFragment()
-//            }
-//        }
-//        fragmentManager.replace(R.id.frame_layout, fragment)
-//        fragmentManager.addToBackStack(null)
-//        fragmentManager.commit()
     }
 
+    private fun loadFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+
+        when (fragment) {
+            is ReservationFragment -> {
+                fragmentManager.popBackStack("예약", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                transaction.replace(R.id.frame_layout, fragment, "예약")
+                transaction.addToBackStack("예약")
+            }
+            is GameCenterFragment -> {
+                fragmentManager.popBackStack("게임센터", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                transaction.replace(R.id.frame_layout, fragment, "게임센터")
+                transaction.addToBackStack("게임센터")
+            }
+            is AlramFragment -> {
+                fragmentManager.popBackStack("알림", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                transaction.replace(R.id.frame_layout, fragment, "알림")
+                transaction.addToBackStack("알림")
+            }
+            is MyPageFragment -> {
+                fragmentManager.popBackStack("마이페이지", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                transaction.replace(R.id.frame_layout, fragment, "마이페이지")
+                transaction.addToBackStack("마이페이지")
+            }
+        }
+
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit()
+        transaction.isAddToBackStackAllowed
+        Log.d(TAG, "count: ${supportFragmentManager.backStackEntryCount}")
+    }
+
+    private fun backButtonBottomNavigationListener(navigation: BottomNavigationView) {
+        val reservation = supportFragmentManager.findFragmentByTag("예약")
+        val gamecenter = supportFragmentManager.findFragmentByTag("게임센터")
+        val alram = supportFragmentManager.findFragmentByTag("알림")
+        val mypage = supportFragmentManager.findFragmentByTag("마이페이지")
+
+        when {
+            reservation != null && reservation.isVisible -> {
+                initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
+                navigation.menu.findItem(R.id.reservation).isChecked = true
+            }
+            gamecenter != null && gamecenter.isVisible -> {
+                initToolbar(binding.homeToolbar.toolbar, getString(R.string.gamecenter_toolbar_title), false)
+                navigation.menu.findItem(R.id.gamecenter).isChecked = true
+            }
+            alram != null && alram.isVisible -> {
+                initToolbar(binding.homeToolbar.toolbar, getString(R.string.alram_toolbar_title), false)
+                navigation.menu.findItem(R.id.alram).isChecked = true
+            }
+            mypage != null && mypage.isVisible -> {
+                initToolbar(binding.homeToolbar.toolbar, getString(R.string.mypage_toolbar_title), false)
+                navigation.menu.findItem(R.id.mypage).isChecked = true
+            }
+        }
+    }
+
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 0) {
+            //Log.d(TAG, "vm call: ${supportFragmentManager.backStackEntryCount}")
+            vm.backPressed()
+        } else {
+            super.onBackPressed()
+            backButtonBottomNavigationListener(bottomNavigation)
+        }
+        Log.d(TAG, "onBackPressed count: ${supportFragmentManager.backStackEntryCount}")
+    }
 
     companion object {
         const val RESERVATION = "예약"
         const val GAME_CENTER = "림게임센터"
-        const val ALRAM = "알"
+        const val ALRAM = "알림"
         const val MY_PAGE = "마이페이지"
     }
 

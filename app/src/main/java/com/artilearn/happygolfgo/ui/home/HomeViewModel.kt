@@ -7,15 +7,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import java.util.concurrent.TimeUnit
 
 class HomeViewModel : BaseViewModel() {
 
     private val bottomNavigation: Subject<BottomNavigationEvent> = PublishSubject.create()
+    private val backPressed: Subject<Unit> = PublishSubject.create()
 
     private val _bottomNavigationButton: SingleLiveEvent<BottomNavigationEvent> = SingleLiveEvent()
+    private val _backPressedEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
 
-    val bottomNavigationButton: LiveData<BottomNavigationEvent> get() = _bottomNavigationButton
+    val bottomNavigationButton: LiveData<BottomNavigationEvent>
+        get() = _bottomNavigationButton
+
+    val backPressedEvent: LiveData<Unit>
+        get() = _backPressedEvent
 
     init {
         rxBind()
@@ -28,6 +33,14 @@ class HomeViewModel : BaseViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { _bottomNavigationButton.value = it }
             .addTo(compositeDisposable)
+
+        backPressed.map { System.currentTimeMillis() }
+            .buffer(2, 1)
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { val (first, second) = it; first to second }
+            .filter { (first, second) -> second - first < 2_000 }
+            .subscribe { _backPressedEvent.call()}
+            .addTo(compositeDisposable)
     }
 
     fun bottomNavigation(name: String) {
@@ -37,6 +50,10 @@ class HomeViewModel : BaseViewModel() {
             HomeActivity.ALRAM -> bottomNavigation.onNext(BottomNavigationEvent.ALRAM)
             HomeActivity.MY_PAGE -> bottomNavigation.onNext(BottomNavigationEvent.MY_PAGE)
         }
+    }
+
+    fun backPressed() {
+        backPressed.onNext(Unit)
     }
 
     enum class BottomNavigationEvent {
