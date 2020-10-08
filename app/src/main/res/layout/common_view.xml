@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/parent_card"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:background="@color/color_white"
