@@ -33,13 +33,14 @@
                     android:layout_height="0dp"
                     android:clipToPadding="false"
                     android:paddingTop="20dp"
+                    android:paddingBottom="10dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     bind:setTickets="@{vm.tickets}"
-                    tools:itemCount="10"
+                    tools:itemCount="6"
                     tools:listitem="@layout/item_home_reservation_ticket" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,6 +98,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/home_reservation_button"
             android:elevation="10dp"
+            android:onClick="@{() -> vm.myReservationList()}"
             android:text="@string/home_bottomview_title"
             android:textColor="@color/color_white"
             android:textSize="18dp"

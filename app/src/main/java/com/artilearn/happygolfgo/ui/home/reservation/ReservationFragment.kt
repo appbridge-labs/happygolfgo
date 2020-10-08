@@ -35,7 +35,6 @@ class ReservationFragment
         initViewModelObserving()
         initAdapter()
         initSwipeRefresh()
-        initClickLitener()
     }
 
     private fun inject() {
@@ -50,6 +49,9 @@ class ReservationFragment
             })
             networkFail.observe(this@ReservationFragment, Observer {
                 showFragmentNetworkFail()
+            })
+            reservationListButton.observe(this@ReservationFragment, Observer {
+                reservationListCheck(adapter.itemCount)
             })
         }
     }
@@ -80,9 +82,11 @@ class ReservationFragment
         }
     }
 
-    private fun initClickLitener() {
-        with(binding) {
-            btnReservationList.setOnClickListener { goReservationList() }
+    private fun reservationListCheck(item: Int) {
+        if (item != 0) {
+            goReservationList()
+        } else {
+            binding.parentLayout.snackbar(getString(R.string.home_empty_ticket_go))
         }
     }
 
@@ -90,4 +94,5 @@ class ReservationFragment
         val intent = Intent(activity, ReserveListActivity::class.java)
         startActivity(intent)
     }
+
 }
