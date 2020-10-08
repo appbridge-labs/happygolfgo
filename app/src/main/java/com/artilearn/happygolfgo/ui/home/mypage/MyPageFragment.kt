@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.home.mypage
 
+import android.content.Intent
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentMypageBinding
+import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
+import com.artilearn.happygolfgo.ui.login.LoginActivity
+import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
+import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.common_view.view.*
 
@@ -35,8 +40,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
 
     private fun initView() {
         with(binding) {
-            includeInfor.tv_text.text = getString(R.string.mypage_lesson_title)
-            includeRecord.tv_text.text = getString(R.string.mypage_info_change)
+            includeInfor.tv_text.text = getString(R.string.mypage_info_change)
+            includeRecord.tv_text.text = getString(R.string.mypage_lesson_title)
             includePassword.tv_text.text = getString(R.string.mypage_password_change)
             includeLogout.tv_text.text = getString(R.string.mypage_logout)
 
@@ -49,10 +54,34 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.la
     private fun initClickListener() {
         with(binding) {
             includeUpdate.setOnClickListener {  }
-            includeInfor.setOnClickListener {  }
-            includeRecord.setOnClickListener {  }
-            includeLogout.setOnClickListener {  }
-            includePassword.setOnClickListener {  }
+            includeInfor.setOnClickListener { goMyInfo() }
+            includeRecord.setOnClickListener { goLessonLog() }
+            includeLogout.setOnClickListener { logout() }
+            includePassword.setOnClickListener { goPwAuth() }
         }
+    }
+
+    private fun logout() {
+        //viewModel.userLogout()
+    }
+
+    private fun goLogin() {
+        val intent = Intent(activity, LoginActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        activity?.finish()
+    }
+
+    private fun goMyInfo() {
+        startActivity(Intent(activity, MyInfoActivity::class.java))
+    }
+
+    private fun goPwAuth() {
+        startActivity(Intent(activity, PwAuthActivity::class.java))
+    }
+
+    private fun goLessonLog() {
+        startActivity(Intent(activity, LessonPostListActivity::class.java))
     }
 }
