@@ -141,4 +141,11 @@
     <string name="fragment_gamecenter_detail">자세히 보기</string>
     <string name="fragment_gamecenter_all_rank">전체 랭킹</string>
     <string name="fragment_gamecenter_score_average">골프력 게임 평균</string>
+    <string name="home_tag_name_reservation">예약</string>
+    <string name="home_tag_name_gamecenter">게임센터</string>
+    <string name="home_tag_name_alram">알림</string>
+    <string name="home_tag_name_mypage">마이페이지</string>
+    <string name="home_app_finish_title">정말 종료하시겠습니까?</string>
+    <string name="home_app_finish_positive">종료하기</string>
+    <string name="home_app_finish_negative">취소</string>
 </resources>

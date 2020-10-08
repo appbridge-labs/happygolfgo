@@ -74,14 +74,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 initFragment(event)
             })
             backPressedEvent.observe(this@HomeActivity, Observer {
-                val dialog = AlertDialog.Builder(this@HomeActivity)
-                dialog.setTitle("zzz")
-                    .setPositiveButton("ok") { _, _ ->
-
-                    }
-
-                dialog.create()
-                dialog.show()
+                showAppFinish()
             })
         }
     }
@@ -134,37 +127,36 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
         when (fragment) {
             is ReservationFragment -> {
-                fragmentManager.popBackStack("예약", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                transaction.replace(R.id.frame_layout, fragment, "예약")
-                transaction.addToBackStack("예약")
+                fragmentManager.popBackStack(getString(R.string.home_tag_name_reservation), FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                transaction.replace(R.id.frame_layout, fragment, getString(R.string.home_tag_name_reservation))
+                transaction.addToBackStack(getString(R.string.home_tag_name_reservation))
             }
             is GameCenterFragment -> {
-                fragmentManager.popBackStack("게임센터", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                transaction.replace(R.id.frame_layout, fragment, "게임센터")
-                transaction.addToBackStack("게임센터")
+                fragmentManager.popBackStack(getString(R.string.home_tag_name_gamecenter), FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                transaction.replace(R.id.frame_layout, fragment, getString(R.string.home_tag_name_gamecenter))
+                transaction.addToBackStack(getString(R.string.home_tag_name_gamecenter))
             }
             is AlramFragment -> {
-                fragmentManager.popBackStack("알림", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                transaction.replace(R.id.frame_layout, fragment, "알림")
-                transaction.addToBackStack("알림")
+                fragmentManager.popBackStack(getString(R.string.home_tag_name_alram), FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                transaction.replace(R.id.frame_layout, fragment, getString(R.string.home_tag_name_alram))
+                transaction.addToBackStack(getString(R.string.home_tag_name_alram))
             }
             is MyPageFragment -> {
-                fragmentManager.popBackStack("마이페이지", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                transaction.replace(R.id.frame_layout, fragment, "마이페이지")
-                transaction.addToBackStack("마이페이지")
+                fragmentManager.popBackStack(getString(R.string.home_tag_name_mypage), FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                transaction.replace(R.id.frame_layout, fragment, getString(R.string.home_tag_name_mypage))
+                transaction.addToBackStack(getString(R.string.home_tag_name_mypage))
             }
         }
 
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit()
         transaction.isAddToBackStackAllowed
-        Log.d(TAG, "count: ${supportFragmentManager.backStackEntryCount}")
     }
 
     private fun backButtonBottomNavigationListener(navigation: BottomNavigationView) {
-        val reservation = supportFragmentManager.findFragmentByTag("예약")
-        val gamecenter = supportFragmentManager.findFragmentByTag("게임센터")
-        val alram = supportFragmentManager.findFragmentByTag("알림")
-        val mypage = supportFragmentManager.findFragmentByTag("마이페이지")
+        val reservation = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_reservation))
+        val gamecenter = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_gamecenter))
+        val alram = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_alram))
+        val mypage = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_mypage))
 
         when {
             reservation != null && reservation.isVisible -> {
@@ -186,16 +178,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
     }
 
+    private fun showAppFinish() {
+        val dialog = AlertDialog.Builder(this@HomeActivity)
+        dialog.setTitle(getString(R.string.home_app_finish_title))
+            .setPositiveButton(getString(R.string.home_app_finish_positive)) { _, _ -> this.finish() }
+            .setNegativeButton(getString(R.string.home_app_finish_negative)) { _, _ ->  }
+        dialog.create()
+        dialog.show()
+    }
+
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 0) {
-            //Log.d(TAG, "vm call: ${supportFragmentManager.backStackEntryCount}")
+        if (supportFragmentManager.backStackEntryCount == 1) {
             vm.backPressed()
         } else {
             super.onBackPressed()
             backButtonBottomNavigationListener(bottomNavigation)
         }
-        Log.d(TAG, "onBackPressed count: ${supportFragmentManager.backStackEntryCount}")
     }
 
     companion object {

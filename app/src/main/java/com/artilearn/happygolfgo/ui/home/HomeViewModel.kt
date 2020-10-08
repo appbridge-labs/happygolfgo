@@ -34,12 +34,8 @@ class HomeViewModel : BaseViewModel() {
             .subscribe { _bottomNavigationButton.value = it }
             .addTo(compositeDisposable)
 
-        backPressed.map { System.currentTimeMillis() }
-            .buffer(2, 1)
-            .observeOn(AndroidSchedulers.mainThread())
-            .map { val (first, second) = it; first to second }
-            .filter { (first, second) -> second - first < 2_000 }
-            .subscribe { _backPressedEvent.call()}
+        backPressed.observeOn(AndroidSchedulers.mainThread())
+            .subscribe { _backPressedEvent.call() }
             .addTo(compositeDisposable)
     }
 
