@@ -1,19 +1,18 @@
 package com.artilearn.happygolfgo.data.splash.source
 
-import com.artilearn.happygolfgo.data.User
-import com.artilearn.happygolfgo.data.splash.SplashTokenModel
-import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
-import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
-import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
+import com.artilearn.happygolfgo.data.splash.*
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
+import com.artilearn.happygolfgo.util.PreferenceManager
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response
 
 class SplashRepositoryImpl(
     private val splashLocalDataSource: SplashLocalDataSource,
     private val splashRemoteDataSource: SplashRemoteDataSource,
+    private val preferenceManager: PreferenceManager,
     private val networkManager: NetworkManager
 ) : SplashRepository {
 
@@ -55,12 +54,11 @@ class SplashRepositoryImpl(
         return if (networkManager.networkState()) {
             splashRemoteDataSource.remoteUserSynchronized(data)
                 .flatMap {
-                    val body = it.body()
-                    if (it.isSuccessful && body != null) {
-                        userInfoSynchronized(body.data.user)
+                    if (it.code() == 200) {
+                        userInfoSynchronized(it.body()?.data)
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException("Server Error"))
+                        Single.just(it)
                     }
                 }
         } else {
@@ -68,15 +66,39 @@ class SplashRepositoryImpl(
         }
     }
 
-    private fun userInfoSynchronized(user: User) {
-        with(splashLocalDataSource) {
-            name = user.name
-            profileImageURL = user.profileImageURL
-            nickname = user.nickname
-            clientSecretKey = user.clientSecretKey
-            fcmToken = user.fcmToken
-            accessToken = user.accessToken
-            dateOfBirth = user.dateOfBirth
+    override fun deleteUser(): Completable {
+        return if (networkManager.networkState()) {
+            splashRemoteDataSource.deleteUser()
+                .doOnComplete { preferenceManager.userLogout() }
+        } else {
+            Completable.error(IllegalStateException("Network Error"))
+        }
+    }
+
+    override fun getFcmToken(): Single<String?> {
+        return splashRemoteDataSource.getFcmToken()
+            .doOnSuccess { token ->
+                token?.let {
+                    saveFcmToken(it)
+                }
+            }
+    }
+
+    private fun saveFcmToken(token: String?) {
+        token?.let { splashLocalDataSource.fcmToken = token }
+    }
+
+    private fun userInfoSynchronized(user: SynchronizedDetail?) {
+        user?.let {
+            with(splashLocalDataSource) {
+                name = user.name
+                profileImageURL = user.profileImageURL
+                nickname = user.nickname
+                clientSecretKey = user.clientSecretKey
+                fcmToken = user.fcmToken
+                accessToken = user.accessToken
+                dateOfBirth = user.dateOfBirth
+            }
         }
     }
 }

@@ -5,12 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.source.LoginRepository
+import com.artilearn.happygolfgo.util.MyApplication
+import com.artilearn.happygolfgo.util.getAndroidID
+import com.artilearn.happygolfgo.util.getWidevineID
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.withContext
 
 class LoginViewModel(
     private val loginRepository: LoginRepository
 ) : BaseViewModel() {
+
+    private val applicationContext = MyApplication.getApplicationContext()
 
     val phone = MutableLiveData("")
     val password = MutableLiveData("")
@@ -34,6 +40,14 @@ class LoginViewModel(
     val loginSuccess: LiveData<Unit> get() = _loginSuccess
     val developerOption: LiveData<Unit> get() = _developerOption
     val passwordClick: LiveData<Unit> get() = _passwordClick
+
+    init {
+        val token = loginRepository.fcmToken
+
+        if (token.isNullOrEmpty()) {
+            getFcmToken()
+        }
+    }
 
     fun onLoginClick() {
         currentPhone = phone.value.toString()
@@ -66,8 +80,10 @@ class LoginViewModel(
     }
 
     private fun requestLogin() {
+        val id = getAndroidID(applicationContext)
+        val uuid = getWidevineID()
         val dataModel = LoginDataModel(
-            currentPhone, currentPassword, loginRepository.fcmToken
+            currentPhone, currentPassword, loginRepository.fcmToken, uuid, id
         )
 
         val hashMap = hashMapOf<String, LoginDataModel>()
@@ -98,6 +114,14 @@ class LoginViewModel(
                     }
                 })
         )
+    }
+
+    private fun getFcmToken() {
+        loginRepository.getFcmToken()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+            .let(compositeDisposable::add)
     }
 
 }

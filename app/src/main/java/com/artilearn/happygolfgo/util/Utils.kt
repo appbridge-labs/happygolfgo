@@ -112,6 +112,28 @@ fun Date.convertDateTime(): String {
     }
 }
 
+fun getAndroidID(context: Context): String {
+    return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+}
+
+fun getWidevineID(): String {
+    val uuid = UUID(-0x121074568629b532L, -0x5c37d8232ae2de13L)
+
+    val wvDrm = try {
+        MediaDrm(uuid)
+    } catch (e: UnsupportedSchemeException) {
+        null
+    }
+
+    val widevineId = wvDrm!!.getPropertyByteArray(MediaDrm.PROPERTY_DEVICE_UNIQUE_ID)
+
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        Base64.getEncoder().encodeToString(widevineId).trim()
+    } else {
+        android.util.Base64.encodeToString(widevineId, android.util.Base64.DEFAULT);
+    }
+}
+
 fun String.convertMonth(): String {
     return if (this.startsWith("0")) {
         this.substring(1)

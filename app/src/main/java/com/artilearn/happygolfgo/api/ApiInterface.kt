@@ -27,18 +27,20 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiInterface {
-
-    @POST("auth/user/signIn")
+    //기존 auth/user/signIn
+    @POST("auth/user/doSignin")
     fun login(
         @Body data: HashMap<String, LoginDataModel>
     ): Single<LoginResponse>
 
-    @POST("auth/common/token")
+    //기존 auth/common/token
+    @POST("auth/common/renewAccessToken")
     fun getAccessToken(
         @Body data: HashMap<String, SplashTokenModel>
     ): Single<Response<SplashTokenResponse>>
 
-    @POST("auth/common/uptodate")
+    // 기존 auth/common/uptodate
+    @POST("auth/common/update")
     fun userSynchronized(
         @Body data: HashMap<String, SynchronizedDataModel>
     ): Single<Response<SynchronizedResponse>>

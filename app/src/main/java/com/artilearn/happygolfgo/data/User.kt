@@ -52,13 +52,13 @@ data class User(
     @Expose
     val fcmToken: String,
 
-    @SerializedName("isLoggedIn")
+    @SerializedName("isSigedIn")
     @Expose
-    val isLoggedIn: Int,
+    val isSigedIn: Boolean,
 
-    @SerializedName("sysLang")
+    @SerializedName("systemLanguage")
     @Expose
-    val sysLang: Int,
+    val systemLanguage: Int,
 
     @SerializedName("memo")
     @Expose

@@ -3,10 +3,12 @@ package com.artilearn.happygolfgo.data.login.source.remote
 import com.artilearn.happygolfgo.api.ApiInterface
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
+import com.google.firebase.iid.FirebaseInstanceId
 import io.reactivex.Single
 
 class LoginRemoteDataSourceImpl(
-    private val apiInterface: ApiInterface
+    private val apiInterface: ApiInterface,
+    private val firebase: FirebaseInstanceId
 ) : LoginRemoteDataSource {
 
     override fun remoteLogin(
@@ -18,4 +20,20 @@ class LoginRemoteDataSourceImpl(
             }
     }
 
+    override fun getFcmToken(): Single<String?> {
+        return Single.create { emitter ->
+            firebase.instanceId
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        task.result?.let {
+                            emitter.onSuccess(it.token)
+                        } ?: emitter.onSuccess("")
+                    } else {
+                        task.exception?.let { t ->
+                            emitter.onError(t)
+                        } ?: emitter.onError(Throwable(IllegalStateException("UnKnown Error")))
+                    }
+                }
+        }
+    }
 }
