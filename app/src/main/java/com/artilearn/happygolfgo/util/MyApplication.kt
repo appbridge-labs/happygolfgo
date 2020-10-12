@@ -86,15 +86,16 @@ import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSourc
 import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSource
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSourceImpl
-import com.crashlytics.android.Crashlytics
 import com.facebook.stetho.Stetho
-import io.fabric.sdk.android.Fabric
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.iid.FirebaseInstanceId
 
 class MyApplication : Application() {
 
     private lateinit var networkManager: NetworkManager
     private lateinit var apiInterface: ApiInterface
     private lateinit var preferenceManager: PreferenceManager
+    private lateinit var firebaseInstanceId: FirebaseInstanceId
 
     private lateinit var loginRemoteDataSource: LoginRemoteDataSource
     private lateinit var loginLocalDataSource: LoginLocalDataSource
@@ -153,11 +154,12 @@ class MyApplication : Application() {
         networkManager = NetworkManager(this)
         apiInterface = ApiService.api
         preferenceManager = PreferenceManager(this)
+        firebaseInstanceId = FirebaseInstanceId.getInstance()
 
-        loginRemoteDataSource = LoginRemoteDataSourceImpl(apiInterface)
+        loginRemoteDataSource = LoginRemoteDataSourceImpl(apiInterface, firebaseInstanceId)
         loginLocalDataSource = LoginLocalDataSourceImpl(preferenceManager)
         splashLocalDataSource = SplashLocalDataSourceImpl(preferenceManager)
-        splashRemoteDataSource = SplashRemoteDataSourceImpl(apiInterface)
+        splashRemoteDataSource = SplashRemoteDataSourceImpl(apiInterface, firebaseInstanceId)
         tutorialLocalDataSource = TutorialLocalDataSourceImpl(preferenceManager)
         homeRemoteDataSource = HomeRemoteDataSourceImpl(apiInterface)
         versionRemoteDataSource = VersionRemoteDataSourceImpl(apiInterface)
@@ -180,7 +182,7 @@ class MyApplication : Application() {
         developerOptionDataSoucre = DeveloperOptionDataSoucreImpl(preferenceManager)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
-        splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, networkManager)
+        splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, preferenceManager, networkManager)
         tutorialRepository = TutorialRepositoryImpl(tutorialLocalDataSource)
         homeRepository = HomeRepositoryImpl(homeRemoteDataSource, networkManager)
         versionRepository = VersionRepositoryImpl(versionRemoteDataSource, versionLocalDataSource, preferenceManager, networkManager)
@@ -217,7 +219,9 @@ class MyApplication : Application() {
         Thread.setDefaultUncaughtExceptionHandler { _, _ ->
             // Crashlytics에서 기본 handler를 호출하기 때문에 이중으로 호출되는것을 막기위해 빈 handler로 설정
         }
-        Fabric.with(this, Crashlytics())
+
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
+
         val fabricExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler(
             HappyGolfUserExceptionHandler(
@@ -226,6 +230,17 @@ class MyApplication : Application() {
                 fabricExceptionHandler
             )
         )
+
+        // fabric deprecated 2020. 11까지 서비스 종료
+//        Fabric.with(this, Crashlytics())
+//        val fabricExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+//        Thread.setDefaultUncaughtExceptionHandler(
+//            HappyGolfUserExceptionHandler(
+//                this,
+//                defaultExceptionHandler,
+//                fabricExceptionHandler
+//            )
+//        )
     }
 
 }

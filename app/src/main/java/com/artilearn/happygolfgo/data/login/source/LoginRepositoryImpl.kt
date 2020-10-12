@@ -44,6 +44,11 @@ class LoginRepositoryImpl(
         }
     }
 
+    override fun getFcmToken(): Single<String?> {
+        return loginRemoteDataSource.getFcmToken()
+            .doOnSuccess { saveFcmToken(it) }
+    }
+
     private fun saveLocalData(user: User) {
         with(loginLocalDataSource) {
             accessToken = user.accessToken
@@ -53,5 +58,9 @@ class LoginRepositoryImpl(
             autoLogin = true
             nickname = user.nickname
         }
+    }
+
+    private fun saveFcmToken(token: String?) {
+        token?.let { loginLocalDataSource.fcmToken = token }
     }
 }

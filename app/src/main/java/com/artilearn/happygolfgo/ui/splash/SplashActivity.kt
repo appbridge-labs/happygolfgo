@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.ui.splash
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -51,7 +52,23 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
             goHome.observe(this@SplashActivity, Observer {
                 goHome()
             })
+            needUpdate.observe(this@SplashActivity, Observer {
+                needReLogin(it)
+            })
         }
+    }
+
+    private fun needReLogin(text: String) {
+        val alert = AlertDialog.Builder(this)
+        alert.setTitle("알림")
+            .setMessage(text)
+            .setPositiveButton("확인") { _, _ ->
+                goLogin()
+            }
+            .setCancelable(false)
+
+        alert.create()
+        alert.show()
     }
 
     private fun goLogin() {

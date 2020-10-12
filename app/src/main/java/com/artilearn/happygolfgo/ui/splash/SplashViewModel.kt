@@ -6,11 +6,7 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.source.SplashRepository
-import com.artilearn.happygolfgo.util.MyApplication
-import com.artilearn.happygolfgo.util.PreferenceManager
-import com.artilearn.happygolfgo.util.notificationCheck
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
+import com.artilearn.happygolfgo.util.*
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -26,13 +22,18 @@ class SplashViewModel(
     private val _goHome: MutableLiveData<Unit> = MutableLiveData()
     private val _goLogin: MutableLiveData<Unit> = MutableLiveData()
     private val _goTutorial: MutableLiveData<Unit> = MutableLiveData()
+    private val _needUpdate = SingleLiveEvent<String>()
 
     val goHome: LiveData<Unit> get() = _goHome
     val goLogin: LiveData<Unit> get() = _goLogin
     val goTutorial: LiveData<Unit> get() = _goTutorial
+    val needUpdate: LiveData<String> get() = _needUpdate
 
     init {
-        getFcmToken()
+        val token = splashRepository.fcmToken
+        if (token.isNullOrEmpty()) {
+            getFcmToken()
+        }
         splash()
     }
 
@@ -61,14 +62,15 @@ class SplashViewModel(
 
     private fun confirmClientSecretKey() {
         if (splashRepository.clientSecretKey.isNotEmpty()) {
-            selectAccessToken()
+            userSynchronized()
         } else {
             _goLogin.value = Unit
         }
     }
 
     private fun selectAccessToken() {
-        val dataModel = SplashTokenModel(splashRepository.clientSecretKey)
+        val uuid = getWidevineID()
+        val dataModel = SplashTokenModel(splashRepository.clientSecretKey, uuid)
         val hashMap = hashMapOf<String, SplashTokenModel>()
         hashMap["Data"] = dataModel
 
@@ -79,7 +81,7 @@ class SplashViewModel(
                 .doOnSubscribe { }
                 .doAfterTerminate { }
                 .subscribe({
-                    userSynchronized()
+                    _goHome.value = Unit
                 }, { t ->
                     _goHome.value = Unit
                 })
@@ -88,11 +90,15 @@ class SplashViewModel(
 
     private fun userSynchronized() {
         val userPushCheck = notificationCheck(applicationContext)
+        val id = getAndroidID(applicationContext)
+        val uuid = getWidevineID()
 
         val dataModel = SynchronizedDataModel(
             splashRepository.clientSecretKey,
             splashRepository.fcmToken ?: "",
-            userPushCheck
+            userPushCheck,
+            uuid,
+            id
         )
 
         val hashMap = hashMapOf<String, SynchronizedDataModel>()
@@ -105,21 +111,36 @@ class SplashViewModel(
                 .doOnSubscribe { }
                 .doAfterTerminate { }
                 .subscribe({
-                    _goHome.value = Unit
+                    if (it.code() == 200) {
+                        selectAccessToken()
+                    } else {
+                        deleteUser()
+                    }
                 }, { t ->
-                    _goHome.value = Unit
+                    selectAccessToken()
                 })
         )
     }
 
-    private fun getFcmToken() {
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    return@OnCompleteListener
-                }
-
-                PreferenceManager(applicationContext).fcmToken = task.result?.token
-            })
+    private fun deleteUser() {
+        splashRepository.deleteUser()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { }
+            .doAfterTerminate { }
+            .subscribe({
+                _needUpdate.value = "최신 업데이트와 보안상의 이유로 다시 한번 로그인 부탁드립니다"
+            }, { t ->
+                _goLogin.value = Unit
+            }).addTo(compositeDisposable)
     }
+
+    private fun getFcmToken() {
+        splashRepository.getFcmToken()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}, {})
+            .addTo(compositeDisposable)
+    }
+
 }

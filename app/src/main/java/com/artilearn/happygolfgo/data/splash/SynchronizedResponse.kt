@@ -8,6 +8,10 @@ data class SynchronizedResponse(
     @Expose
     val statusCode: Int,
 
+    @SerializedName("resultCode")
+    @Expose
+    val resultCode: Int? = null,
+
     @SerializedName("message")
     @Expose
     val message: String,
