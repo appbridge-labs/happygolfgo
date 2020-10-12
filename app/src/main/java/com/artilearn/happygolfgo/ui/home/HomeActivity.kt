@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -12,34 +13,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.FCM_EVENT_TYPE
+import com.artilearn.happygolfgo.constants.LESSON_ID
+import com.artilearn.happygolfgo.constants.PLATE_ID
+import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.ui.home.alram.AlramFragment
 import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterFragment
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageFragment
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationFragment
+import com.artilearn.happygolfgo.ui.log.LogActivity
+import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
-
-//    private val fcmEventType by lazy {
-//        intent.getStringExtra(FCM_EVENT_TYPE)
-//    }
-//
-//    private val reservationType by lazy {
-//        intent.getStringExtra(RESERVATION_TYPE)
-//    }
-//
-//    private val lessonId by lazy {
-//        intent.getIntExtra(LESSON_ID, 0)
-//    }
-//
-//    private val plateId by lazy {
-//        intent.getIntExtra(PLATE_ID, 0)
-//    }
-//
     private val TAG = javaClass.simpleName
+
     private lateinit var myApplication: MyApplication
+    private lateinit var fragment: Fragment
+    private lateinit var bottomNavigation: BottomNavigationView
+
     private val vm: HomeViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -48,8 +42,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
     }
 
-    private lateinit var fragment: Fragment
-    private lateinit var bottomNavigation: BottomNavigationView
+    private val fcmEventType by lazy {
+        intent.getStringExtra(FCM_EVENT_TYPE)
+    }
+
+    private val reservationType by lazy {
+        intent.getStringExtra(RESERVATION_TYPE)
+    }
+
+    private val lessonId by lazy {
+        intent.getIntExtra(LESSON_ID, 0)
+    }
+
+    private val plateId by lazy {
+        intent.getIntExtra(PLATE_ID, 0)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +86,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun initView() {
         initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
         bottomNavigation = binding.bottomNavigation
+
+        when (fcmEventType) {
+            "3" -> goReservaitonPlateFromFCM()
+            "4" -> goReservationLessonFromFCM()
+            "6" -> goLessonLogFromFCM()
+            "" -> "" // 알람화면으로
+        }
     }
 
     private fun bottomNavigationListener() {
@@ -184,6 +198,31 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         dialog.show()
     }
 
+    private fun goReservaitonPlateFromFCM() {
+        val fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_TYPE, reservationType)
+                putExtra(PLATE_ID, plateId)
+            }
+        startActivity(fcmIntent)
+    }
+
+    private fun goReservationLessonFromFCM() {
+        val fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_TYPE, reservationType)
+                putExtra(LESSON_ID, lessonId)
+            }
+        startActivity(fcmIntent)
+    }
+
+    private fun goLessonLogFromFCM() {
+        val logIntent = Intent(this, LogActivity::class.java)
+            .apply {
+                putExtra(LESSON_ID, lessonId)
+            }
+        startActivity(logIntent)
+    }
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1) {
