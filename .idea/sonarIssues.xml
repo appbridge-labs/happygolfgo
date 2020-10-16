@@ -98,6 +98,61 @@
             <set />
           </value>
         </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/AndroidManifest.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/java/com/jay/rxstudyfirst/data/main/source/MainRepository.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/java/com/jay/rxstudyfirst/data/main/source/MainRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/java/com/jay/rxstudyfirst/utils/BindingAdapters.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/java/com/jay/rxstudyfirst/utils/Extenstion.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/java/com/jay/rxstudyfirst/utils/MergeInterface.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/java/com/jay/rxstudyfirst/utils/MyApplication.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/java/com/jay/rxstudyfirst/utils/NetworkManager.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/java/com/jay/rxstudyfirst/view/main/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/java/com/jay/rxstudyfirst/view/main/MainViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/five_week/RxStudyFirst/app/src/main/res/layout/activity_main.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/MyselfProjects/SJApp/app/src/main/java/com/jay/sjapp/base/BaseFragment.kt">
           <value>
             <set />
@@ -359,6 +414,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/common/NetworkErrorActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../Pro/app/src/main/java/com/artilearn/happygolfpro/ui/developeroption/DeveloperOptionViewModel.kt">
           <value>
             <set />
           </value>

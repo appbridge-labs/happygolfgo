@@ -14,6 +14,7 @@ import com.artilearn.happygolfgo.ui.common.DeveloperOptionFragment
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import com.artilearn.happygolfgo.util.MyApplication
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
@@ -34,6 +35,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
         inject()
         initViewModelObserve()
+
     }
 
     private fun inject() {
