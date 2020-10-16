@@ -1198,6 +1198,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/tutorial/TutorialViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/util/BindingAdapter.kt">
           <value>
             <set />
@@ -1383,7 +1388,11 @@
             <set />
           </value>
         </entry>
+<<<<<<< HEAD
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_reserve_list.xml">
+=======
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_reserve_confirm.xml">
+>>>>>>> HG-Dev-1.12.0
           <value>
             <set />
           </value>

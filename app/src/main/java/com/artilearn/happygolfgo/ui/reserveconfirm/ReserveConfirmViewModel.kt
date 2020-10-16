@@ -31,6 +31,7 @@ class ReserveConfirmViewModel(
     private val _unKnowError: SingleLiveEvent<Unit> = SingleLiveEvent()
     private val _reservationPlate: MutableLiveData<ReservationPlate> = MutableLiveData()
     private val _reservationLesson: MutableLiveData<ReservationLesson> = MutableLiveData()
+    private val _buttonClickable: SingleLiveEvent<Unit> = SingleLiveEvent()
 
     val status: LiveData<ReservationStatus> get() = _status
     val plateModel: LiveData<PlateResponse> get() = _plateModel
@@ -39,6 +40,7 @@ class ReserveConfirmViewModel(
     val unKnowError: LiveData<Unit> get() = _unKnowError
     val reservationPlate: LiveData<ReservationPlate> get() = _reservationPlate
     val reservationLesson: LiveData<ReservationLesson> get() = _reservationLesson
+    val buttonClickable: LiveData<Unit> get() = _buttonClickable
 
     var plateAvailabilityId: Int? = null
     var lessonAvailabilityId: Int? = null
@@ -87,17 +89,32 @@ class ReserveConfirmViewModel(
                         if (response.isSuccessful && body != null) {
                             _reservationPlate.value = body.data.plateReservation
                         } else {
-                            _serverError.value = response.message()
+                            try {
+                                _buttonClickable.call()
+                                _serverError.value = response.message()
+                                throw RuntimeException("타석예약 exception")
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().recordException(e)
+                                FirebaseCrashlytics.getInstance().log("타석예약: ${response.message()}...\n${response.body()}...\n${e.printStackTrace()}}")
+                            }
                         }
                     }, { t ->
+                        _buttonClickable.call()
                         when (t.message) {
                             "Network Error" -> {
                                 _networkFail.value = Unit
                             }
                             else -> {
-                                _serverError.value = t.message
+                                try {
+                                    _serverError.value = t.message
+                                    throw RuntimeException("타석예약 실패 exception")
+                                } catch (e: Exception) {
+                                    FirebaseCrashlytics.getInstance().recordException(e)
+                                    FirebaseCrashlytics.getInstance().log("타석예약 실패: $t...\n${t.printStackTrace()}}")
+                                }
                             }
                         }
+
                     })
             )
         } else {
@@ -121,15 +138,29 @@ class ReserveConfirmViewModel(
                         if (response.isSuccessful && body != null) {
                             _reservationLesson.value = body.data.lessonReservaion
                         } else {
-                            _serverError.value = response.message()
+                            try {
+                                _buttonClickable.call()
+                                _serverError.value = response.message()
+                                throw RuntimeException("레슨예약 exception")
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().recordException(e)
+                                FirebaseCrashlytics.getInstance().log("레슨예약: ${response.message()}...\n${response.body()}...\n${e.printStackTrace()}}")
+                            }
                         }
                     }, { t ->
+                        _buttonClickable.call()
                         when (t.message) {
                             "Network Error" -> {
                                 _networkFail.value = Unit
                             }
                             else -> {
-                                _serverError.value = t.message
+                                try {
+                                    _serverError.value = t.message
+                                    throw RuntimeException("레슨예약 실패 exception")
+                                } catch (e: Exception) {
+                                    FirebaseCrashlytics.getInstance().recordException(e)
+                                    FirebaseCrashlytics.getInstance().log("레슨예약 실패: $t...\n${t.printStackTrace()}}")
+                                }
                             }
                         }
                     })
@@ -199,6 +230,7 @@ class ReserveConfirmViewModel(
                 .subscribe({
                     _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
+                    _buttonClickable.call()
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit
@@ -221,6 +253,7 @@ class ReserveConfirmViewModel(
                 .subscribe({
                     _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
+                    _buttonClickable.call()
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit

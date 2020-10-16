@@ -130,6 +130,9 @@ class ReserveConfirmActivity :
             reservationLesson.observe(this@ReserveConfirmActivity, Observer {
                 goReserveSuccessLesson(it)
             })
+            buttonClickable.observe(this@ReserveConfirmActivity, Observer {
+                binding.reserveConfirmBottomView.bottom_layout.isClickable = true
+            })
         }
     }
 
@@ -244,6 +247,8 @@ class ReserveConfirmActivity :
                 }
             }
         }
+
+        binding.reserveConfirmBottomView.bottom_layout.isClickable = false
     }
 
 }

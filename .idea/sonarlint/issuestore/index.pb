@@ -336,4 +336,9 @@ Kapp/src/main/java/com/artilearn/happygolfgo/ui/gamerank/GameRankActivity.kt,a/
 =======
 ‚
 Rapp/src/main/java/com/artilearn/happygolfgo/data/home/source/HomeRepositoryImpl.kt,a/0/a09c44f13685725174e44b3fc1240be51cfdb143
+<<<<<<< HEAD
 >>>>>>> HG-Dev-1.11.4
+=======
+
+_app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/ReservationRepository.kt,6/3/63a67c371e4e0305779d244f0ac4b87a5ee74bc3
+>>>>>>> HG-Dev-1.12.0
