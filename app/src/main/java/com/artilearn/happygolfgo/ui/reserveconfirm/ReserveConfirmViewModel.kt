@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.reserveconfirm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -14,11 +13,10 @@ import com.artilearn.happygolfgo.data.reserveconfirm.source.CancelRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
-import java.util.concurrent.TimeUnit
 
 class ReserveConfirmViewModel(
     private val reserveConfirmRepository: ReserveConfirmRepository,
@@ -91,8 +89,14 @@ class ReserveConfirmViewModel(
                         if (response.isSuccessful && body != null) {
                             _reservationPlate.value = body.data.plateReservation
                         } else {
-                            _buttonClickable.call()
-                            _serverError.value = response.message()
+                            try {
+                                _buttonClickable.call()
+                                _serverError.value = response.message()
+                                throw RuntimeException("타석예약 exception")
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().recordException(e)
+                                FirebaseCrashlytics.getInstance().log("타석예약: ${response.message()}...\n${response.body()}...\n${e.printStackTrace()}}")
+                            }
                         }
                     }, { t ->
                         _buttonClickable.call()
@@ -101,9 +105,16 @@ class ReserveConfirmViewModel(
                                 _networkFail.value = Unit
                             }
                             else -> {
-                                _serverError.value = t.message
+                                try {
+                                    _serverError.value = t.message
+                                    throw RuntimeException("타석예약 실패 exception")
+                                } catch (e: Exception) {
+                                    FirebaseCrashlytics.getInstance().recordException(e)
+                                    FirebaseCrashlytics.getInstance().log("타석예약 실패: $t...\n${t.printStackTrace()}}")
+                                }
                             }
                         }
+
                     })
             )
         } else {
@@ -127,8 +138,14 @@ class ReserveConfirmViewModel(
                         if (response.isSuccessful && body != null) {
                             _reservationLesson.value = body.data.lessonReservaion
                         } else {
-                            _buttonClickable.call()
-                            _serverError.value = response.message()
+                            try {
+                                _buttonClickable.call()
+                                _serverError.value = response.message()
+                                throw RuntimeException("레슨예약 exception")
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().recordException(e)
+                                FirebaseCrashlytics.getInstance().log("레슨예약: ${response.message()}...\n${response.body()}...\n${e.printStackTrace()}}")
+                            }
                         }
                     }, { t ->
                         _buttonClickable.call()
@@ -137,7 +154,13 @@ class ReserveConfirmViewModel(
                                 _networkFail.value = Unit
                             }
                             else -> {
-                                _serverError.value = t.message
+                                try {
+                                    _serverError.value = t.message
+                                    throw RuntimeException("레슨예약 실패 exception")
+                                } catch (e: Exception) {
+                                    FirebaseCrashlytics.getInstance().recordException(e)
+                                    FirebaseCrashlytics.getInstance().log("레슨예약 실패: $t...\n${t.printStackTrace()}}")
+                                }
                             }
                         }
                     })
