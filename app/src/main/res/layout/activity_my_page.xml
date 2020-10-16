@@ -123,6 +123,21 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="1.0.0" />
 
+            <TextView
+                android:id="@+id/tv_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="@string/mypage_update"
+                android:textColor="@color/color_red"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:onClick="@{() -> vm.onUpdateClick()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View

@@ -131,6 +131,9 @@ class ReserveConfirmActivity :
             reservationLesson.observe(this@ReserveConfirmActivity, Observer {
                 goReserveSuccessLesson(it)
             })
+            buttonClickable.observe(this@ReserveConfirmActivity, Observer {
+                binding.reserveConfirmBottomView.bottom_layout.isClickable = true
+            })
         }
     }
 
@@ -229,7 +232,7 @@ class ReserveConfirmActivity :
 
     override fun bottomAction() {
         super.bottomAction()
-
+        Log.d("testest", "bottomAction: click")
         when (reservationType) {
             "ReservationPlateFromAlram", "cancel_plate" -> {
                 viewModel.reservationPlateCancel(plateId)
@@ -245,6 +248,8 @@ class ReserveConfirmActivity :
                 }
             }
         }
+
+        binding.reserveConfirmBottomView.bottom_layout.isClickable = false
     }
 
 }

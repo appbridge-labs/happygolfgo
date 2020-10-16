@@ -1,13 +1,16 @@
 package com.artilearn.happygolfgo.ui.mypage
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.PLAY_STORE
 import com.artilearn.happygolfgo.databinding.ActivityMyPageBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
@@ -15,12 +18,10 @@ import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import com.artilearn.happygolfgo.util.MyApplication
-import com.artilearn.happygolfgo.util.PreferenceManager
 import kotlinx.android.synthetic.main.common_view.view.*
 
 class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
 
-    private var appVersion: String? = null
     private lateinit var myApplication: MyApplication
 
     private val viewModel: MyPageViewModel by viewModels {
@@ -54,6 +55,18 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
             fail.observe(this@MyPageActivity, Observer {
                 showToast(ToastType.ERROR, it)
             })
+            versionText.observe(this@MyPageActivity, Observer { version ->
+                binding.tvVersion.text = version
+            })
+            update.observe(this@MyPageActivity, Observer {
+                when (update.value) {
+                    MyPageViewModel.UpdateModel.NEED -> showUpdate()
+                    MyPageViewModel.UpdateModel.NECESSARY -> hideUpdate()
+                }
+            })
+            playStore.observe(this@MyPageActivity, Observer {
+                goPlayStore()
+            })
         }
     }
 
@@ -71,12 +84,6 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
             includePassword.setOnClickListener { goPwAuth() }
             includeLogout.setOnClickListener { logout() }
         }
-
-        appVersion = viewModel.loadAppVersion()
-        appVersion?.let {
-            binding.tvVersion.text = it
-        }
-
     }
 
     private fun logout() {
@@ -101,6 +108,22 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
 
     private fun goLessonLog() {
         startActivity(Intent(this, LessonPostListActivity::class.java))
+    }
+
+    private fun showUpdate() {
+        binding.tvUpdate.visibility = View.VISIBLE
+    }
+
+    private fun hideUpdate() {
+        binding.tvUpdate.visibility = View.GONE
+    }
+
+    private fun goPlayStore() {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(PLAY_STORE)
+            setPackage("com.android.vending")
+        }
+        startActivity(intent)
     }
 
 }
