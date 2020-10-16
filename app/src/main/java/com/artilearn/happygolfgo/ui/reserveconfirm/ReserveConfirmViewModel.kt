@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.reserveconfirm
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -16,6 +17,8 @@ import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 
 class ReserveConfirmViewModel(
     private val reserveConfirmRepository: ReserveConfirmRepository,
@@ -30,6 +33,7 @@ class ReserveConfirmViewModel(
     private val _unKnowError: SingleLiveEvent<Unit> = SingleLiveEvent()
     private val _reservationPlate: MutableLiveData<ReservationPlate> = MutableLiveData()
     private val _reservationLesson: MutableLiveData<ReservationLesson> = MutableLiveData()
+    private val _buttonClickable: SingleLiveEvent<Unit> = SingleLiveEvent()
 
     val status: LiveData<ReservationStatus> get() = _status
     val plateModel: LiveData<PlateResponse> get() = _plateModel
@@ -38,6 +42,7 @@ class ReserveConfirmViewModel(
     val unKnowError: LiveData<Unit> get() = _unKnowError
     val reservationPlate: LiveData<ReservationPlate> get() = _reservationPlate
     val reservationLesson: LiveData<ReservationLesson> get() = _reservationLesson
+    val buttonClickable: LiveData<Unit> get() = _buttonClickable
 
     var plateAvailabilityId: Int? = null
     var lessonAvailabilityId: Int? = null
@@ -86,9 +91,11 @@ class ReserveConfirmViewModel(
                         if (response.isSuccessful && body != null) {
                             _reservationPlate.value = body.data.plateReservation
                         } else {
+                            _buttonClickable.call()
                             _serverError.value = response.message()
                         }
                     }, { t ->
+                        _buttonClickable.call()
                         when (t.message) {
                             "Network Error" -> {
                                 _networkFail.value = Unit
@@ -120,9 +127,11 @@ class ReserveConfirmViewModel(
                         if (response.isSuccessful && body != null) {
                             _reservationLesson.value = body.data.lessonReservaion
                         } else {
+                            _buttonClickable.call()
                             _serverError.value = response.message()
                         }
                     }, { t ->
+                        _buttonClickable.call()
                         when (t.message) {
                             "Network Error" -> {
                                 _networkFail.value = Unit
@@ -198,6 +207,7 @@ class ReserveConfirmViewModel(
                 .subscribe({
                     _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
+                    _buttonClickable.call()
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit
@@ -220,6 +230,7 @@ class ReserveConfirmViewModel(
                 .subscribe({
                     _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
+                    _buttonClickable.call()
                     when (t.message) {
                         "Network Error" -> {
                             _networkFail.value = Unit
