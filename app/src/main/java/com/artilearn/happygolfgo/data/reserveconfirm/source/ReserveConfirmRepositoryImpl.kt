@@ -8,6 +8,7 @@ import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReserveConfir
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Completable
 import io.reactivex.Single
+import retrofit2.HttpException
 import retrofit2.Response
 
 class ReserveConfirmRepositoryImpl(
@@ -42,7 +43,7 @@ class ReserveConfirmRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException(it.message()))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {
@@ -59,7 +60,7 @@ class ReserveConfirmRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException(it.message()))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {

@@ -95,7 +95,10 @@ class ReserveConfirmViewModel(
                                 throw RuntimeException("타석예약 exception")
                             } catch (e: Exception) {
                                 FirebaseCrashlytics.getInstance().recordException(e)
-                                FirebaseCrashlytics.getInstance().log("타석예약: ${response.message()}...\n${response.body()}...\n${e.printStackTrace()}}")
+                                FirebaseCrashlytics.getInstance()
+                                    .log("타석예약 response: $response\nmessage: ${response.message()}\nbody: ${response.body()}\nerrorBody: ${response.errorBody()}...}")
+                                FirebaseCrashlytics.getInstance()
+                                    .log("타석예약 error: $e\nstack: ${e.printStackTrace()}\nlocal: ${e.localizedMessage}}")
                             }
                         }
                     }, { t ->
@@ -106,11 +109,14 @@ class ReserveConfirmViewModel(
                             }
                             else -> {
                                 try {
-                                    _serverError.value = t.message
+                                    _serverError.value = t.localizedMessage
                                     throw RuntimeException("타석예약 실패 exception")
                                 } catch (e: Exception) {
                                     FirebaseCrashlytics.getInstance().recordException(e)
-                                    FirebaseCrashlytics.getInstance().log("타석예약 실패: $t...\n${t.printStackTrace()}}")
+                                    FirebaseCrashlytics.getInstance()
+                                        .log("타석예약 실패 t: $t\n t stack: ${t.printStackTrace()}\n t local: ${t.localizedMessage}")
+                                    FirebaseCrashlytics.getInstance()
+                                        .log("타석예약 실패 e: $e\n e stack: ${e.printStackTrace()}\n e local: ${e.localizedMessage}")
                                 }
                             }
                         }
@@ -144,7 +150,10 @@ class ReserveConfirmViewModel(
                                 throw RuntimeException("레슨예약 exception")
                             } catch (e: Exception) {
                                 FirebaseCrashlytics.getInstance().recordException(e)
-                                FirebaseCrashlytics.getInstance().log("레슨예약: ${response.message()}...\n${response.body()}...\n${e.printStackTrace()}}")
+                                FirebaseCrashlytics.getInstance()
+                                    .log("레슨예약 response: $response \nmessage: ${response.message()}\n body: ${response.body()}\n errorBody: ${response.errorBody()}...}")
+                                FirebaseCrashlytics.getInstance()
+                                    .log("레슨예약 error: $e\n stack: ${e.printStackTrace()}\nlocal: ${e.localizedMessage}}")
                             }
                         }
                     }, { t ->
@@ -159,7 +168,10 @@ class ReserveConfirmViewModel(
                                     throw RuntimeException("레슨예약 실패 exception")
                                 } catch (e: Exception) {
                                     FirebaseCrashlytics.getInstance().recordException(e)
-                                    FirebaseCrashlytics.getInstance().log("레슨예약 실패: $t...\n${t.printStackTrace()}}")
+                                    FirebaseCrashlytics.getInstance()
+                                        .log("레슨예약 실패 t: $t\n t stack: ${t.printStackTrace()}\n t local: ${t.localizedMessage}")
+                                    FirebaseCrashlytics.getInstance()
+                                        .log("레슨예약 실패 e: $e\n e stack: ${e.printStackTrace()}\n e local: ${e.localizedMessage}")
                                 }
                             }
                         }
