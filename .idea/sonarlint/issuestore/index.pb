@@ -274,3 +274,5 @@ _app/src/main/java/com/artilearn/happygolfgo/data/home/source/remote/HomeRemoteD
 Rapp/src/main/java/com/artilearn/happygolfgo/data/home/source/HomeRepositoryImpl.kt,a/0/a09c44f13685725174e44b3fc1240be51cfdb143
 è
 _app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/ReservationRepository.kt,6/3/63a67c371e4e0305779d244f0ac4b87a5ee74bc3
+Ñ
+Tapp/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/ReservePlateModel.kt,1/b/1b7100c2533bd27da2ad63dc160517988cebeb02

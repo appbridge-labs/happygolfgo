@@ -17,7 +17,6 @@ class ReserveConfirmRepositoryImpl(
     private val cancelRemoteDataSource: CancelRemoteDataSource,
     private val networkManager: NetworkManager
 ) : ReserveConfirmRepository, ReservationRepository, CancelRepository {
-    private val TAG = javaClass.simpleName
     
     override fun requestPolicy(): Single<Response<PolicyResponse>> {
         return if (networkManager.networkState()) {

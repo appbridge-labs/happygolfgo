@@ -10,7 +10,6 @@ import com.artilearn.happygolfgo.util.getAndroidID
 import com.artilearn.happygolfgo.util.getWidevineID
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.withContext
 
 class LoginViewModel(
     private val loginRepository: LoginRepository
