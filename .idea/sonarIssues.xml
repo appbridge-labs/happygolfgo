@@ -43,6 +43,26 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/ticketdate/source/TicketDateRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/ticketdate/source/remote/TicketDateRemoteDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/tickettime/source/TicketTimeRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/tickettime/source/remote/TicketTimeRemoteDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/di/KoinApplication.kt">
           <value>
             <set />
@@ -228,7 +248,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/ticketdate/TicketDateViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/tickettime/TicketTimeActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/tickettime/TicketTimeViewModel.kt">
           <value>
             <set />
           </value>
