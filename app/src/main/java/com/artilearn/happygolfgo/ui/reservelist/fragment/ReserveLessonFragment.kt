@@ -20,11 +20,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ReserveLessonFragment
     : BaseFragment<FragmentReserveLessonBinding, ReserveLessonViewModel>(R.layout.fragment_reserve_lesson) {
 
+    override val viewModel: ReserveLessonViewModel by viewModel()
     private lateinit var adapter: ReserveListAdapter
     private val cancel = "cancel_lesson"
 
     companion object {
-
         fun newInstance(reservation: ArrayList<ReserveList>): ReserveLessonFragment {
             val args = Bundle()
             args.putParcelableArrayList(RESERVATION_LIST, reservation)
@@ -33,16 +33,6 @@ class ReserveLessonFragment
             return fragment
         }
     }
-
-    override val viewModel: ReserveLessonViewModel by viewModel()
-
-//    override val viewModel: ReserveLessonViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return ReserveLessonViewModel() as T
-//            }
-//        }
-//    }
 
     override fun init() {
         initAdapter()

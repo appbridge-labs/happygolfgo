@@ -19,6 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ReservePlateFragment
     : BaseFragment<FragmentReservePlateBinding, ReservePlateViewModel>(R.layout.fragment_reserve_plate) {
 
+    override val viewModel: ReservePlateViewModel by viewModel()
     private lateinit var adapter: ReserveListAdapter
     private val cancel = "cancel_plate"
 
@@ -32,16 +33,6 @@ class ReservePlateFragment
             return fragment
         }
     }
-
-    override val viewModel: ReservePlateViewModel by viewModel()
-
-    //    override val viewModel: ReservePlateViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return ReservePlateViewModel() as T
-//            }
-//        }
-//    }
 
     override fun init() {
         initAdapter()

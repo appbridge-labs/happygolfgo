@@ -4,6 +4,7 @@ import com.artilearn.happygolfgo.data.reservelist.ReserveListResponse
 import com.artilearn.happygolfgo.data.reservelist.source.remote.ReserveListRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Single
+import retrofit2.HttpException
 import retrofit2.Response
 
 class ReserveListRepositoryImpl(
@@ -18,7 +19,7 @@ class ReserveListRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException("Server Error"))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {

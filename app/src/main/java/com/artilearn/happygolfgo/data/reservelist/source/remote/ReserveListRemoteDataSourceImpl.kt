@@ -11,8 +11,5 @@ class ReserveListRemoteDataSourceImpl(
 
     override fun remoteSelectReservationList(): Single<Response<ReserveListResponse>> {
         return apiInterface.reservationList()
-            .map {
-                it
-            }
     }
 }
