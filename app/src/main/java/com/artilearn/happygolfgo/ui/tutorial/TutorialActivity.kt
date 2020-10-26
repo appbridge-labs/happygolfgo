@@ -16,17 +16,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class TutorialActivity : BaseActivity<ActivityTutorialBinding>(R.layout.activity_tutorial) {
 
     private val viewModel: TutorialViewModel by viewModel()
-//    private lateinit var myApplication: MyApplication
-//
-//    private val viewModel: TutorialViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return TutorialViewModel(
-//                    myApplication.tutorialRepository
-//                ) as T
-//            }
-//        }
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +25,6 @@ class TutorialActivity : BaseActivity<ActivityTutorialBinding>(R.layout.activity
     }
 
     private fun initBinding() {
-        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 
@@ -53,8 +41,7 @@ class TutorialActivity : BaseActivity<ActivityTutorialBinding>(R.layout.activity
 
     private fun startAnimation() {
         binding.btnStart.apply {
-            animate()
-                .alpha(1f)
+            animate().alpha(1f)
                 .scaleX(1f)
                 .scaleY(1f)
                 .duration = 450L

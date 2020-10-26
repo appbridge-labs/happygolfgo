@@ -19,17 +19,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
 
     private val viewModel: SplashViewModel by viewModel()
-//    private lateinit var myApplication: MyApplication
-//
-//    private val viewModel: SplashViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return SplashViewModel(
-//                    myApplication.splashRepository
-//                ) as T
-//            }
-//        }
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +28,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
     }
 
     private fun initBinding() {
-        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 
