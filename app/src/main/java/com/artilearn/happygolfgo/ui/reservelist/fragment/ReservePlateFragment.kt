@@ -14,6 +14,7 @@ import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.data.ReserveList
 import com.artilearn.happygolfgo.databinding.FragmentReservePlateBinding
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReservePlateFragment
     : BaseFragment<FragmentReservePlateBinding, ReservePlateViewModel>(R.layout.fragment_reserve_plate) {
@@ -32,13 +33,15 @@ class ReservePlateFragment
         }
     }
 
-    override val viewModel: ReservePlateViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return ReservePlateViewModel() as T
-            }
-        }
-    }
+    override val viewModel: ReservePlateViewModel by viewModel()
+
+    //    override val viewModel: ReservePlateViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return ReservePlateViewModel() as T
+//            }
+//        }
+//    }
 
     override fun init() {
         initAdapter()

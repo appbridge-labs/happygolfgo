@@ -19,31 +19,33 @@ import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.common_view.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
 
-    private lateinit var myApplication: MyApplication
-
-    private val viewModel: MyPageViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MyPageViewModel(
-                    myApplication.versionRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: MyPageViewModel by viewModel()
+//    private lateinit var myApplication: MyApplication
+//
+//    private val viewModel: MyPageViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return MyPageViewModel(
+//                    myApplication.versionRepository
+//                ) as T
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
         initView()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
+        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 

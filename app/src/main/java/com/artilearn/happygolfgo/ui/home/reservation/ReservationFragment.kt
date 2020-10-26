@@ -11,33 +11,40 @@ import com.artilearn.happygolfgo.databinding.FragmentReservationBinding
 import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReservationFragment
     : BaseFragment<FragmentReservationBinding, ReservationViewModel>(R.layout.fragment_reservation) {
 
-    private lateinit var myApplication: MyApplication
+    //private lateinit var myApplication: MyApplication
     private lateinit var adapter: ReservationAdapter
+    override val viewModel: ReservationViewModel by viewModel()
 
-    override val viewModel: ReservationViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return ReservationViewModel(myApplication.homeRepository) as T
-            }
-        }
-    }
+    //    override val viewModel: ReservationViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return ReservationViewModel(myApplication.homeRepository) as T
+//            }
+//        }
+//    }
 
     override fun init() {
 
-        inject()
+        //inject()
+        initBinding()
         initViewModelObserving()
         initAdapter()
         initSwipeRefresh()
     }
 
-    private fun inject() {
-        myApplication = activity?.application as MyApplication
+    private fun initBinding() {
         binding.vm = viewModel
     }
+
+//    private fun inject() {
+//        myApplication = activity?.application as MyApplication
+//        binding.vm = viewModel
+//    }
 
     private fun initViewModelObserving() {
         with(viewModel) {

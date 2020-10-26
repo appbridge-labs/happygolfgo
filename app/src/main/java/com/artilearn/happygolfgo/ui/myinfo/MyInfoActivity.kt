@@ -15,31 +15,33 @@ import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.activity_my_info.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_info) {
 
-    private lateinit var myApplication: MyApplication
-
-    private val viewModel: MyInfoViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MyInfoViewModel(
-                    myApplication.myinfoRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: MyInfoViewModel by viewModel()
+//    private lateinit var myApplication: MyApplication
+//
+//    private val viewModel: MyInfoViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return MyInfoViewModel(
+//                    myApplication.myinfoRepository
+//                ) as T
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
         initView()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
+        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 

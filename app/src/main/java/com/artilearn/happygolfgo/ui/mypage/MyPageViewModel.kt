@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.mypage
 
+import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.lifecycle.LiveData
@@ -14,10 +15,11 @@ import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
 class MyPageViewModel(
-    private val versionRepository: VersionRepository
+    private val versionRepository: VersionRepository,
+    private val koinContext: Context
 ) : BaseViewModel() {
 
-    private val myApplicationContext = MyApplication.getApplicationContext()
+    //private val myApplicationContext = MyApplication.getApplicationContext()
     private val updateClick = PublishSubject.create<Unit>()
 
     private var packageInfo: PackageInfo? = null
@@ -69,8 +71,8 @@ class MyPageViewModel(
 
     private fun loadAppVersion(): String? {
         try {
-            packageInfo = myApplicationContext.packageManager
-                .getPackageInfo(myApplicationContext.packageName, 0)
+            packageInfo = koinContext.packageManager
+                .getPackageInfo(koinContext.packageName, 0)
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }

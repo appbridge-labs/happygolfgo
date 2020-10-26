@@ -21,6 +21,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_pw_reset) {
@@ -29,32 +30,33 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
     private lateinit var disposable: Disposable
     private var passwordStatus = false
     private var confirmStatus = false
-    private lateinit var myApplication: MyApplication
+    //private lateinit var myApplication: MyApplication
 
     private val phone by lazy {
         intent.getStringExtra(PHONE_NUMBER)
     }
 
-    private val viewModel: PwResetViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return PwResetViewModel(
-                    myApplication.pwrestRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: PwResetViewModel by viewModel()
+//    private val viewModel: PwResetViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return PwResetViewModel(
+//                    myApplication.pwrestRepository
+//                ) as T
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
         initView()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
+        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 

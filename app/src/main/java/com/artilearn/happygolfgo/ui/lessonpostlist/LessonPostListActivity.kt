@@ -14,33 +14,36 @@ import com.artilearn.happygolfgo.databinding.ActivityLessonPostListBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.util.MyApplication
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LessonPostListActivity : BaseActivity<ActivityLessonPostListBinding>(R.layout.activity_lesson_post_list) {
 
     private lateinit var adapter: LessonPostListAdapter
-    private lateinit var myApplication: MyApplication
+    //private lateinit var myApplication: MyApplication
 
-    private val viewModel: LessonPostListViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return LessonPostListViewModel(
-                    myApplication.lessonLogRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: LessonPostListViewModel by viewModel()
+
+//    private val viewModel: LessonPostListViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return LessonPostListViewModel(
+//                    myApplication.lessonLogRepository
+//                ) as T
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
         initView()
         initAdapter()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
+        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 

@@ -26,21 +26,23 @@ import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private val TAG = javaClass.simpleName
 
-    private lateinit var myApplication: MyApplication
+    //private lateinit var myApplication: MyApplication
     private lateinit var fragment: Fragment
     private lateinit var bottomNavigation: BottomNavigationView
+    private val vm: HomeViewModel by viewModel()
 
-    private val vm: HomeViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return HomeViewModel() as T
-            }
-        }
-    }
+//    private val vm: HomeViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return HomeViewModel() as T
+//            }
+//        }
+//    }
 
     private val fcmEventType by lazy {
         intent.getStringExtra(FCM_EVENT_TYPE)
@@ -68,7 +70,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun initBinding() {
-        myApplication = application as MyApplication
+        //myApplication = application as MyApplication
         binding.vm = vm
     }
 

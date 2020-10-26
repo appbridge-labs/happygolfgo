@@ -14,12 +14,13 @@ import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityTicketTimeBinding
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import com.artilearn.happygolfgo.util.MyApplication
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.activity_ticket_time) {
 
     private lateinit var adapter: TicketTimeAdapter
     private val reservation = "reservation"
-    private lateinit var myApplication: MyApplication
+    //private lateinit var myApplication: MyApplication
 
     private val ticket by lazy {
         intent.getParcelableExtra<Ticket>(TICKET)
@@ -29,26 +30,28 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
         intent.getStringExtra(SELECTION_DATE)
     }
 
-    private val viewModel: TicketTimeViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return TicketTimeViewModel(
-                    myApplication.ticketTimeRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: TicketTimeViewModel by viewModel()
+
+//    private val viewModel: TicketTimeViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return TicketTimeViewModel(
+//                    myApplication.ticketTimeRepository
+//                ) as T
+//            }
+//        }
+//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+    initBinding()
         initViewModelObserve()
         initView()
         initAdapter()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
+        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 

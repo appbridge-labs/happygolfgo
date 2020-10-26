@@ -18,37 +18,39 @@ import com.artilearn.happygolfgo.databinding.ActivityTicketDateBinding
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.activity_ticket_date) {
 
-    private lateinit var myApplication: MyApplication
+    private val viewModel: TicketDateViewModel by viewModel()
+//    private lateinit var myApplication: MyApplication
 
     private val ticket by lazy {
         intent.getParcelableExtra<Ticket>(TICKET)
     }
 
-    private val viewModel: TicketDateViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return TicketDateViewModel(
-                    myApplication.ticketDateRepository
-                ) as T
-            }
-        }
-    }
+//    private val viewModel: TicketDateViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return TicketDateViewModel(
+//                    myApplication.ticketDateRepository
+//                ) as T
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
         initView()
         initCalendarListener()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
+        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 

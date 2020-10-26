@@ -14,6 +14,7 @@ import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.data.ReserveList
 import com.artilearn.happygolfgo.databinding.FragmentReserveLessonBinding
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ReserveLessonFragment
@@ -33,13 +34,15 @@ class ReserveLessonFragment
         }
     }
 
-    override val viewModel: ReserveLessonViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return ReserveLessonViewModel() as T
-            }
-        }
-    }
+    override val viewModel: ReserveLessonViewModel by viewModel()
+
+//    override val viewModel: ReserveLessonViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return ReserveLessonViewModel() as T
+//            }
+//        }
+//    }
 
     override fun init() {
         initAdapter()

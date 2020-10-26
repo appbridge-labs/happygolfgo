@@ -27,12 +27,13 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_commet) {
 
     private lateinit var disposable: Disposable
-    private lateinit var myApplication: MyApplication
+    //private lateinit var myApplication: MyApplication
 
     private val lessonId by lazy {
         intent.getIntExtra(LESSON_ID, 0)
@@ -46,29 +47,37 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
         intent.getStringExtra(LESSON_DATE)
     }
 
-    private val viewModel: CommentViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return CommentViewModel(
-                    myApplication.commentRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: CommentViewModel by viewModel()
+
+//    private val viewModel: CommentViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return CommentViewModel(
+//                    myApplication.commentRepository
+//                ) as T
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        //inject()
+        initBinding()
         initViewModelObserve()
         initView()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
         binding.vm = viewModel
         viewModel.lessonId = lessonId
     }
+
+//    private fun inject() {
+//        myApplication = application as MyApplication
+//        binding.vm = viewModel
+//        viewModel.lessonId = lessonId
+//    }
 
     private fun initViewModelObserve() {
         with(viewModel) {

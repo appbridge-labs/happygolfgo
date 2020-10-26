@@ -6,10 +6,12 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityGameRankBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GameRankActivity : BaseActivity<ActivityGameRankBinding>(R.layout.activity_game_rank) {
 
     //private lateinit var pagerAdapter: GameRankPagerAdapter
+    private val viewModel: GameRankViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

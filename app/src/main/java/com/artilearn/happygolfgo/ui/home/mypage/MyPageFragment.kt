@@ -14,30 +14,37 @@ import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.common_view.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyPageFragment : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
 
-    private lateinit var myApplication: MyApplication
+    //private lateinit var myApplication: MyApplication
+    override val viewModel: MyPageViewModel by viewModel()
 
-    override val viewModel: MyPageViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MyPageViewModel() as T
-            }
-        }
-    }
+    //    override val viewModel: MyPageViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return MyPageViewModel() as T
+//            }
+//        }
+//    }
 
     override fun init() {
 
-        inject()
+        //inject()
+        initBinding()
         initView()
         initClickListener()
     }
 
-    private fun inject() {
-        myApplication = activity?.application as MyApplication
+    private fun initBinding() {
         binding.vm = viewModel
     }
+
+//    private fun inject() {
+//        myApplication = activity?.application as MyApplication
+//        binding.vm = viewModel
+//    }
 
     private fun initView() {
         with(binding) {

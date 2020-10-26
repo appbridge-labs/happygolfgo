@@ -22,6 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_auth) {
@@ -29,30 +30,32 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
     private val phonePublishSubject = PublishSubject.create<String>()
     private val authPulishSubject = PublishSubject.create<String>()
     private var status = false
-    private lateinit var myApplication: MyApplication
 
-    private val viewModel: PwAuthViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return PwAuthViewModel(
-                    myApplication.pwAuthRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: PwAuthViewModel by viewModel()
+//    private lateinit var myApplication: MyApplication
+//
+//    private val viewModel: PwAuthViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return PwAuthViewModel(
+//                    myApplication.pwAuthRepository
+//                ) as T
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
         initView()
         rxPhoneNumber()
         rxAuthNumber()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
+        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 

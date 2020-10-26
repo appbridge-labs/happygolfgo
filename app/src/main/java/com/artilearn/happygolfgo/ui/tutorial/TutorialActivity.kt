@@ -11,30 +11,32 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityTutorialBinding
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.util.MyApplication
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TutorialActivity : BaseActivity<ActivityTutorialBinding>(R.layout.activity_tutorial) {
 
-    private lateinit var myApplication: MyApplication
-
-    private val viewModel: TutorialViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return TutorialViewModel(
-                    myApplication.tutorialRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: TutorialViewModel by viewModel()
+//    private lateinit var myApplication: MyApplication
+//
+//    private val viewModel: TutorialViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return TutorialViewModel(
+//                    myApplication.tutorialRepository
+//                ) as T
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
+        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 

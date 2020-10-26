@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.splash
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -15,10 +16,11 @@ import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 class SplashViewModel(
-    private val splashRepository: SplashRepository
+    private val splashRepository: SplashRepository,
+    private val koinContext: Context
 ) : BaseViewModel() {
 
-    private val applicationContext = MyApplication.getApplicationContext()
+    //private val applicationContext = MyApplication.getApplicationContext()
 
     private val _goHome: MutableLiveData<Unit> = MutableLiveData()
     private val _goLogin: MutableLiveData<Unit> = MutableLiveData()
@@ -90,8 +92,8 @@ class SplashViewModel(
     }
 
     private fun userSynchronized() {
-        val userPushCheck = notificationCheck(applicationContext)
-        val id = getAndroidID(applicationContext)
+        val userPushCheck = notificationCheck(koinContext)
+        val id = getAndroidID(koinContext)
         val uuid = getWidevineID()
 
         val dataModel = SynchronizedDataModel(

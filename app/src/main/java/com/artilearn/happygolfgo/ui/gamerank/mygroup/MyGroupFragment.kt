@@ -6,16 +6,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentMygroupBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyGroupFragment : BaseFragment<FragmentMygroupBinding, MyGroupViewModel>(R.layout.fragment_mygroup) {
+    override val viewModel: MyGroupViewModel by viewModel()
 
-    override val viewModel: MyGroupViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MyGroupViewModel() as T
-            }
-        }
-    }
+    //    override val viewModel: MyGroupViewModel by viewModels {
+//        object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return MyGroupViewModel() as T
+//            }
+//        }
+//    }
 
     override fun init() {
 

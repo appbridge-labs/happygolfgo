@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.login
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -13,10 +14,11 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.withContext
 
 class LoginViewModel(
-    private val loginRepository: LoginRepository
+    private val loginRepository: LoginRepository,
+    private val koinContext: Context
 ) : BaseViewModel() {
 
-    private val applicationContext = MyApplication.getApplicationContext()
+    //private val applicationContext = MyApplication.getApplicationContext()
 
     val phone = MutableLiveData("")
     val password = MutableLiveData("")
@@ -80,7 +82,7 @@ class LoginViewModel(
     }
 
     private fun requestLogin() {
-        val id = getAndroidID(applicationContext)
+        val id = getAndroidID(koinContext)
         val uuid = getWidevineID()
         val dataModel = LoginDataModel(
             currentPhone, currentPassword, loginRepository.fcmToken, uuid, id
