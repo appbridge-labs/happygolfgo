@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.ui.pwauth
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.pwauth.ConfirmAuthModel
@@ -58,22 +57,10 @@ class PwAuthViewModel(
 
     fun btnSendClick() {
         _sendButton.onNext(Unit)
-        with(_phoneNumber.value) {
-            when {
-                isNullOrEmpty() -> _phoneValueType.value = PwAuthPhoneType.EMPTY
-                this?.length == 11 -> requestAuthNumber(this)
-                else -> _phoneValueType.value = PwAuthPhoneType.LEGNTH_FAIL
-            }
-        }
     }
 
     fun btnConfirmClick() {
         _confirmButton.onNext(Unit)
-        if (status) {
-            confirmAuthNumber()
-        } else {
-            _authValueType.value = PwAuthNumberType.UNCREATE
-        }
     }
 
     private fun requestAuthNumber(phone: String) {
@@ -155,6 +142,26 @@ class PwAuthViewModel(
             .subscribe { timerState = it <= 180 }
             .addTo(compositeDisposable)
 
+        _sendButton.throttleFirst(5000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                with(_phoneNumber.value) {
+                    when {
+                        isNullOrEmpty() -> _phoneValueType.value = PwAuthPhoneType.EMPTY
+                        this?.length == 11 -> requestAuthNumber(this)
+                        else -> _phoneValueType.value = PwAuthPhoneType.LEGNTH_FAIL
+                    }
+                }
+            }.addTo(compositeDisposable)
 
+        _confirmButton.throttleFirst(5000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if (status) {
+                    confirmAuthNumber()
+                } else {
+                    _authValueType.value = PwAuthNumberType.UNCREATE
+                }
+            }.addTo(compositeDisposable)
     }
 }
