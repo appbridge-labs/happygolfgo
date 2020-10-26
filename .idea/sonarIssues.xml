@@ -33,6 +33,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/ReserveConfirmRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/remote/ReserveConfirmRemoteDataSource.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/remote/ReserveConfirmRemoteDataSourceImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/reservelist/source/ReserveListRepositoryImpl.kt">
           <value>
             <set />
@@ -209,6 +224,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/pwauth/PwAuthActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/ui/pwauth/PwAuthViewModel.kt">
           <value>
             <set />
           </value>

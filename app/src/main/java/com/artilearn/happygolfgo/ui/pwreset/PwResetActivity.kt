@@ -26,26 +26,12 @@ import java.util.concurrent.TimeUnit
 
 class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_pw_reset) {
 
+    private val viewModel: PwResetViewModel by viewModel()
     private val pattern = "^[A-Za-z0-9+]{8,20}\$"
     private lateinit var disposable: Disposable
     private var passwordStatus = false
     private var confirmStatus = false
-    //private lateinit var myApplication: MyApplication
-
-    private val phone by lazy {
-        intent.getStringExtra(PHONE_NUMBER)
-    }
-
-    private val viewModel: PwResetViewModel by viewModel()
-//    private val viewModel: PwResetViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return PwResetViewModel(
-//                    myApplication.pwrestRepository
-//                ) as T
-//            }
-//        }
-//    }
+    private val phone by lazy { intent.getStringExtra(PHONE_NUMBER) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +42,6 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
     }
 
     private fun initBinding() {
-        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 
