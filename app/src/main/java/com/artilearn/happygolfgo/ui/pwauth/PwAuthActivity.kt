@@ -73,6 +73,7 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             PwAuthNumberType.UNCREATE -> showToast(ToastType.WARNNING, getString(R.string.pwauth_uncreate_auth))
             PwAuthNumberType.AUTH_ERROR -> showToast(ToastType.ERROR, getString(R.string.pwauth_fail_auth))
             PwAuthNumberType.MODEL_FAIL -> showToast(ToastType.ERROR, getString(R.string.pwauth_model_fail))
+            PwAuthNumberType.TIMER_OVER -> showToast(ToastType.ERROR, getString(R.string.pwauth_timer_over))
             PwAuthNumberType.SUCCESS -> {
                 showToast(ToastType.SUCCESS, getString(R.string.pwauth_success_auth))
                 status = true

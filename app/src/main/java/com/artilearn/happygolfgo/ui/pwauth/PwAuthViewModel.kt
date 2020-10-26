@@ -11,21 +11,26 @@ import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
-import kotlin.math.log
 
 class PwAuthViewModel(
     private val pwAuthRepository: PwAuthRepository
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
+    private var disposable: Disposable? = null
     private val _phoneNumber = BehaviorSubject.createDefault("")
     private val _authNumber = BehaviorSubject.createDefault("")
-    private val _timer = PublishSubject.create<Long>()
-
+    private val _sendButton = PublishSubject.create<Unit>()
+    private val _confirmButton = PublishSubject.create<Unit>()
+    private val timerTask = Observable.interval(0, 1, TimeUnit.SECONDS)
+        .map { seconds -> authTimer.onNext(seconds) }
+    private val authTimer = PublishSubject.create<Long>()
+    
     private val _phoneValueType = SingleLiveEvent<PwAuthPhoneType>()
     private val _authValueType = SingleLiveEvent<PwAuthNumberType>()
 
@@ -35,28 +40,12 @@ class PwAuthViewModel(
     val authValueType: LiveData<PwAuthNumberType>
         get() = _authValueType
 
+    private var timerState = false
     private var status = false
     private var successPhone = ""
-    private var time = 0L
-
-    private val test = Observable.interval(0, 1, TimeUnit.SECONDS)
-        .map { seconds ->
-            _timer.onNext(seconds)
-        }
 
     init {
-        _timer.observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                if (it >= 10) {
-                    Log.d(TAG, "finish: $it")
-                } else {
-                    Log.d(TAG, "ing: $it")
-                }
-            }.addTo(compositeDisposable)
-
-        test.observeOn(AndroidSchedulers.mainThread())
-            .subscribe {}
-            .addTo(compositeDisposable)
+        bindRx()
     }
 
     fun phoneOnNext(str: String) {
@@ -68,6 +57,7 @@ class PwAuthViewModel(
     }
 
     fun btnSendClick() {
+        _sendButton.onNext(Unit)
         with(_phoneNumber.value) {
             when {
                 isNullOrEmpty() -> _phoneValueType.value = PwAuthPhoneType.EMPTY
@@ -78,6 +68,7 @@ class PwAuthViewModel(
     }
 
     fun btnConfirmClick() {
+        _confirmButton.onNext(Unit)
         if (status) {
             confirmAuthNumber()
         } else {
@@ -96,6 +87,7 @@ class PwAuthViewModel(
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
             .subscribe({
+                rxTimerStart()
                 _phoneValueType.value = PwAuthPhoneType.SUCCESS
                 successPhone = phone
                 status = true
@@ -118,7 +110,7 @@ class PwAuthViewModel(
     }
 
     private fun confirmAuthDataModel(authNumber: String) {
-        if (successPhone == _phoneNumber.value) {
+        if (successPhone == _phoneNumber.value && timerState) {
             val dataModel = ConfirmAuthModel(successPhone, authNumber)
             val hashMap = hashMapOf<String, ConfirmAuthModel>()
             hashMap["Data"] = dataModel
@@ -133,13 +125,36 @@ class PwAuthViewModel(
                 }, {
                     when (it.message) {
                         "Network Error" -> _authValueType.value = PwAuthNumberType.NETWORK_FAIL
-                        "HTTP 406 Not Acceptable" -> _authValueType.value = PwAuthNumberType.AUTH_ERROR
+                        "HTTP 406 Not Acceptable" -> _authValueType.value =
+                            PwAuthNumberType.AUTH_ERROR
                         else -> _authValueType.value = PwAuthNumberType.FAIL
                     }
                 }).addTo(compositeDisposable)
-        } else {
+        } else if (successPhone != _phoneNumber.value) {
             _authValueType.value = PwAuthNumberType.MODEL_FAIL
+        } else {
+            disposable?.dispose()
+            _authValueType.value = PwAuthNumberType.TIMER_OVER
         }
     }
 
+    private fun rxTimerStart() {
+        disposable?.let { 
+            if (!it.isDisposed) {
+                it.dispose()
+            }
+        }
+        
+        disposable = timerTask.observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+            .addTo(compositeDisposable)
+    }
+
+    private fun bindRx() {
+        authTimer.observeOn(AndroidSchedulers.mainThread())
+            .subscribe { timerState = it <= 180 }
+            .addTo(compositeDisposable)
+
+
+    }
 }

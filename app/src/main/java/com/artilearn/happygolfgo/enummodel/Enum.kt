@@ -34,5 +34,6 @@ enum class PwAuthNumberType {
     AUTH_ERROR,
     NETWORK_FAIL,
     SUCCESS,
-    MODEL_FAIL
+    MODEL_FAIL,
+    TIMER_OVER
 }

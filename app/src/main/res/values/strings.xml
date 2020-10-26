@@ -60,6 +60,7 @@
     <string name="pwauth_empty_auth">인증번호를 입력해 주세요</string>
     <string name="pwauth_fail_auth">인증번호가 틀립니다</string>
     <string name="pwauth_model_fail">핸드폰 번호로 발급된 인증번호가 아닙니다</string>
+    <string name="pwauth_timer_over">시간초과로 인해 인증번호를 재발행 해주세요</string>
     <string name="pwauth_success_auth">인증완료</string>
     <string name="pwauth_uncreate_auth">인증번호를 생성해 주세요</string>
     <string name="pwauth_error_auth">일시적인 오류 발생</string>
