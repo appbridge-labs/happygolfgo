@@ -46,6 +46,7 @@ class ReserveConfirmViewModel(
     var lessonAvailabilityId: Int? = null
     var ticketId: Int? = null
 
+
     fun requestPolicy() {
         compositeDisposable.add(
             reserveConfirmRepository.requestPolicy()
