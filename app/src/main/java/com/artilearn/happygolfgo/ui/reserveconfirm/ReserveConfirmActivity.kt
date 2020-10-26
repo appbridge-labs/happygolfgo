@@ -2,10 +2,7 @@ package com.artilearn.happygolfgo.ui.reserveconfirm
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.*
@@ -17,7 +14,6 @@ import com.artilearn.happygolfgo.databinding.ActivityReserveConfirmBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.reservesuccess.ReserveSuccessActivity
-import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.convertTime
 import kotlinx.android.synthetic.main.activity_reserve_confirm.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
@@ -27,40 +23,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ReserveConfirmActivity :
     BaseActivity<ActivityReserveConfirmBinding>(R.layout.activity_reserve_confirm) {
 
-    //private lateinit var myApplication: MyApplication
-
-    private val lessonId by lazy {
-        intent.getIntExtra(LESSON_ID, 0)
-    }
-
-    private val plateId by lazy {
-        intent.getIntExtra(PLATE_ID, 0)
-    }
-
-    private val reservationType by lazy {
-        intent.getStringExtra(RESERVATION_TYPE)
-    }
-
-    private val ticketTime by lazy {
-        intent.getParcelableExtra<TicketTime>(TICKET_TIME)
-    }
-
-    private val ticket by lazy {
-        intent.getParcelableExtra<Ticket>(TICKET)
-    }
-
     private val viewModel: ReserveConfirmViewModel by viewModel()
-//    private val viewModel: ReserveConfirmViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return ReserveConfirmViewModel(
-//                    myApplication.reserveConfirmRepository,
-//                    myApplication.reservationRepository,
-//                    myApplication.cancelRepository
-//                ) as T
-//            }
-//        }
-//    }
+    private val lessonId by lazy { intent.getIntExtra(LESSON_ID, 0) }
+    private val plateId by lazy { intent.getIntExtra(PLATE_ID, 0) }
+    private val reservationType by lazy { intent.getStringExtra(RESERVATION_TYPE) }
+    private val ticketTime by lazy { intent.getParcelableExtra<TicketTime>(TICKET_TIME) }
+    private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +39,6 @@ class ReserveConfirmActivity :
     }
 
     private fun initBinding() {
-        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 
@@ -94,11 +61,7 @@ class ReserveConfirmActivity :
             })
             plateModel.observe(this@ReserveConfirmActivity, Observer {
                 if (it.plateReservation.isCancellable) {
-                    initBottomView(
-                        binding.reserveConfirmBottomView.bottom_layout,
-                        getString(R.string.reserve_confirm_cancel_bottom_title),
-                        BottimViewType.CANCEL_TYPE
-                    )
+                    initBottomView(binding.reserveConfirmBottomView.bottom_layout, getString(R.string.reserve_confirm_cancel_bottom_title), BottimViewType.CANCEL_TYPE)
                 }
                 setReservationTicketName(it.plateReservation.name)
                 setReservationTicketDate(it.plateReservation.startDate)
@@ -139,33 +102,21 @@ class ReserveConfirmActivity :
     }
 
     private fun initView() {
-        initToolbar(
-            reserve_confirm_toolbar.toolbar,
-            getString(R.string.reserve_confirm_toolbar_title),
-            true
-        )
+        initToolbar(reserve_confirm_toolbar.toolbar, getString(R.string.reserve_confirm_toolbar_title), true)
 
         when (reservationType) {
-            "ReservationPlateFromAlram" -> {
-                viewModel.getReservationPlateDetail(plateId)
-            }
+            "ReservationPlateFromAlram" -> viewModel.getReservationPlateDetail(plateId)
             "ReservationLessonFromAlram" -> {
                 viewModel.getReservationLessonDetail(lessonId)
                 binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
             }
-            "cancel_plate" -> {
-                viewModel.getReservationPlateDetail(plateId)
-            }
+            "cancel_plate" -> viewModel.getReservationPlateDetail(plateId)
             "cancel_lesson" -> {
                 viewModel.getReservationLessonDetail(lessonId)
                 binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
             }
             "reservation" -> {
-                initBottomView(
-                    binding.reserveConfirmBottomView.bottom_layout,
-                    getString(R.string.reserve_confirm_bottom_title),
-                    BottimViewType.DEFAULT_TYPE
-                )
+                initBottomView(binding.reserveConfirmBottomView.bottom_layout, getString(R.string.reserve_confirm_bottom_title), BottimViewType.DEFAULT_TYPE)
                 if (ticketTime.plateAvailabilityId != null) {
                     viewModel.ticketId = ticket.id
                     viewModel.plateAvailabilityId = ticketTime.plateAvailabilityId
@@ -235,12 +186,8 @@ class ReserveConfirmActivity :
         super.bottomAction()
 
         when (reservationType) {
-            "ReservationPlateFromAlram", "cancel_plate" -> {
-                viewModel.reservationPlateCancel(plateId)
-            }
-            "ReservationLessonFromAlram", "cancel_lesson" -> {
-                viewModel.reservationLessonCancel(lessonId)
-            }
+            "ReservationPlateFromAlram", "cancel_plate" -> viewModel.reservationPlateCancel(plateId)
+            "ReservationLessonFromAlram", "cancel_lesson" -> viewModel.reservationLessonCancel(lessonId)
             "reservation" -> {
                 if (ticketTime.plateAvailabilityId != null) {
                     viewModel.reservationPlate()

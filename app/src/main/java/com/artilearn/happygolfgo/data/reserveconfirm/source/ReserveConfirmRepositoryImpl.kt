@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.data.reserveconfirm.source
 
-import android.util.Log
 import com.artilearn.happygolfgo.data.reserveconfirm.*
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.CancelRemoteDataSource
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReservationRemoteDataSource
@@ -17,7 +16,6 @@ class ReserveConfirmRepositoryImpl(
     private val cancelRemoteDataSource: CancelRemoteDataSource,
     private val networkManager: NetworkManager
 ) : ReserveConfirmRepository, ReservationRepository, CancelRepository {
-    private val TAG = javaClass.simpleName
     
     override fun requestPolicy(): Single<Response<PolicyResponse>> {
         return if (networkManager.networkState()) {
@@ -26,7 +24,7 @@ class ReserveConfirmRepositoryImpl(
                     if (it.isSuccessful) {
                       Single.just(it)
                     } else {
-                        Single.error(IllegalStateException("Server Error"))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {
@@ -93,7 +91,7 @@ class ReserveConfirmRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException("Server Error"))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {
@@ -110,7 +108,7 @@ class ReserveConfirmRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException("Server Error"))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {

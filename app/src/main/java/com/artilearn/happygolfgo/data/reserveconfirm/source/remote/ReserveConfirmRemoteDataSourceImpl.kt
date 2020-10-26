@@ -12,27 +12,18 @@ class ReserveConfirmRemoteDataSourceImpl(
 
     override fun remoteRequestPolicy(): Single<Response<PolicyResponse>> {
         return apiInterface.requestPolicy()
-            .map {
-                it
-            }
     }
 
     override fun remoteReservationPlate(
         data: HashMap<String, ReservePlateModel>
     ): Single<Response<ReservePlateResponse>> {
         return apiInterface.reservationPlate(data)
-            .map {
-                it
-            }
     }
 
     override fun remoteReservationLesson(
         data: HashMap<String, ReserveLessonModel>
     ): Single<Response<ReserveLessonResponse>> {
         return apiInterface.reservationLesson(data)
-            .map {
-                it
-            }
     }
 
     override fun remoteReservationPlateCancel(plateId: Int): Completable {
@@ -47,17 +38,11 @@ class ReserveConfirmRemoteDataSourceImpl(
         lessonId: Int
     ): Single<Response<ReservationLessonDetail>> {
         return apiInterface.getReservationLessonDetail(lessonId)
-            .map {
-                it
-            }
     }
 
     override fun remoteReservationPlateDetail(
         plateId: Int
     ): Single<Response<ReservationPlateDetail>> {
         return apiInterface.getReservationPlateDetail(plateId)
-            .map {
-                it
-            }
     }
 }

@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.data.reserveconfirm.source.remote
 
-import com.artilearn.happygolfgo.data.reserveconfirm.LessonResponse
 import com.artilearn.happygolfgo.data.reserveconfirm.PolicyResponse
 import com.artilearn.happygolfgo.data.reserveconfirm.ReservationLessonDetail
 import com.artilearn.happygolfgo.data.reserveconfirm.ReservationPlateDetail
