@@ -13,17 +13,11 @@ class TicketDateRemoteDataSourceImpl(
         ticketId: Int
     ): Single<Response<TicketDateResponse>> {
         return apiInterface.selectPlateDate(ticketId)
-            .map {
-                it
-            }
     }
 
     override fun remoteSelectLessonDate(
         ticketId: Int
     ): Single<Response<TicketDateResponse>> {
         return apiInterface.selectLessonDate(ticketId)
-            .map {
-                it
-            }
     }
 }

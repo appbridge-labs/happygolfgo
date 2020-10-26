@@ -24,21 +24,7 @@ import java.util.*
 class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.activity_ticket_date) {
 
     private val viewModel: TicketDateViewModel by viewModel()
-//    private lateinit var myApplication: MyApplication
-
-    private val ticket by lazy {
-        intent.getParcelableExtra<Ticket>(TICKET)
-    }
-
-//    private val viewModel: TicketDateViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return TicketDateViewModel(
-//                    myApplication.ticketDateRepository
-//                ) as T
-//            }
-//        }
-//    }
+    private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +36,6 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
     }
 
     private fun initBinding() {
-        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 
@@ -75,12 +60,7 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
     }
 
     private fun initView() {
-        initToolbar(
-            binding.calendarToolbar.toolbar,
-            getString(R.string.ticketdate_toolbar_title),
-            true
-        )
-
+        initToolbar(binding.calendarToolbar.toolbar, getString(R.string.ticketdate_toolbar_title), true)
         ticket?.let {
             viewModel.ticketId = it.id
             viewModel.selectDate(it.type)
@@ -119,6 +99,7 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
                 putExtra(TICKET, ticket)
                 putExtra(SELECTION_DATE, date)
             }
+
         startActivity(goActivity)
     }
 

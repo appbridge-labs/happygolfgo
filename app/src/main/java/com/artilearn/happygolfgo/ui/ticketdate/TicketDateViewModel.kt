@@ -9,6 +9,7 @@ import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
 import com.artilearn.happygolfgo.util.convertCalendar
 import com.artilearn.happygolfgo.util.convertDate
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
@@ -21,10 +22,17 @@ class TicketDateViewModel(
     private val _availableMinDate: MutableLiveData<Calendar> = MutableLiveData()
     private val _availableMaxDate: MutableLiveData<Calendar> = MutableLiveData()
 
-    val eventDayList: LiveData<List<EventDay>> get() = _eventDayList
-    val availableMinDate: LiveData<Calendar> get() = _availableMinDate
-    val availableMaxDate: LiveData<Calendar> get() = _availableMaxDate
-    val isCalendarLoading: LiveData<Boolean> get() = _isCalendarLoading
+    val eventDayList: LiveData<List<EventDay>>
+        get() = _eventDayList
+
+    val availableMinDate: LiveData<Calendar>
+        get() = _availableMinDate
+
+    val availableMaxDate: LiveData<Calendar>
+        get() = _availableMaxDate
+
+    val isCalendarLoading: LiveData<Boolean>
+        get() = _isCalendarLoading
 
     var ticketId: Int? = null
     private var calendarMin: Calendar? = null
@@ -35,86 +43,58 @@ class TicketDateViewModel(
 
     fun selectDate(type: Int) {
         when (type) {
-            0 -> { // lesson
-                selectLessonDate()
-            }
-            1 -> { // group lesson
-
-            }
-            2 -> { // plate
-                selectPlateDate()
-            }
-            3 -> { // address
-
-            }
-            4 -> { // locker
-
-            }
-            5 -> { // other
-
-            }
+            0 -> selectLessonDate()
+            2 -> selectPlateDate()
         }
     }
 
     private fun selectPlateDate() {
         ticketId?.let {
-            compositeDisposable.add(
-                ticketDateRepository.selectPlateDate(it)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe { showLoading() }
-                    .doAfterTerminate { hideLoading() }
-                    .subscribe({ response ->
-                        val body = response.body()
-                        with(response) {
-                            if (isSuccessful && body != null) {
-                                convertToEventDay(body.data.availableDates, body.data.eventDates)
-                            } else {
-                                _serverError.value = response.message()
-                            }
+            ticketDateRepository.selectPlateDate(it)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
+                .subscribe({ response ->
+                    val body = response.body()
+                    with(response) {
+                        if (isSuccessful && body != null) {
+                            convertToEventDay(body.data.availableDates, body.data.eventDates)
+                        } else {
+                            _serverError.value = response.message()
                         }
-                    }, { t ->
-                        when (t.message) {
-                            "Network Error" -> {
-                                _networkFail.value = Unit
-                            }
-                            else -> {
-                                _serverError.value = t.message
-                            }
-                        }
-                    })
-            )
+                    }
+                }, { t ->
+                    when (t.message) {
+                        "Network Error" -> _networkFail.value = Unit
+                        else -> _serverError.value = t.message
+                    }
+                }).addTo(compositeDisposable)
         }
     }
 
     private fun selectLessonDate() {
         ticketId?.let {
-            compositeDisposable.add(
-                ticketDateRepository.selectLessonDate(it)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe { showLoading() }
-                    .doAfterTerminate { hideLoading() }
-                    .subscribe({ response ->
-                        val body = response.body()
-                        with(response) {
-                            if (isSuccessful && body != null) {
-                                convertToEventDay(body.data.availableDates, body.data.eventDates)
-                            } else {
-                                _serverError.value = response.message()
-                            }
+            ticketDateRepository.selectLessonDate(it)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
+                .subscribe({ response ->
+                    val body = response.body()
+                    with(response) {
+                        if (isSuccessful && body != null) {
+                            convertToEventDay(body.data.availableDates, body.data.eventDates)
+                        } else {
+                            _serverError.value = response.message()
                         }
-                    }, { t ->
-                        when (t.message) {
-                            "Network Error" -> {
-                                _networkFail.value = Unit
-                            }
-                            else -> {
-                                _serverError.value = t.message
-                            }
-                        }
-                    })
-            )
+                    }
+                }, { t ->
+                    when (t.message) {
+                        "Network Error" -> _networkFail.value = Unit
+                        else -> _serverError.value = t.message
+                    }
+                }).addTo(compositeDisposable)
         }
     }
 
