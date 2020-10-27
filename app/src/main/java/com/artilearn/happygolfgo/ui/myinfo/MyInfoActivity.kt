@@ -20,17 +20,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_info) {
 
     private val viewModel: MyInfoViewModel by viewModel()
-//    private lateinit var myApplication: MyApplication
-//
-//    private val viewModel: MyInfoViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return MyInfoViewModel(
-//                    myApplication.myinfoRepository
-//                ) as T
-//            }
-//        }
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +30,6 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
     }
 
     private fun initBinding() {
-        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 

@@ -7,6 +7,7 @@ import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
 import com.artilearn.happygolfgo.data.myinfo.source.MyInfoRepository
 import com.artilearn.happygolfgo.enummodel.UploadProfileType
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 
 class MyInfoViewModel(
@@ -42,16 +43,10 @@ class MyInfoViewModel(
         currentNickName = nickname.value.toString()
 
         when {
-            currentNickName.isEmpty() -> {
-                _emptyNickName.value = Unit
-            }
-            currentNickName.length < 2 ||
-                    currentNickName.length > 8 -> {
-                _failNickName.value = Unit
-            }
-            else -> {
-                uploadUserProfile()
-            }
+            currentNickName.isEmpty() -> _emptyNickName.value = Unit
+            currentNickName.length < 2
+                    || currentNickName.length > 8 -> _failNickName.value = Unit
+            else -> uploadUserProfile()
         }
     }
 
@@ -60,24 +55,19 @@ class MyInfoViewModel(
         val hashMap = hashMapOf<String, MyInfoModel>()
         hashMap["Data"] = myInfoModel
 
-        compositeDisposable.add(
-            myinfoRepository.uploadProfile(hashMap)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showLoading() }
-                .doAfterTerminate { hideLoading() }
-                .subscribe({
-                    _upload.value = UploadProfileType.SUCCESS
-                }, {
-                    when (it.message) {
-                        "Network Error" -> {
-                            _upload.value = UploadProfileType.NETWORK_FAIL
-                        }
-                        else -> {
-                            _upload.value = UploadProfileType.UNKNOW_ERROR
-                        }
-                    }
-                })
-        )
+        myinfoRepository.uploadProfile(hashMap)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .subscribe({
+                _upload.value = UploadProfileType.SUCCESS
+            }, {
+                when (it.message) {
+                    "Network Error" -> _upload.value = UploadProfileType.NETWORK_FAIL
+                    else -> _upload.value = UploadProfileType.UNKNOW_ERROR
+
+                }
+            }).addTo(compositeDisposable)
     }
 }

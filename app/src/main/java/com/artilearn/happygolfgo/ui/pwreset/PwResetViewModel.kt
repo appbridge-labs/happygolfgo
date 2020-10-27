@@ -18,7 +18,7 @@ import java.util.regex.Pattern
 class PwResetViewModel(
     private val pwrestRepository: PwrestRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
+
     private val currentPhone = BehaviorSubject.create<String>()
     private val _bottomClick = PublishSubject.create<Unit>()
     private val _password = BehaviorSubject.create<String>()

@@ -19,9 +19,7 @@ class MyPageViewModel(
     private val koinContext: Context
 ) : BaseViewModel() {
 
-    //private val myApplicationContext = MyApplication.getApplicationContext()
     private val updateClick = PublishSubject.create<Unit>()
-
     private var packageInfo: PackageInfo? = null
 
     private val _logout = SingleLiveEvent<Unit>()

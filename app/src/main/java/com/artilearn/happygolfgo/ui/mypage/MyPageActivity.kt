@@ -24,17 +24,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_page) {
 
     private val viewModel: MyPageViewModel by viewModel()
-//    private lateinit var myApplication: MyApplication
-//
-//    private val viewModel: MyPageViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return MyPageViewModel(
-//                    myApplication.versionRepository
-//                ) as T
-//            }
-//        }
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +34,6 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding>(R.layout.activity_my_
     }
 
     private fun initBinding() {
-        //myApplication = application as MyApplication
         binding.vm = viewModel
     }
 
