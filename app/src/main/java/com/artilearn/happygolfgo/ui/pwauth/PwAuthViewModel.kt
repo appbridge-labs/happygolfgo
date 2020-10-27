@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 class PwAuthViewModel(
     private val pwAuthRepository: PwAuthRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
+
     private var disposable: Disposable? = null
     private val _phoneNumber = BehaviorSubject.createDefault("")
     private val _authNumber = BehaviorSubject.createDefault("")
@@ -29,7 +29,7 @@ class PwAuthViewModel(
     private val timerTask = Observable.interval(0, 1, TimeUnit.SECONDS)
         .map { seconds -> authTimer.onNext(seconds) }
     private val authTimer = PublishSubject.create<Long>()
-    
+
     private val _phoneValueType = SingleLiveEvent<PwAuthPhoneType>()
     private val _authValueType = SingleLiveEvent<PwAuthNumberType>()
 
@@ -112,56 +112,77 @@ class PwAuthViewModel(
                 }, {
                     when (it.message) {
                         "Network Error" -> _authValueType.value = PwAuthNumberType.NETWORK_FAIL
-                        "HTTP 406 Not Acceptable" -> _authValueType.value =
-                            PwAuthNumberType.AUTH_ERROR
+                        "HTTP 406 Not Acceptable" -> _authValueType.value = PwAuthNumberType.AUTH_ERROR
                         else -> _authValueType.value = PwAuthNumberType.FAIL
                     }
                 }).addTo(compositeDisposable)
         } else if (successPhone != _phoneNumber.value) {
             _authValueType.value = PwAuthNumberType.MODEL_FAIL
         } else {
+            status = false
             disposable?.dispose()
             _authValueType.value = PwAuthNumberType.TIMER_OVER
         }
     }
 
     private fun rxTimerStart() {
-        disposable?.let { 
+        disposable?.let {
             if (!it.isDisposed) {
                 it.dispose()
             }
         }
-        
+
         disposable = timerTask.observeOn(AndroidSchedulers.mainThread())
             .subscribe()
             .addTo(compositeDisposable)
     }
 
+    private fun sendButtonObservable(): Observable<StringType> {
+        return _sendButton.throttleFirst(1000, TimeUnit.MILLISECONDS)
+            .map { StringType.PHONE }
+    }
+
+    private fun confirmButtonObservable(): Observable<StringType> {
+        return _confirmButton.throttleFirst(1000, TimeUnit.MILLISECONDS)
+            .map { StringType.AUTH }
+    }
+
+    fun getPhoneNumber(): String? {
+        return _phoneNumber.value
+    }
+
     private fun bindRx() {
         authTimer.observeOn(AndroidSchedulers.mainThread())
-            .subscribe { timerState = it <= 180 }
+            .subscribe { timerState = it <= 10 }
             .addTo(compositeDisposable)
 
-        _sendButton.throttleFirst(5000, TimeUnit.MILLISECONDS)
+        Observable.merge(sendButtonObservable(), confirmButtonObservable())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                with(_phoneNumber.value) {
-                    when {
-                        isNullOrEmpty() -> _phoneValueType.value = PwAuthPhoneType.EMPTY
-                        this?.length == 11 -> requestAuthNumber(this)
-                        else -> _phoneValueType.value = PwAuthPhoneType.LEGNTH_FAIL
+            .subscribe { type ->
+                when (type) {
+                    StringType.PHONE -> {
+                        with(_phoneNumber.value) {
+                            when {
+                                isNullOrEmpty() -> _phoneValueType.value = PwAuthPhoneType.EMPTY
+                                this?.length == 11 -> requestAuthNumber(this)
+                                else -> _phoneValueType.value = PwAuthPhoneType.LEGNTH_FAIL
+                            }
+                        }
+                    }
+                    StringType.AUTH -> {
+                        if (status) {
+                            confirmAuthNumber()
+                        } else {
+                            _authValueType.value = PwAuthNumberType.UNCREATE
+                        }
                     }
                 }
-            }.addTo(compositeDisposable)
+            }
+            .addTo(compositeDisposable)
+    }
 
-        _confirmButton.throttleFirst(5000, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                if (status) {
-                    confirmAuthNumber()
-                } else {
-                    _authValueType.value = PwAuthNumberType.UNCREATE
-                }
-            }.addTo(compositeDisposable)
+    enum class StringType {
+        PHONE,
+        AUTH
     }
 }

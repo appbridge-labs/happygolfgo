@@ -1,17 +1,23 @@
 package com.artilearn.happygolfgo.ui.pwauth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.PHONE_NUMBER
 import com.artilearn.happygolfgo.databinding.ActivityPwAuthBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.PwAuthNumberType
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
+import io.reactivex.Observable
+import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.concurrent.TimeUnit
 
 class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_auth) {
 
@@ -44,7 +50,11 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
 
     private fun initView() {
         initToolbar(binding.pwauthToolbar.toolbar, getString(R.string.pwauth_toolbar_title), true)
-        initBottomView(binding.pwauthBottomView.bottom_layout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
+        initBottomView(
+            binding.pwauthBottomView.bottom_layout,
+            getString(R.string.bottom_view_default),
+            BottimViewType.DEFAULT_TYPE
+        )
     }
 
     private fun initTextListener() {
@@ -75,16 +85,35 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             PwAuthNumberType.MODEL_FAIL -> showToast(ToastType.ERROR, getString(R.string.pwauth_model_fail))
             PwAuthNumberType.TIMER_OVER -> showToast(ToastType.ERROR, getString(R.string.pwauth_timer_over))
             PwAuthNumberType.SUCCESS -> {
+                rxDelay()
                 showToast(ToastType.SUCCESS, getString(R.string.pwauth_success_auth))
                 status = true
             }
         }
     }
 
+    private fun rxDelay() {
+        Observable.just(1)
+            .delay(500, TimeUnit.MILLISECONDS)
+            .subscribe { goPasswordReset() }
+            .addTo(compositeDisposable)
+    }
+
+    private fun goPasswordReset() {
+        val intent = Intent(this, PwResetActivity::class.java).apply {
+            putExtra(PHONE_NUMBER, viewModel.getPhoneNumber())
+        }
+
+        startActivity(intent)
+        finish()
+    }
+
     override fun bottomAction() {
         super.bottomAction()
         if (!status) {
             showToast(ToastType.WARNNING, "인증을 완료해 주세요")
+        } else {
+            rxDelay()
         }
     }
 }
