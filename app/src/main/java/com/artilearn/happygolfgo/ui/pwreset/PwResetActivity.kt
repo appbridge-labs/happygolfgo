@@ -1,7 +1,9 @@
 package com.artilearn.happygolfgo.ui.pwreset
 
 import android.os.Bundle
+import android.view.View
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.PHONE_NUMBER
@@ -13,7 +15,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_pw_reset) {
 
     private val viewModel: PwResetViewModel by viewModel()
-    private val pattern = "^[A-Za-z0-9+]{8,20}\$"
     private val phoneNumber by lazy { intent.getStringExtra(PHONE_NUMBER) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +23,7 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
         initBinding()
         initViewModelObserve()
         initView()
+        initTextListener()
     }
 
     private fun initBinding() {
@@ -30,6 +32,12 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
 
     private fun initViewModelObserve() {
         with(viewModel) {
+            passwordValue.observe(this@PwResetActivity, Observer {
+                passwordValidator(it)
+            })
+            confirmValue.observe(this@PwResetActivity, Observer {
+                confirmValidator(it)
+            })
 //            networkFail.observe(this@PwResetActivity, Observer {
 //                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
 //            })
@@ -57,6 +65,46 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
             etPw.addTextChangedListener { viewModel.passwordOnNext(it.toString()) }
             etPwConfirm.addTextChangedListener { viewModel.confirmOnNext(it.toString()) }
         }
+    }
+
+    private fun passwordValidator(result: Boolean) {
+        with(binding) {
+            etPw.error = if (result) {
+                showPasswordSuccess()
+                null
+            } else {
+                hidePasswordSuccess()
+                getString(R.string.pwreset_input_fail_password)
+            }
+        }
+    }
+
+    private fun confirmValidator(result: Boolean) {
+        with(binding) {
+            etPwConfirm.error = if (result) {
+                showConfirmSuccess()
+                null
+            } else {
+                hideConfirmSuccess()
+                getString(R.string.pwreset_fail_password)
+            }
+        }
+    }
+
+    private fun showPasswordSuccess() {
+        binding.ivPwSuccess.visibility = View.VISIBLE
+    }
+
+    private fun hidePasswordSuccess() {
+        binding.ivPwSuccess.visibility = View.INVISIBLE
+    }
+
+    private fun showConfirmSuccess() {
+        binding.ivPwConfirmSuccess.visibility = View.VISIBLE
+    }
+
+    private fun hideConfirmSuccess() {
+        binding.ivPwConfirmSuccess.visibility = View.INVISIBLE
     }
 
 //    private fun createPassword(): Observable<String> {
