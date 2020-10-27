@@ -2,9 +2,6 @@ package com.artilearn.happygolfgo.ui.home.mypage
 
 import android.content.Intent
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentMypageBinding
@@ -12,7 +9,6 @@ import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
-import com.artilearn.happygolfgo.util.MyApplication
 import kotlinx.android.synthetic.main.common_view.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
