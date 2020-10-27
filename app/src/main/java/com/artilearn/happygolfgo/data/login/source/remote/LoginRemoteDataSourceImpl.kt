@@ -15,9 +15,6 @@ class LoginRemoteDataSourceImpl(
         data: HashMap<String, LoginDataModel>
     ): Single<LoginResponse> {
         return apiInterface.login(data)
-            .map {
-                it
-            }
     }
 
     override fun getFcmToken(): Single<String?> {

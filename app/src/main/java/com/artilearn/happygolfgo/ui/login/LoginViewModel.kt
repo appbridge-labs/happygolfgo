@@ -6,19 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.source.LoginRepository
-import com.artilearn.happygolfgo.util.MyApplication
+import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.getAndroidID
 import com.artilearn.happygolfgo.util.getWidevineID
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.withContext
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
     private val koinContext: Context
 ) : BaseViewModel() {
-
-    //private val applicationContext = MyApplication.getApplicationContext()
 
     val phone = MutableLiveData("")
     val password = MutableLiveData("")
@@ -27,21 +25,34 @@ class LoginViewModel(
     private var currentPhone = ""
     private var currentPassword = ""
 
-    private val _emptyUser: MutableLiveData<Unit> = MutableLiveData()
-    private val _failPassword: MutableLiveData<Unit> = MutableLiveData()
-    private val _emptyPhone: MutableLiveData<Unit> = MutableLiveData()
-    private val _emptyPassword: MutableLiveData<Unit> = MutableLiveData()
-    private val _loginSuccess: MutableLiveData<Unit> = MutableLiveData()
-    private val _developerOption: MutableLiveData<Unit> = MutableLiveData()
-    private val _passwordClick: MutableLiveData<Unit> = MutableLiveData()
+    private val _emptyUser: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _failPassword: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _emptyPhone: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _emptyPassword: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _loginSuccess: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _developerOption: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _passwordClick: SingleLiveEvent<Unit> = SingleLiveEvent()
 
-    val emptyPassword: LiveData<Unit> get() = _emptyPassword
-    val emptyPhone: LiveData<Unit> get() = _emptyPhone
-    val failPassword: LiveData<Unit> get() = _failPassword
-    val emptyUser: LiveData<Unit> get() = _emptyUser
-    val loginSuccess: LiveData<Unit> get() = _loginSuccess
-    val developerOption: LiveData<Unit> get() = _developerOption
-    val passwordClick: LiveData<Unit> get() = _passwordClick
+    val emptyPassword: LiveData<Unit>
+        get() = _emptyPassword
+
+    val emptyPhone: LiveData<Unit>
+        get() = _emptyPhone
+
+    val failPassword: LiveData<Unit>
+        get() = _failPassword
+
+    val emptyUser: LiveData<Unit>
+        get() = _emptyUser
+
+    val loginSuccess: LiveData<Unit>
+        get() = _loginSuccess
+
+    val developerOption: LiveData<Unit>
+        get() = _developerOption
+
+    val passwordClick: LiveData<Unit>
+        get() = _passwordClick
 
     init {
         val token = loginRepository.fcmToken
@@ -56,15 +67,9 @@ class LoginViewModel(
         currentPassword = password.value.toString()
 
         when {
-            currentPhone.isEmpty() -> {
-                _emptyPhone.value = Unit
-            }
-            currentPassword.isEmpty() -> {
-                _emptyPassword.value = Unit
-            }
-            else -> {
-                requestLogin()
-            }
+            currentPhone.isEmpty() -> _emptyPhone.value = Unit
+            currentPassword.isEmpty() -> _emptyPassword.value = Unit
+            else -> requestLogin()
         }
 
     }
@@ -91,31 +96,21 @@ class LoginViewModel(
         val hashMap = hashMapOf<String, LoginDataModel>()
         hashMap["Data"] = dataModel
 
-        compositeDisposable.add(
-            loginRepository.repositoryLogin(hashMap)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showLoading() }
-                .doAfterTerminate { hideLoading() }
-                .subscribe({
-                    _loginSuccess.value = Unit
-                }, {
-                    when (it.message) {
-                        "HTTP 401 Unauthorized", "HTTP 401 " -> {
-                            _failPassword.value = Unit
-                        }
-                        "HTTP 404 Not Found", "HTTP 404 " -> {
-                            _emptyUser.value = Unit
-                        }
-                        "Network Error" -> {
-                            _networkFail.value = Unit
-                        }
-                        else -> {
-                            _serverError.value = it.message
-                        }
-                    }
-                })
-        )
+        loginRepository.repositoryLogin(hashMap)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .subscribe({
+                _loginSuccess.value = Unit
+            }, {
+                when (it.message) {
+                    "HTTP 401 Unauthorized", "HTTP 401 " -> _failPassword.value = Unit
+                    "HTTP 404 Not Found", "HTTP 404 " -> _emptyUser.value = Unit
+                    "Network Error" -> _networkFail.value = Unit
+                    else -> _serverError.value = it.message
+                }
+            }).addTo(compositeDisposable)
     }
 
     private fun getFcmToken() {
