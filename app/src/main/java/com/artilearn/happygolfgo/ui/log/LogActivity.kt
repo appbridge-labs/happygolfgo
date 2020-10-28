@@ -30,28 +30,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
 
+    private val viewModel: LogViewModel by viewModel()
+    private val lessonId by lazy { intent.getIntExtra(LESSON_ID, 0) }
+
     private var playReady = false
     private var player: SimpleExoPlayer? = null
     private var currentWindow = 0
     private var playbackPosition = 0L
     private var log: LogDetail? = null
-    //private lateinit var myApplication: MyApplication
-
-    private val lessonId by lazy {
-        intent.getIntExtra(LESSON_ID, 0)
-    }
-
-    private val viewModel: LogViewModel by viewModel()
-
-//    private val viewModel: LogViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return LogViewModel(
-//                    myApplication.logRespository
-//                ) as T
-//            }
-//        }
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +48,8 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
     }
 
     private fun initBinding() {
-        //myApplication = application as MyApplication
         binding.vm = viewModel
-        viewModel.requestLessonLogDetail(lessonId)
+        viewModel.requestLog(lessonId)
     }
 
     private fun initViewModelObserve() {

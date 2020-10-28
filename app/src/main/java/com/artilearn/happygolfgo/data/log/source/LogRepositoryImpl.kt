@@ -4,6 +4,7 @@ import com.artilearn.happygolfgo.data.log.LogResponse
 import com.artilearn.happygolfgo.data.log.source.remote.LogRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Single
+import retrofit2.HttpException
 import retrofit2.Response
 
 class LogRepositoryImpl(
@@ -20,7 +21,7 @@ class LogRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException("Server Error"))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {

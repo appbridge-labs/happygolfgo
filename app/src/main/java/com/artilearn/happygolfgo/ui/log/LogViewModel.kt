@@ -6,6 +6,7 @@ import com.artilearn.happygolfgo.data.LogDetail
 import com.artilearn.happygolfgo.data.log.source.LogRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 
 class LogViewModel(
@@ -15,35 +16,15 @@ class LogViewModel(
     private val _logDetail: SingleLiveEvent<LogDetail> = SingleLiveEvent()
     private val _videoUrl: SingleLiveEvent<String> = SingleLiveEvent()
 
-    val logDetail: LiveData<LogDetail> get() = _logDetail
-    val videoUrl: LiveData<String> get() = _videoUrl
+    val logDetail: LiveData<LogDetail>
+        get() = _logDetail
 
-    fun requestLessonLogDetail(lessonId: Int?) {
-        lessonId?.let {
-            compositeDisposable.add(
-                logRepository.lessonLogDetail(it)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe { showLoading() }
-                    .doAfterTerminate { hideLoading() }
-                    .subscribe({ response ->
-                        val body = response.body()
-                        if (response.isSuccessful && body != null) {
-                            _logDetail.value = body.data.lessonLog
-                        } else {
-                            _serverError.value = response.errorBody().toString()
-                        }
-                    }, { t ->
-                        when (t.message) {
-                            "Network Error" -> {
-                                _networkFail.value = Unit
-                            }
-                            else -> {
-                                _serverError.value = t.message
-                            }
-                        }
-                    })
-            )
+    val videoUrl: LiveData<String>
+        get() = _videoUrl
+
+    fun requestLog(lessonId: Int?) {
+        lessonId?.let { id ->
+            requestLessonLogDetail(id)
         }
     }
 
@@ -51,6 +32,27 @@ class LogViewModel(
         videoUrl?.let {
             _videoUrl.value = videoUrl
         }
+    }
+
+    private fun requestLessonLogDetail(lessonId: Int) {
+        logRepository.lessonLogDetail(lessonId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .subscribe({ response ->
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    _logDetail.value = body.data.lessonLog
+                } else {
+                    _serverError.value = response.message()
+                }
+            }, { t ->
+                when (t.message) {
+                    "Network Error" -> _networkFail.value = Unit
+                    else -> _serverError.value = t.message
+                }
+            }).addTo(compositeDisposable)
     }
 
 }
