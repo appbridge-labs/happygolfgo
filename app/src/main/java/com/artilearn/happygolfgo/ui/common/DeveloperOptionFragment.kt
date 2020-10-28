@@ -5,30 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.databinding.FragmentDeveloperOptionBinding
-import com.artilearn.happygolfgo.util.MyApplication
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DeveloperOptionFragment : BottomSheetDialogFragment() {
 
-    private lateinit var binding: FragmentDeveloperOptionBinding
-    //private lateinit var myApplication: MyApplication
     private val viewModel: DeveloperOptionViewModel by viewModel()
-//    private val viewModel: DeveloperOptionViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return DeveloperOptionViewModel(
-//                    myApplication.developerOptionRepository
-//                ) as T
-//            }
-//        }
-//    }
+    private lateinit var binding: FragmentDeveloperOptionBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +29,6 @@ class DeveloperOptionFragment : BottomSheetDialogFragment() {
             false
         )
 
-        //inject()
         initBinding()
         initViewModelCallback()
 
@@ -54,12 +39,6 @@ class DeveloperOptionFragment : BottomSheetDialogFragment() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
     }
-
-//    private fun inject() {
-//        myApplication = activity?.applicationContext as MyApplication
-//        binding.vm = viewModel
-//        binding.lifecycleOwner = this
-//    }
 
     private fun initViewModelCallback() {
         with(viewModel) {

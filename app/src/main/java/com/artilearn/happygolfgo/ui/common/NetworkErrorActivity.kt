@@ -10,9 +10,7 @@ import com.artilearn.happygolfgo.databinding.ActivityNetworkErrorBinding
 class NetworkErrorActivity :
     BaseActivity<ActivityNetworkErrorBinding>(R.layout.activity_network_error) {
 
-    private val lastActivityIntent by lazy {
-        intent.getParcelableExtra<Intent>(EXTRA_INTENT)
-    }
+    private val lastActivityIntent by lazy { intent.getParcelableExtra<Intent>(EXTRA_INTENT) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

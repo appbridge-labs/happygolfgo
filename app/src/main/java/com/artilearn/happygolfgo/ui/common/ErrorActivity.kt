@@ -10,13 +10,8 @@ import com.artilearn.happygolfgo.databinding.ActivityErrorBinding
 
 class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error) {
 
-    private val lastActivityIntent by lazy {
-        intent.getParcelableExtra<Intent>(EXTRA_INTENT)
-    }
-
-    private val errorText by lazy {
-        intent.getStringExtra(EXTRA_ERROR_TEXT)
-    }
+    private val lastActivityIntent by lazy { intent.getParcelableExtra<Intent>(EXTRA_INTENT) }
+    private val errorText by lazy { intent.getStringExtra(EXTRA_ERROR_TEXT) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
