@@ -16,10 +16,17 @@ class AlramViewModel(
     private val _emptyAlramMessage: MutableLiveData<Boolean> = MutableLiveData()
     private val _alramMessages: MutableLiveData<ArrayList<Alram>> = MutableLiveData()
 
-    val emptyAlramMessage: LiveData<Boolean> get() = _emptyAlramMessage
-    val alramMessages: LiveData<ArrayList<Alram>> get() = _alramMessages
+    val emptyAlramMessage: LiveData<Boolean>
+        get() = _emptyAlramMessage
+
+    val alramMessages: LiveData<ArrayList<Alram>>
+        get() = _alramMessages
 
     init {
+        requestMessage()
+    }
+
+    private fun requestMessage() {
         repository.getAlramMessage()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -39,12 +46,8 @@ class AlramViewModel(
                 }
             }, {
                 when (it.message) {
-                    "Network Error" -> {
-                        _networkFail.value = Unit
-                    }
-                    else -> {
-                        _serverError.value = it.message
-                    }
+                    "Network Error" -> _networkFail.value = Unit
+                    else -> _serverError.value = it.message
                 }
             }).addTo(compositeDisposable)
     }

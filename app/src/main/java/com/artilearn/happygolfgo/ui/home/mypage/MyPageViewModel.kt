@@ -11,6 +11,10 @@ class MyPageViewModel(
 ) : BaseViewModel() {
 
     init {
+        getAppVersion()
+    }
+
+    private fun getAppVersion() {
         repository.getAppVersion()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

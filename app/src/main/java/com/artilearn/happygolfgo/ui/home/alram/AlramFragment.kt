@@ -1,36 +1,21 @@
 package com.artilearn.happygolfgo.ui.home.alram
 
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentAlramBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
-import com.artilearn.happygolfgo.util.MyApplication
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AlramFragment
     : BaseFragment<FragmentAlramBinding, AlramViewModel>(R.layout.fragment_alram) {
 
-    private lateinit var adapter: AlramAdapter
-    //private lateinit var myApplication: MyApplication
     override val viewModel: AlramViewModel by viewModel()
-
-    //    override val viewModel: AlramViewModel by viewModels {
-//        object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return AlramViewModel(
-//                    myApplication.alramRepository
-//                ) as T
-//            }
-//        }
-//    }
+    private lateinit var adapter: AlramAdapter
 
     override fun init() {
 
-        //inject()
+        initBinding()
         initViewModelObserving()
         initAdapter()
     }
@@ -38,11 +23,6 @@ class AlramFragment
     private fun initBinding() {
         binding.vm = viewModel
     }
-
-//    private fun inject() {
-//        myApplication = activity?.application as MyApplication
-//        binding.vm = viewModel
-//    }
 
     private fun initViewModelObserving() {
         with(viewModel) {

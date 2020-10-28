@@ -4,6 +4,7 @@ import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.alram.source.remote.AlramRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Single
+import retrofit2.HttpException
 import retrofit2.Response
 
 class AlramRepositoryImpl(
@@ -18,7 +19,7 @@ class AlramRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException(it.message()))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {

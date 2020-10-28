@@ -14,9 +14,6 @@ class VersionRemoteDataSourceImpl(
         clientType: Int
     ): Single<VersionResponse> {
         return apiInterface.getAppVersion()
-            .map {
-                it
-            }
     }
 
     override fun userLogout(): Completable {

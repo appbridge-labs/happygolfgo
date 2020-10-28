@@ -7,6 +7,7 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -15,7 +16,6 @@ import java.util.concurrent.TimeUnit
 class ReservationViewModel(
     private val repository: HomeRepository
 ) : BaseViewModel() {
-    private val TAG = javaClass.simpleName
 
     private val reservationList: Subject<Unit> = PublishSubject.create()
 
@@ -37,36 +37,34 @@ class ReservationViewModel(
         getTicket()
     }
 
+    fun myReservationList() {
+        reservationList.onNext(Unit)
+    }
+
     fun getTicket() {
-        compositeDisposable.add(
-            repository.requestHomeTicket()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showLoading() }
-                .doAfterTerminate { hideLoading() }
-                .subscribe({
-                    val body = it.body()
-                    if (it.isSuccessful) {
-                        if (body != null && body.data.tickets.isNotEmpty()) {
-                            hideEmptyTicket()
-                            _tickets.value = body.data.tickets as ArrayList<Ticket>
-                        } else {
-                            showEmptyTicket()
-                        }
+        repository.requestHomeTicket()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .subscribe({
+                val body = it.body()
+                if (it.isSuccessful) {
+                    if (body != null && body.data.tickets.isNotEmpty()) {
+                        hideEmptyTicket()
+                        _tickets.value = body.data.tickets as ArrayList<Ticket>
                     } else {
-                        _serverError.value = it.message()
+                        showEmptyTicket()
                     }
-                }, {
-                    when (it.message) {
-                        "Network Error" -> {
-                            _networkFail.value = Unit
-                        }
-                        else -> {
-                            _serverError.value = it.message
-                        }
-                    }
-                })
-        )
+                } else {
+                    _serverError.value = it.message()
+                }
+            }, { t ->
+                when (t.message) {
+                    "Network Error" -> _networkFail.value = Unit
+                    else -> _serverError.value = t.message
+                }
+            }).addTo(compositeDisposable)
     }
 
     private fun rxBind() {
@@ -74,10 +72,6 @@ class ReservationViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { _reservationListButton.call() }
             .let(compositeDisposable::add)
-    }
-
-    fun myReservationList() {
-        reservationList.onNext(Unit)
     }
 
     private fun showEmptyTicket() {

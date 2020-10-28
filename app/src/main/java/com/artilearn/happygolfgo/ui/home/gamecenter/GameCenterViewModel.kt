@@ -18,7 +18,8 @@ class GameCenterViewModel : BaseViewModel() {
 
     private val _button: SingleLiveEvent<ButtonType> = SingleLiveEvent()
 
-    val button: LiveData<ButtonType> get() = _button
+    val button: LiveData<ButtonType>
+        get() = _button
 
     init {
         rxBind()
