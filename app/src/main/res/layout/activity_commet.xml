@@ -85,23 +85,24 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="21dp"
                         android:text="@string/comment_subtitle_text"
-                        android:textSize="18dp"
                         android:textColor="@color/color_black"
+                        android:textSize="18dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view_one" />
 
                     <TextView
                         android:id="@+id/tv_notice"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="4dp"
-                        android:textSize="16dp"
-                        android:textColor="@color/color_red"
-                        app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
-                        android:text="@string/comment_subtitle_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp" />
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="@string/comment_subtitle_content"
+                        android:textColor="@color/color_red"
+                        android:textSize="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_subtitle" />
 
                     <RatingBar
                         android:id="@+id/ratingbar"
@@ -112,7 +113,7 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="20dp"
                         android:numStars="5"
-                        android:rating="@={vm.rating}"
+                        android:rating="1"
                         android:stepSize="1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +150,6 @@
                         android:background="@drawable/review_edittext_side"
                         android:hint="@string/comment_comment_hint"
                         android:padding="8dp"
-                        android:text="@={vm.comment}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_comment_title" />
