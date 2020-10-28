@@ -15,6 +15,7 @@ import com.artilearn.happygolfgo.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
+import java.io.Serializable
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -151,3 +152,16 @@ fun getNowDate(): Date {
     val now = System.currentTimeMillis()
     return Date(now)
 }
+
+data class Qnintuple<out A, out B, out C, out D, out E>(
+    val one: A,
+    val two: B,
+    val three: C,
+    val four: D,
+    val five: E
+) : Serializable {
+
+    override fun toString(): String = "($one, $two, $three, $four, $five)"
+}
+
+fun <T> Qnintuple<T, T, T, T, T>.toList(): List<T> = listOf(one, two, three, four, five)

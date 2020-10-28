@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
@@ -21,6 +22,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
         initBinding()
         initViewModelObserve()
+        initTextListener()
     }
 
     private fun initBinding() {
@@ -35,27 +37,28 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             serverError.observe(this@LoginActivity, Observer {
                 showToast(ToastType.ERROR, it)
             })
-            emptyPhone.observe(this@LoginActivity, Observer {
-                showEmptyPhone()
-            })
-            emptyPassword.observe(this@LoginActivity, Observer {
-                showEmptyPassword()
-            })
-            emptyUser.observe(this@LoginActivity, Observer {
-                showEmptyUser()
-            })
-            failPassword.observe(this@LoginActivity, Observer {
-                showFailPassword()
-            })
-            loginSuccess.observe(this@LoginActivity, Observer {
-                goHome()
-            })
-            passwordClick.observe(this@LoginActivity, Observer {
+            forgetPassword.observe(this@LoginActivity, Observer {
                 goPasswordAuth()
             })
             developerOption.observe(this@LoginActivity, Observer {
                 openDeveloperOption()
             })
+            loginType.observe(this@LoginActivity, Observer {
+                when (loginType.value) {
+                    LoginViewModel.LoginType.EMPTY_PHONE -> showEmptyPhone()
+                    LoginViewModel.LoginType.EMPTY_PASSWORD -> showEmptyPassword()
+                    LoginViewModel.LoginType.NOT_FOUND_USER -> showEmptyUser()
+                    LoginViewModel.LoginType.FAIL_PASSWORD -> showFailPassword()
+                    LoginViewModel.LoginType.SUCCESS -> goHome()
+                }
+            })
+        }
+    }
+
+    private fun initTextListener() {
+        with(binding) {
+            etPhone.addTextChangedListener { viewModel.phoneOnNext(it.toString()) }
+            etPw.addTextChangedListener { viewModel.passwordOnNext(it.toString()) }
         }
     }
 

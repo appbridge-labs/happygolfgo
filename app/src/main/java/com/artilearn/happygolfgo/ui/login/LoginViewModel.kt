@@ -6,119 +6,145 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.source.LoginRepository
+import com.artilearn.happygolfgo.util.Qnintuple
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.getAndroidID
 import com.artilearn.happygolfgo.util.getWidevineID
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
     private val koinContext: Context
 ) : BaseViewModel() {
 
-    val phone = MutableLiveData("")
-    val password = MutableLiveData("")
-    private var count = 0
+    private val _phone = BehaviorSubject.create<String>()
+    private val _password = BehaviorSubject.create<String>()
+    private val _passwordForget = PublishSubject.create<ButtonClickType>()
+    private val _developerServer = PublishSubject.create<Unit>()
+    private val _login = PublishSubject.create<ButtonClickType>()
 
-    private var currentPhone = ""
-    private var currentPassword = ""
+    private val _forgetPassword = SingleLiveEvent<Unit>()
+    private val _developerOption: MutableLiveData<Unit> = MutableLiveData()
+    private val _loginType: SingleLiveEvent<LoginType> = SingleLiveEvent()
 
-    private val _emptyUser: SingleLiveEvent<Unit> = SingleLiveEvent()
-    private val _failPassword: SingleLiveEvent<Unit> = SingleLiveEvent()
-    private val _emptyPhone: SingleLiveEvent<Unit> = SingleLiveEvent()
-    private val _emptyPassword: SingleLiveEvent<Unit> = SingleLiveEvent()
-    private val _loginSuccess: SingleLiveEvent<Unit> = SingleLiveEvent()
-    private val _developerOption: SingleLiveEvent<Unit> = SingleLiveEvent()
-    private val _passwordClick: SingleLiveEvent<Unit> = SingleLiveEvent()
-
-    val emptyPassword: LiveData<Unit>
-        get() = _emptyPassword
-
-    val emptyPhone: LiveData<Unit>
-        get() = _emptyPhone
-
-    val failPassword: LiveData<Unit>
-        get() = _failPassword
-
-    val emptyUser: LiveData<Unit>
-        get() = _emptyUser
-
-    val loginSuccess: LiveData<Unit>
-        get() = _loginSuccess
+    val forgetPassword: LiveData<Unit>
+        get() = _forgetPassword
 
     val developerOption: LiveData<Unit>
         get() = _developerOption
 
-    val passwordClick: LiveData<Unit>
-        get() = _passwordClick
+    val loginType: LiveData<LoginType>
+        get() = _loginType
 
     init {
-        val token = loginRepository.fcmToken
+        bindRx()
+    }
 
-        if (token.isNullOrEmpty()) {
-            getFcmToken()
-        }
+    fun phoneOnNext(phone: String) {
+        _phone.onNext(phone)
+    }
+
+    fun passwordOnNext(password: String) {
+        _password.onNext(password)
     }
 
     fun onLoginClick() {
-        currentPhone = phone.value.toString()
-        currentPassword = password.value.toString()
-
-        when {
-            currentPhone.isEmpty() -> _emptyPhone.value = Unit
-            currentPassword.isEmpty() -> _emptyPassword.value = Unit
-            else -> requestLogin()
-        }
-
+        _login.onNext(ButtonClickType.LOGIN)
     }
 
     fun onPasswordForgetClick() {
-        _passwordClick.value = Unit
+        _passwordForget.onNext(ButtonClickType.FORGET_PASSWORD)
     }
 
     fun onDeveloperOption() {
-        count++
-        if (count >= 10) {
-            count = 0
-            _developerOption.value = Unit
+        _developerServer.onNext(Unit)
+    }
+
+    private fun loginClickObservable(): Observable<ButtonClickType> {
+        return _login.throttleFirst(1000, TimeUnit.MILLISECONDS)
+    }
+
+    private fun passwordForgetObservable(): Observable<ButtonClickType> {
+        return _passwordForget.throttleFirst(1000, TimeUnit.MILLISECONDS)
+    }
+
+    private fun inputCheck() {
+        when {
+            _phone.value.isNullOrEmpty() -> _loginType.value = LoginType.EMPTY_PHONE
+            _password.value.isNullOrEmpty() -> _loginType.value = LoginType.EMPTY_PASSWORD
+            else -> setDataModel(_phone.value!!, _password.value!!)
         }
     }
 
-    private fun requestLogin() {
+    private fun bindRx() {
+        Observable.merge(loginClickObservable(), passwordForgetObservable())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { type ->
+                when (type) {
+                    ButtonClickType.FORGET_PASSWORD -> _forgetPassword.call()
+                    ButtonClickType.LOGIN -> inputCheck()
+                }
+            }.addTo(compositeDisposable)
+
+        _developerServer.map { System.currentTimeMillis() }
+            .buffer(5, 1)
+            .map {
+                val (one, two, three, four, five) = it
+                Qnintuple(one, two, three, four, five)
+            }
+            .filter { (i, ii, iii, iiii, iiiii) ->
+                iiiii - i < TimeUnit.SECONDS.toMillis(2)
+            }
+            .subscribe { _developerOption.value = Unit  }
+            .addTo(compositeDisposable)
+    }
+
+    private fun setDataModel(phone: String, password: String) {
         val id = getAndroidID(koinContext)
         val uuid = getWidevineID()
-        val dataModel = LoginDataModel(
-            currentPhone, currentPassword, loginRepository.fcmToken, uuid, id
-        )
+        val dataModel = LoginDataModel(phone, password, loginRepository.fcmToken, uuid, id)
 
         val hashMap = hashMapOf<String, LoginDataModel>()
         hashMap["Data"] = dataModel
 
-        loginRepository.repositoryLogin(hashMap)
+        requestLogin(hashMap)
+    }
+
+    private fun requestLogin(model: HashMap<String, LoginDataModel>) {
+        loginRepository.repositoryLogin(model)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
             .subscribe({
-                _loginSuccess.value = Unit
+                _loginType.value = LoginType.SUCCESS
             }, {
                 when (it.message) {
-                    "HTTP 401 Unauthorized", "HTTP 401 " -> _failPassword.value = Unit
-                    "HTTP 404 Not Found", "HTTP 404 " -> _emptyUser.value = Unit
+                    "HTTP 401 Unauthorized", "HTTP 401 " -> _loginType.value = LoginType.FAIL_PASSWORD
+                    "HTTP 404 Not Found", "HTTP 404 " -> _loginType.value = LoginType.NOT_FOUND_USER
                     "Network Error" -> _networkFail.value = Unit
                     else -> _serverError.value = it.message
                 }
             }).addTo(compositeDisposable)
     }
 
-    private fun getFcmToken() {
-        loginRepository.getFcmToken()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-            .let(compositeDisposable::add)
+    enum class ButtonClickType {
+        LOGIN,
+        FORGET_PASSWORD
+    }
+
+    enum class LoginType {
+        EMPTY_PHONE,
+        EMPTY_PASSWORD,
+        NOT_FOUND_USER,
+        FAIL_PASSWORD,
+        SUCCESS
     }
 
 }
