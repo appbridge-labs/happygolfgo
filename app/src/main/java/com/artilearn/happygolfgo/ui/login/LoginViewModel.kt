@@ -93,7 +93,7 @@ class LoginViewModel(
             }.addTo(compositeDisposable)
 
         _developerServer.map { System.currentTimeMillis() }
-            .buffer(5, 1)
+            .buffer(5)
             .map {
                 val (one, two, three, four, five) = it
                 Qnintuple(one, two, three, four, five)

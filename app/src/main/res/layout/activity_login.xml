@@ -170,10 +170,10 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/btn_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/pw_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
