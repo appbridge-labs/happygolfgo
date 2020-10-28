@@ -11,8 +11,5 @@ class LessonLogRemoteDataSourceImpl(
 
     override fun remoteGetLessonLog(): Single<Response<LessonLogResponse>> {
         return apiInterface.getLessonLogs()
-            .map {
-                it
-            }
     }
 }
