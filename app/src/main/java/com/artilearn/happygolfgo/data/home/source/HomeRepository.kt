@@ -7,4 +7,5 @@ import retrofit2.Response
 interface HomeRepository {
 
     fun requestHomeTicket(): Single<Response<HomeResponse>>
+
 }

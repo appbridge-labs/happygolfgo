@@ -98,7 +98,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/home_reservation_button"
             android:elevation="10dp"
-            android:onClick="@{() -> vm.myReservationList()}"
+            android:onClick="@{() -> vm.onReservationList()}"
             android:text="@string/home_bottomview_title"
             android:textColor="@color/color_white"
             android:textSize="18dp"

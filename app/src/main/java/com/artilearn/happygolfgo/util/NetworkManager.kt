@@ -2,7 +2,12 @@ package com.artilearn.happygolfgo.util
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
+import io.reactivex.FlowableEmitter
 
 class NetworkManager(private val context: Context) {
 
@@ -18,5 +23,26 @@ class NetworkManager(private val context: Context) {
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             else -> false
         }
+    }
+
+    fun getNetworkStateChanges(request: NetworkRequest): Flowable<Boolean> {
+        return Flowable.create({ emitter: FlowableEmitter<Boolean> ->
+            val callback = object : ConnectivityManager.NetworkCallback() {
+                override fun onAvailable(network: Network) {
+                    emitter.onNext(true)
+                }
+
+                override fun onLost(network: Network) {
+                    emitter.onNext(false)
+                }
+            }
+
+            connectivityManager.registerNetworkCallback(request, callback)
+
+            emitter.setCancellable {
+                connectivityManager.unregisterNetworkCallback(callback)
+            }
+
+        }, BackpressureStrategy.BUFFER)
     }
 }

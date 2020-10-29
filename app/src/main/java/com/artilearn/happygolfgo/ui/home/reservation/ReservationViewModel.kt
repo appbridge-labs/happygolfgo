@@ -6,17 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Ticket
-import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import retrofit2.Response
 import java.util.concurrent.TimeUnit
 
 class ReservationViewModel(
@@ -24,7 +21,6 @@ class ReservationViewModel(
     private val koinContext: Context
 ) : BaseViewModel() {
 
-    private var disposable: Disposable? = null
     private val reservationList: Subject<Unit> = PublishSubject.create()
     private val _refresh: Subject<Unit> = PublishSubject.create()
 
@@ -54,7 +50,7 @@ class ReservationViewModel(
         getTicket()
     }
 
-    fun myReservationList() {
+    fun onReservationList() {
         reservationList.onNext(Unit)
     }
 
@@ -70,26 +66,17 @@ class ReservationViewModel(
         _message.value = koinContext.getString(R.string.fragment_reservation_donot_refresh)
     }
 
-    private fun refreshTicket(): Observable<Response<HomeResponse>> {
-        return _refresh.throttleFirst(1000, TimeUnit.MILLISECONDS)
+    private fun refreshTicket(): Observable<Unit> {
+        return _refresh.throttleFirst(2500, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { showLoading() }
-            .switchMapSingle {
-                repository.requestHomeTicket()
-                    .subscribeOn(Schedulers.io())
-            }
+            .delay(2000, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { hideLoading(); _refresh.onNext(Unit) }
+            .doOnNext { hideLoading(); _swipeRefresh.call() }
     }
 
     private fun getTicket() {
-        disposable?.let {
-            if (!it.isDisposed) {
-                it.dispose()
-            }
-        }
-
-        disposable = repository.requestHomeTicket()
+        repository.requestHomeTicket()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
@@ -121,11 +108,9 @@ class ReservationViewModel(
             .let(compositeDisposable::add)
 
         refreshTicket().observeOn(AndroidSchedulers.mainThread())
-            .map {
-
-            }
-            .subscribe {
-
+            .map { _tickets.value?.size }
+            .subscribe { ticket ->
+                if (ticket != 0) getTicket()
             }.addTo(compositeDisposable)
     }
 
@@ -136,4 +121,5 @@ class ReservationViewModel(
     private fun hideEmptyTicket() {
         _emptyTicket.value = false
     }
+
 }

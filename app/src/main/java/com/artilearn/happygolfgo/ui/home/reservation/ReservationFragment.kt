@@ -7,14 +7,14 @@ import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.FragmentReservationBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
 import com.artilearn.happygolfgo.util.snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReservationFragment
-    :
-    BaseFragment<FragmentReservationBinding, ReservationViewModel>(R.layout.fragment_reservation) {
+    : BaseFragment<FragmentReservationBinding, ReservationViewModel>(R.layout.fragment_reservation) {
 
     override val viewModel: ReservationViewModel by viewModel()
     private lateinit var adapter: ReservationAdapter
@@ -41,6 +41,12 @@ class ReservationFragment
             })
             reservationListButton.observe(this@ReservationFragment, Observer {
                 reservationListCheck(adapter.itemCount)
+            })
+            swipeRefresh.observe(this@ReservationFragment, Observer {
+                hideRefresh()
+            })
+            message.observe(this@ReservationFragment, Observer {
+                showFragmentToast(ToastType.WARNNING, it)
             })
         }
     }
