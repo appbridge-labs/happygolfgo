@@ -62,17 +62,18 @@
                         app:layout_constraintTop_toTopOf="@id/iv_profile">
 
                         <TextView
-                            android:id="@+id/tv_nickname"
+                            android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLines="1"
+                            android:textStyle="bold"
                             android:textColor="@color/color_black"
                             android:textSize="24dp"
-                            tools:text="Jay" />
+                            tools:text="이름 (닉네임)" />
 
                         <TextView
-                            android:id="@+id/tv_name"
+                            android:id="@+id/tv_checkin_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -80,7 +81,7 @@
                             android:maxLines="1"
                             android:textColor="@color/color_black"
                             android:textSize="14dp"
-                            tools:text="이름" />
+                            tools:text="checkin id: 0000" />
 
                     </LinearLayout>
 

@@ -1,17 +1,61 @@
 package com.artilearn.happygolfgo.ui.home.mypage
 
+import android.content.Context
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.version.source.VersionRepository
+import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
+import java.util.concurrent.TimeUnit
 
 class MyPageViewModel(
-    private val repository: VersionRepository
+    private val repository: VersionRepository,
+    private val koinContext: Context
 ) : BaseViewModel() {
 
+    private val _appUpdate: Subject<Unit> = PublishSubject.create()
+
+    private val _eventType: SingleLiveEvent<MyPageStateType> = SingleLiveEvent()
+    private val _message = SingleLiveEvent<String>()
+    private val _appVersion = SingleLiveEvent<String>()
+
+    val message: LiveData<String>
+        get() = _message
+
+    val eventType: LiveData<MyPageStateType>
+        get() = _eventType
+
+    val appVersion: LiveData<String>
+        get() = _appVersion
+
+    private var packageInfo: PackageInfo? = null
+
     init {
+        bindRx()
         getAppVersion()
+    }
+
+    fun appUpdateOnNext() {
+        _appUpdate.onNext(Unit)
+    }
+
+    fun logout() {
+        repository.userLogout()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .subscribe({
+                _eventType.value = MyPageStateType.LOGOUT
+            }, {
+                _message.value = "로그아웃 불가\n${it.message}"
+            }).addTo(compositeDisposable)
     }
 
     private fun getAppVersion() {
@@ -19,14 +63,53 @@ class MyPageViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-
+                _appVersion.value = loadCurrentAppVersion()
+                compareAppVersion(it.data.latestVersion)
             }, {
-
+                _appVersion.value = loadCurrentAppVersion()
             }).addTo(compositeDisposable)
     }
 
-    enum class VersionUpdateModel {
-        NECESSARY,
-        NEED
+    private fun compareAppVersion(version: String?) {
+        version?.let {
+            val server = it.substring(2).toFloat()
+            val local = loadCurrentAppVersion()?.substring(2)?.toFloat()
+
+            if (local == null) {
+                _eventType.value = MyPageStateType.NECESSARY_UPDATE
+            } else {
+                when {
+                    local < server -> _eventType.value = MyPageStateType.NEED_UPDATE
+                    local >= server -> _eventType.value = MyPageStateType.NECESSARY_UPDATE
+                    else -> _eventType.value = MyPageStateType.NECESSARY_UPDATE
+                }
+            }
+        }
     }
+
+    private fun loadCurrentAppVersion(): String? {
+        try {
+            packageInfo = koinContext.packageManager
+                .getPackageInfo(koinContext.packageName, 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+
+        return packageInfo?.versionName
+    }
+
+    private fun bindRx() {
+        _appUpdate.throttleFirst(1000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { _eventType.value = MyPageStateType.PLAY_STORE }
+            .addTo(compositeDisposable)
+    }
+
+    enum class MyPageStateType {
+        NECESSARY_UPDATE,
+        NEED_UPDATE,
+        LOGOUT,
+        PLAY_STORE
+    }
+
 }

@@ -50,7 +50,7 @@ val viewModelModule = module {
 
     viewModel { PwAuthViewModel(get()) }
 
-    viewModel { MyPageViewModel(get()) }
+    viewModel { MyPageViewModel(get(), get()) }
 
     viewModel { com.artilearn.happygolfgo.ui.mypage.MyPageViewModel(get(), get()) }
 
