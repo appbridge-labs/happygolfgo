@@ -18,6 +18,15 @@ import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
 import java.util.*
 
+@BindingAdapter("setTicketType")
+fun setTicketType(iv: ImageView, type: Int) {
+    when (type) {
+        0 -> iv.setImageResource(R.drawable.ic_reservation_lesson_point)
+        2 -> iv.setImageResource(R.drawable.ic_home_reservation_ticket_point)
+        else -> iv.setImageResource(R.drawable.ic_home_reservation_ticket_point)
+    }
+}
+
 @BindingAdapter("setTicketStartDate", "setTicketEndDate")
 fun ticketDate(tv: TextView, startDate: String, endDate: String) {
     val startTime = convertTime(startDate).trim().split(":")

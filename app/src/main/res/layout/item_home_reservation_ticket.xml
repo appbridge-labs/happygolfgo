@@ -33,7 +33,8 @@
                 android:layout_marginTop="35dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_home_reservation_ticket_point" />
+                bind:setTicketType="@{ticket.type}"
+                tools:srcCompat="@drawable/ic_home_reservation_ticket_point" />
 
             <TextView
                 android:id="@+id/tv_ticket_date"
