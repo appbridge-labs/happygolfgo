@@ -15,7 +15,6 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.constants.*
-import com.artilearn.happygolfgo.ui.alram.AlramActivity
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
@@ -24,7 +23,6 @@ import com.google.firebase.messaging.RemoteMessage
 
 class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
 
-    private var fcmIntent: Intent? = null
     private var eventType: String? = null
     private var eventValue: String? = null
     private var isRunning = false
@@ -37,13 +35,7 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
 
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        remoteMessage.data.let {
-            sendNotification(remoteMessage.data)
-        }
-    }
-
-    override fun onNewToken(to: String) {
-        super.onNewToken(to)
+        sendNotification(remoteMessage.data)
     }
 
     private fun sendNotification(body: MutableMap<String, String>) {
@@ -51,21 +43,23 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
 
         eventType = body["eventType"]
         eventValue = body["eventValue"]
-        createTypePush(body, eventType)
+        createNotification(body, eventType)
     }
 
-    private fun createTypePush(body: MutableMap<String, String>, type: String?) {
+    private fun createNotification(body: MutableMap<String, String>, type: String?) {
+        val intent: Intent
+
         when (type) {
             "3" -> {
                 if (isRunning) {
-                    fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
+                    intent = Intent(this, ReserveConfirmActivity::class.java)
                         .apply {
                             putExtra(RESERVATION_TYPE, reservationPlate)
                             putExtra(PLATE_ID, eventValue?.toInt())
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         }
                 } else {
-                    fcmIntent = Intent(this, HomeActivity::class.java)
+                    intent = Intent(this, HomeActivity::class.java)
                         .apply {
                             putExtra(RESERVATION_TYPE, reservationPlate)
                             putExtra(PLATE_ID, eventValue?.toInt())
@@ -75,14 +69,14 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
             }
             "4" -> {
                 if (isRunning) {
-                    fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
+                    intent = Intent(this, ReserveConfirmActivity::class.java)
                         .apply {
                             putExtra(RESERVATION_TYPE, reservationLesson)
                             putExtra(LESSON_ID, eventValue?.toInt())
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         }
                 } else {
-                    fcmIntent = Intent(this, HomeActivity::class.java)
+                    intent = Intent(this, HomeActivity::class.java)
                         .apply {
                             putExtra(RESERVATION_TYPE, reservationLesson)
                             putExtra(LESSON_ID, eventValue?.toInt())
@@ -92,13 +86,13 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
             }
             "6" -> {
                 if (isRunning) {
-                    fcmIntent = Intent(this, LogActivity::class.java)
+                    intent = Intent(this, LogActivity::class.java)
                         .apply {
                             putExtra(LESSON_ID, eventValue?.toInt())
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         }
                 } else {
-                    fcmIntent = Intent(this, HomeActivity::class.java)
+                    intent = Intent(this, HomeActivity::class.java)
                         .apply {
                             putExtra(LESSON_ID, eventValue?.toInt())
                             putExtra(FCM_EVENT_TYPE, eventType)
@@ -108,12 +102,13 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
             else -> {
                 eventType = ""
                 if (isRunning) {
-                    fcmIntent = Intent(this, AlramActivity::class.java)
+                    intent = Intent(this, HomeActivity::class.java)
                         .apply {
+                            putExtra(FCM_EVENT_TYPE, eventType)
                             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         }
                 } else {
-                    fcmIntent = Intent(this, HomeActivity::class.java)
+                    intent = Intent(this, HomeActivity::class.java)
                         .apply {
                             putExtra(FCM_EVENT_TYPE, eventType)
                         }
@@ -121,10 +116,7 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
             }
         }
 
-        createNotification(body, fcmIntent!!)
-    }
 
-    private fun createNotification(body: MutableMap<String, String>, intent: Intent) {
         val sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         val pendingIntent = PendingIntent.getActivity(

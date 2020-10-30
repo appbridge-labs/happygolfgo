@@ -24,11 +24,11 @@ class HomeViewModel : BaseViewModel() {
 
     init {
         rxBind()
+        bottomNavigation.onNext(BottomNavigationEvent.RESERVATION)
     }
 
     private fun rxBind() {
         bottomNavigation
-            .startWith(BottomNavigationEvent.RESERVATION)
             .distinctUntilChanged()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { _bottomNavigationButton.value = it }

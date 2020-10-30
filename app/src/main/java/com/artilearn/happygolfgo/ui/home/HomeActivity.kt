@@ -2,15 +2,11 @@ package com.artilearn.happygolfgo.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.FCM_EVENT_TYPE
@@ -24,7 +20,6 @@ import com.artilearn.happygolfgo.ui.home.mypage.MyPageFragment
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationFragment
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
-import com.artilearn.happygolfgo.util.MyApplication
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -48,6 +43,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         bottomNavigationListener()
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        when (fcmEventType) {
+            "3" -> goReservaitonPlateFromFCM()
+            "4" -> goReservationLessonFromFCM()
+            "6" -> goLessonLogFromFCM()
+            "" -> goAlramFCM()
+        }
+    }
+
     private fun initBinding() {
         binding.vm = vm
     }
@@ -66,13 +72,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun initView() {
         initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
         bottomNavigation = binding.bottomNavigation
-
-        when (fcmEventType) {
-            "3" -> goReservaitonPlateFromFCM()
-            "4" -> goReservationLessonFromFCM()
-            "6" -> goLessonLogFromFCM()
-            "" -> "" // 알람화면으로
-        }
     }
 
     private fun bottomNavigationListener() {
@@ -178,6 +177,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         dialog.show()
     }
 
+    private fun goAlramFCM() {
+        vm.bottomNavigation(ALRAM)
+        bottomNavigation.selectedItemId = R.id.alram
+    }
+
     private fun goReservaitonPlateFromFCM() {
         val fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
             .apply {
@@ -219,123 +223,5 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         const val ALRAM = "알림"
         const val MY_PAGE = "마이페이지"
     }
-
-//    private fun inject() {
-//        myApplication = application as MyApplication
-//        binding.vm = viewModel
-//    }
-//
-//    private fun initViewModelObserve() {
-//        with(viewModel) {
-//            myPage.observe(this@HomeActivity, Observer {
-//                //goMyPage()
-//            })
-//            alram.observe(this@HomeActivity, Observer {
-//                //goAlram()
-//            })
-//            serverError.observe(this@HomeActivity, Observer {
-//                showError(it)
-//            })
-//            networkFail.observe(this@HomeActivity, Observer {
-//                showNetworkFail()
-//            })
-//        }
-//    }
-
-//    private fun initView() {
-//        initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
-//        initBottomView(
-//            binding.includeBottomView,
-//            getString(R.string.home_bottomview_title),
-//            BottimViewType.DEFAULT_TYPE
-//        )
-//
-//        when (fcmEventType) {
-//            "3" -> goReservaitonPlateFromFCM()
-//            "4" -> goReservationLessonFromFCM()
-//            "6" -> goLessonLogFromFCM()
-//            "" -> goAlram()
-//        }
-//    }
-
-//    private fun initAdapter() {
-//        adapter = HomeAdapter { ticket ->
-//            with(ticket) {
-//                when {
-//                    !isUnlimited && remainingCount == 0 -> binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
-//                    allowToBook == possible -> binding.parentLayout.snackbar(getString(R.string.home_reservation_allowbook_fail))
-//                    ticket.type == 1 -> ""
-//                    else -> goSelectionDate(ticket)
-//                }
-//            }
-//        }
-//
-//        binding.recyclerview.adapter = adapter
-//    }
-
-//    private fun ticketRefresh() {
-//        with(binding.swipeRefresh) {
-//            setOnRefreshListener {
-//                viewModel.requestTicket()
-//                isRefreshing = false
-//            }
-//
-//            setColorSchemeColors(resources.getColor(R.color.color_dark_green))
-//        }
-//    }
-
-//    private fun goMyPage() {
-//        startActivity(Intent(this, MyPageActivity::class.java))
-//    }
-//
-//    private fun goAlram() {
-//        startActivity(Intent(this, AlramActivity::class.java))
-//    }
-
-//    private fun goSelectionDate(ticket: Ticket) {
-//        val selectIntent = Intent(this, TicketDateActivity::class.java)
-//            .apply {
-//                putExtra(TICKET, ticket)
-//            }
-//        startActivity(selectIntent)
-//    }
-//
-//    private fun goReservaitonPlateFromFCM() {
-//        val fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
-//            .apply {
-//                putExtra(RESERVATION_TYPE, reservationType)
-//                putExtra(PLATE_ID, plateId)
-//            }
-//        startActivity(fcmIntent)
-//    }
-//
-//    private fun goReservationLessonFromFCM() {
-//        val fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
-//            .apply {
-//                putExtra(RESERVATION_TYPE, reservationType)
-//                putExtra(LESSON_ID, lessonId)
-//            }
-//        startActivity(fcmIntent)
-//    }
-//
-//    private fun goLessonLogFromFCM() {
-//        val logIntent = Intent(this, LogActivity::class.java)
-//            .apply {
-//                putExtra(LESSON_ID, lessonId)
-//            }
-//        startActivity(logIntent)
-//    }
-//
-//    override fun bottomAction() {
-//        super.bottomAction()
-//
-//        if (adapter.itemCount != 0) {
-//            val reserveListActivity = Intent(this, ReserveListActivity::class.java)
-//            startActivity(reserveListActivity)
-//        } else {
-//            binding.parentLayout.snackbar(getString(R.string.home_empty_ticket_go))
-//        }
-//    }
-
 
 }

@@ -49,4 +49,5 @@ class AlramFragment
 
         binding.recyclerview.adapter = adapter
     }
+
 }
