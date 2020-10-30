@@ -1,10 +1,18 @@
 package com.artilearn.happygolfgo.ui.home.alram
 
+import android.content.Intent
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.api.firebase.FCMMessage.Companion.reservationLesson
+import com.artilearn.happygolfgo.api.firebase.FCMMessage.Companion.reservationPlate
 import com.artilearn.happygolfgo.base.BaseFragment
+import com.artilearn.happygolfgo.constants.LESSON_ID
+import com.artilearn.happygolfgo.constants.PLATE_ID
+import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.databinding.FragmentAlramBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.log.LogActivity
+import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AlramFragment
@@ -41,13 +49,39 @@ class AlramFragment
     private fun initAdapter() {
         adapter = AlramAdapter { alram ->
             when (alram.eventType) {
-                "3" -> ""
-                "4" -> ""
-                "6" -> ""
+                "3" -> goReservaitonPlate(alram.eventValue.toInt())
+                "4" -> goReservationLesson(alram.eventValue.toInt())
+                "6" -> goLessonLog(alram.eventValue.toInt())
             }
         }
 
         binding.recyclerview.adapter = adapter
+    }
+
+    private fun goReservationLesson(lessonId: Int) {
+        val lessonIntent = Intent(activity, ReserveConfirmActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_TYPE, reservationLesson)
+                putExtra(LESSON_ID, lessonId)
+            }
+        startActivity(lessonIntent)
+    }
+
+    private fun goReservaitonPlate(plateId: Int) {
+        val plateIntent = Intent(activity, ReserveConfirmActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_TYPE, reservationPlate)
+                putExtra(PLATE_ID, plateId)
+            }
+        startActivity(plateIntent)
+    }
+
+    private fun goLessonLog(lessonId: Int) {
+        val logIntent = Intent(activity, LogActivity::class.java)
+            .apply {
+                putExtra(LESSON_ID, lessonId)
+            }
+        startActivity(logIntent)
     }
 
 }
