@@ -2,11 +2,7 @@ package com.artilearn.happygolfgo.ui.ticketdate
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.artilearn.happygolfgo.R
@@ -16,7 +12,6 @@ import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityTicketDateBinding
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeActivity
-import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*

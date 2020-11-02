@@ -153,7 +153,7 @@ class PwAuthViewModel(
 
     private fun bindRx() {
         authTimer.observeOn(AndroidSchedulers.mainThread())
-            .subscribe { timerState = it <= 10 }
+            .subscribe { timerState = it <= 180 }
             .addTo(compositeDisposable)
 
         Observable.merge(sendButtonObservable(), confirmButtonObservable())

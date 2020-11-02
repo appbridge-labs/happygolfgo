@@ -1,8 +1,5 @@
 package com.artilearn.happygolfgo.constants
 
-const val CONNECT_TIMEOUT = 15L
-const val WRITE_TIMEOUT = 15L
-const val READ_TIMEOUT = 15L
 const val HAPPY_GOLF_USER = "HAPPY_GOLF_USER"
 const val TUTORIAL = "TUTORIAL"
 const val AUTO_LOGIN = "AUTO_LOGIN"

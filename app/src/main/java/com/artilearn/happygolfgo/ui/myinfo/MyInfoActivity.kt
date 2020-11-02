@@ -1,20 +1,14 @@
 package com.artilearn.happygolfgo.ui.myinfo
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityMyInfoBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.enummodel.UploadProfileType
-import com.artilearn.happygolfgo.util.MyApplication
-import kotlinx.android.synthetic.main.activity_my_info.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_info) {

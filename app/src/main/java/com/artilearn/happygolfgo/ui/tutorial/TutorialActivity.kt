@@ -2,15 +2,11 @@ package com.artilearn.happygolfgo.ui.tutorial
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityTutorialBinding
 import com.artilearn.happygolfgo.ui.login.LoginActivity
-import com.artilearn.happygolfgo.util.MyApplication
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TutorialActivity : BaseActivity<ActivityTutorialBinding>(R.layout.activity_tutorial) {

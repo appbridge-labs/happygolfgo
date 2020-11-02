@@ -13,8 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.gamerank.GameRankActivity"></activity>
-        <activity android:name=".ui.gamescore.GameScoreActivity" />
+        <activity android:name=".ui.gamerank.GameRankActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.gamescore.GameScoreActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.comment.CommentActivity"
             android:screenOrientation="portrait"
@@ -44,9 +46,6 @@
             android:name=".ui.ticketdate.TicketDateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.alram.AlramActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.lessonpostlist.LessonPostListActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -61,9 +60,6 @@
             android:name=".ui.myinfo.MyInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".ui.mypage.MyPageActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait" />

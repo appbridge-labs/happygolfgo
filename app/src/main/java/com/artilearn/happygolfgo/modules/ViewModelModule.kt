@@ -52,8 +52,6 @@ val viewModelModule = module {
 
     viewModel { MyPageViewModel(get(), get()) }
 
-    viewModel { com.artilearn.happygolfgo.ui.mypage.MyPageViewModel(get(), get()) }
-
     viewModel { MyInfoViewModel(get()) }
 
     viewModel { LoginViewModel(get(), get()) }
