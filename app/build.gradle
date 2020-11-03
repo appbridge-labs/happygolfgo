@@ -117,4 +117,7 @@ dependencies {
 
     // koin
     implementation "org.koin:koin-androidx-viewmodel:2.1.5"
+
+    // mp chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
