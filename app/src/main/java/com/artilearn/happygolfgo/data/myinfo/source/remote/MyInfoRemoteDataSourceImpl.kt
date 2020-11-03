@@ -13,8 +13,5 @@ class MyInfoRemoteDataSourceImpl(
         data: HashMap<String, MyInfoModel>
     ): Single<MyInfoResponse> {
         return apiInterface.updateProfile(data)
-            .map { 
-                it
-            }
     }
 }

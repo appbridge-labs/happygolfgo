@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.ReserveList
 import com.artilearn.happygolfgo.databinding.ItemReservationNewListBinding
-import com.artilearn.happygolfgo.databinding.ItemReserveListBinding
 
 class ReserveListAdapter(
     private val itemClick: (ReserveList) -> Unit

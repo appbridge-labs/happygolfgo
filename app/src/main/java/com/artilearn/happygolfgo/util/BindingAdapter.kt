@@ -32,7 +32,8 @@ fun ticketDate(tv: TextView, startDate: String, endDate: String) {
     val startTime = convertTime(startDate).trim().split(":")
     val endTime = convertTime(endDate).trim().split(":")
 
-    tv.text = "${startTime[1]}.${startTime[2]}~${endTime[1]}.${endTime[2]}"
+    val text = "${startTime[1]}.${startTime[2]}~${endTime[1]}.${endTime[2]}"
+    tv.text = text
 }
 
 @BindingAdapter(
@@ -53,7 +54,8 @@ fun ticketCount(
     } else if (isUnlimited && !onceToday) {
         tv.text = "무제한 사용"
     } else {
-        tv.text = "${total}회 중 ${remaining}회 남음"
+        val text = "${total}회 중 ${remaining}회 남음"
+        tv.text = text
     }
 }
 
@@ -76,8 +78,8 @@ fun RecyclerView.setLessonLogItems(logs: List<LessonLog>?) {
 @BindingAdapter("setLogTime", "setLogCoachName")
 fun setLessonLogItem(tv: TextView, time: String, coach: String) {
     val logTime = convertTime(time).trim().split(":")
-
-    tv.text = "${logTime[0]}. ${logTime[1]}. ${logTime[2]} / $coach"
+    val text = "${logTime[0]}. ${logTime[1]}. ${logTime[2]} / $coach"
+    tv.text = text
 }
 
 @BindingAdapter("setAlramMessage")
@@ -122,7 +124,8 @@ fun setTicketTimeDate(tv: TextView, start: String, end: String) {
     val startTime = convertTime(start).trim().split(":")
     val endTime = convertTime(end).trim().split(":")
 
-    tv.text = "${startTime[3]}:${startTime[4]}~${endTime[3]}:${endTime[4]}"
+    val text = "${startTime[3]}:${startTime[4]}~${endTime[3]}:${endTime[4]}"
+    tv.text = text
 }
 
 @BindingAdapter("setTicketLessonStatus", "setTicketPlateAllCount")
@@ -131,7 +134,8 @@ fun setTicketTimeTitle(tv: TextView, lessonStauts: Int?, plateAllCount: Int?) {
         tv.text = "상태"
     }
     plateAllCount?.let {
-        tv.text = "총 ${plateAllCount}석"
+        val text = "총 ${plateAllCount}석"
+        tv.text = text
     }
 }
 
@@ -144,7 +148,8 @@ fun setTicketTimeDetail(tv: TextView, lessonStatus: Int?, plateAvailableCount: I
 
     plateAvailableCount?.let {
         if (it != 0) {
-            tv.text = "잔여 ${it}석"
+            val text = "잔여 ${it}석"
+            tv.text = text
             tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_black))
         }
     }
@@ -154,23 +159,6 @@ fun setTicketTimeDetail(tv: TextView, lessonStatus: Int?, plateAvailableCount: I
 fun setTicketName(tv: TextView, name: String) {
     tv.text = name
 }
-
-//@BindingAdapter("setReservationDate")
-//fun setReservationStartTime(tv: TextView, time: String) {
-//    val start = convertTime(time).trim().split(":")
-//    tv.text = "${start[1]}.${start[2]}"
-//}
-
-//@BindingAdapter("setTicketStatus")
-//fun setReservationStatus(tv: TextView, status: Int) {
-//    when (status) {
-//        0 -> tv.text = "예약완료"
-//        1 -> tv.text = "1번"
-//        2 -> tv.text = "2번"
-//        3 -> tv.text = "3번"
-//        else -> tv.text = "else"
-//    }
-//}
 
 @BindingAdapter("setLogThumbNail")
 fun setLogThumbNail(iv: ImageView, thumbNail: String?) {
@@ -189,7 +177,6 @@ fun setLogComment(tv: TextView, comment: String?) {
 @BindingAdapter("setReservationStartTime")
 fun setReservationStartTime(tv: TextView, startTime: String) {
     val time = convertTime(startTime).trim().split(":")
-    println("${time[3]}, ${time[4]}")
     tv.text = String.format("%s:%s", time[3], time[4])
 }
 

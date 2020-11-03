@@ -22,11 +22,20 @@ class MyInfoViewModel(
     private val _localNickName: MutableLiveData<String> = MutableLiveData()
     private val _upload: MutableLiveData<UploadProfileType> = MutableLiveData()
 
-    val emptyNickName: LiveData<Unit> get() = _emptyNickName
-    val failNickName: LiveData<Unit> get() = _failNickName
-    val localName: LiveData<String> get() = _localName
-    val localNickName: LiveData<String> get() = _localNickName
-    val upload: LiveData<UploadProfileType> get() = _upload
+    val emptyNickName: LiveData<Unit>
+        get() = _emptyNickName
+
+    val failNickName: LiveData<Unit>
+        get() = _failNickName
+
+    val localName: LiveData<String>
+        get() = _localName
+
+    val localNickName: LiveData<String>
+        get() = _localNickName
+
+    val upload: LiveData<UploadProfileType>
+        get() = _upload
 
     private var currentNickName = ""
 

@@ -3,9 +3,6 @@ package com.artilearn.happygolfgo.ui.reservelist.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.PLATE_ID

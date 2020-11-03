@@ -139,16 +139,16 @@ class ReserveConfirmActivity :
 
     private fun setReservationTicketDate(startTime: String) {
         val date = convertTime(startTime).trim().split(":")
-
-        binding.tvTicketDate.text = "${date[0]}. ${date[1]}. ${date[2]}"
+        val text = "${date[0]}. ${date[1]}. ${date[2]}"
+        binding.tvTicketDate.text = text
     }
 
     private fun setReservationTicketTime(startTime: String, endTime: String) {
         val start = convertTime(startTime).trim().split(":")
         val end = convertTime(endTime).trim().split(":")
 
-        binding.tvTicketTime.text =
-            "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
+        val text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
+        binding.tvTicketTime.text = text
     }
 
     private fun setReservationPolicy(policy: String) {

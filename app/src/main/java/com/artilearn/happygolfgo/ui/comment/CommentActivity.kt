@@ -78,8 +78,8 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
 
     private fun setCoachNameLessonTime(name: String, date: String) {
         val time = convertTime(date).trim().split(":")
-        binding.tvCoachInfo.text =
-            "$name, ${time[0]}.${time[1]}.${time[2]}"
+        val text = "${time[0]}.${time[1]}.${time[2]}"
+        binding.tvCoachInfo.text = text
     }
 
     private fun showEmptyRating() {
