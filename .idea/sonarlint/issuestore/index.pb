@@ -341,4 +341,9 @@ Rapp/src/main/java/com/artilearn/happygolfgo/data/home/source/HomeRepositoryImpl
 =======
 è
 _app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/ReservationRepository.kt,6/3/63a67c371e4e0305779d244f0ac4b87a5ee74bc3
+<<<<<<< HEAD
 >>>>>>> HG-Dev-1.12.0
+=======
+Ñ
+Tapp/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/ReservePlateModel.kt,1/b/1b7100c2533bd27da2ad63dc160517988cebeb02
+>>>>>>> HG-Hotfix-1.12.1
