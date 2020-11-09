@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.base
 
 import androidx.databinding.ViewDataBinding
+import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +30,7 @@ abstract class BaseRecyclerViewAdapter<T: Identifiable>
     ) : RecyclerView.ViewHolder(binding.root) {
 
         open fun bind(item: T) {
-            
+            binding.setVariable(BR.item, item)
             binding.executePendingBindings()
         }
 
