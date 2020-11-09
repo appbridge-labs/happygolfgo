@@ -41,8 +41,8 @@ class ReserveListAdapter(
         private val binding: ItemReservationNewListBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(lesson: ReserveList) {
-            binding.reservation = lesson
+        fun bind(item: ReserveList) {
+            binding.item = item
             binding.executePendingBindings()
         }
 

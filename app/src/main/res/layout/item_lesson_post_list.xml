@@ -7,7 +7,7 @@
     <data>
 
         <variable
-            name="log"
+            name="item"
             type="com.artilearn.happygolfgo.data.LessonLog" />
     </data>
 
@@ -25,8 +25,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:setLogCoachName="@{log.employeeName}"
-            bind:setLogTime="@{log.createdAt}"
+            bind:setLogCoachName="@{item.employeeName}"
+            bind:setLogTime="@{item.createdAt}"
             tools:text="2020. 05. 28 / OOO 코치" />
 
         <ImageView

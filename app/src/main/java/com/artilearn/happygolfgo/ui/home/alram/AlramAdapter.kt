@@ -41,15 +41,15 @@ class AlramAdapter(
         private val binding: ItemHomeAlramBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(alram: Alram) {
-            binding.alram = alram
+        fun bind(item: Alram) {
+            binding.item = item
 
-            when (alram.eventType) {
+            when (item.eventType) {
                 "3", "4", "6" -> binding.ivArrow.visibility = View.VISIBLE
                 else -> binding.ivArrow.visibility = View.GONE
             }
 
-            when (alram.isRead) {
+            when (item.isRead) {
                 false -> binding.parentLayout.setBackgroundResource(R.drawable.bg_alram_unread)
                 true -> binding.parentLayout.setBackgroundResource(R.drawable.bg_alram_read)
             }

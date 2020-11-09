@@ -40,8 +40,8 @@ class TicketTimeAdapter(
         private val binding: ItemTicketTimeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(ticketTime: TicketTime) {
-            binding.ticketTime = ticketTime
+        fun bind(item: TicketTime) {
+            binding.item = item
             binding.executePendingBindings()
         }
     }

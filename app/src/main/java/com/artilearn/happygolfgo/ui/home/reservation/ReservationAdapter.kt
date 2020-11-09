@@ -41,9 +41,9 @@ class ReservationAdapter(
         private val binding: ItemHomeReservationTicketBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(ticket: Ticket) {
-            binding.ticket = ticket
-            when (ticket.type) {
+        fun bind(item: Ticket) {
+            binding.item = item
+            when (item.type) {
                 1 -> binding.ivArrow.visibility = View.INVISIBLE
                 else -> binding.ivArrow.visibility = View.VISIBLE
             }

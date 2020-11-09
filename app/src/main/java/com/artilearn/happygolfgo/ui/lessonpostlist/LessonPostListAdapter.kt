@@ -40,8 +40,8 @@ class LessonPostListAdapter(
         private val binding: ItemLessonPostListBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(log: LessonLog) {
-            binding.log = log
+        fun bind(item: LessonLog) {
+            binding.item = item
             binding.executePendingBindings()
         }
 

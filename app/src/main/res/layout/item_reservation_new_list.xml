@@ -7,7 +7,7 @@
     <data>
 
         <variable
-            name="reservation"
+            name="item"
             type="com.artilearn.happygolfgo.data.ReserveList" />
     </data>
 
@@ -18,8 +18,8 @@
         android:layout_marginTop="12dp"
         android:elevation="4dp"
         app:cardCornerRadius="5dp"
-        bind:setReservationCard="@{reservation.plateNumber}"
-        bind:setReservationCardDay="@{reservation.startDate}">
+        bind:setReservationCard="@{item.plateNumber}"
+        bind:setReservationCardDay="@{item.startDate}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:setReservationPoint="@{reservation.plateNumber}"
+                bind:setReservationPoint="@{item.plateNumber}"
                 tools:srcCompat="@drawable/ic_home_reservation_ticket_point" />
 
             <TextView
@@ -47,7 +47,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/iv_point"
                 app:layout_constraintStart_toEndOf="@id/iv_point"
                 app:layout_constraintTop_toTopOf="@id/iv_point"
-                bind:setTicketName="@{reservation.name}"
+                bind:setTicketName="@{item.name}"
                 tools:text="티켓 이름" />
 
             <View
@@ -74,7 +74,7 @@
                     android:layout_width="68dp"
                     android:layout_height="68dp"
                     android:paddingTop="8dp"
-                    bind:setReservationCalendarColor="@{reservation.plateNumber}">
+                    bind:setReservationCalendarColor="@{item.plateNumber}">
 
                     <TextView
                         android:id="@+id/tv_month"
@@ -85,8 +85,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        bind:setReservationMonth="@{reservation.startDate}"
-                        bind:setReservationMonthType="@{reservation.plateNumber}"
+                        bind:setReservationMonth="@{item.startDate}"
+                        bind:setReservationMonthType="@{item.plateNumber}"
                         tools:text="1월" />
 
                     <TextView
@@ -98,8 +98,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_month"
-                        bind:setReservationDay="@{reservation.startDate}"
-                        bind:setReservationDayType="@{reservation.plateNumber}"
+                        bind:setReservationDay="@{item.startDate}"
+                        bind:setReservationDayType="@{item.plateNumber}"
                         tools:text="20" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -128,7 +128,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/start_time"
-                        bind:setReservationStartTime="@{reservation.startDate}"
+                        bind:setReservationStartTime="@{item.startDate}"
                         tools:text="11:00" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -157,7 +157,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/end_time"
-                        bind:setReservationEndTime="@{reservation.endDate}"
+                        bind:setReservationEndTime="@{item.endDate}"
                         tools:text="12:00" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

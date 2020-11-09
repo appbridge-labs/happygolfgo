@@ -7,7 +7,7 @@
     <data>
 
         <variable
-            name="ticket"
+            name="item"
             type="com.artilearn.happygolfgo.data.Ticket" />
     </data>
 
@@ -33,7 +33,7 @@
                 android:layout_marginTop="35dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:setTicketType="@{ticket.type}"
+                bind:setTicketType="@{item.type}"
                 tools:srcCompat="@drawable/ic_home_reservation_ticket_point" />
 
             <TextView
@@ -47,8 +47,8 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/iv_point"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:setTicketEndDate="@{ticket.endDate}"
-                bind:setTicketStartDate="@{ticket.startDate}"
+                bind:setTicketEndDate="@{item.endDate}"
+                bind:setTicketStartDate="@{item.startDate}"
                 tools:text="09.01 ~ 09.24" />
 
             <TextView
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@{ticket.name}"
+                android:text="@{item.name}"
                 android:textSize="14dp"
                 app:layout_constraintStart_toStartOf="@id/tv_ticket_date"
                 app:layout_constraintTop_toBottomOf="@id/tv_ticket_date"
@@ -92,10 +92,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                bind:setTicketIsUnLimited="@{ticket.unlimited}"
-                bind:setTicketOnlyOnceToday="@{ticket.onlyOnceToday}"
-                bind:setTicketRemainingCount="@{ticket.remainingCount}"
-                bind:setTicketTotalCount="@{ticket.totalCount}"
+                bind:setTicketIsUnLimited="@{item.unlimited}"
+                bind:setTicketOnlyOnceToday="@{item.onlyOnceToday}"
+                bind:setTicketRemainingCount="@{item.remainingCount}"
+                bind:setTicketTotalCount="@{item.totalCount}"
                 tools:text="횟수 or 무제한 이용권" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

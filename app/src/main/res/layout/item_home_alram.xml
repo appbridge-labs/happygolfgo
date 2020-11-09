@@ -7,7 +7,7 @@
     <data>
 
         <variable
-            name="alram"
+            name="item"
             type="com.artilearn.happygolfgo.data.Alram" />
     </data>
 
@@ -42,7 +42,7 @@
                 app:layout_constraintEnd_toStartOf="@id/iv_arrow"
                 app:layout_constraintStart_toEndOf="@id/iv_alram"
                 app:layout_constraintTop_toTopOf="@id/iv_alram"
-                bind:setAlramTitle="@{alram.title}"
+                bind:setAlramTitle="@{item.title}"
                 tools:text="제 목 들어갑니다제 목 들어갑니다제 목 들어갑니다제 목 들어갑니다제 목 들어갑니다제 목 들어갑니다제 목 들어갑니다" />
 
             <TextView
@@ -56,7 +56,7 @@
                 app:layout_constraintEnd_toStartOf="@id/iv_arrow"
                 app:layout_constraintStart_toStartOf="@id/tv_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_title"
-                bind:setAlramBody="@{alram.body}"
+                bind:setAlramBody="@{item.body}"
                 tools:text="내용이 들어갑니다내용이 들어갑니다내용이 들어갑니다내용이 들어갑니다내용이 들어갑니다내용이 들어갑니다내용이 들어갑니다내용이 들어갑니다" />
 
             <TextView
@@ -68,7 +68,7 @@
                 android:textSize="14dp"
                 app:layout_constraintStart_toStartOf="@id/tv_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_content"
-                bind:setAlramDate="@{alram.createdAt}"
+                bind:setAlramDate="@{item.createdAt}"
                 tools:text="2020.05.09 15:40" />
 
             <ImageView
