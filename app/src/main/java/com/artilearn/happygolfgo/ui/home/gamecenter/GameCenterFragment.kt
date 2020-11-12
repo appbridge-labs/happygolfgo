@@ -2,29 +2,22 @@ package com.artilearn.happygolfgo.ui.home.gamecenter
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Point
-import android.util.DisplayMetrics
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentGamecenterBinding
 import com.artilearn.happygolfgo.ui.gamerank.GameRankActivity
 import com.artilearn.happygolfgo.ui.gamescore.GameScoreActivity
-import com.artilearn.happygolfgo.util.LabelCustomFormatter
-import com.artilearn.happygolfgo.util.ScoreCustomFormatter
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import kotlinx.android.synthetic.main.fragment_gamecenter.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class GameCenterFragment :
     BaseFragment<FragmentGamecenterBinding, GameCenterViewModel>(R.layout.fragment_gamecenter) {
-    private val TAG = javaClass.simpleName
+
     override val viewModel: GameCenterViewModel by viewModel()
 
     override fun init() {
@@ -108,8 +101,6 @@ class GameCenterFragment :
                 colors = colorList
                 valueTextColor = Color.RED
             }
-
-
 
         val dataSets = mutableListOf<IBarDataSet>()
         dataSets.add(set)
