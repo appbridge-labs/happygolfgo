@@ -2,6 +2,8 @@ package com.artilearn.happygolfgo.ui.home.gamecenter
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Point
+import android.util.DisplayMetrics
 import android.util.Log
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
@@ -15,8 +17,8 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import kotlinx.android.synthetic.main.fragment_gamecenter.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -54,22 +56,20 @@ class GameCenterFragment :
             barChart.run {
                 setDrawBarShadow(true)
                 setTouchEnabled(false)
-                setDrawValueAboveBar(true)
+                setDrawValueAboveBar(false)
                 setPinchZoom(false)
                 setDrawGridBackground(false)
-                setMaxVisibleValueCount(10)
                 description.isEnabled = false
                 legend.isEnabled = false
 
+                setVisibleXRangeMaximum(5f)
+
                 xAxis.run {
                     isEnabled = true
-                    position = XAxis.XAxisPosition.BOTTOM
-                    valueFormatter = LabelCustomFormatter()
                     setDrawGridLines(false)
                     granularity = 1f
                     setDrawAxisLine(false)
                     textSize = 12f
-                    textColor = Color.BLUE
                 }
 
                 axisLeft.run {
@@ -80,7 +80,7 @@ class GameCenterFragment :
                 }
 
                 animateY(2500)
-                //animateX(2000)
+                animateX(2000)
             }
         }
     }
@@ -105,11 +105,12 @@ class GameCenterFragment :
         val set = BarDataSet(values, "내용없음")
             .apply {
                 setDrawIcons(false)
-                setDrawValues(true)
+                setDrawValues(false)
                 colors = colorList
-                valueFormatter = ScoreCustomFormatter()
                 valueTextColor = Color.RED
             }
+
+
 
         val dataSets = mutableListOf<IBarDataSet>()
         dataSets.add(set)
@@ -121,7 +122,6 @@ class GameCenterFragment :
             }
 
         binding.barChart.data = data
-
     }
 
     private fun goGameRank() {

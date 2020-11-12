@@ -1,5 +1,7 @@
 package com.artilearn.happygolfgo.util
 
+import android.util.Log
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.io.Serializable
 
@@ -33,13 +35,17 @@ class LabelCustomFormatter : ValueFormatter() {
     override fun getFormattedValue(value: Float): String {
         index = value.toInt()
         return when (index) {
-            6 -> "드라이버"
-            7 -> "아이언"
-            8 -> "우드"
-            9 -> "어프로치"
-            10 -> "퍼팅"
+            6 -> "DR"
+            7 -> "WU"
+            8 -> "IRON"
+            9 -> "S/W"
+            10 -> "PUTT"
             else -> throw IndexOutOfBoundsException("index out")
         }
+    }
+
+    override fun getBarStackedLabel(value: Float, stackedEntry: BarEntry?): String {
+        return super.getBarStackedLabel(value, stackedEntry)
     }
 }
 
