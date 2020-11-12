@@ -61,11 +61,10 @@ class GameCenterFragment :
                 setDrawGridBackground(false)
                 description.isEnabled = false
                 legend.isEnabled = false
-
                 setVisibleXRangeMaximum(5f)
 
                 xAxis.run {
-                    isEnabled = true
+                    isEnabled = false
                     setDrawGridLines(false)
                     granularity = 1f
                     setDrawAxisLine(false)

@@ -27,4 +27,9 @@
     <color name="color_sw_text_color">#22B8CF</color>
     <color name="color_putt_text_color">#51CF66</color>
     <color name="color_mypage_update">#F23C3C</color>
+    <color name="color_graph_dr">#CC5DE8</color>
+    <color name="color_graph_wu">#845EF7</color>
+    <color name="color_graph_iron">#5C7CFA</color>
+    <color name="color_graph_sw">#22B8CF</color>
+    <color name="color_graph_putt">#51CF66</color>
 </resources>
