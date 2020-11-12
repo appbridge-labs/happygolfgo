@@ -350,6 +350,7 @@
                         android:layout_weight="0.2"
                         android:gravity="center_horizontal"
                         android:text="DR"
+                        android:textColor="@color/color_graph_dr"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -359,6 +360,7 @@
                         android:layout_weight="0.2"
                         android:gravity="center_horizontal"
                         android:text="WU"
+                        android:textColor="@color/color_graph_wu"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -368,6 +370,7 @@
                         android:layout_weight="0.2"
                         android:gravity="center_horizontal"
                         android:text="IRON"
+                        android:textColor="@color/color_graph_iron"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -377,6 +380,7 @@
                         android:layout_weight="0.2"
                         android:gravity="center_horizontal"
                         android:text="S/W"
+                        android:textColor="@color/color_graph_sw"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 
@@ -386,6 +390,7 @@
                         android:layout_weight="0.2"
                         android:gravity="center_horizontal"
                         android:text="PUTT"
+                        android:textColor="@color/color_graph_putt"
                         android:textSize="14dp"
                         android:textStyle="bold" />
 

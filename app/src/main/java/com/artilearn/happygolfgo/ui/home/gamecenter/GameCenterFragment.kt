@@ -78,8 +78,8 @@ class GameCenterFragment :
                     isEnabled = false
                 }
 
-                animateY(2500)
-                animateX(2000)
+                animateY(1500)
+                animateX(1000)
             }
         }
     }
@@ -87,11 +87,11 @@ class GameCenterFragment :
     private fun replaceSetBarData() {
         val values = mutableListOf<BarEntry>()
         val colorList = listOf(
-            Color.rgb(192, 255, 140),
-            Color.rgb(255, 247, 97),
-            Color.rgb(79, 208, 45),
-            Color.rgb(140, 234, 255),
-            Color.rgb(255, 140, 157)
+            Color.rgb(204, 93, 232),
+            Color.rgb(132, 94, 247),
+            Color.rgb(92, 124, 250),
+            Color.rgb(34, 184, 207),
+            Color.rgb(81, 207, 102)
         )
 
         for (i in 6..10) {
