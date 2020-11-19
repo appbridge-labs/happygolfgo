@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -97,6 +98,7 @@ class LoginViewModel(
                 .subscribe({
                     _loginSuccess.value = Unit
                 }, {
+                    Log.d("testest", "requestLogin: $it")
                     when (it.message) {
                         "HTTP 401 Unauthorized", "HTTP 401 " -> {
                             _failPassword.value = Unit

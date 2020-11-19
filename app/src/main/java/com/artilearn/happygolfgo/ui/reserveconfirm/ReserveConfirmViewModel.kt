@@ -1,8 +1,10 @@
 package com.artilearn.happygolfgo.ui.reserveconfirm
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
+import com.artilearn.happygolfgo.data.ApiError
 import com.artilearn.happygolfgo.data.ReservationLesson
 import com.artilearn.happygolfgo.data.ReservationPlate
 import com.artilearn.happygolfgo.data.reserveconfirm.LessonResponse
@@ -13,7 +15,8 @@ import com.artilearn.happygolfgo.data.reserveconfirm.source.CancelRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
@@ -62,12 +65,8 @@ class ReserveConfirmViewModel(
                     }
                 }, { t ->
                     when (t.message) {
-                        "Network Error" -> {
-                            _networkFail.value = Unit
-                        }
-                        else -> {
-                            _serverError.value = t.message
-                        }
+                        "Network Error" -> _networkFail.value = Unit
+                        else -> _serverError.value = t.message
                     }
                 })
         )
@@ -89,38 +88,30 @@ class ReserveConfirmViewModel(
                         if (response.isSuccessful && body != null) {
                             _reservationPlate.value = body.data.plateReservation
                         } else {
-                            try {
-                                _buttonClickable.call()
-                                _serverError.value = response.message()
-                                throw RuntimeException("타석예약 exception")
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().recordException(e)
-                                FirebaseCrashlytics.getInstance()
-                                    .log("타석예약 response: $response\nmessage: ${response.message()}\nbody: ${response.body()}\nerrorBody: ${response.errorBody()}...}")
-                                FirebaseCrashlytics.getInstance()
-                                    .log("타석예약 error: $e\nstack: ${e.printStackTrace()}\nlocal: ${e.localizedMessage}}")
+                            _buttonClickable.call()
+                            val erroBody = response.errorBody()
+                            if (erroBody == null) {
+                                _serverError.value = "알 수 없는 오류 발생"
+                            } else {
+                                val gson = Gson()
+                                val type = object : TypeToken<ApiError>() {}.type
+                                val errorResponse: ApiError = gson.fromJson(erroBody.charStream(), type)
+                                when (errorResponse.resultCode) {
+                                    4110 -> _serverError.value = "사용 불가능한 이용권 입니다"
+                                    4102 -> _serverError.value = "최대 예약횟수는 3회 입니다"
+                                    4117 -> _serverError.value = "예약가능한 타석이 없습니다"
+                                    4103, 4116 -> _serverError.value = "당일 예약이 가득 찼습니다"
+                                    4118 -> _serverError.value = "요청 정보를 알 수 없습니다"
+                                    4112 -> _serverError.value = "해당 티켓은 타석 이용권이 아닙니다"
+                                }
                             }
                         }
                     }, { t ->
                         _buttonClickable.call()
                         when (t.message) {
-                            "Network Error" -> {
-                                _networkFail.value = Unit
-                            }
-                            else -> {
-                                try {
-                                    _serverError.value = t.localizedMessage
-                                    throw RuntimeException("타석예약 실패 exception")
-                                } catch (e: Exception) {
-                                    FirebaseCrashlytics.getInstance().recordException(e)
-                                    FirebaseCrashlytics.getInstance()
-                                        .log("타석예약 실패 t: $t\n t stack: ${t.printStackTrace()}\n t local: ${t.localizedMessage}")
-                                    FirebaseCrashlytics.getInstance()
-                                        .log("타석예약 실패 e: $e\n e stack: ${e.printStackTrace()}\n e local: ${e.localizedMessage}")
-                                }
-                            }
+                            "Network Error" -> _networkFail.value = Unit
+                            else -> _serverError.value = t.localizedMessage
                         }
-
                     })
             )
         } else {
@@ -144,36 +135,14 @@ class ReserveConfirmViewModel(
                         if (response.isSuccessful && body != null) {
                             _reservationLesson.value = body.data.lessonReservaion
                         } else {
-                            try {
-                                _buttonClickable.call()
-                                _serverError.value = response.message()
-                                throw RuntimeException("레슨예약 exception")
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().recordException(e)
-                                FirebaseCrashlytics.getInstance()
-                                    .log("레슨예약 response: $response \nmessage: ${response.message()}\n body: ${response.body()}\n errorBody: ${response.errorBody()}...}")
-                                FirebaseCrashlytics.getInstance()
-                                    .log("레슨예약 error: $e\n stack: ${e.printStackTrace()}\nlocal: ${e.localizedMessage}}")
-                            }
+                            _buttonClickable.call()
+                            _serverError.value = response.message()
                         }
                     }, { t ->
                         _buttonClickable.call()
                         when (t.message) {
-                            "Network Error" -> {
-                                _networkFail.value = Unit
-                            }
-                            else -> {
-                                try {
-                                    _serverError.value = t.message
-                                    throw RuntimeException("레슨예약 실패 exception")
-                                } catch (e: Exception) {
-                                    FirebaseCrashlytics.getInstance().recordException(e)
-                                    FirebaseCrashlytics.getInstance()
-                                        .log("레슨예약 실패 t: $t\n t stack: ${t.printStackTrace()}\n t local: ${t.localizedMessage}")
-                                    FirebaseCrashlytics.getInstance()
-                                        .log("레슨예약 실패 e: $e\n e stack: ${e.printStackTrace()}\n e local: ${e.localizedMessage}")
-                                }
-                            }
+                            "Network Error" -> _networkFail.value = Unit
+                            else -> _serverError.value = t.message
                         }
                     })
             )
@@ -222,12 +191,8 @@ class ReserveConfirmViewModel(
                 }
             }, { t ->
                 when (t.message) {
-                    "Network Error" -> {
-                        _networkFail.value = Unit
-                    }
-                    else -> {
-                        _serverError.value = t.message
-                    }
+                    "Network Error" -> _networkFail.value = Unit
+                    else -> _serverError.value = t.localizedMessage
                 }
             }).addTo(compositeDisposable)
     }

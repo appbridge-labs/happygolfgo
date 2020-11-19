@@ -21,9 +21,6 @@ class ReserveConfirmRemoteDataSourceImpl(
         data: HashMap<String, ReservePlateModel>
     ): Single<Response<ReservePlateResponse>> {
         return apiInterface.reservationPlate(data)
-            .map {
-                it
-            }
     }
 
     override fun remoteReservationLesson(

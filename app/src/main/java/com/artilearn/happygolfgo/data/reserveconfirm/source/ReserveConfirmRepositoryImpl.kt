@@ -17,15 +17,18 @@ class ReserveConfirmRepositoryImpl(
     private val cancelRemoteDataSource: CancelRemoteDataSource,
     private val networkManager: NetworkManager
 ) : ReserveConfirmRepository, ReservationRepository, CancelRepository {
-    
+
     override fun requestPolicy(): Single<Response<PolicyResponse>> {
         return if (networkManager.networkState()) {
             reserveConfirmRemoteDataSource.remoteRequestPolicy()
                 .flatMap {
+                    //Single.just(it)
                     if (it.isSuccessful) {
-                      Single.just(it)
+                        Log.d("testest", "requestPolicy: success")
+                        Single.just(it)
                     } else {
-                        Single.error(IllegalStateException("Server Error"))
+                        Log.d("testest", "requestPolicy: fail")
+                        Single.error(HttpException(it))
                     }
                 }
         } else {
@@ -39,11 +42,7 @@ class ReserveConfirmRepositoryImpl(
         return if (networkManager.networkState()) {
             reservationRemoteDataSource.remoteReservationPlate(data)
                 .flatMap {
-                    if (it.isSuccessful) {
-                        Single.just(it)
-                    } else {
-                        Single.error(HttpException(it))
-                    }
+                    Single.just(it)
                 }
         } else {
             Single.error(IllegalStateException("Network Error"))
@@ -109,7 +108,7 @@ class ReserveConfirmRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException("Server Error"))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {
