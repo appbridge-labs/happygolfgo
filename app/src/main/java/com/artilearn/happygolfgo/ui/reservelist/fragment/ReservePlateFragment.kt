@@ -14,6 +14,7 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.data.ReserveList
+import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.FragmentReservePlateBinding
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import kotlin.concurrent.fixedRateTimer
@@ -81,10 +82,27 @@ class ReservePlateFragment
     }
 
     private fun goReservationConfirm(item: ReserveList) {
+        val ticket = Ticket(
+            id = item.ticketId ?: 0,
+            type = 2,
+            name = item.name,
+            period = 0,
+            totalCount = item.totalCount,
+            usedCount = 0,
+            onlyOnceToday = false,
+            remainingCount = item.remainingCount,
+            isUnlimited = false,
+            startDate = "2020-11-27",
+            endDate = item.endDate,
+            allowToBook = false
+        )
+        Log.d("testest frag", "ticket: $ticket")
+        Log.d("testest frag", "ticketId: ${item.ticketId}, itemId: ${item.id}")
         val confirmIntent = Intent(activity, ReserveConfirmActivity::class.java)
             .apply {
                 putExtra(PLATE_ID, item.id)
                 putExtra(RESERVATION_TYPE, cancel)
+                putExtra(TICKET, ticket)
             }
         startActivity(confirmIntent)
     }

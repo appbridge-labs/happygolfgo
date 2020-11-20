@@ -19,6 +19,7 @@ import com.artilearn.happygolfgo.databinding.ActivityReserveConfirmBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.reservesuccess.ReserveSuccessActivity
+import com.artilearn.happygolfgo.ui.tickettime.TicketTimeActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.convertTime
 import kotlinx.android.synthetic.main.activity_reserve_confirm.*
@@ -96,6 +97,7 @@ class ReserveConfirmActivity :
             })
             plateModel.observe(this@ReserveConfirmActivity, Observer {
                 if (it.plateReservation.isCancellable) {
+                    showChangeTimeLayout()
                     initBottomView(
                         binding.reserveConfirmBottomView.bottom_layout,
                         getString(R.string.reserve_confirm_cancel_bottom_title),
@@ -141,6 +143,7 @@ class ReserveConfirmActivity :
     }
 
     private fun initView() {
+        hideChangeTimeLayout()
         initToolbar(
             reserve_confirm_toolbar.toolbar,
             getString(R.string.reserve_confirm_toolbar_title),
@@ -149,25 +152,20 @@ class ReserveConfirmActivity :
 
         when (reservationType) {
             "ReservationPlateFromAlram" -> {
-                hideChangeTimeLayout()
                 viewModel.getReservationPlateDetail(plateId)
             }
             "ReservationLessonFromAlram" -> {
-                hideChangeTimeLayout()
                 viewModel.getReservationLessonDetail(lessonId)
                 binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
             }
             "cancel_plate" -> {
-                showChangeTimeLayout()
                 viewModel.getReservationPlateDetail(plateId)
             }
             "cancel_lesson" -> {
-                showChangeTimeLayout()
                 viewModel.getReservationLessonDetail(lessonId)
                 binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
             }
             "reservation" -> {
-                hideChangeTimeLayout()
                 initBottomView(
                     binding.reserveConfirmBottomView.bottom_layout,
                     getString(R.string.reserve_confirm_bottom_title),
@@ -215,7 +213,7 @@ class ReserveConfirmActivity :
         with(binding) {
             timeChangeLayout.visibility = View.VISIBLE
             timeChangeLayout.tv_text.text = "예약시간 변경"
-            timeChangeLayout.setOnClickListener {  }
+            timeChangeLayout.setOnClickListener { goTicketTime() }
         }
     }
 
@@ -248,6 +246,15 @@ class ReserveConfirmActivity :
             }
         startActivity(cancelIntent)
         finish()
+    }
+
+    private fun goTicketTime() {
+        Log.d("testest confirm", "ticket: $ticket")
+//        val intent = Intent(this, TicketTimeActivity::class.java).apply {
+//            putExtra(TICKET, ticket)
+//            putExtra(SELECTION_DATE, "2020-11-27")
+//        }
+//        startActivity(intent)
     }
 
     override fun bottomAction() {

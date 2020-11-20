@@ -45,5 +45,9 @@ data class ReserveList(
 
     @SerializedName("plateNumber")
     @Expose
-    val plateNumber: Int?
+    val plateNumber: Int?,
+
+    @SerializedName("ticketID")
+    @Expose
+    val ticketId: Int?
 ) : Parcelable
