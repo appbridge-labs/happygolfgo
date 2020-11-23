@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.tickettime
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -27,6 +28,10 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
 
     private val date by lazy {
         intent.getStringExtra(SELECTION_DATE)
+    }
+
+    private val timeChange by lazy {
+        intent.getIntExtra(PLATE_TIME_CHANGE, 0)
     }
 
     private val viewModel: TicketTimeViewModel by viewModels {
@@ -77,11 +82,13 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
     }
 
     private fun goReserveConfirm(ticketTime: TicketTime) {
+        Log.d("testest", "time reservationid: $timeChange, ticketid: ${ticket.id}")
         val confirmIntent = Intent(this, ReserveConfirmActivity::class.java)
             .apply {
                 putExtra(TICKET, ticket)
                 putExtra(TICKET_TIME, ticketTime)
                 putExtra(RESERVATION_TYPE, reservation)
+                putExtra(PLATE_TIME_CHANGE, timeChange)
             }
         startActivity(confirmIntent)
     }

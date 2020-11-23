@@ -151,4 +151,8 @@ interface ApiInterface {
     @PUT("mypage/signOut")
     fun userLogout(): Completable
 
+    @POST("reservation/user/plateReservation/changeTime")
+    fun plateTimeChange(
+        @Body data: HashMap<String, PlateTimeChangeModel>
+    ): Single<PlateTimeChangeResponse>
 }

@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.reservelist
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -46,6 +47,9 @@ class ReserveListActivity :
     private fun initViewModelObserve() {
         with(viewModel) {
             reservationList.observe(this@ReserveListActivity, Observer {
+                for ((i,v) in it.data.plateReservations.withIndex()) {
+                    Log.d("testest", "$i, ${v.id}, ${v.ticket?.id}")
+                }
                 pagerAdaper = ReservePagerListAdapter(this@ReserveListActivity, it)
 
                 binding.viewpager.adapter = pagerAdaper

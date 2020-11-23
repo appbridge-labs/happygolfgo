@@ -53,13 +53,18 @@ class ReserveConfirmActivity :
         intent.getParcelableExtra<Ticket>(TICKET)
     }
 
+    private val timeChange by lazy {
+        intent.getIntExtra(PLATE_TIME_CHANGE, 0)
+    }
+
     private val viewModel: ReserveConfirmViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return ReserveConfirmViewModel(
                     myApplication.reserveConfirmRepository,
                     myApplication.reservationRepository,
-                    myApplication.cancelRepository
+                    myApplication.cancelRepository,
+                    myApplication.plateTimeChangeRepository
                 ) as T
             }
         }
@@ -174,6 +179,7 @@ class ReserveConfirmActivity :
                 if (ticketTime.plateAvailabilityId != null) {
                     viewModel.ticketId = ticket.id
                     viewModel.plateAvailabilityId = ticketTime.plateAvailabilityId
+                    viewModel.plateTimeChange = timeChange
                     viewModel.requestPolicy()
                 } else {
                     viewModel.ticketId = ticket.id
@@ -249,12 +255,13 @@ class ReserveConfirmActivity :
     }
 
     private fun goTicketTime() {
-        Log.d("testest confirm", "ticket: $ticket")
-//        val intent = Intent(this, TicketTimeActivity::class.java).apply {
-//            putExtra(TICKET, ticket)
-//            putExtra(SELECTION_DATE, "2020-11-27")
-//        }
-//        startActivity(intent)
+        Log.d("testest", "confirm reservationid: $plateId, ticketid: ${ticket.id}")
+        val intent = Intent(this, TicketTimeActivity::class.java).apply {
+            putExtra(TICKET, ticket)
+            putExtra(SELECTION_DATE, ticket.startDate)
+            putExtra(PLATE_TIME_CHANGE, plateId)
+        }
+        startActivity(intent)
     }
 
     override fun bottomAction() {
@@ -268,7 +275,8 @@ class ReserveConfirmActivity :
             }
             "reservation" -> {
                 if (ticketTime.plateAvailabilityId != null) {
-                    viewModel.reservationPlate()
+                    if (timeChange == 0) viewModel.reservationPlate()
+                    else viewModel.reservationPlateTimeChange()
                 } else {
                     viewModel.reservationLesson()
                 }

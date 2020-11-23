@@ -7,24 +7,25 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.ApiError
 import com.artilearn.happygolfgo.data.ReservationLesson
 import com.artilearn.happygolfgo.data.ReservationPlate
-import com.artilearn.happygolfgo.data.reserveconfirm.LessonResponse
-import com.artilearn.happygolfgo.data.reserveconfirm.PlateResponse
-import com.artilearn.happygolfgo.data.reserveconfirm.ReserveLessonModel
-import com.artilearn.happygolfgo.data.reserveconfirm.ReservePlateModel
+import com.artilearn.happygolfgo.data.reserveconfirm.*
 import com.artilearn.happygolfgo.data.reserveconfirm.source.CancelRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
+import com.artilearn.happygolfgo.data.reserveconfirm.source.TimeChangeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
+import kotlin.math.log
 
 class ReserveConfirmViewModel(
     private val reserveConfirmRepository: ReserveConfirmRepository,
     private val reservationRepository: ReservationRepository,
-    private val cancelRepository: CancelRepository
+    private val cancelRepository: CancelRepository,
+    private val timeChangeRepository: TimeChangeRepository
 ) : BaseViewModel() {
 
     private val _status: MutableLiveData<ReservationStatus> = MutableLiveData()
@@ -48,6 +49,7 @@ class ReserveConfirmViewModel(
     var plateAvailabilityId: Int? = null
     var lessonAvailabilityId: Int? = null
     var ticketId: Int? = null
+    var plateTimeChange: Int? = null
 
     fun requestPolicy() {
         compositeDisposable.add(
@@ -73,6 +75,7 @@ class ReserveConfirmViewModel(
     }
 
     fun reservationPlate() {
+        Log.d("testest", "$ticketId, $plateAvailabilityId")
         if (ticketId != null && plateAvailabilityId != null) {
             val dataModel = ReservePlateModel(ticketId!!, plateAvailabilityId!!)
             val data = hashMapOf<String, ReservePlateModel>()
@@ -241,6 +244,42 @@ class ReserveConfirmViewModel(
                     }
                 })
         )
+    }
+
+    fun reservationPlateTimeChange() {
+        Log.d("testest", "reservationPlateTimeChange: ")
+        val timeChangeModel = PlateTimeChangeModel(
+            ticketID = ticketId ?: 0,
+            plateReservationID = plateTimeChange ?: 0,
+            plateAvailabilityID = plateAvailabilityId ?: 0
+        )
+        Log.d("testest", "reservationPlateTimeChange: $timeChangeModel")
+
+        val data = hashMapOf<String, PlateTimeChangeModel>()
+        data["Data"] = timeChangeModel
+
+        timeChangeRepository.timeChnage(data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .subscribe({
+                Log.d("testest", "reservationPlateTimeChange: $it")
+            }, {
+                Log.d("testest", "reservationPlateTimeChange: $it")
+                when (it) {
+                    is HttpException -> {
+                        Log.d("testest", "http: ")
+                        val gson = Gson()
+                        val type = object : TypeToken<ApiError>() {}.type
+                        val errorResponse: ApiError = gson.fromJson(it.response()?.errorBody()?.charStream(), type)
+                        Log.d("testest", "reservationPlateTimeChange: $errorResponse")
+                    }
+                    else -> {
+                        Log.d("testest", "else")
+                    }
+                }
+            }).let(compositeDisposable::add)
     }
 
     enum class ReservationStatus {
