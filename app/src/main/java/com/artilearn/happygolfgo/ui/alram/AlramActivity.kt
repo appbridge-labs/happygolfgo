@@ -66,7 +66,7 @@ class AlramActivity : BaseActivity<ActivityAlramBinding>(R.layout.activity_alram
     private fun initAdapter() {
         adapter = AlramAdapter { alram ->
             when (alram.eventType) {
-                "3" -> {
+                "3", "7" -> {
                     goReservaitonPlate(alram.eventValue.toInt())
                 }
                 "4" -> {
