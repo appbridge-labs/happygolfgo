@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.alram
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,10 +44,11 @@ class AlramAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(alram: Alram) {
+            Log.d("testest", "bind: ${alram.eventType}")
             binding.alram = alram
 
             when (alram.eventType) {
-                "3", "4", "6" -> binding.ivArrow.visibility = View.VISIBLE
+                "3", "4", "6", "7" -> binding.ivArrow.visibility = View.VISIBLE
                 else -> binding.ivArrow.visibility = View.GONE
             }
 

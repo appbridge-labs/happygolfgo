@@ -18,6 +18,61 @@
             <set />
           </value>
         </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/java/com/jay/randomuser/data/response/UserResponse.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/java/com/jay/randomuser/utils/ext/DialogFragmentExt.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/java/com/jay/randomuser/view/base/BaseActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/java/com/jay/randomuser/view/base/BaseDialogFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/java/com/jay/randomuser/view/base/FragmentLauncher.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/java/com/jay/randomuser/view/main/GenderSelectFragment.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/java/com/jay/randomuser/view/main/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/java/com/jay/randomuser/view/main/MainViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/java/com/jay/randomuser/view/main/mapper/UserListMapper.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/java/com/jay/randomuser/view/mapper/Mapper.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RandomUser/app/src/main/res/layout/fragment_gender_select.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/1주차/RxStudyFirst/app/build.gradle">
           <value>
             <set />
@@ -98,6 +153,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$USER_HOME$/MyselfProjects/RxStudy/RxStudy/final_6rd_week/RxStudyFirst/app/src/main/java/com/jay/rxstudyfirst/view/sixweek/SixWeekActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/MyselfProjects/SJApp/app/src/main/java/com/jay/sjapp/base/BaseFragment.kt">
           <value>
             <set />
@@ -124,6 +184,31 @@
           </value>
         </entry>
         <entry key="$USER_HOME$/MyselfProjects/SJApp/app/src/main/res/layout/fragment_editor.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/sooakim_SfoIDE_1/app/src/main/java/io/github/sooakim/sfoide/utils/databinding/RadioGroupExt.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/sooakim_SfoIDE_1/app/src/main/java/io/github/sooakim/sfoide/view/main/MainViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/sooakim_SfoIDE_1/app/src/main/java/io/github/sooakim/sfoide/view/main/mapper/UserListMapper.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/wonjin/app/src/main/java/com/robin1/portfolio/base/BaseActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/MyselfProjects/wonjin/app/src/main/java/com/robin1/portfolio/base/BaseViewModel.kt">
           <value>
             <set />
           </value>
@@ -573,6 +658,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/api/ApiInterceptor.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/api/ApiInterface.kt">
           <value>
             <set />
@@ -608,12 +698,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/ApiError.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/FcmEventType.kt">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/LogDetail.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/ResponseWrapper.kt">
           <value>
             <set />
           </value>
@@ -688,12 +788,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/ReservePlateModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/ReservePlateResponse.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/ReservationRepository.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/ReserveConfirmRepository.kt">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/ReserveConfirmRepositoryImpl.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/remote/ReservationRemoteDataSource.kt">
           <value>
             <set />
           </value>

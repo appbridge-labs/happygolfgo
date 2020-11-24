@@ -2,7 +2,7 @@ package com.artilearn.happygolfgo.ui.reserveconfirm
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -18,11 +18,15 @@ import com.artilearn.happygolfgo.databinding.ActivityReserveConfirmBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.reservesuccess.ReserveSuccessActivity
+import com.artilearn.happygolfgo.ui.tickettime.TicketTimeActivity
 import com.artilearn.happygolfgo.util.MyApplication
+import com.artilearn.happygolfgo.util.convertCalendar
+import com.artilearn.happygolfgo.util.convertDate
 import com.artilearn.happygolfgo.util.convertTime
 import kotlinx.android.synthetic.main.activity_reserve_confirm.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
+import java.util.*
 
 class ReserveConfirmActivity :
     BaseActivity<ActivityReserveConfirmBinding>(R.layout.activity_reserve_confirm) {
@@ -49,13 +53,21 @@ class ReserveConfirmActivity :
         intent.getParcelableExtra<Ticket>(TICKET)
     }
 
+    private val timeChange by lazy {
+        intent.getIntExtra(PLATE_TIME_CHANGE, 0)
+    }
+
+    private lateinit var secondTicket: Ticket
+    private var secondPlateId: Int? = null
+
     private val viewModel: ReserveConfirmViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return ReserveConfirmViewModel(
                     myApplication.reserveConfirmRepository,
                     myApplication.reservationRepository,
-                    myApplication.cancelRepository
+                    myApplication.cancelRepository,
+                    myApplication.plateTimeChangeRepository
                 ) as T
             }
         }
@@ -92,7 +104,27 @@ class ReserveConfirmActivity :
                 }
             })
             plateModel.observe(this@ReserveConfirmActivity, Observer {
+                if (ticket == null) {
+                    secondPlateId = it.plateReservation.id
+                    with(it.plateReservation.ticket) {
+                        secondTicket = Ticket(
+                            id = id,
+                            name = name,
+                            type = type,
+                            period = period,
+                            totalCount = totalCount,
+                            usedCount = usedCount,
+                            onlyOnceToday = onlyOnceToday,
+                            remainingCount = remainingCount,
+                            isUnlimited = isUnlimited,
+                            startDate = it.plateReservation.startDate,
+                            endDate = it.plateReservation.endDate,
+                            allowToBook = null
+                        )
+                    }
+                }
                 if (it.plateReservation.isCancellable) {
+                    showChangeTimeLayout()
                     initBottomView(
                         binding.reserveConfirmBottomView.bottom_layout,
                         getString(R.string.reserve_confirm_cancel_bottom_title),
@@ -134,10 +166,14 @@ class ReserveConfirmActivity :
             buttonClickable.observe(this@ReserveConfirmActivity, Observer {
                 binding.reserveConfirmBottomView.bottom_layout.isClickable = true
             })
+            reservationTimeChange.observe(this@ReserveConfirmActivity, Observer {
+                goReserveSuccessPlateTime(it)
+            })
         }
     }
 
     private fun initView() {
+        hideChangeTimeLayout()
         initToolbar(
             reserve_confirm_toolbar.toolbar,
             getString(R.string.reserve_confirm_toolbar_title),
@@ -168,6 +204,7 @@ class ReserveConfirmActivity :
                 if (ticketTime.plateAvailabilityId != null) {
                     viewModel.ticketId = ticket.id
                     viewModel.plateAvailabilityId = ticketTime.plateAvailabilityId
+                    viewModel.plateTimeChange = timeChange
                     viewModel.requestPolicy()
                 } else {
                     viewModel.ticketId = ticket.id
@@ -203,6 +240,18 @@ class ReserveConfirmActivity :
         binding.tvTicketPolicy.text = policy
     }
 
+    private fun showChangeTimeLayout() {
+        with(binding) {
+            timeChangeLayout.visibility = View.VISIBLE
+            timeChangeLayout.tv_text.text = "예약시간 변경"
+            timeChangeLayout.setOnClickListener { goTicketTime() }
+        }
+    }
+
+    private fun hideChangeTimeLayout() {
+        binding.timeChangeLayout.visibility = View.GONE
+    }
+
     private fun goReserveSuccessPlate(plate: ReservationPlate) {
         val plateIntent = Intent(this, ReserveSuccessActivity::class.java)
             .apply {
@@ -230,9 +279,44 @@ class ReserveConfirmActivity :
         finish()
     }
 
+    private fun goTicketTime() {
+        val intent = Intent(this, TicketTimeActivity::class.java)
+
+        if (ticket == null) {
+            val convertTime = convertDate(secondTicket.startDate)
+            val calendar = convertTime?.let { convertCalendar(it) }
+            val date = "${calendar?.get(Calendar.YEAR)}-${calendar?.get(Calendar.MONTH)?.plus(1)}-${calendar?.get(
+                Calendar.DAY_OF_MONTH)}"
+            secondTicket.startDate = date
+
+            with(intent) {
+                putExtra(TICKET, secondTicket)
+                putExtra(SELECTION_DATE, date)
+                putExtra(PLATE_TIME_CHANGE, secondPlateId)
+            }
+        } else {
+            with(intent) {
+                putExtra(TICKET, ticket)
+                putExtra(SELECTION_DATE, ticket.startDate)
+                putExtra(PLATE_TIME_CHANGE, plateId)
+            }
+        }
+
+        startActivity(intent)
+    }
+
+    private fun goReserveSuccessPlateTime(plate: ReservationPlate) {
+        val plateIntent = Intent(this, ReserveSuccessActivity::class.java)
+            .apply {
+                putExtra(RESERVATION_PLATE, plate)
+                putExtra(RESERVATION_TYPE, reservationType)
+                putExtra(PLATE_TIME_CHANGE, 1)
+            }
+        startActivity(plateIntent)
+    }
+
     override fun bottomAction() {
         super.bottomAction()
-        Log.d("testest", "bottomAction: click")
         when (reservationType) {
             "ReservationPlateFromAlram", "cancel_plate" -> {
                 viewModel.reservationPlateCancel(plateId)
@@ -242,7 +326,8 @@ class ReserveConfirmActivity :
             }
             "reservation" -> {
                 if (ticketTime.plateAvailabilityId != null) {
-                    viewModel.reservationPlate()
+                    if (timeChange == 0) viewModel.reservationPlate()
+                    else viewModel.reservationPlateTimeChange()
                 } else {
                     viewModel.reservationLesson()
                 }

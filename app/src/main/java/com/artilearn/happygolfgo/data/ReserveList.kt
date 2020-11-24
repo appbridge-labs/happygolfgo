@@ -45,5 +45,37 @@ data class ReserveList(
 
     @SerializedName("plateNumber")
     @Expose
-    val plateNumber: Int?
-) : Parcelable
+    val plateNumber: Int?,
+
+    @SerializedName("ticket")
+    @Expose
+    val ticket: ReservationTicket?
+) : Parcelable {
+
+    @Parcelize
+    data class ReservationTicket(
+        @field:SerializedName("id")
+        val id: Int,
+        @field:SerializedName("name")
+        val name: String,
+        @field:SerializedName("type")
+        val type: Int,
+        @field:SerializedName("period")
+        val period: Int,
+        @field:SerializedName("totalCount")
+        val totalCount: Int,
+        @field:SerializedName("usedCount")
+        val usedCount: Int,
+        @field:SerializedName("remainingCount")
+        val remainingCount: Int,
+        @field:SerializedName("isUnlimited")
+        val isUnlimited: Boolean,
+        @field:SerializedName("onlyOnceToday")
+        val onlyOnceToday: Boolean,
+        @field:SerializedName("startDate")
+        val startDate: String,
+        @field:SerializedName("endDate")
+        val endDate: String
+    ) : Parcelable
+
+}

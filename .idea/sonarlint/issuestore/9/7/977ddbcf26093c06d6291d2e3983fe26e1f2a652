@@ -1,3 +1,5 @@
 
-kkotlin:S1192!"NDefine a constant instead of duplicating this literal "Network Error" 7 times.(²ì¶ıøÿÿÿÿ
-qkotlin:S1192"MDefine a constant instead of duplicating this literal "Server Error" 3 times.(õ˜—‘ÿÿÿÿÿ8½ÚÕ›Ô.
+qkotlin:S11926"MDefine a constant instead of duplicating this literal "testest impl" 4 times.(Ã¿Ğüÿÿÿÿ8° Ş…Ü.
+=kotlin:S125;"Remove this commented out code.(ü¼î8¤ÏŞ‚Ü.
+qkotlin:S1192"MDefine a constant instead of duplicating this literal "Server Error" 3 times.(õ˜—‘ÿÿÿÿÿ8½ÚÕ›Ô.
+kkotlin:S1192"NDefine a constant instead of duplicating this literal "Network Error" 7 times.(²ì¶ıøÿÿÿÿ

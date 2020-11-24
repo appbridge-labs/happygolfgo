@@ -51,14 +51,8 @@ import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSource
 import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSource
 import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSourceImpl
-import com.artilearn.happygolfgo.data.reserveconfirm.source.CancelRepository
-import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepository
-import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
-import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepositoryImpl
-import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.CancelRemoteDataSource
-import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReservationRemoteDataSource
-import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReserveConfirmRemoteDataSource
-import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReserveConfirmRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.reserveconfirm.source.*
+import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.*
 import com.artilearn.happygolfgo.data.reservelist.source.ReserveListRepository
 import com.artilearn.happygolfgo.data.reservelist.source.ReserveListRepositoryImpl
 import com.artilearn.happygolfgo.data.reservelist.source.remote.ReserveListRemoteDataSource
@@ -126,6 +120,7 @@ class MyApplication : Application() {
     private lateinit var logRemoteDataSource: LogRemoteDataSource
     private lateinit var commentRemoteDataSource: CommentRemoteDataSource
     private lateinit var developerOptionDataSoucre: DeveloperOptionDataSoucre
+    private lateinit var plateTimeChangeDataSource: TimeChangeRemoteSource
 
     lateinit var loginRepository: LoginRepository
     lateinit var splashRepository: SplashRepository
@@ -146,6 +141,7 @@ class MyApplication : Application() {
     lateinit var logRespository: LogRepository
     lateinit var commentRepository: CommentRepository
     lateinit var developerOptionRepository: DeveloperOptionRepository
+    lateinit var plateTimeChangeRepository: TimeChangeRepository
 
     override fun onCreate() {
         super.onCreate()
@@ -186,6 +182,7 @@ class MyApplication : Application() {
         logRemoteDataSource = LogRemoteDataSourceImpl(apiInterface)
         commentRemoteDataSource = CommentRemoteDataSourceImpl(apiInterface)
         developerOptionDataSoucre = DeveloperOptionDataSoucreImpl(preferenceManager)
+        plateTimeChangeDataSource = ReserveConfirmRemoteDataSourceImpl(apiInterface)
 
         loginRepository = LoginRepositoryImpl(loginLocalDataSource, loginRemoteDataSource, networkManager)
         splashRepository = SplashRepositoryImpl(splashLocalDataSource, splashRemoteDataSource, preferenceManager, networkManager)
@@ -199,10 +196,11 @@ class MyApplication : Application() {
         alramRepository = AlramRepositoryImpl(alramRemoteDataSource, networkManager)
         ticketDateRepository = TicketDateRepositoryImpl(ticketDateRemoteDataSource, networkManager)
         ticketTimeRepository = TicketTimeRepositoryImpl(ticketTimeRemoteDataSource, networkManager)
-        reserveConfirmRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, networkManager)
-        reservationRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, networkManager)
+        plateTimeChangeRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, plateTimeChangeDataSource, networkManager)
+        reserveConfirmRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, plateTimeChangeDataSource, networkManager)
+        reservationRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, plateTimeChangeDataSource, networkManager)
         reserveListRepository = ReserveListRepositoryImpl(reserveListRemoteDataSource, networkManager)
-        cancelRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, networkManager)
+        cancelRepository = ReserveConfirmRepositoryImpl(reserveConfirmRemoteDataSource, reservationRemoteDataSource, cancelRemoteDataSource, plateTimeChangeDataSource, networkManager)
         logRespository = LogRepositoryImpl(logRemoteDataSource, networkManager)
         commentRepository = CommentRepositoryImpl(commentRemoteDataSource, networkManager)
         developerOptionRepository = DeveloperOptionRepositoryImpl(developerOptionDataSoucre)

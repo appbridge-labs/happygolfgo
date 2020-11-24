@@ -9,49 +9,49 @@ import kotlinx.android.parcel.Parcelize
 data class Ticket(
     @SerializedName("id")
     @Expose
-    val id: Int,
+    var id: Int,
 
     @SerializedName("name")
     @Expose
-    val name: String,
+    var name: String,
 
     @SerializedName("type")
     @Expose
-    val type: Int,
+    var type: Int,
 
     @SerializedName("period")
     @Expose
-    val period: Int,
+    var period: Int,
 
     @SerializedName("totalCount")
     @Expose
-    val totalCount: Int,
+    var totalCount: Int,
 
     @SerializedName("usedCount")
     @Expose
-    val usedCount: Int,
+    var usedCount: Int,
 
     @SerializedName("onlyOnceToday")
     @Expose
-    val onlyOnceToday: Boolean,
+    var onlyOnceToday: Boolean,
 
     @SerializedName("remainingCount")
     @Expose
-    val remainingCount: Int,
+    var remainingCount: Int,
 
     @SerializedName("isUnlimited")
     @Expose
-    val isUnlimited: Boolean,
+    var isUnlimited: Boolean,
 
     @SerializedName("startDate")
     @Expose
-    val startDate: String,
+    var startDate: String,
 
     @SerializedName("endDate")
     @Expose
-    val endDate: String,
+    var endDate: String,
 
     @SerializedName("allowToBook")
     @Expose
-    val allowToBook: Boolean?
+    var allowToBook: Boolean?
 ) : Parcelable

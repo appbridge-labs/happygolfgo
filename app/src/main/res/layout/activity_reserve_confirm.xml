@@ -12,154 +12,163 @@
             type="com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmViewModel" />
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_white"
-        tools:context=".ui.reserveconfirm.ReserveConfirmActivity">
+        android:background="@color/color_white">
 
         <include
             android:id="@+id/reserve_confirm_toolbar"
             layout="@layout/custom_toolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:id="@+id/ticketname_layout"
+        <ScrollView
             android:layout_width="0dp"
-            android:layout_height="83dp"
-            android:background="@drawable/bg_unserline"
-            android:orientation="vertical"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/reserve_confirm_bottom_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/reserve_confirm_toolbar">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="17dp"
-                android:text="@string/reserve_confirm_ticket_name"
-                android:textColor="@color/color_black"
-                android:textSize="16dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_ticket_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/color_black"
-                android:textSize="24dp"
-                tools:text="티켓명~" />
-
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_gravity="bottom"
-                android:background="@color/color_line_gray" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ticketdate_layout"
-            android:layout_width="0dp"
-            android:layout_height="83dp"
-            android:background="@drawable/bg_unserline"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ticketname_layout">
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="17dp"
-                android:text="@string/reserve_confirm_ticket_date"
-                android:textColor="@color/color_black"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_ticket_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/color_black"
-                android:textSize="24dp"
-                tools:text="2020. 03. 12" />
+                <LinearLayout
+                    android:id="@+id/ticketname_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="83dp"
+                    android:background="@drawable/bg_unserline"
+                    android:orientation="vertical">
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="17dp"
+                        android:text="@string/reserve_confirm_ticket_name"
+                        android:textColor="@color/color_black"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/tickettime_layout"
-            android:layout_width="0dp"
-            android:layout_height="83dp"
-            android:background="@drawable/bg_unserline"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ticketdate_layout">
+                    <TextView
+                        android:id="@+id/tv_ticket_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="16dp"
+                        android:textColor="@color/color_black"
+                        android:textSize="24dp"
+                        tools:text="티켓명~" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="17dp"
-                android:text="@string/reserve_confirm_ticket_time"
-                android:textColor="@color/color_black"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="bottom"
+                        android:background="@color/color_line_gray" />
 
-            <TextView
-                android:id="@+id/tv_ticketTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/color_black"
-                android:textSize="24dp"
-                tools:text="06:00 ~ 06:30" />
+                </LinearLayout>
 
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ticketdate_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="83dp"
+                    android:background="@drawable/bg_unserline"
+                    android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="180dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_unserline"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tickettime_layout">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="17dp"
+                        android:text="@string/reserve_confirm_ticket_date"
+                        android:textColor="@color/color_black"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="@string/reserve_confirm_policy_title"
-                android:textColor="@color/color_black"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/tv_ticket_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="16dp"
+                        android:textColor="@color/color_black"
+                        android:textSize="24dp"
+                        tools:text="2020. 03. 12" />
 
-            <TextView
-                android:id="@+id/tv_ticket_policy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="20dp"
-                android:textColor="@color/color_black"
-                android:textSize="14dp"
-                tools:text="-예약 취소 정책\n예약취소~~~~ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ\n\n -결석 정책\n 1회차감~~" />
+                </LinearLayout>
 
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/tickettime_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="83dp"
+                    android:background="@drawable/bg_unserline"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="17dp"
+                        android:text="@string/reserve_confirm_ticket_time"
+                        android:textColor="@color/color_black"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_ticketTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="16dp"
+                        android:textColor="@color/color_black"
+                        android:textSize="24dp"
+                        tools:text="06:00 ~ 06:30" />
+
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/time_change_layout"
+                    layout="@layout/common_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_unserline"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="@string/reserve_confirm_policy_title"
+                        android:textColor="@color/color_black"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_ticket_policy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/color_black"
+                        android:textSize="14dp"
+                        tools:text="-예약 취소 정책\n예약취소~~~~ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ\n\n -결석 정책\n 1회차감~~" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <include
             android:id="@+id/reserve_confirm_bottom_view"
@@ -180,4 +189,5 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

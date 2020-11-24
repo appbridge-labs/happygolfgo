@@ -9,37 +9,37 @@ import kotlinx.android.parcel.Parcelize
 data class ReservationPlate(
     @SerializedName("id")
     @Expose
-    val id: Int,
+    var id: Int,
 
     @SerializedName("name")
     @Expose
-    val name: String,
+    var name: String,
 
     @SerializedName("status")
     @Expose
-    val status: Int,
+    var status: Int,
 
     @SerializedName("startDate")
     @Expose
-    val startDate: String,
+    var startDate: String,
 
     @SerializedName("endDate")
     @Expose
-    val endDate: String,
+    var endDate: String,
 
     @SerializedName("plateNumber")
     @Expose
-    val plateNumber: String?,
+    var plateNumber: String?,
 
     @SerializedName("remainingCount")
     @Expose
-    val remainingCount: Int,
+    var remainingCount: Int,
 
     @SerializedName("totalCount")
     @Expose
-    val totalCount: Int,
+    var totalCount: Int,
 
     @SerializedName("isUnlimited")
     @Expose
-    val isUnlimited: Boolean
+    var isUnlimited: Boolean
 ) : Parcelable

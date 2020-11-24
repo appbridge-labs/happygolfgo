@@ -92,6 +92,7 @@
     <string name="reserve_confirm_policy_title">정책사항</string>
     <string name="default_error_toast">알 수 없는 오류 발생</string>
     <string name="reserve_success_title">예약이 완료 되었습니다</string>
+    <string name="reserve_success_title_change">예약시간이 변경 되었습니다</string>
     <string name="reserve_cancel_success_title">예약이 취소 되었습니다</string>
     <string name="reserve_success_bottom_title">확인</string>
     <string name="reserve_list_plate_title">타석 예약</string>
