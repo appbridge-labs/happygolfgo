@@ -60,7 +60,7 @@ class ReserveConfirmRemoteDataSourceImpl(
 
     override fun plateTimeChange(
         data: HashMap<String, PlateTimeChangeModel>
-    ): Single<PlateTimeChangeResponse> {
+    ): Single<Response<PlateTimeChangeResponse>> {
         return apiInterface.plateTimeChange(data)
     }
 }

@@ -56,7 +56,7 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
 
     private fun createTypePush(body: MutableMap<String, String>, type: String?) {
         when (type) {
-            "3" -> {
+            "3", "7" -> {
                 if (isRunning) {
                     fcmIntent = Intent(this, ReserveConfirmActivity::class.java)
                         .apply {

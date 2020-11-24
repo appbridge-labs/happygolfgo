@@ -8,5 +8,5 @@ interface TimeChangeRepository {
 
     fun timeChnage(
         hashMap: HashMap<String, PlateTimeChangeModel>
-    ): Single<PlateTimeChangeResponse.PlateReservation>
+    ): Single<PlateTimeChangeResponse.TimePlateReservation>
 }

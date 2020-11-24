@@ -18,65 +18,55 @@ data class PlateTimeChangeResponse(
 
     @SerializedName("Data")
     @Expose
-    val data: PlateReservation
+    val data: ChangePlateReservation
 ) {
 
-    data class PlateReservation(
-        @field:SerializedName("id")
-        val id: Int,
-        @field:SerializedName("name")
-        val name: String,
-        @field:SerializedName("status")
-        val status: Int,
-        @field:SerializedName("startDate")
-        val startDate: String,
-        @field:SerializedName("endDate")
-        val endDate: String,
-        @field:SerializedName("createdAt")
-        val createdAt: String,
-        @field:SerializedName("updatedAt")
-        val updatedAt: String,
-        @field:SerializedName("relatedPlateID")
-        val relatedPlateID: Int,
-        @field:SerializedName("branchID")
-        val branchID: Int,
-        @field:SerializedName("userID")
-        val userID: Int,
-        @field:SerializedName("ticketID")
-        val ticketID: Int,
-        @field:SerializedName("schduleID")
-        val schduleID: Int,
-        @field:SerializedName("RelatedPlate")
-        val relatedPlate: RelatedPlate
+    data class ChangePlateReservation(
+        @SerializedName("plateReservation")
+        @Expose
+        val plateReservation: TimePlateReservation
     )
 
-    data class RelatedPlate(
-        @field:SerializedName("id")
+    data class TimePlateReservation(
+        @SerializedName("id")
+        @Expose
         val id: Int,
-        @field:SerializedName("number")
-        val number: String,
-        @field:SerializedName("status")
+
+        @SerializedName("name")
+        @Expose
+        val name: String,
+
+        @SerializedName("status")
+        @Expose
         val status: Int,
-        @field:SerializedName("plateAvailabilityID")
-        val plateAvailabilityID: Int,
-        @field:SerializedName("PlateAvailability")
-        val plateAvailability: PlateAvailability
+
+        @SerializedName("startDate")
+        @Expose
+        val startDate: String,
+
+        @SerializedName("endDate")
+        @Expose
+        val endDate: String,
+
+        @SerializedName("plateNumber")
+        @Expose
+        val plateNumber: String,
+
+        @SerializedName("remainingCount")
+        @Expose
+        val remainingCount: Int,
+
+        @SerializedName("totalCount")
+        @Expose
+        val totalCount: Int,
+
+        @SerializedName("isUnlimited")
+        @Expose
+        val isUnlimited: Boolean,
+
+        @SerializedName("isCancellable")
+        @Expose
+        val isCancellable: Boolean
     )
 
-    data class PlateAvailability(
-        @field:SerializedName("id")
-        val id: Int,
-        @field:SerializedName("startDate")
-        val startDate: String,
-        @field:SerializedName("endDate")
-        val endDate: String,
-        @field:SerializedName("name")
-        val name: String,
-        @field:SerializedName("memo")
-        val memo: String,
-        @field:SerializedName("plateID")
-        val plateID: Int,
-        @field:SerializedName("branchID")
-        val branchID: Int
-    )
 }

@@ -107,7 +107,7 @@ class ReservePlateFragment
                 putExtra(RESERVATION_TYPE, cancel)
                 putExtra(TICKET, ticket)
             }
-        Log.d("testest", "fragment reservationid: ${item.id}. ticketid: ${ticket.id}")
+
         startActivity(confirmIntent)
     }
 }

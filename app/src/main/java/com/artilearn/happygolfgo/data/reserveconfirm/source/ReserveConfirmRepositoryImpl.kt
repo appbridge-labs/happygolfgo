@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.data.reserveconfirm.source
 
-import android.util.Log
 import com.artilearn.happygolfgo.data.reserveconfirm.*
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.CancelRemoteDataSource
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReservationRemoteDataSource
@@ -117,10 +116,17 @@ class ReserveConfirmRepositoryImpl(
 
     override fun timeChnage(
         hashMap: HashMap<String, PlateTimeChangeModel>
-    ): Single<PlateTimeChangeResponse.PlateReservation> {
+    ): Single<PlateTimeChangeResponse.TimePlateReservation> {
         return if (networkManager.networkState()) {
-             timeChangeRemoteSource.plateTimeChange(hashMap)
-                 .map { it.data }
+            timeChangeRemoteSource.plateTimeChange(hashMap)
+                .flatMap {
+                    if (it.isSuccessful) {
+                        Single.just(it)
+                    } else {
+                        Single.error(HttpException(it))
+                    }
+                }
+                .map { it.body()?.data?.plateReservation }
         } else {
             Single.error(IllegalStateException("Network Error"))
         }

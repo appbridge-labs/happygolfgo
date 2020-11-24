@@ -82,7 +82,6 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
     }
 
     private fun goReserveConfirm(ticketTime: TicketTime) {
-        Log.d("testest", "time reservationid: $timeChange, ticketid: ${ticket.id}")
         val confirmIntent = Intent(this, ReserveConfirmActivity::class.java)
             .apply {
                 putExtra(TICKET, ticket)

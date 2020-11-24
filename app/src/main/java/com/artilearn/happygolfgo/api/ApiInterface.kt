@@ -154,5 +154,5 @@ interface ApiInterface {
     @POST("reservation/user/plateReservation/changeTime")
     fun plateTimeChange(
         @Body data: HashMap<String, PlateTimeChangeModel>
-    ): Single<PlateTimeChangeResponse>
+    ): Single<Response<PlateTimeChangeResponse>>
 }
