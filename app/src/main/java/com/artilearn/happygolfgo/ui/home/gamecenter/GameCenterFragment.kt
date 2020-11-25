@@ -7,6 +7,7 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentGamecenterBinding
 import com.artilearn.happygolfgo.ui.gamerank.GameRankActivity
+import com.artilearn.happygolfgo.ui.gamerank.GameRankTestModel
 import com.artilearn.happygolfgo.ui.gamescore.GameScoreActivity
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -14,19 +15,24 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import kotlin.collections.ArrayList
 
 class GameCenterFragment :
     BaseFragment<FragmentGamecenterBinding, GameCenterViewModel>(R.layout.fragment_gamecenter) {
 
     override val viewModel: GameCenterViewModel by viewModel()
+    private lateinit var adapter: GameCenterAdapter
+    private val list: ArrayList<GameRankTestModel> = arrayListOf()
 
     override fun init() {
 
         initBinding()
         initViewModelObserving()
+        initAdapter()
 
         replaceBarDataSetting()
         replaceSetBarData()
+        setRandomData()
     }
 
     private fun initBinding() {
@@ -112,6 +118,24 @@ class GameCenterFragment :
             }
 
         binding.barChart.data = data
+    }
+
+    private fun initAdapter() {
+        adapter = GameCenterAdapter(list)
+
+        binding.rvAllRank.adapter = adapter
+    }
+
+    private fun setRandomData() {
+        val data1 = GameRankTestModel(100, "행골나들이", 8.7f)
+        val data2 = GameRankTestModel(101, "킹드라이버", 6.7f)
+        val data3 = GameRankTestModel(102, "싱글진입하자", 4.7f)
+
+        list.add(data1)
+        list.add(data2)
+        list.add(data3)
+
+        adapter.setItems(list)
     }
 
     private fun goGameRank() {

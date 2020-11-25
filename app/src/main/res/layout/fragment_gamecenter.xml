@@ -442,32 +442,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/golf_rank_text" />
 
-                <include
-                    android:id="@+id/before"
-                    layout="@layout/gamecenter_rank_view"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_all_rank"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/five_guideline" />
-
-                <include
-                    android:id="@+id/me"
-                    layout="@layout/gamecenter_rank_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/before" />
-
-                <include
-                    android:id="@+id/after"
-                    layout="@layout/gamecenter_rank_view"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/me" />
+                    app:layout_constraintTop_toBottomOf="@id/five_guideline"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_gamecenter_rank" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
