@@ -72,10 +72,6 @@ val viewModelModule = module {
 
     viewModel { CommentViewModel(get()) }
 
-    viewModel { AllGroupViewModel() }
-
-    viewModel { MyGroupViewModel() }
-
     viewModel { DeveloperOptionViewModel(get()) }
 
 }
