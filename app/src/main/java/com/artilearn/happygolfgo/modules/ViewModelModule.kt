@@ -42,7 +42,7 @@ val viewModelModule = module {
 
     viewModel { ReserveLessonViewModel() }
 
-    viewModel { ReserveConfirmViewModel(get(), get(), get()) }
+    viewModel { ReserveConfirmViewModel(get(), get(), get(), get()) }
 
     viewModel { PwResetViewModel(get()) }
 

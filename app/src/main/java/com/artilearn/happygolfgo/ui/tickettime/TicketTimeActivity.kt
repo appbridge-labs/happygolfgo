@@ -5,10 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
-import com.artilearn.happygolfgo.constants.SELECTION_DATE
-import com.artilearn.happygolfgo.constants.TICKET
-import com.artilearn.happygolfgo.constants.TICKET_TIME
+import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityTicketTimeBinding
@@ -23,6 +20,7 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
 
     private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
     private val date by lazy { intent.getStringExtra(SELECTION_DATE) }
+    private val timeChange by lazy { intent.getIntExtra(PLATE_TIME_CHANGE, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +65,7 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
                 putExtra(TICKET, ticket)
                 putExtra(TICKET_TIME, ticketTime)
                 putExtra(RESERVATION_TYPE, reservation)
+                putExtra(PLATE_TIME_CHANGE, timeChange)
             }
 
         startActivity(confirmIntent)

@@ -4,6 +4,7 @@ import com.artilearn.happygolfgo.data.reserveconfirm.*
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.CancelRemoteDataSource
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReservationRemoteDataSource
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReserveConfirmRemoteDataSource
+import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.TimeChangeRemoteSource
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -14,8 +15,9 @@ class ReserveConfirmRepositoryImpl(
     private val reserveConfirmRemoteDataSource: ReserveConfirmRemoteDataSource,
     private val reservationRemoteDataSource: ReservationRemoteDataSource,
     private val cancelRemoteDataSource: CancelRemoteDataSource,
+    private val timeChangeRemoteSource: TimeChangeRemoteSource,
     private val networkManager: NetworkManager
-) : ReserveConfirmRepository, ReservationRepository, CancelRepository {
+) : ReserveConfirmRepository, ReservationRepository, CancelRepository, TimeChangeRepository {
     
     override fun requestPolicy(): Single<Response<PolicyResponse>> {
         return if (networkManager.networkState()) {
@@ -111,6 +113,24 @@ class ReserveConfirmRepositoryImpl(
                         Single.error(HttpException(it))
                     }
                 }
+        } else {
+            Single.error(IllegalStateException("Network Error"))
+        }
+    }
+
+    override fun timeChnage(
+        hashMap: HashMap<String, PlateTimeChangeModel>
+    ): Single<PlateTimeChangeResponse.TimePlateReservation> {
+        return if (networkManager.networkState()) {
+            timeChangeRemoteSource.plateTimeChange(hashMap)
+                .flatMap {
+                    if (it.isSuccessful) {
+                        Single.just(it)
+                    } else {
+                        Single.error(HttpException(it))
+                    }
+                }
+                .map { it.body()?.data?.plateReservation }
         } else {
             Single.error(IllegalStateException("Network Error"))
         }

@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.reserveconfirm
 
+import com.artilearn.happygolfgo.data.Ticket
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -66,7 +67,11 @@ data class PlateReservation(
 
     @SerializedName("isCancellable")
     @Expose
-    val isCancellable: Boolean
+    val isCancellable: Boolean,
+
+    @SerializedName("ticket")
+    @Expose
+    val ticket: Ticket
 )
 
 data class PlatePolicy(

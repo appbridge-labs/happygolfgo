@@ -18,10 +18,7 @@ import com.artilearn.happygolfgo.data.pwauth.source.remote.PwAuthRemoteDataSourc
 import com.artilearn.happygolfgo.data.pwauth.source.remote.PwAuthRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSource
 import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSourceImpl
-import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.CancelRemoteDataSource
-import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReservationRemoteDataSource
-import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReserveConfirmRemoteDataSource
-import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReserveConfirmRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.*
 import com.artilearn.happygolfgo.data.reservelist.source.remote.ReserveListRemoteDataSource
 import com.artilearn.happygolfgo.data.reservelist.source.remote.ReserveListRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSource
@@ -69,5 +66,7 @@ val remoteModule = module {
     single<LogRemoteDataSource> { LogRemoteDataSourceImpl(get()) }
 
     single<CommentRemoteDataSource> { CommentRemoteDataSourceImpl(get()) }
+
+    single<TimeChangeRemoteSource> { ReserveConfirmRemoteDataSourceImpl(get()) }
 
 }

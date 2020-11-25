@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.constants.PLATE_TIME_CHANGE
 import com.artilearn.happygolfgo.constants.RESERVATION_LESSON
 import com.artilearn.happygolfgo.constants.RESERVATION_PLATE
 import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
@@ -22,6 +23,7 @@ class ReserveSuccessActivity :
     private val reservationPlate by lazy { intent.getParcelableExtra<ReservationPlate>(RESERVATION_PLATE) }
     private val reservationLesson by lazy { intent.getParcelableExtra<ReservationLesson>(RESERVATION_LESSON) }
     private val successType by lazy { intent.getStringExtra(RESERVATION_TYPE) }
+    private val timeChnage by lazy { intent.getIntExtra(PLATE_TIME_CHANGE, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,8 @@ class ReserveSuccessActivity :
     private fun setReservationText() {
         with(binding) {
             reservationPlate?.let { plate ->
-                tvMain.text = getString(R.string.reserve_success_title)
+                if (timeChnage == 0) tvMain.text = getString(R.string.reserve_success_title)
+                else tvMain.text = getString(R.string.reserve_success_title_change)
                 tvTitle.text = convertToTitle(plate.name, plate.totalCount, plate.remainingCount)
                 tvSubtitle.text = convertToTime(plate.startDate, plate.endDate)
             }

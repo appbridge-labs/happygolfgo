@@ -20,10 +20,7 @@ import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepository
 import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepositoryImpl
 import com.artilearn.happygolfgo.data.pwreset.source.PwrestRepository
 import com.artilearn.happygolfgo.data.pwreset.source.PwrestRepositoryImpl
-import com.artilearn.happygolfgo.data.reserveconfirm.source.CancelRepository
-import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepository
-import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
-import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepositoryImpl
+import com.artilearn.happygolfgo.data.reserveconfirm.source.*
 import com.artilearn.happygolfgo.data.reservelist.source.ReserveListRepository
 import com.artilearn.happygolfgo.data.reservelist.source.ReserveListRepositoryImpl
 import com.artilearn.happygolfgo.data.splash.source.SplashRepository
@@ -64,13 +61,13 @@ val repositoryModule = module {
 
     single<TicketTimeRepository> { TicketTimeRepositoryImpl(get(), get()) }
 
-    single<ReserveConfirmRepository> { ReserveConfirmRepositoryImpl(get(), get(), get(), get()) }
+    single<ReserveConfirmRepository> { ReserveConfirmRepositoryImpl(get(), get(), get(), get(), get()) }
 
-    single<ReservationRepository> { ReserveConfirmRepositoryImpl(get(), get(), get(), get()) }
+    single<ReservationRepository> { ReserveConfirmRepositoryImpl(get(), get(), get(), get(), get()) }
 
     single<ReserveListRepository> { ReserveListRepositoryImpl(get(), get()) }
 
-    single<CancelRepository> { ReserveConfirmRepositoryImpl(get(), get(), get(), get()) }
+    single<CancelRepository> { ReserveConfirmRepositoryImpl(get(), get(), get(), get(), get()) }
 
     single<LogRepository> { LogRepositoryImpl(get(), get()) }
 
@@ -78,4 +75,5 @@ val repositoryModule = module {
 
     single<DeveloperOptionRepository> { DeveloperOptionRepositoryImpl(get()) }
 
+    single<TimeChangeRepository> { ReserveConfirmRepositoryImpl(get(), get(), get(), get(), get()) }
 }

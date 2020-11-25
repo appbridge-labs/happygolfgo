@@ -8,7 +8,7 @@ import retrofit2.Response
 
 class ReserveConfirmRemoteDataSourceImpl(
     private val apiInterface: ApiInterface
-) : ReserveConfirmRemoteDataSource, ReservationRemoteDataSource, CancelRemoteDataSource {
+) : ReserveConfirmRemoteDataSource, ReservationRemoteDataSource, CancelRemoteDataSource, TimeChangeRemoteSource {
 
     override fun remoteRequestPolicy(): Single<Response<PolicyResponse>> {
         return apiInterface.requestPolicy()
@@ -44,5 +44,11 @@ class ReserveConfirmRemoteDataSourceImpl(
         plateId: Int
     ): Single<Response<ReservationPlateDetail>> {
         return apiInterface.getReservationPlateDetail(plateId)
+    }
+
+    override fun plateTimeChange(
+        data: HashMap<String, PlateTimeChangeModel>
+    ): Single<Response<PlateTimeChangeResponse>> {
+        return apiInterface.plateTimeChange(data)
     }
 }
