@@ -234,17 +234,6 @@ class MyApplication : Application() {
                 fabricExceptionHandler
             )
         )
-
-        // fabric deprecated 2020. 11까지 서비스 종료
-//        Fabric.with(this, Crashlytics())
-//        val fabricExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
-//        Thread.setDefaultUncaughtExceptionHandler(
-//            HappyGolfUserExceptionHandler(
-//                this,
-//                defaultExceptionHandler,
-//                fabricExceptionHandler
-//            )
-//        )
     }
 
     private fun rxErrorHandler() {
