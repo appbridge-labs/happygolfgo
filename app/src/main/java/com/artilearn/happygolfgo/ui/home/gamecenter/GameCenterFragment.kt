@@ -22,7 +22,7 @@ class GameCenterFragment :
 
     override val viewModel: GameCenterViewModel by viewModel()
     private lateinit var adapter: GameCenterAdapter
-    private val list: ArrayList<GameRankTestModel> = arrayListOf()
+    private var list: ArrayList<GameRankTestModel> = arrayListOf()
 
     override fun init() {
 
@@ -127,6 +127,7 @@ class GameCenterFragment :
     }
 
     private fun setRandomData() {
+        list = arrayListOf()
         val data1 = GameRankTestModel(100, "행골나들이", 8.7f)
         val data2 = GameRankTestModel(101, "킹드라이버", 6.7f)
         val data3 = GameRankTestModel(102, "싱글진입하자", 4.7f)

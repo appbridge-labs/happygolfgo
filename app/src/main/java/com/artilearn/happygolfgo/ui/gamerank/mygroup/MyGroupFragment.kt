@@ -13,7 +13,7 @@ class MyGroupFragment : BaseFragment<FragmentMygroupBinding, GameRankViewModel>(
 
     override val viewModel: GameRankViewModel by sharedViewModel()
     private lateinit var adapter: GameRankAdapter
-    private val list = arrayListOf<GameRankTestModel>()
+    private var list = arrayListOf<GameRankTestModel>()
 
     override fun init() {
 
@@ -28,6 +28,7 @@ class MyGroupFragment : BaseFragment<FragmentMygroupBinding, GameRankViewModel>(
     }
 
     private fun setRandomData() {
+        list = arrayListOf()
         val data1 = GameRankTestModel(1, "닉네임~~11", 7.7f)
         val data2 = GameRankTestModel(2, "닉네임~~22", 3.7f)
         val data3 = GameRankTestModel(3, "닉네임~~33", 6.7f)
