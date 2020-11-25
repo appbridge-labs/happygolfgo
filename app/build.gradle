@@ -47,7 +47,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.github.happygolfdev:TLSModules-Android:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -59,14 +59,14 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.2.0'
 
-    implementation "androidx.preference:preference:1.1.1"
+    implementation "androidx.preference:preference-ktx:1.1.1"
 
     // retrofit, okhttp log
-    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
-    implementation 'com.squareup.okhttp3:okhttp:4.2.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.8.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
 
     // aac lifecycle
     implementation 'android.arch.lifecycle:extensions:2.2.0'
@@ -87,7 +87,7 @@ dependencies {
     //implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     // rxjava
-    implementation "io.reactivex.rxjava2:rxjava:2.2.17"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.20"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
     implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
 
@@ -116,7 +116,7 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.4.2'
 
     // koin
-    implementation "org.koin:koin-androidx-viewmodel:2.1.5"
+    implementation "org.koin:koin-androidx-viewmodel:2.1.6"
 
     // mp chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
