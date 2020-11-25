@@ -18,9 +18,9 @@ object ApiService {
     private fun interceptor(
         interceptor: ApiInterceptor
     ): OkHttpClient = OkHttpClient.Builder().run {
-        connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
-        readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-        writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+        connectTimeout(60, TimeUnit.SECONDS)
+        readTimeout(60, TimeUnit.SECONDS)
+        writeTimeout(60, TimeUnit.SECONDS)
         addInterceptor(interceptor)
         build()
     }

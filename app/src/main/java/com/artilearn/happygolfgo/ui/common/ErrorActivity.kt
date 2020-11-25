@@ -7,6 +7,7 @@ import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
 import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.databinding.ActivityErrorBinding
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error) {
 
@@ -23,6 +24,17 @@ class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error
 
         showEvent()
         initClickListener()
+
+        try {
+            throw RuntimeException("ErrorActivity!")
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().log(
+                """errorMsg: $errorText
+                | e: $e
+                | intent: $lastActivityIntent
+            """.trimMargin()
+            )
+        }
     }
 
     private fun showEvent() {

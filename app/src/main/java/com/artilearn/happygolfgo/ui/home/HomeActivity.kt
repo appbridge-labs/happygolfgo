@@ -20,6 +20,7 @@ import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
@@ -61,6 +62,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         initView()
         initAdapter()
         ticketRefresh()
+
+        try {
+            throw RuntimeException("테스트")
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().log("테스트 입니다~~~")
+        }
     }
 
     private fun inject() {
