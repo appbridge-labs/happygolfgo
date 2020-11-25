@@ -3,8 +3,6 @@ package com.artilearn.happygolfgo.modules
 import com.artilearn.happygolfgo.ui.comment.CommentViewModel
 import com.artilearn.happygolfgo.ui.common.DeveloperOptionViewModel
 import com.artilearn.happygolfgo.ui.gamerank.GameRankViewModel
-import com.artilearn.happygolfgo.ui.gamerank.allgroup.AllGroupViewModel
-import com.artilearn.happygolfgo.ui.gamerank.mygroup.MyGroupViewModel
 import com.artilearn.happygolfgo.ui.gamescore.GameScoreViewModel
 import com.artilearn.happygolfgo.ui.home.HomeViewModel
 import com.artilearn.happygolfgo.ui.home.alram.AlramViewModel
