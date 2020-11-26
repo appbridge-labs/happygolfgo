@@ -35,7 +35,7 @@ class GameCenterViewModel(
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
             .subscribe({
-                Log.d(TAG, "${it.data}")
+                Log.d(TAG, "$it: ")
             }, {
                 Log.d(TAG, "$it: ")
             }).addTo(compositeDisposable)
