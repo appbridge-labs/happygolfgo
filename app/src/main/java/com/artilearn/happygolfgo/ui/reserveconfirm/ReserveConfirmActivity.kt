@@ -191,14 +191,13 @@ class ReserveConfirmActivity :
 
     private fun showChangeTimeLayout() {
         with(binding) {
-            timeChangeLayout.visibility = View.VISIBLE
-            timeChangeLayout.tv_text.text = "예약시간 변경"
-            timeChangeLayout.setOnClickListener { goTicketTime() }
+            llTimechange.visibility = View.VISIBLE
+            llTimechange.setOnClickListener { goTicketTime() }
         }
     }
 
     private fun hideChangeTimeLayout() {
-        binding.timeChangeLayout.visibility = View.GONE
+        binding.llTimechange.visibility = View.GONE
     }
 
     private fun goReserveSuccessPlate(plate: ReservationPlate) {
