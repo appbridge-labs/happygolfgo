@@ -49,7 +49,7 @@ class AlramFragment
     private fun initAdapter() {
         adapter = AlramAdapter { alram ->
             when (alram.eventType) {
-                "3" -> goReservaitonPlate(alram.eventValue.toInt())
+                "3", "7" -> goReservaitonPlate(alram.eventValue.toInt())
                 "4" -> goReservationLesson(alram.eventValue.toInt())
                 "6" -> goLessonLog(alram.eventValue.toInt())
             }

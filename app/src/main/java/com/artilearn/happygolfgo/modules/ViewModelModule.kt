@@ -62,7 +62,7 @@ val viewModelModule = module {
 
     viewModel { ReservationViewModel(get(), get()) }
 
-    viewModel { GameCenterViewModel() }
+    viewModel { GameCenterViewModel(get()) }
 
     viewModel { AlramViewModel(get()) }
 

@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.comment.CommentModel
+import com.artilearn.happygolfgo.data.gamecenter.GameCenterResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.log.LogResponse
@@ -153,4 +154,7 @@ interface ApiInterface {
     fun plateTimeChange(
         @Body data: HashMap<String, PlateTimeChangeModel>
     ): Single<Response<PlateTimeChangeResponse>>
+
+    @GET("hgGame")
+    fun getGameCenter(): Single<GameCenterResponse>
 }

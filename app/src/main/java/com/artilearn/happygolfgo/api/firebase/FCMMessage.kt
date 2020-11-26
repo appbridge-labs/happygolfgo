@@ -50,7 +50,7 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
         val intent: Intent
 
         when (type) {
-            "3" -> {
+            "3", "7" -> {
                 if (isRunning) {
                     intent = Intent(this, ReserveConfirmActivity::class.java)
                         .apply {
