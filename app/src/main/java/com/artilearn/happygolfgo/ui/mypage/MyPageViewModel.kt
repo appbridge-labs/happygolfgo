@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 class MyPageViewModel(
     private val versionRepository: VersionRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val myApplicationContext = MyApplication.getApplicationContext()
     private val updateClick = PublishSubject.create<Unit>()
 
@@ -93,7 +93,7 @@ class MyPageViewModel(
             .subscribe({
                 _logout.call()
             }, {
-                _fail.value = it.message
+                _fail.value = it.localizedMessage
             }).let(compositeDisposable::add)
     }
 

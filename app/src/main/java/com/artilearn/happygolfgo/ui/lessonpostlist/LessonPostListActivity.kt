@@ -50,7 +50,8 @@ class LessonPostListActivity : BaseActivity<ActivityLessonPostListBinding>(R.lay
                 showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
             })
             serverError.observe(this@LessonPostListActivity, Observer {
-                showError(it)
+                //showError(it)
+                showToast(ToastType.ERROR, it)
             })
         }
     }

@@ -1,17 +1,20 @@
 package com.artilearn.happygolfgo.ui.reservelist
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.reservelist.ReserveListResponse
 import com.artilearn.happygolfgo.data.reservelist.source.ReserveListRepository
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class ReserveListViewModel(
     private val reseveListRepository: ReserveListRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _reservationList: MutableLiveData<ReserveListResponse> = MutableLiveData()
     val reservationList: LiveData<ReserveListResponse> get() = _reservationList
 
@@ -30,13 +33,17 @@ class ReserveListViewModel(
                         _serverError.value = response.errorBody().toString()
                     }
                 }, { t ->
-                    when (t.message) {
-                        "Network Error" -> {
-                            _networkFail.value = Unit
+                    when (t) {
+                        is NetworkErrorException -> _networkFail.value = Unit
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                            _serverError.value = t.localizedMessage
                         }
-                        else -> {
-                            _serverError.value = t.message
-                        }
+                        else -> _serverError.value = t.localizedMessage
                     }
                 })
         )

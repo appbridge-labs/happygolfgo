@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.ticketdate
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.applandeo.materialcalendarview.EventDay
@@ -8,14 +9,16 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
 import com.artilearn.happygolfgo.util.convertCalendar
 import com.artilearn.happygolfgo.util.convertDate
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 import java.util.*
 
 class TicketDateViewModel(
     private val ticketDateRepository: TicketDateRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _isCalendarLoading: MutableLiveData<Boolean> = MutableLiveData()
     private val _eventDayList: MutableLiveData<List<EventDay>> = MutableLiveData()
     private val _availableMinDate: MutableLiveData<Calendar> = MutableLiveData()
@@ -64,6 +67,13 @@ class TicketDateViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
+                    .doOnError { t ->
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                        }
+                    }
                     .subscribe({ response ->
                         val body = response.body()
                         with(response) {
@@ -74,13 +84,17 @@ class TicketDateViewModel(
                             }
                         }
                     }, { t ->
-                        when (t.message) {
-                            "Network Error" -> {
-                                _networkFail.value = Unit
+                        when (t) {
+                            is NetworkErrorException -> _networkFail.value = Unit
+                            is HttpException -> {
+                                try {
+                                    throw RuntimeException(TAG)
+                                } catch (e: Exception) {
+                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                                }
+                                _serverError.value = t.localizedMessage
                             }
-                            else -> {
-                                _serverError.value = t.message
-                            }
+                            else -> _serverError.value = t.localizedMessage
                         }
                     })
             )
@@ -95,6 +109,13 @@ class TicketDateViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
+                    .doOnError { t ->
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                        }
+                    }
                     .subscribe({ response ->
                         val body = response.body()
                         with(response) {
@@ -105,13 +126,17 @@ class TicketDateViewModel(
                             }
                         }
                     }, { t ->
-                        when (t.message) {
-                            "Network Error" -> {
-                                _networkFail.value = Unit
+                        when (t) {
+                            is NetworkErrorException -> _networkFail.value = Unit
+                            is HttpException -> {
+                                try {
+                                    throw RuntimeException(TAG)
+                                } catch (e: Exception) {
+                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                                }
+                                _serverError.value = t.localizedMessage
                             }
-                            else -> {
-                                _serverError.value = t.message
-                            }
+                            else -> _serverError.value = t.localizedMessage
                         }
                     })
             )

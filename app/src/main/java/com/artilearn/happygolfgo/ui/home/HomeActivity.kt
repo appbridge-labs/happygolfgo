@@ -12,6 +12,7 @@ import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.alram.AlramActivity
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.ui.mypage.MyPageActivity
@@ -84,7 +85,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 goAlram()
             })
             serverError.observe(this@HomeActivity, Observer {
-                showError(it)
+                //showError(it)
+                showToast(ToastType.ERROR, it)
             })
             networkFail.observe(this@HomeActivity, Observer {
                 showNetworkFail()

@@ -1,17 +1,20 @@
 package com.artilearn.happygolfgo.ui.lessonpostlist
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.lessonlog.source.LessonLogRepository
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class LessonPostListViewModel(
     private val lessonLogRepository: LessonLogRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _emptyLessonLog: MutableLiveData<Boolean> = MutableLiveData()
     private val _lessonLog: MutableLiveData<ArrayList<LessonLog>> = MutableLiveData()
 
@@ -25,6 +28,13 @@ class LessonPostListViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    try {
+                        throw RuntimeException(TAG)
+                    } catch (e: Exception) {
+                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                    }
+                }
                 .subscribe({
                     val body = it.body()
                     if (it.isSuccessful && body != null) {
@@ -37,14 +47,18 @@ class LessonPostListViewModel(
                     } else {
                         _serverError.value = it.message()
                     }
-                }, {
-                    when (it.message) {
-                        "Network Error" -> {
-                            _networkFail.value = Unit
+                }, { t ->
+                    when (t) {
+                        is NetworkErrorException -> _networkFail.value = Unit
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                            _serverError.value = t.localizedMessage
                         }
-                        else -> {
-                            _serverError.value = it.message
-                        }
+                        else -> _serverError.value = t.localizedMessage
                     }
                 })
         )

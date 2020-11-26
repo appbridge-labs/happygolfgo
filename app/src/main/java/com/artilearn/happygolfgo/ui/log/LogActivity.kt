@@ -84,7 +84,8 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
                 showVideoView()
             })
             serverError.observe(this@LogActivity, Observer { errorMsg ->
-                showError(errorMsg)
+                //showError(errorMsg)
+                showToast(ToastType.ERROR, errorMsg)
             })
             networkFail.observe(this@LogActivity, Observer {
                 showNetworkFail()

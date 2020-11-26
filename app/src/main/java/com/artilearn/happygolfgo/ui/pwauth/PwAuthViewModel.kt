@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.pwauth
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -8,13 +9,15 @@ import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
 import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepository
 import com.artilearn.happygolfgo.enummodel.PwAuthNumberType
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class PwAuthViewModel(
     private val pwAuthRepository: PwAuthRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _phoneNumber: MutableLiveData<PwAuthPhoneType> = MutableLiveData()
     private val _authNumber: MutableLiveData<PwAuthNumberType> = MutableLiveData()
     private val _success: MutableLiveData<Boolean> = MutableLiveData()
@@ -61,20 +64,28 @@ class PwAuthViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    when (t.message) {
+                        "HTTP 404 Not Found" -> _phoneNumber.value = PwAuthPhoneType.EMPTY_USER
+                        "Network Error" -> _phoneNumber.value = PwAuthPhoneType.NETWORK_FAIL
+                        else -> _phoneNumber.value = PwAuthPhoneType.FAIL
+                    }
+                }
                 .subscribe({
                     _phoneNumber.value = PwAuthPhoneType.SUCCESS
                     successPhone = currentPhone
                     status = true
-                }, {
-                    when (it.message) {
-                        "HTTP 404 Not Found" -> {
-                            _phoneNumber.value = PwAuthPhoneType.EMPTY_USER
+                }, { t ->
+                    when (t) {
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                            _serverError.value = t.localizedMessage
                         }
-                        "Network Error" ->
-                            _phoneNumber.value = PwAuthPhoneType.NETWORK_FAIL
-                        else -> {
-                            _phoneNumber.value = PwAuthPhoneType.FAIL
-                        }
+                        else -> _serverError.value = t.localizedMessage
                     }
                 })
         )
@@ -103,20 +114,27 @@ class PwAuthViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
+                    .doOnError { t ->
+                        when(t.message) {
+                            "Network Error" -> _authNumber.value = PwAuthNumberType.NETWORK_FAIL
+                            "HTTP 406 Not Acceptable" -> _authNumber.value = PwAuthNumberType.AUTH_ERROR
+                            else -> _authNumber.value = PwAuthNumberType.FAIL
+                        }
+                    }
                     .subscribe({
                         _authNumber.value = PwAuthNumberType.SUCCESS
                         _success.value = true
-                    }, {
-                        when (it.message) {
-                            "Network Error" -> {
-                                _authNumber.value = PwAuthNumberType.NETWORK_FAIL
+                    }, { t ->
+                        when (t) {
+                            is HttpException -> {
+                                try {
+                                    throw RuntimeException(TAG)
+                                } catch (e: Exception) {
+                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                                }
+                                _serverError.value = t.localizedMessage
                             }
-                            "HTTP 406 Not Acceptable" -> {
-                                _authNumber.value = PwAuthNumberType.AUTH_ERROR
-                            }
-                            else -> {
-                                _authNumber.value = PwAuthNumberType.FAIL
-                            }
+                            else -> _serverError.value = t.localizedMessage
                         }
                     })
             )

@@ -1,9 +1,6 @@
 package com.artilearn.happygolfgo.api
 
 import android.content.Context
-import com.artilearn.happygolfgo.constants.CONNECT_TIMEOUT
-import com.artilearn.happygolfgo.constants.READ_TIMEOUT
-import com.artilearn.happygolfgo.constants.WRITE_TIMEOUT
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.PreferenceManager
 import okhttp3.OkHttpClient

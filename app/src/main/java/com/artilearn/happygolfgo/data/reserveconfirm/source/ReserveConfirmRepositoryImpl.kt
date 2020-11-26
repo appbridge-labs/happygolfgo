@@ -1,5 +1,7 @@
 package com.artilearn.happygolfgo.data.reserveconfirm.source
 
+import android.accounts.NetworkErrorException
+import android.util.Log
 import com.artilearn.happygolfgo.data.reserveconfirm.*
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.CancelRemoteDataSource
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReservationRemoteDataSource
@@ -30,7 +32,7 @@ class ReserveConfirmRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -40,10 +42,14 @@ class ReserveConfirmRepositoryImpl(
         return if (networkManager.networkState()) {
             reservationRemoteDataSource.remoteReservationPlate(data)
                 .flatMap {
-                    Single.just(it)
+                    if (it.isSuccessful) {
+                        Single.just(it)
+                    } else {
+                        Single.error(HttpException(it))
+                    }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -60,7 +66,7 @@ class ReserveConfirmRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -68,7 +74,7 @@ class ReserveConfirmRepositoryImpl(
         return if (networkManager.networkState()) {
             cancelRemoteDataSource.remoteReservationPlateCancel(plateId)
         } else {
-            Completable.error(IllegalStateException("Network Error"))
+            Completable.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -76,7 +82,7 @@ class ReserveConfirmRepositoryImpl(
         return if (networkManager.networkState()) {
             cancelRemoteDataSource.remoteReservationLessonCancel(lessonId)
         } else {
-            Completable.error(IllegalStateException("Network Error"))
+            Completable.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -89,11 +95,11 @@ class ReserveConfirmRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException("Server Error"))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -110,7 +116,7 @@ class ReserveConfirmRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -128,7 +134,7 @@ class ReserveConfirmRepositoryImpl(
                 }
                 .map { it.body()?.data?.plateReservation }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 }

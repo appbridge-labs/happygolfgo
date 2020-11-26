@@ -25,10 +25,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_error"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="v1.12.1"/>
+
+        <TextView
             android:id="@+id/tv_error_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginTop="45dp"
             android:alpha="0"
             android:scaleX="0.5"
@@ -39,7 +50,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_error" />
+            app:layout_constraintTop_toBottomOf="@id/tv_version" />
 
         <Button
             android:id="@+id/btn_reload"
