@@ -1,17 +1,21 @@
 package com.artilearn.happygolfgo.ui.tickettime
 
+import android.accounts.NetworkErrorException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.data.tickettime.source.TicketTimeRepository
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class TicketTimeViewModel(
     private val ticketTimeRepository: TicketTimeRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _ticketTime: MutableLiveData<ArrayList<TicketTime>> = MutableLiveData()
     private val _emptyTicketTime: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -37,6 +41,13 @@ class TicketTimeViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    try {
+                        throw RuntimeException(TAG)
+                    } catch (e: Exception) {
+                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                    }
+                }
                 .subscribe({ response ->
                     val body = response.body()
                     if (response.isSuccessful && body != null) {
@@ -50,13 +61,17 @@ class TicketTimeViewModel(
                         _serverError.value = response.message()
                     }
                 }, { t ->
-                    when (t.message) {
-                        "Network Error" -> {
-                            _networkFail.value = Unit
+                    when (t) {
+                        is NetworkErrorException -> _networkFail.value = Unit
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                            _serverError.value = t.localizedMessage
                         }
-                        else -> {
-                            _serverError.value = t.message
-                        }
+                        else -> _serverError.value = t.localizedMessage
                     }
                 })
         )
@@ -69,6 +84,13 @@ class TicketTimeViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    try {
+                        throw RuntimeException(TAG)
+                    } catch (e: Exception) {
+                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                    }
+                }
                 .subscribe({ response ->
                     val body = response.body()
                     if (response.isSuccessful && body != null) {
@@ -82,13 +104,17 @@ class TicketTimeViewModel(
                         _serverError.value = response.message()
                     }
                 }, { t ->
-                    when (t.message) {
-                        "Network Error" -> {
-                            _networkFail.value = Unit
+                    when (t) {
+                        is NetworkErrorException -> _networkFail.value = Unit
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                            _serverError.value = t.localizedMessage
                         }
-                        else -> {
-                            _serverError.value = t.message
-                        }
+                        else -> _serverError.value = t.localizedMessage
                     }
                 })
         )

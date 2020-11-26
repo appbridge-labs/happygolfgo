@@ -15,6 +15,7 @@ import com.artilearn.happygolfgo.constants.SELECTION_DATE
 import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ActivityTicketDateBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeActivity
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.snackbar
@@ -55,7 +56,8 @@ class TicketDateActivity : BaseActivity<ActivityTicketDateBinding>(R.layout.acti
     private fun initViewModelObserve() {
         with(viewModel) {
             serverError.observe(this@TicketDateActivity, Observer {
-                showError(it)
+                //showError(it)
+                showToast(ToastType.ERROR, it)
             })
             networkFail.observe(this@TicketDateActivity, Observer {
                 showNetworkFail()

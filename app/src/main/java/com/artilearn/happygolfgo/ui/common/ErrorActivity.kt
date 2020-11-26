@@ -1,7 +1,9 @@
 package com.artilearn.happygolfgo.ui.common
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.TextView
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
@@ -19,8 +21,18 @@ class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error
         intent.getStringExtra(EXTRA_ERROR_TEXT)
     }
 
+    private lateinit var versionName: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        versionName = findViewById(R.id.tv_version)
+
+        try {
+            val packageInfo = this.packageManager.getPackageInfo(this.packageName, 0)
+            versionName.text = packageInfo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
 
         showEvent()
         initClickListener()

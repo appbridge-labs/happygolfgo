@@ -1,9 +1,11 @@
 package com.artilearn.happygolfgo.data.home.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Single
+import retrofit2.HttpException
 import retrofit2.Response
 
 class HomeRepositoryImpl(
@@ -19,12 +21,12 @@ class HomeRepositoryImpl(
                         if (isSuccessful) {
                             Single.just(it)
                         } else {
-                            Single.error(IllegalStateException("Server Error"))
+                            Single.error(HttpException(it))
                         }
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 }

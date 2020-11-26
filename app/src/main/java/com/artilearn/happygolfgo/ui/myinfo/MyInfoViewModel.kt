@@ -1,18 +1,21 @@
 package com.artilearn.happygolfgo.ui.myinfo
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
 import com.artilearn.happygolfgo.data.myinfo.source.MyInfoRepository
 import com.artilearn.happygolfgo.enummodel.UploadProfileType
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class MyInfoViewModel(
     private val myinfoRepository: MyInfoRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     val nickname = MutableLiveData("")
 
     private val _emptyNickName: MutableLiveData<Unit> = MutableLiveData()
@@ -66,16 +69,27 @@ class MyInfoViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    try {
+                        throw RuntimeException(TAG)
+                    } catch (e: Exception) {
+                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                    }
+                }
                 .subscribe({
                     _upload.value = UploadProfileType.SUCCESS
-                }, {
-                    when (it.message) {
-                        "Network Error" -> {
-                            _upload.value = UploadProfileType.NETWORK_FAIL
-                        }
-                        else -> {
+                }, { t ->
+                    when (t) {
+                        is NetworkErrorException -> _upload.value = UploadProfileType.NETWORK_FAIL
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
                             _upload.value = UploadProfileType.UNKNOW_ERROR
                         }
+                        else -> _upload.value = UploadProfileType.UNKNOW_ERROR
                     }
                 })
         )

@@ -10,6 +10,7 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.data.ReserveList
 import com.artilearn.happygolfgo.databinding.ActivityReserveListBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.util.MyApplication
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_reserve_list.*
@@ -62,7 +63,8 @@ class ReserveListActivity :
                 showNetworkFail()
             })
             serverError.observe(this@ReserveListActivity, Observer {
-                showError(it)
+                //showError(it)
+                showToast(ToastType.ERROR, it)
             })
         }
     }

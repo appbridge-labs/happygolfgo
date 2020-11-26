@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.pwauth.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.pwauth.ConfirmAuthModel
 import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
 import com.artilearn.happygolfgo.data.pwauth.source.remote.PwAuthRemoteDataSource
@@ -17,7 +18,7 @@ class PwAuthRepositoryImpl(
         return if (networkManager.networkState()) {
             pwAuthRemoteDataSource.remoteGetAuthNumber(data)
         } else {
-            Completable.error(IllegalStateException("Network Error"))
+            Completable.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -27,7 +28,7 @@ class PwAuthRepositoryImpl(
         return if (networkManager.networkState()) {
             pwAuthRemoteDataSource.remoteConfirmAuthNumber(data)
         } else {
-            Completable.error(IllegalStateException("Network Error"))
+            Completable.error(NetworkErrorException("Network Error"))
         }
     }
 }

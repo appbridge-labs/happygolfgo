@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.myinfo.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.User
 import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
 import com.artilearn.happygolfgo.data.myinfo.MyInfoResponse
@@ -30,7 +31,7 @@ class MyInfoRepositoryImpl(
                     Single.just(it)
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 

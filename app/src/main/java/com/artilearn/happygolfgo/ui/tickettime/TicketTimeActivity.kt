@@ -13,6 +13,7 @@ import com.artilearn.happygolfgo.constants.*
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityTicketTimeBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import com.artilearn.happygolfgo.util.MyApplication
 
@@ -60,7 +61,8 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
     private fun initViewModelObserve() {
         with(viewModel) {
             serverError.observe(this@TicketTimeActivity, Observer {
-                showError(it)
+                //showError(it)
+                showToast(ToastType.ERROR, it)
             })
             networkFail.observe(this@TicketTimeActivity, Observer {
                 showNetworkFail()

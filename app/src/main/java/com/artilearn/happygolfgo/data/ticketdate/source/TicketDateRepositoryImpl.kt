@@ -1,9 +1,11 @@
 package com.artilearn.happygolfgo.data.ticketdate.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.ticketdate.TicketDateResponse
 import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Single
+import retrofit2.HttpException
 import retrofit2.Response
 
 class TicketDateRepositoryImpl(
@@ -20,11 +22,11 @@ class TicketDateRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException(it.message()))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -37,11 +39,11 @@ class TicketDateRepositoryImpl(
                     if (it.isSuccessful) {
                         Single.just(it)
                     } else {
-                        Single.error(IllegalStateException(it.message()))
+                        Single.error(HttpException(it))
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.pwreset.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.pwreset.PwrestModel
 import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSource
 import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSource
@@ -21,7 +22,7 @@ class PwrestRepositoryImpl(
         return if (networkManager.networkState()) {
              pwrestRemoteDataSource.remoteChangePassword(data)
         } else {
-            Completable.error(IllegalStateException("Network Error"))
+            Completable.error(NetworkErrorException("Network Error"))
         }
     }
 }

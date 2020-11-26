@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.login
 
+import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,13 +10,15 @@ import com.artilearn.happygolfgo.data.login.source.LoginRepository
 import com.artilearn.happygolfgo.util.MyApplication
 import com.artilearn.happygolfgo.util.getAndroidID
 import com.artilearn.happygolfgo.util.getWidevineID
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class LoginViewModel(
     private val loginRepository: LoginRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val applicationContext = MyApplication.getApplicationContext()
 
     val phone = MutableLiveData("")
@@ -95,23 +98,26 @@ class LoginViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    when (t.localizedMessage) {
+                        "HTTP 401 Unauthorized", "HTTP 401 " -> _failPassword.value = Unit
+                        "HTTP 404 Not Found", "HTTP 404 " -> _emptyUser.value = Unit
+                        else -> _serverError.value = t.localizedMessage
+                    }
+                }
                 .subscribe({
                     _loginSuccess.value = Unit
-                }, {
-                    Log.d("testest", "requestLogin: $it")
-                    when (it.message) {
-                        "HTTP 401 Unauthorized", "HTTP 401 " -> {
-                            _failPassword.value = Unit
+                }, { t ->
+                    when (t) {
+                        is NetworkErrorException -> _networkFail.value = Unit
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
                         }
-                        "HTTP 404 Not Found", "HTTP 404 " -> {
-                            _emptyUser.value = Unit
-                        }
-                        "Network Error" -> {
-                            _networkFail.value = Unit
-                        }
-                        else -> {
-                            _serverError.value = it.message
-                        }
+                        else -> _serverError.value = t.localizedMessage
                     }
                 })
         )
