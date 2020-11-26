@@ -2,6 +2,8 @@ package com.artilearn.happygolfgo.modules
 
 import com.artilearn.happygolfgo.data.developeroption.source.local.DeveloperOptionDataSoucre
 import com.artilearn.happygolfgo.data.developeroption.source.local.DeveloperOptionDataSoucreImpl
+import com.artilearn.happygolfgo.data.gamecenter.source.local.GameCenterLocalDataSource
+import com.artilearn.happygolfgo.data.gamecenter.source.local.GameCenterLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSource
 import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.myinfo.source.local.MyInfoLocalDataSource
@@ -34,4 +36,6 @@ val localModule = module {
     single<PwrestLocalDataSource> { PwrestLocalDataSourceImpl(get()) }
 
     single<DeveloperOptionDataSoucre> { DeveloperOptionDataSoucreImpl(get()) }
+
+    single<GameCenterLocalDataSource> { GameCenterLocalDataSourceImpl(get()) }
 }

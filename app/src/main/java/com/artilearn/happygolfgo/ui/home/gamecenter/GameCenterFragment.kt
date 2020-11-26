@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.home.gamecenter
 
 import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
@@ -16,10 +17,11 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.log
 
 class GameCenterFragment :
     BaseFragment<FragmentGamecenterBinding, GameCenterViewModel>(R.layout.fragment_gamecenter) {
-
+    private val TAG = javaClass.simpleName
     override val viewModel: GameCenterViewModel by viewModel()
     private lateinit var adapter: GameCenterAdapter
     private var list: ArrayList<GameRankTestModel> = arrayListOf()
@@ -46,6 +48,9 @@ class GameCenterFragment :
                     GameCenterViewModel.ButtonType.RANK -> goGameRank()
                     GameCenterViewModel.ButtonType.GAME -> goGameScore()
                 }
+            })
+            user.observe(this@GameCenterFragment, Observer {
+                binding.user = it
             })
         }
     }

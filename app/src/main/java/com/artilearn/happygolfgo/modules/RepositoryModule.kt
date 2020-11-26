@@ -79,5 +79,5 @@ val repositoryModule = module {
 
     single<TimeChangeRepository> { ReserveConfirmRepositoryImpl(get(), get(), get(), get(), get()) }
 
-    single<GameCenterRepository> { GameCenterRepositoryImpl(get(), get()) }
+    single<GameCenterRepository> { GameCenterRepositoryImpl(get(), get(), get()) }
 }
