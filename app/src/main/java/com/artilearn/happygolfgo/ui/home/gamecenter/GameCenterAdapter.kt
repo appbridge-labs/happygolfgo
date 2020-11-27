@@ -6,10 +6,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.databinding.ItemGamecenterRankBinding
-import com.artilearn.happygolfgo.ui.gamerank.GameRankTestModel
+import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCRankModel
 
-class GameCenterAdapter(private val items: ArrayList<GameRankTestModel>) : RecyclerView.Adapter<GameCenterAdapter.GameCenterViewHolder>() {
+class GameCenterAdapter() : RecyclerView.Adapter<GameCenterAdapter.GameCenterViewHolder>() {
 
+    private val items: ArrayList<GCRankModel> = arrayListOf()
     lateinit var binding: ItemGamecenterRankBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameCenterViewHolder {
@@ -33,16 +34,13 @@ class GameCenterAdapter(private val items: ArrayList<GameRankTestModel>) : Recyc
         private val binding: ItemGamecenterRankBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: GameRankTestModel) {
-            //binding.item = item
-            binding.tvRank.text = item.rank.toString()
-            binding.tvNickname.text = item.nickname
-            binding.tvScore.text = item.score.toString()
+        fun bind(item: GCRankModel) {
+            binding.item = item
             binding.executePendingBindings()
         }
     }
 
-    fun setItems(items: List<GameRankTestModel>) {
+    fun setItems(items: List<GCRankModel>) {
         this.items.addAll(items)
         notifyDataSetChanged()
     }

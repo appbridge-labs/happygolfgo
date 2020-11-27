@@ -24,7 +24,6 @@ class GameCenterFragment :
     private val TAG = javaClass.simpleName
     override val viewModel: GameCenterViewModel by viewModel()
     private lateinit var adapter: GameCenterAdapter
-    private var list: ArrayList<GameRankTestModel> = arrayListOf()
 
     override fun init() {
 
@@ -34,7 +33,6 @@ class GameCenterFragment :
 
         replaceBarDataSetting()
         replaceSetBarData()
-        setRandomData()
     }
 
     private fun initBinding() {
@@ -57,6 +55,10 @@ class GameCenterFragment :
             })
             sumary.observe(this@GameCenterFragment, Observer { sumary ->
                 binding.sumary = sumary
+            })
+            networkFail.observe(this@GameCenterFragment, Observer {
+                Log.d(TAG, "zzz: zzz")
+                showFragmentNetworkFail()
             })
         }
     }
@@ -132,22 +134,9 @@ class GameCenterFragment :
     }
 
     private fun initAdapter() {
-        adapter = GameCenterAdapter(list)
+        adapter = GameCenterAdapter()
 
         binding.rvAllRank.adapter = adapter
-    }
-
-    private fun setRandomData() {
-        list = arrayListOf()
-        val data1 = GameRankTestModel(100, "행골나들이", 8.7f)
-        val data2 = GameRankTestModel(101, "킹드라이버", 6.7f)
-        val data3 = GameRankTestModel(102, "싱글진입하자", 4.7f)
-
-        list.add(data1)
-        list.add(data2)
-        list.add(data3)
-
-        adapter.setItems(list)
     }
 
     private fun goGameRank() {

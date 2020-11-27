@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.os.Process
+import android.util.Log
 import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
 import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.ui.common.ErrorActivity
@@ -61,16 +62,16 @@ class HappyGolfUserExceptionHandler(
         lastActivity?.run {
             val stringWriter = StringWriter()
             e.printStackTrace(PrintWriter(stringWriter))
-
-            try {
-                throw RuntimeException(TAG)
-            } catch (ex: Exception) {
-                FirebaseCrashlytics.getInstance().log("""
-                    activity: $lastActivity,
-                    error: $e
-                    message: $stringWriter
-                """.trimIndent())
-            }
+            Log.d(TAG, "uncaughtException: $e\n${e.localizedMessage}")
+//            try {
+//                throw RuntimeException(TAG)
+//            } catch (ex: Exception) {
+//                FirebaseCrashlytics.getInstance().log("""
+//                    activity: $lastActivity,
+//                    error: $e
+//                    message: $stringWriter
+//                """.trimIndent())
+//            }
 
             startErrorActivity(this, stringWriter.toString())
         } ?: defaultExceptionHandler.uncaughtException(t, e)

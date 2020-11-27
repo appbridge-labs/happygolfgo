@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -19,10 +19,14 @@
         <variable
             name="sumary"
             type="com.artilearn.happygolfgo.ui.home.gamecenter.model.GCSumaryModel" />
-        
+
         <variable
             name="averages"
             type="com.artilearn.happygolfgo.ui.home.gamecenter.model.GCAveragesModel" />
+
+        <variable
+            name="rank"
+            type="com.artilearn.happygolfgo.data.gamecenter.GameCenterResponse.GameCenterRank" />
 
     </data>
 
@@ -57,10 +61,10 @@
                         android:id="@+id/iv_profile"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        bind:onBindProfile="@{user.profileImageURL}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        bind:onBindProfile="@{user.profileImageURL}"
                         tools:srcCompat="@drawable/ic_rating_star" />
 
                     <LinearLayout
@@ -480,6 +484,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/five_guideline"
+                        bind:list="@{vm.rank}"
                         tools:itemCount="3"
                         tools:listitem="@layout/item_gamecenter_rank" />
 

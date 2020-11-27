@@ -1,68 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="item"
+            type="com.artilearn.happygolfgo.ui.home.gamecenter.model.GCRankModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_rank"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/iv_profile"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="등급" />
-
-        <ImageView
-            android:id="@+id/iv_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_rank"
-            app:layout_constraintEnd_toEndOf="@id/tv_nickname"
-            app:layout_constraintStart_toEndOf="@id/tv_rank"
-            app:layout_constraintTop_toTopOf="@id/tv_rank"
-            app:srcCompat="@drawable/ratingbar_star" />
-
-        <TextView
-            android:id="@+id/tv_nickname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="28dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            app:layout_constraintBottom_toBottomOf="@id/iv_profile"
-            app:layout_constraintEnd_toStartOf="@id/tv_score"
-            app:layout_constraintStart_toEndOf="@id/iv_profile"
-            app:layout_constraintTop_toTopOf="@id/iv_profile"
-            tools:text="닉네임" />
-
-        <TextView
-            android:id="@+id/tv_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_nickname"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="점수" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/tv_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@{item.globalRank}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="등급" />
+
+            <ImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_nickname"
+                app:layout_constraintStart_toEndOf="@id/tv_rank"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ratingbar_star"
+                bind:onBindProfile="@{item.profileImage}" />
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="28dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{item.name}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_score"
+                app:layout_constraintStart_toEndOf="@id/iv_profile"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="닉네임" />
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@{item.average}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_nickname"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="점수" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:layout_width="0dp"

@@ -8,8 +8,10 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.gamecenter.GameCenterResponse
 import com.artilearn.happygolfgo.data.gamecenter.source.GameCenterRepository
 import com.artilearn.happygolfgo.ui.home.gamecenter.mapper.AveragesMapper
+import com.artilearn.happygolfgo.ui.home.gamecenter.mapper.RankMapper
 import com.artilearn.happygolfgo.ui.home.gamecenter.mapper.SumaryMapper
 import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCAveragesModel
+import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCRankModel
 import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCSumaryModel
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.Observable
@@ -23,6 +25,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
+import kotlin.math.log
 
 class GameCenterViewModel(
     private val repository: GameCenterRepository
@@ -32,14 +35,17 @@ class GameCenterViewModel(
     private val _onGameDetailButton: Subject<ButtonType> = PublishSubject.create()
     private val _isGameDataSubject: PublishSubject<Unit> = PublishSubject.create()
     private val _isDefaultGameDataSubject: BehaviorSubject<Unit> = BehaviorSubject.createDefault(Unit)
+    private val _rankSubject: BehaviorSubject<List<GCRankModel>> = BehaviorSubject.createDefault(emptyList())
 
     private val _sumaryMapper: SumaryMapper = SumaryMapper
     private val _averagesMapper: AveragesMapper = AveragesMapper
+    private val _rankMapper: RankMapper = RankMapper
 
     private val _button: SingleLiveEvent<ButtonType> = SingleLiveEvent()
     private val _user: MutableLiveData<GameCenterResponse.GameCenterUser> = MutableLiveData()
     private val _averages: MutableLiveData<GCAveragesModel> = MutableLiveData()
     private val _sumary: MutableLiveData<GCSumaryModel> = MutableLiveData()
+    private val _rank: MutableLiveData<List<GCRankModel>> = MutableLiveData()
 
     val button: LiveData<ButtonType>
         get() = _button
@@ -52,6 +58,9 @@ class GameCenterViewModel(
 
     val sumary: LiveData<GCSumaryModel>
         get() = _sumary
+
+    val rank: LiveData<List<GCRankModel>>
+        get() = _rank
 
     init {
         listOf(rankDetail(), gameDetail())
@@ -70,14 +79,14 @@ class GameCenterViewModel(
 
         val gameData = defaultSubject
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { showLoading() }
+            .doOnNext { showLoading(); Log.d(TAG, "next1 ") }
             .switchMapSingle {
                 repository.getGames()
                     .subscribeOn(Schedulers.io())
             }
             .materialize()
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { hideLoading() }
+            .doOnNext { hideLoading(); Log.d(TAG, "next2: ") }
             .share()
 
         gameData.filter { it.isOnNext }
@@ -96,24 +105,36 @@ class GameCenterViewModel(
         gameData.filter { it.isOnNext }
             .map { it.value }
             .map { it.data.rank }
-            .subscribe()
+            .map(_rankMapper::mapper)
+            .subscribe(_rankSubject::onNext)
             .let(compositeDisposable::add)
 
         gameData.filter { it.isOnNext }
             .map { it.value }
             .map { it.data.averages }
-            .map(AveragesMapper::mapper)
+            .map(_averagesMapper::mapper)
             .subscribe(_averages::setValue)
             .let(compositeDisposable::add)
 
         gameData.filter { it.isOnError }
-            .subscribe {
-                Log.d(TAG, "error: $it, ${it.error?.localizedMessage}")
-                when(it.error) {
-                    is HttpException -> ""
-                    is NetworkErrorException -> ""
-                    else -> ""
+            .subscribe { e ->
+                Log.d(TAG, "error: $e, ${e.error?.localizedMessage}")
+                val a = e.error
+                when(a) {
+                    is HttpException -> Log.d(TAG, "error ${a.localizedMessage} ")
+                    is NetworkErrorException -> {
+                        Log.d(TAG, "network exception!!!: ")
+                        _networkFail.value = Unit
+                    }
+                    else -> Log.d(TAG, "else error: ${a?.localizedMessage}")
                 }
+            }
+            .let(compositeDisposable::add)
+
+        _rankSubject.observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                Log.d(TAG, "$it: ")
+                _rank.value = it
             }
             .let(compositeDisposable::add)
     }
