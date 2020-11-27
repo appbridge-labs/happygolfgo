@@ -8,6 +8,7 @@ import android.os.Process
 import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
 import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.ui.common.ErrorActivity
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import java.io.PrintWriter
 import java.io.StringWriter
 import kotlin.system.exitProcess
@@ -17,7 +18,7 @@ class HappyGolfUserExceptionHandler(
     private val defaultExceptionHandler: Thread.UncaughtExceptionHandler,
     private val fabricExceptionHandler: Thread.UncaughtExceptionHandler
 ) : Thread.UncaughtExceptionHandler {
-
+    private val TAG = javaClass.simpleName
     private var lastActivity: Activity? = null
     private var activityCount = 0
 
@@ -60,6 +61,16 @@ class HappyGolfUserExceptionHandler(
         lastActivity?.run {
             val stringWriter = StringWriter()
             e.printStackTrace(PrintWriter(stringWriter))
+
+            try {
+                throw RuntimeException(TAG)
+            } catch (ex: Exception) {
+                FirebaseCrashlytics.getInstance().log("""
+                    activity: $lastActivity,
+                    error: $e
+                    message: $stringWriter
+                """.trimIndent())
+            }
 
             startErrorActivity(this, stringWriter.toString())
         } ?: defaultExceptionHandler.uncaughtException(t, e)

@@ -49,8 +49,14 @@ class GameCenterFragment :
                     GameCenterViewModel.ButtonType.GAME -> goGameScore()
                 }
             })
-            user.observe(this@GameCenterFragment, Observer {
-                binding.user = it
+            user.observe(this@GameCenterFragment, Observer { user ->
+                binding.user = user
+            })
+            averages.observe(this@GameCenterFragment, Observer { averages ->
+                binding.averages = averages
+            })
+            sumary.observe(this@GameCenterFragment, Observer { sumary ->
+                binding.sumary = sumary
             })
         }
     }

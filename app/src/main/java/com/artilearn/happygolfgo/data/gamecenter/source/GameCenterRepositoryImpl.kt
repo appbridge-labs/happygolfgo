@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.data.gamecenter.source
 
 import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.gamecenter.GameCenterResponse
-import com.artilearn.happygolfgo.data.gamecenter.model.GameCenterMyInfo
 import com.artilearn.happygolfgo.data.gamecenter.source.local.GameCenterLocalDataSource
 import com.artilearn.happygolfgo.data.gamecenter.source.remote.GameCenterRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
@@ -21,11 +20,4 @@ class GameCenterRepositoryImpl(
         }
     }
 
-    private fun getMyInfors(): GameCenterMyInfo {
-        return GameCenterMyInfo(
-            name = local.name,
-            nickName = local.nickName,
-            profileImage = local.profileImage
-        )
-    }
 }
