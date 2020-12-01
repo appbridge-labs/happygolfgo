@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.api
 import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.comment.CommentModel
 import com.artilearn.happygolfgo.data.gamecenter.GameCenterResponse
+import com.artilearn.happygolfgo.data.golfrank.GolfRankResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.log.LogResponse
@@ -157,4 +158,7 @@ interface ApiInterface {
 
     @GET("hgGame")
     fun getGameCenter(): Single<GameCenterResponse>
+
+    @GET("hgGame/ranks")
+    fun getGameRanks(): Single<GolfRankResponse>
 }

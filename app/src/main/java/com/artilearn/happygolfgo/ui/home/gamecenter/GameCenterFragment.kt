@@ -6,7 +6,9 @@ import android.util.Log
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
+import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.databinding.FragmentGamecenterBinding
+import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
 import com.artilearn.happygolfgo.ui.gamerank.GameRankActivity
 import com.artilearn.happygolfgo.ui.gamerank.GameRankTestModel
 import com.artilearn.happygolfgo.ui.gamescore.GameScoreActivity
@@ -58,10 +60,15 @@ class GameCenterFragment :
                 binding.sumary = sumary
             })
             networkFail.observe(this@GameCenterFragment, Observer {
-                Log.d(TAG, "zzz: zzz")
-                showFragmentNetworkFail()
+                // toast
             })
         }
+    }
+
+    private fun initAdapter() {
+        adapter = GameCenterAdapter()
+
+        binding.rvAllRank.adapter = adapter
     }
 
     private fun initBarChart() {
@@ -137,12 +144,6 @@ class GameCenterFragment :
             }
 
         binding.barChart.data = data
-    }
-
-    private fun initAdapter() {
-        adapter = GameCenterAdapter()
-
-        binding.rvAllRank.adapter = adapter
     }
 
     private fun goGameRank() {

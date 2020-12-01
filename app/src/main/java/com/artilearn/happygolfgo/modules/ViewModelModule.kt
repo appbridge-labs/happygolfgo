@@ -68,7 +68,7 @@ val viewModelModule = module {
 
     viewModel { GameScoreViewModel() }
 
-    viewModel { GameRankViewModel() }
+    viewModel { GameRankViewModel(get()) }
 
     viewModel { CommentViewModel(get()) }
 

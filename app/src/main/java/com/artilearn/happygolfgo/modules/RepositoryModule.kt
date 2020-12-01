@@ -8,6 +8,8 @@ import com.artilearn.happygolfgo.data.developeroption.source.DeveloperOptionRepo
 import com.artilearn.happygolfgo.data.developeroption.source.DeveloperOptionRepositoryImpl
 import com.artilearn.happygolfgo.data.gamecenter.source.GameCenterRepository
 import com.artilearn.happygolfgo.data.gamecenter.source.GameCenterRepositoryImpl
+import com.artilearn.happygolfgo.data.golfrank.source.GolfRankRepository
+import com.artilearn.happygolfgo.data.golfrank.source.GolfRankRepositoryImpl
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.data.home.source.HomeRepositoryImpl
 import com.artilearn.happygolfgo.data.lessonlog.source.LessonLogRepository
@@ -80,4 +82,6 @@ val repositoryModule = module {
     single<TimeChangeRepository> { ReserveConfirmRepositoryImpl(get(), get(), get(), get(), get()) }
 
     single<GameCenterRepository> { GameCenterRepositoryImpl(get(), get(), get()) }
+    
+    single<GolfRankRepository> { GolfRankRepositoryImpl(get(), get()) }
 }

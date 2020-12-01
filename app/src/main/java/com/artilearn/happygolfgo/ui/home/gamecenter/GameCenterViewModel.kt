@@ -25,7 +25,6 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
-import kotlin.math.log
 
 class GameCenterViewModel(
     private val repository: GameCenterRepository
@@ -121,10 +120,7 @@ class GameCenterViewModel(
                 val a = e.error
                 when(a) {
                     is HttpException -> Log.d(TAG, "error ${a.localizedMessage} ")
-                    is NetworkErrorException -> {
-                        Log.d(TAG, "network exception!!!: ")
-                        _networkFail.value = Unit
-                    }
+                    is NetworkErrorException -> _networkFail.value = Unit
                     else -> Log.d(TAG, "else error: ${a?.localizedMessage}")
                 }
             }
