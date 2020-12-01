@@ -10,10 +10,12 @@ import com.artilearn.happygolfgo.databinding.FragmentGamecenterBinding
 import com.artilearn.happygolfgo.ui.gamerank.GameRankActivity
 import com.artilearn.happygolfgo.ui.gamerank.GameRankTestModel
 import com.artilearn.happygolfgo.ui.gamescore.GameScoreActivity
+import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCAveragesModel
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import kotlinx.android.synthetic.main.fragment_gamecenter.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,9 +32,7 @@ class GameCenterFragment :
         initBinding()
         initViewModelObserving()
         initAdapter()
-
-        replaceBarDataSetting()
-        replaceSetBarData()
+        initBarChart()
     }
 
     private fun initBinding() {
@@ -52,6 +52,7 @@ class GameCenterFragment :
             })
             averages.observe(this@GameCenterFragment, Observer { averages ->
                 binding.averages = averages
+                setBarData(averages)
             })
             sumary.observe(this@GameCenterFragment, Observer { sumary ->
                 binding.sumary = sumary
@@ -63,7 +64,7 @@ class GameCenterFragment :
         }
     }
 
-    private fun replaceBarDataSetting() {
+    private fun initBarChart() {
         with(binding) {
             barChart.run {
                 setDrawBarShadow(true)
@@ -85,18 +86,20 @@ class GameCenterFragment :
 
                 axisLeft.run {
                     isEnabled = false
+                    axisMinimum = 0f
+                    axisMaximum = 100f
                 }
                 axisRight.run {
                     isEnabled = false
                 }
 
-                animateY(1500)
-                animateX(1000)
+                animateY(1000)
+                animateX(700)
             }
         }
     }
 
-    private fun replaceSetBarData() {
+    private fun setBarData(item: GCAveragesModel) {
         val values = mutableListOf<BarEntry>()
         val colorList = listOf(
             Color.rgb(204, 93, 232),
@@ -106,11 +109,14 @@ class GameCenterFragment :
             Color.rgb(81, 207, 102)
         )
 
-        for (i in 6..10) {
-            val index = i.toFloat()
-            val random = Random().nextInt(101).toFloat()
-
-            values.add(BarEntry(index, random))
+        for (i in 0..4) {
+            when (i) {
+                0 -> values.add(BarEntry(i.toFloat(), item.driver.toFloat()))
+                1 -> values.add(BarEntry(i.toFloat(), item.woodUtil.toFloat()))
+                2 -> values.add(BarEntry(i.toFloat(), item.iron.toFloat()))
+                3 -> values.add(BarEntry(i.toFloat(), item.shortGame.toFloat()))
+                4 -> values.add(BarEntry(i.toFloat(), item.putter.toFloat()))
+            }
         }
 
         val set = BarDataSet(values, "내용없음")

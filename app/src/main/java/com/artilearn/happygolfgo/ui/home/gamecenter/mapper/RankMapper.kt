@@ -7,12 +7,12 @@ import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCRankModel
 object RankMapper : GameCenterMapper<List<GameCenterResponse.GameCenterRank>, List<GCRankModel>> {
     override fun mapper(from: List<GameCenterResponse.GameCenterRank>): List<GCRankModel> {
         return from.map { ranks ->
-            Log.d("GameCenter Mapper", "mapper: ${from.size}")
             GCRankModel(
                 globalRank = ranks.globalRank.toString(),
                 profileImage = ranks.profileImageURL,
                 name = ranks.name,
-                average = ranks.average.toString()
+                average = ranks.average.toString(),
+                isMe = ranks.isMe
             )
         }
     }

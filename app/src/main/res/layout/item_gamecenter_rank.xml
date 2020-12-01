@@ -24,7 +24,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
             <TextView
                 android:id="@+id/tv_rank"
                 android:layout_width="wrap_content"
@@ -33,11 +32,13 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="@{item.globalRank}"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/iv_profile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                bind:onIsMe="@{item.isMe}"
+                bind:onRank="@{item.globalRank}"
                 tools:text="등급" />
 
             <ImageView
@@ -60,11 +61,12 @@
                 android:layout_marginEnd="28dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{item.name}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_score"
                 app:layout_constraintStart_toEndOf="@id/iv_profile"
                 app:layout_constraintTop_toTopOf="parent"
+                bind:onIsMe="@{item.isMe}"
+                bind:onNickName="@{item.name}"
                 tools:text="닉네임" />
 
             <TextView
@@ -75,11 +77,12 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="@{item.average}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_nickname"
                 app:layout_constraintTop_toTopOf="parent"
+                bind:onAverages="@{item.average}"
+                bind:onIsMe="@{item.isMe}"
                 tools:text="점수" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

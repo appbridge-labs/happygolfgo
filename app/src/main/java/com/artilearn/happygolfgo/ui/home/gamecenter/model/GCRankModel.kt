@@ -4,5 +4,6 @@ data class GCRankModel(
     val globalRank: String,
     val profileImage: String?,
     val name: String,
-    val average: String
+    val average: String,
+    val isMe: Boolean
 )

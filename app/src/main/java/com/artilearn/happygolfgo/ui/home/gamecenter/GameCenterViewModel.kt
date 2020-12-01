@@ -35,7 +35,6 @@ class GameCenterViewModel(
     private val _onGameDetailButton: Subject<ButtonType> = PublishSubject.create()
     private val _isGameDataSubject: PublishSubject<Unit> = PublishSubject.create()
     private val _isDefaultGameDataSubject: BehaviorSubject<Unit> = BehaviorSubject.createDefault(Unit)
-    private val _rankSubject: BehaviorSubject<List<GCRankModel>> = BehaviorSubject.createDefault(emptyList())
 
     private val _sumaryMapper: SumaryMapper = SumaryMapper
     private val _averagesMapper: AveragesMapper = AveragesMapper
@@ -106,7 +105,7 @@ class GameCenterViewModel(
             .map { it.value }
             .map { it.data.rank }
             .map(_rankMapper::mapper)
-            .subscribe(_rankSubject::onNext)
+            .subscribe(_rank::setValue)
             .let(compositeDisposable::add)
 
         gameData.filter { it.isOnNext }
@@ -128,13 +127,6 @@ class GameCenterViewModel(
                     }
                     else -> Log.d(TAG, "else error: ${a?.localizedMessage}")
                 }
-            }
-            .let(compositeDisposable::add)
-
-        _rankSubject.observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                Log.d(TAG, "$it: ")
-                _rank.value = it
             }
             .let(compositeDisposable::add)
     }
