@@ -6,6 +6,8 @@ import com.artilearn.happygolfgo.data.comment.source.remote.CommentRemoteDataSou
 import com.artilearn.happygolfgo.data.comment.source.remote.CommentRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.gamecenter.source.remote.GameCenterRemoteDataSource
 import com.artilearn.happygolfgo.data.gamecenter.source.remote.GameCenterRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.golfgame.source.remote.GolfGameRemoteDataSource
+import com.artilearn.happygolfgo.data.golfgame.source.remote.GolfGameRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.golfrank.source.remote.GolfRankRemoteDataSource
 import com.artilearn.happygolfgo.data.golfrank.source.remote.GolfRankRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSource
@@ -76,4 +78,6 @@ val remoteModule = module {
     single<GameCenterRemoteDataSource> { GameCenterRemoteDataSourceImpl(get()) }
 
     single<GolfRankRemoteDataSource> { GolfRankRemoteDataSourceImpl(get()) }
+
+    single<GolfGameRemoteDataSource> { GolfGameRemoteDataSourceImpl(get()) }
 }

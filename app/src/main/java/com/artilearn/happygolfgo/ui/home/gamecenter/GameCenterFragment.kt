@@ -7,7 +7,7 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentGamecenterBinding
 import com.artilearn.happygolfgo.ui.golfrank.GolfRankActivity
-import com.artilearn.happygolfgo.ui.gamescore.GameScoreActivity
+import com.artilearn.happygolfgo.ui.golfgame.GolfGameActivity
 import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCAveragesModel
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -144,7 +144,7 @@ class GameCenterFragment :
     }
 
     private fun goGameScore() {
-        val scoreIntent = Intent(activity, GameScoreActivity::class.java)
+        val scoreIntent = Intent(activity, GolfGameActivity::class.java)
         startActivity(scoreIntent)
     }
 

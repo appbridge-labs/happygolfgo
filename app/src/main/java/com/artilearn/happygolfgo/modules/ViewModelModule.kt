@@ -2,8 +2,8 @@ package com.artilearn.happygolfgo.modules
 
 import com.artilearn.happygolfgo.ui.comment.CommentViewModel
 import com.artilearn.happygolfgo.ui.common.DeveloperOptionViewModel
+import com.artilearn.happygolfgo.ui.golfgame.GolfGameViewModel
 import com.artilearn.happygolfgo.ui.golfrank.GolfRankViewModel
-import com.artilearn.happygolfgo.ui.gamescore.GameScoreViewModel
 import com.artilearn.happygolfgo.ui.home.HomeViewModel
 import com.artilearn.happygolfgo.ui.home.alram.AlramViewModel
 import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterViewModel
@@ -66,12 +66,12 @@ val viewModelModule = module {
 
     viewModel { AlramViewModel(get()) }
 
-    viewModel { GameScoreViewModel() }
-
     viewModel { GolfRankViewModel(get()) }
 
     viewModel { CommentViewModel(get()) }
 
     viewModel { DeveloperOptionViewModel(get()) }
+
+    viewModel { GolfGameViewModel(get()) }
 
 }

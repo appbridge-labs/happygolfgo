@@ -26,7 +26,6 @@ class GolfRankViewModel(
     private val _defaultTrashSubject: BehaviorSubject<Unit> = BehaviorSubject.createDefault(Unit)
 
     private val mapper: GolfRankMapper = GolfRankMapper
-    //private val two: GolfRankMapper = GolfRankMapper
     private val _globalRanks: SingleLiveEvent<List<GolfRankModel>> = SingleLiveEvent()
     private val _localRanks: SingleLiveEvent<List<GolfRankModel>> = SingleLiveEvent()
 

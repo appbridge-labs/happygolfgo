@@ -1,14 +1,13 @@
-package com.artilearn.happygolfgo.ui.gamescore
+package com.artilearn.happygolfgo.ui.golfgame
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.databinding.ItemGolfGameScoreBinding
+import com.artilearn.happygolfgo.ui.golfgame.model.GolfGameModel
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -18,9 +17,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class GameScoreAdapter(private val items: ArrayList<GameScoreTestModel>) : RecyclerView.Adapter<GameScoreAdapter.GameScoreViewHolder>() {
+class GolfGameAdapter() : RecyclerView.Adapter<GolfGameAdapter.GameScoreViewHolder>() {
 
     lateinit var binding: ItemGolfGameScoreBinding
+    private val items: MutableList<GolfGameModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameScoreViewHolder {
         binding = DataBindingUtil.inflate(
@@ -34,7 +34,7 @@ class GameScoreAdapter(private val items: ArrayList<GameScoreTestModel>) : Recyc
     }
 
     override fun onBindViewHolder(holder: GameScoreViewHolder, position: Int) {
-        holder.bind(items[position])
+        //holder.bind(items[position])
     }
 
     override fun getItemCount() = items.size
@@ -45,39 +45,39 @@ class GameScoreAdapter(private val items: ArrayList<GameScoreTestModel>) : Recyc
 
         private val lineChart = binding.lineChart
 
-        fun bind(item: GameScoreTestModel) {
-            binding.tvClub.text = item.club
-            lineChart.run {
-                setTouchEnabled(false)
-                setPinchZoom(false)
-                isDragEnabled = false
-                setScaleEnabled(false)
-                description.isEnabled = false
-                setDrawGridBackground(false)
-                legend.isEnabled = false
-                setVisibleXRangeMaximum(5f)
-
-                xAxis.run {
-                    isEnabled = false
-                }
-
-                axisLeft.run {
-                    axisMaximum = 100f
-                    axisMinimum = 0f
-                    textColor = Color.LTGRAY
-                }
-
-                axisRight.run {
-                    isEnabled = false
-                }
-
-                data = setLineData()
-                animateX(1000)
-                animateY(2000)
-            }
-
-            binding.executePendingBindings()
-        }
+//        fun bind(item: GameScoreTestModel) {
+//            binding.tvClub.text = item.club
+//            lineChart.run {
+//                setTouchEnabled(false)
+//                setPinchZoom(false)
+//                isDragEnabled = false
+//                setScaleEnabled(false)
+//                description.isEnabled = false
+//                setDrawGridBackground(false)
+//                legend.isEnabled = false
+//                setVisibleXRangeMaximum(5f)
+//
+//                xAxis.run {
+//                    isEnabled = false
+//                }
+//
+//                axisLeft.run {
+//                    axisMaximum = 100f
+//                    axisMinimum = 0f
+//                    textColor = Color.LTGRAY
+//                }
+//
+//                axisRight.run {
+//                    isEnabled = false
+//                }
+//
+//                data = setLineData()
+//                animateX(1000)
+//                animateY(2000)
+//            }
+//
+//            binding.executePendingBindings()
+//        }
 
         private fun setLineData(): LineData {
             val sets = mutableListOf<ILineDataSet>()
@@ -114,14 +114,14 @@ class GameScoreAdapter(private val items: ArrayList<GameScoreTestModel>) : Recyc
         }
     }
 
-    fun setItems(items: List<GameScoreTestModel>) {
-        clear()
-        this.items.addAll(items)
-        notifyDataSetChanged()
-    }
-
-    fun clear() {
-        this.items.clear()
-    }
+//    fun setItems(items: List<GameScoreTestModel>) {
+//        clear()
+//        this.items.addAll(items)
+//        notifyDataSetChanged()
+//    }
+//
+//    fun clear() {
+//        this.items.clear()
+//    }
 
 }
