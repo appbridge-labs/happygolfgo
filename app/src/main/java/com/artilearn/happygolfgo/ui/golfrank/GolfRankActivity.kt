@@ -1,21 +1,26 @@
-package com.artilearn.happygolfgo.ui.gamerank
+package com.artilearn.happygolfgo.ui.golfrank
 
 import android.os.Bundle
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.databinding.ActivityGameRankBinding
+import com.artilearn.happygolfgo.databinding.ActivityGolfRankBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class GameRankActivity : BaseActivity<ActivityGameRankBinding>(R.layout.activity_game_rank) {
+class GolfRankActivity : BaseActivity<ActivityGolfRankBinding>(R.layout.activity_golf_rank) {
 
-    private val viewModel: GameRankViewModel by viewModel()
+    private val viewModel: GolfRankViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initBinding()
         initView()
         initPagerAdapter()
+    }
+
+    private fun initBinding() {
+        binding.vm = viewModel
     }
 
     private fun initView() {
@@ -24,7 +29,7 @@ class GameRankActivity : BaseActivity<ActivityGameRankBinding>(R.layout.activity
 
     private fun initPagerAdapter() {
         with(binding) {
-            viewpager.adapter = GameRankPagerAdapter(this@GameRankActivity)
+            viewpager.adapter = GameRankPagerAdapter(this@GolfRankActivity)
 
             TabLayoutMediator(tabLayout, viewpager) { tab, position ->
                 tab.text = getTabTitle(position)

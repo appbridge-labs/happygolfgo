@@ -77,14 +77,14 @@ class GameCenterViewModel(
 
         val gameData = defaultSubject
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { showLoading(); Log.d(TAG, "next1 ") }
+            .doOnNext { showLoading() }
             .switchMapSingle {
                 repository.getGames()
                     .subscribeOn(Schedulers.io())
             }
             .materialize()
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { hideLoading(); Log.d(TAG, "next2: ") }
+            .doOnNext { hideLoading() }
             .share()
 
         gameData.filter { it.isOnNext }

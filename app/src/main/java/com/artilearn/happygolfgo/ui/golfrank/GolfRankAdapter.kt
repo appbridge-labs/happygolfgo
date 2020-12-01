@@ -1,16 +1,18 @@
-package com.artilearn.happygolfgo.ui.gamerank
+package com.artilearn.happygolfgo.ui.golfrank
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.data.golfrank.GolfRankResponse
 import com.artilearn.happygolfgo.databinding.ItemGroupRankBinding
+import com.artilearn.happygolfgo.ui.golfrank.model.GolfRankModel
 
-class GameRankAdapter(private val items: ArrayList<GameRankTestModel>) : RecyclerView.Adapter<GameRankAdapter.GameRankHolder>() {
+class GolfRankAdapter() : RecyclerView.Adapter<GolfRankAdapter.GameRankHolder>() {
 
     lateinit var binding: ItemGroupRankBinding
-    //private val items: MutableList<GameRankTestModel> = mutableListOf()
+    private val items: MutableList<GolfRankModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameRankHolder {
         binding = DataBindingUtil.inflate(
@@ -35,16 +37,13 @@ class GameRankAdapter(private val items: ArrayList<GameRankTestModel>) : Recycle
         private val binding: ItemGroupRankBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: GameRankTestModel) {
-            //binding.item = item
-            binding.tvRank.text = item.rank.toString()
-            binding.tvNickname.text = item.nickname
-            binding.tvScore.text = item.score.toString()
+        fun bind(item: GolfRankModel) {
+            binding.item = item
             binding.executePendingBindings()
         }
     }
 
-    fun setItems(items: List<GameRankTestModel>) {
+    fun setItems(items: List<GolfRankModel>) {
         this.items.addAll(items)
         notifyDataSetChanged()
     }

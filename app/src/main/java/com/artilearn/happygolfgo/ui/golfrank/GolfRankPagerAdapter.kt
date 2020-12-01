@@ -1,10 +1,10 @@
-package com.artilearn.happygolfgo.ui.gamerank
+package com.artilearn.happygolfgo.ui.golfrank
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.artilearn.happygolfgo.ui.gamerank.allgroup.AllGroupFragment
-import com.artilearn.happygolfgo.ui.gamerank.mygroup.MyGroupFragment
+import com.artilearn.happygolfgo.ui.golfrank.allgroup.AllGroupFragment
+import com.artilearn.happygolfgo.ui.golfrank.mygroup.MyGroupFragment
 
 const val ALL_GROUP = 0
 const val MY_GROUP = 1

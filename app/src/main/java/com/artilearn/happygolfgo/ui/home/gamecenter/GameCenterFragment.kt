@@ -2,26 +2,18 @@ package com.artilearn.happygolfgo.ui.home.gamecenter
 
 import android.content.Intent
 import android.graphics.Color
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
-import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.databinding.FragmentGamecenterBinding
-import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
-import com.artilearn.happygolfgo.ui.gamerank.GameRankActivity
-import com.artilearn.happygolfgo.ui.gamerank.GameRankTestModel
+import com.artilearn.happygolfgo.ui.golfrank.GolfRankActivity
 import com.artilearn.happygolfgo.ui.gamescore.GameScoreActivity
 import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCAveragesModel
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import kotlinx.android.synthetic.main.fragment_gamecenter.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.log
 
 class GameCenterFragment :
     BaseFragment<FragmentGamecenterBinding, GameCenterViewModel>(R.layout.fragment_gamecenter) {
@@ -147,7 +139,7 @@ class GameCenterFragment :
     }
 
     private fun goGameRank() {
-        val rankIntent = Intent(activity, GameRankActivity::class.java)
+        val rankIntent = Intent(activity, GolfRankActivity::class.java)
         startActivity(rankIntent)
     }
 

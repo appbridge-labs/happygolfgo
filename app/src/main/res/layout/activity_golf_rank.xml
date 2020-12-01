@@ -9,13 +9,13 @@
 
         <variable
             name="vm"
-            type="com.artilearn.happygolfgo.ui.gamerank.GameRankViewModel" />
+            type="com.artilearn.happygolfgo.ui.golfrank.GolfRankViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.gamerank.GameRankActivity">
+        tools:context=".ui.golfrank.GolfRankActivity">
 
         <include
             android:id="@+id/rank_toolbar"

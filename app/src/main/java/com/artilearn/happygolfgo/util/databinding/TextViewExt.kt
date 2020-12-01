@@ -6,31 +6,32 @@ import androidx.databinding.BindingAdapter
 import com.artilearn.happygolfgo.R
 
 @BindingAdapter("onRank", "onIsMe")
-fun TextView.bindRank(text: String, isMe: Boolean) {
+fun TextView.bindRank(rank: String, isMe: Boolean) {
     if (isMe) {
         this.setTextColor(ContextCompat.getColor(this.context, R.color.color_green))
     } else {
         this.setTextColor(ContextCompat.getColor(this.context, R.color.color_lucky_gray))
     }
-    this.text = text
+    this.text = rank
 }
 
 @BindingAdapter("onNickName", "onIsMe")
-fun TextView.bindNickName(text: String, isMe: Boolean) {
+fun TextView.bindNickName(nickName: String?, isMe: Boolean) {
     if (isMe) {
         this.setTextColor(ContextCompat.getColor(this.context, R.color.color_green))
     } else {
         this.setTextColor(ContextCompat.getColor(this.context, R.color.color_lucky_gray))
     }
-    this.text = text
+
+    this.text = nickName ?: "닉네임 없음"
 }
 
 @BindingAdapter("onAverages", "onIsMe")
-fun TextView.bindAverages(text: String, isMe: Boolean) {
+fun TextView.bindAverages(averages: String, isMe: Boolean) {
     if (isMe) {
         this.setTextColor(ContextCompat.getColor(this.context, R.color.color_green))
     } else {
         this.setTextColor(ContextCompat.getColor(this.context, R.color.color_lucky_gray))
     }
-    this.text = text
+    this.text = averages
 }
