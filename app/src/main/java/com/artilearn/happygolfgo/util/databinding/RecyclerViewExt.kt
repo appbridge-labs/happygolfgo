@@ -29,10 +29,9 @@ fun RecyclerView.bindRankList(list: List<GolfRankModel>?) {
 }
 
 @BindingAdapter("onGolfGameList")
-fun RecyclerView.bindGolfGameList(list: ArrayList<GolfGameModel>?) {
-    Log.d("GolfGame", "bindGolfGameList: kkkk")
+fun RecyclerView.bindGolfGameList(list: List<GolfGameModel>?) {
     with(adapter as GolfGameAdapter) {
-        //this.clear()
+        this.clear()
         list?.let { this.setItems(it) }
     }
 }

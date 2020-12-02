@@ -1,12 +1,10 @@
 package com.artilearn.happygolfgo.ui.golfgame
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.data.golfgame.GolfGameResponse
 import com.artilearn.happygolfgo.databinding.ItemGolfGameScoreBinding
 import com.artilearn.happygolfgo.ui.golfgame.model.GolfGameModel
 import com.github.mikephil.charting.data.Entry
@@ -15,13 +13,12 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class GolfGameAdapter() : RecyclerView.Adapter<GolfGameAdapter.GameScoreViewHolder>() {
 
     lateinit var binding: ItemGolfGameScoreBinding
-    private val items: ArrayList<GolfGameModel> = arrayListOf()
+    private val items: MutableList<GolfGameModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameScoreViewHolder {
         binding = DataBindingUtil.inflate(
@@ -35,7 +32,7 @@ class GolfGameAdapter() : RecyclerView.Adapter<GolfGameAdapter.GameScoreViewHold
     }
 
     override fun onBindViewHolder(holder: GameScoreViewHolder, position: Int) {
-        //holder.bind(items[position])
+        holder.bind(items[position])
     }
 
     override fun getItemCount() = items.size
@@ -119,9 +116,7 @@ class GolfGameAdapter() : RecyclerView.Adapter<GolfGameAdapter.GameScoreViewHold
         }
     }
 
-    fun setItems(items: ArrayList<GolfGameModel>) {
-        //clear()
-        //this.items.add(items)
+    fun setItems(items: List<GolfGameModel>) {
         this.items.addAll(items)
         notifyDataSetChanged()
     }

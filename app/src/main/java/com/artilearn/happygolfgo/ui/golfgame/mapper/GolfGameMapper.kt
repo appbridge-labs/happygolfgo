@@ -65,7 +65,7 @@ object GolfGameMapper
     override fun puttMapper(from: GolfGameResponse.DataClass): GolfGameModel {
         return GolfGameModel(
             club = "퍼팅",
-            averageScore = from.putter.average.toString(),
+            averageScore = from.putter.average,
             highScore = from.putter.bestScore.toString(),
             scores = from.putter.games.map { game ->
                 game.score
