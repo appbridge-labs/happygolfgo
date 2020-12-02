@@ -8,7 +8,6 @@ object GolfRankMapper : GolfRankMapperModel<GolfRankResponse.Ranks, List<GolfRan
     private val TAG = "GolfRank"
     override fun localMapper(from: GolfRankResponse.Ranks): List<GolfRankModel> {
         return from.local.map { local ->
-            Log.d(TAG, "localMapper: $local")
             GolfRankModel(
                 rank = local.rank.toString(),
                 profileImage = local.profileImageURL,
@@ -21,7 +20,6 @@ object GolfRankMapper : GolfRankMapperModel<GolfRankResponse.Ranks, List<GolfRan
 
     override fun globalMapper(from: GolfRankResponse.Ranks): List<GolfRankModel> {
         return from.global.map { global ->
-            Log.d(TAG, "globalMapper: $global")
             GolfRankModel(
                 rank = global.rank.toString(),
                 profileImage = global.profileImageURL,

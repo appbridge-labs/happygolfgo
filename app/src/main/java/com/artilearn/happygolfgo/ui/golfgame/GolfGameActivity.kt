@@ -15,7 +15,7 @@ class GolfGameActivity : BaseActivity<ActivityGolfGameBinding>(R.layout.activity
         super.onCreate(savedInstanceState)
 
         initBinding()
-        //initAdapter()
+        initAdapter()
     }
 
     private fun initBinding() {

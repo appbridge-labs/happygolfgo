@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.data.golfgame.GolfGameResponse
 import com.artilearn.happygolfgo.databinding.ItemGolfGameScoreBinding
 import com.artilearn.happygolfgo.ui.golfgame.model.GolfGameModel
 import com.github.mikephil.charting.data.Entry
@@ -20,7 +21,7 @@ import kotlin.collections.ArrayList
 class GolfGameAdapter() : RecyclerView.Adapter<GolfGameAdapter.GameScoreViewHolder>() {
 
     lateinit var binding: ItemGolfGameScoreBinding
-    private val items: MutableList<GolfGameModel> = mutableListOf()
+    private val items: ArrayList<GolfGameModel> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameScoreViewHolder {
         binding = DataBindingUtil.inflate(
@@ -45,6 +46,10 @@ class GolfGameAdapter() : RecyclerView.Adapter<GolfGameAdapter.GameScoreViewHold
 
         private val lineChart = binding.lineChart
 
+        fun bind(item: GolfGameModel) {
+            binding.item = item
+            binding.executePendingBindings()
+        }
 //        fun bind(item: GameScoreTestModel) {
 //            binding.tvClub.text = item.club
 //            lineChart.run {
@@ -114,14 +119,15 @@ class GolfGameAdapter() : RecyclerView.Adapter<GolfGameAdapter.GameScoreViewHold
         }
     }
 
-//    fun setItems(items: List<GameScoreTestModel>) {
-//        clear()
-//        this.items.addAll(items)
-//        notifyDataSetChanged()
-//    }
-//
-//    fun clear() {
-//        this.items.clear()
-//    }
+    fun setItems(items: ArrayList<GolfGameModel>) {
+        //clear()
+        //this.items.add(items)
+        this.items.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun clear() {
+        this.items.clear()
+    }
 
 }

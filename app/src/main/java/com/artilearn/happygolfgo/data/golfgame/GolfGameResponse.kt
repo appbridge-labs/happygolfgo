@@ -18,51 +18,22 @@ data class GolfGameResponse(
 
     @SerializedName("Data")
     @Expose
-    val data: GolfGames
+    val data: DataClass
 ) {
-    data class GolfGames(
-        @SerializedName("driver")
-        @Expose
-        val driver: GolfGameInfo,
+    data class DataClass(
+        @field:SerializedName("driver")
+        val driver: Driver,
 
-        @SerializedName("woodUtil")
-        @Expose
-        val woodUtil: GolfGameInfo,
+        @field:SerializedName("iron")
+        val iron: Iron,
 
-        @SerializedName("iron")
-        @Expose
-        val iron: GolfGameInfo,
+        @field:SerializedName("putter")
+        val putter: Putter,
 
-        @SerializedName("shortGame")
-        @Expose
-        val shortGame: GolfGameInfo,
+        @field:SerializedName("shortGame")
+        val shortGame: ShortGame,
 
-        @SerializedName("putter")
-        @Expose
-        val putter: GolfGameInfo
-    )
-
-    data class GolfGameInfo(
-        @SerializedName("games")
-        @Expose
-        val games: List<GolfGameModel>,
-
-        @SerializedName("average")
-        @Expose
-        val average: String,
-
-        @SerializedName("bestScore")
-        @Expose
-        val bestScore: Int
-    )
-
-    data class GolfGameModel(
-        @SerializedName("score")
-        @Expose
-        val score: Float,
-
-        @SerializedName("createdAt")
-        @Expose
-        val date: String
+        @field:SerializedName("woodUtil")
+        val woodUtil: WoodUtil
     )
 }
