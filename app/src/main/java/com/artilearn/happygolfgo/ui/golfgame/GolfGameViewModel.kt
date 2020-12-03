@@ -1,5 +1,7 @@
 package com.artilearn.happygolfgo.ui.golfgame
 
+import android.accounts.NetworkErrorException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.golfgame.source.GolfGameRepository
@@ -13,6 +15,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import retrofit2.HttpException
 
 class GolfGameViewModel(
     private val repository: GolfGameRepository
@@ -95,6 +98,18 @@ class GolfGameViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(_golfGame::setValue)
             .addTo(compositeDisposable)
+
+        golfGameData.filter { it.isOnError }
+            .subscribe { e ->
+                Log.d(TAG, "error: $e, ${e.error?.localizedMessage}")
+                val a = e.error
+                when(a) {
+                    is HttpException -> Log.d(TAG, "error ${a.localizedMessage} ")
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    else -> Log.d(TAG, "else error: ${a?.localizedMessage}")
+                }
+            }
+            .let(compositeDisposable::add)
     }
 
 }
