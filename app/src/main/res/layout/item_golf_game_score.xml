@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -27,7 +28,8 @@
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_golf_game_score_dr" />
+            app:srcCompat="@drawable/ic_golf_game_score_dr"
+            bind:onImage="@{item.club}" />
 
         <TextView
             android:id="@+id/tv_club"
@@ -37,6 +39,7 @@
             android:textColor="@color/color_black"
             android:textSize="14dp"
             android:textStyle="bold"
+            android:text="@{item.club}"
             app:layout_constraintBottom_toBottomOf="@id/iv_image"
             app:layout_constraintStart_toEndOf="@id/iv_image"
             app:layout_constraintTop_toTopOf="@id/iv_image"
@@ -92,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
-
+            android:text="@{item.averageScore}"
             android:textColor="@color/color_black"
             android:textSize="20dp"
             android:textStyle="bold"

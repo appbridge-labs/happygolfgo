@@ -70,8 +70,8 @@ object GolfGameMapper
             scores = from.putter.games.map { game ->
                 game.score
             },
-            dates = from.putter.games.map { date ->
-                date.createdAt
+            dates = from.putter.games.map { data ->
+                data.createdAt
             }
         )
     }

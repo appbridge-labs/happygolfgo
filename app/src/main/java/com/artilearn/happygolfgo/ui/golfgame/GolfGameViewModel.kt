@@ -21,11 +21,7 @@ class GolfGameViewModel(
     private val _trashSubject: PublishSubject<Unit> = PublishSubject.create()
     private val _isDefaultTrashSubject: BehaviorSubject<Unit> = BehaviorSubject.createDefault(Unit)
     private val _golfModelList: BehaviorSubject<GolfGameModel> = BehaviorSubject.create()
-    private val _defaultGolfGameModel: BehaviorSubject<GolfGameModel> = BehaviorSubject.createDefault(
-        GolfGameModel(
-            "", "", "", listOf(), listOf()
-        )
-    )
+    private val _defaultGolfGameModel: PublishSubject<GolfGameModel> = PublishSubject.create()
 
     private val _mapper: GolfGameMapper = GolfGameMapper
 
@@ -94,7 +90,8 @@ class GolfGameViewModel(
             .subscribe(_golfModelList::onNext)
             .addTo(compositeDisposable)
 
-        _golfModelList.buffer(5)
+        _golfModelList
+            .buffer(5)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(_golfGame::setValue)
             .addTo(compositeDisposable)
