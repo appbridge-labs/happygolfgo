@@ -8,6 +8,7 @@ import com.applandeo.materialcalendarview.EventDay
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
+import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.convertCalendar
 import com.artilearn.happygolfgo.util.convertDate
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -45,6 +46,7 @@ class TicketDateViewModel(
     var eventList = arrayListOf<Calendar>()
     var availableList = arrayListOf<Calendar>()
 
+
     fun selectDate(type: Int) {
         when (type) {
             0 -> selectLessonDate()
@@ -70,6 +72,18 @@ class TicketDateViewModel(
                     val body = response.body()
                     with(response) {
                         if (isSuccessful && body != null) {
+                            Log.d(TAG, "타석 예약가능한 갯수: ${body.data.availableDates.size}")
+                            val d = body.data.availableDates
+                            for ((i,v) in d.withIndex()) {
+                                val date = convertDate(v)
+                                val now = if (date != null) {
+                                    convertCalendar(date)
+                                } else {
+                                    null
+                                }
+
+                                Log.d(TAG, "i: $i, 서버 타석 가능 날짜: ${now?.get(Calendar.YEAR)}년 ${now?.get(Calendar.MONTH)?.plus(1)}월 ${now?.get(Calendar.DAY_OF_MONTH)}일")
+                            }
                             convertToEventDay(body.data.availableDates, body.data.eventDates)
                         } else {
                             _serverError.value = response.message()
@@ -110,6 +124,19 @@ class TicketDateViewModel(
                     val body = response.body()
                     with(response) {
                         if (isSuccessful && body != null) {
+                            Log.d(TAG, "레슨 예약 갯수: ${body.data.availableDates.size}")
+                            val d = body.data.availableDates
+                            for ((i,v) in d.withIndex()) {
+                                val date = convertDate(v)
+                                val now = if (date != null) {
+                                    convertCalendar(date)
+                                } else {
+                                    null
+                                }
+
+                                Log.d(TAG, "i: $i, 레슨 가능 날짜: ${now?.get(Calendar.YEAR)}년 ${now?.get(Calendar.MONTH)?.plus(1)}월 ${now?.get(Calendar.DAY_OF_MONTH)}일")
+                            }
+
                             convertToEventDay(body.data.availableDates, body.data.eventDates)
                         } else {
                             _serverError.value = response.message()
@@ -133,6 +160,20 @@ class TicketDateViewModel(
     }
 
     private fun convertToEventDay(available: List<String>?, event: List<String>?) {
+        //Log.d(TAG, "데이터 사이즈: ${available?.size}")
+        if (available != null) {
+            for ((i,v) in available.withIndex()) {
+                var calendar: Calendar?
+                val date = convertDate(v)
+                calendar = if (date != null) {
+                    convertCalendar(date)
+                } else {
+                    null
+                }
+                Log.d(TAG, "데이터 변경 i: $i, 예약가능 날짜: ${calendar?.get(Calendar.YEAR)}년 ${calendar?.get(Calendar.MONTH)?.plus(1)}월 ${calendar?.get(Calendar.DAY_OF_MONTH)}일")
+            }
+        }
+
         available?.let {
             with(it) {
                 if (isNotEmpty()) {
