@@ -114,14 +114,14 @@ class GameCenterViewModel(
             .subscribe(_averages::setValue)
             .let(compositeDisposable::add)
 
+        //todo 에러일 때 예외처리 요망
         gameData.filter { it.isOnError }
             .subscribe { e ->
-                Log.d(TAG, "error: $e, ${e.error?.localizedMessage}")
-                val a = e.error
-                when(a) {
-                    is HttpException -> Log.d(TAG, "error ${a.localizedMessage} ")
+                val error = e.error
+                when(error) {
+                    is HttpException -> Log.d(TAG, "error ${error.localizedMessage} ")
                     is NetworkErrorException -> _networkFail.value = Unit
-                    else -> Log.d(TAG, "else error: ${a?.localizedMessage}")
+                    else -> Log.d(TAG, "else error: ${error?.localizedMessage}")
                 }
             }
             .let(compositeDisposable::add)

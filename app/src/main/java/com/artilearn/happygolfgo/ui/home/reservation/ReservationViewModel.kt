@@ -73,7 +73,7 @@ class ReservationViewModel(
         return _refresh.throttleFirst(2500, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { showLoading() }
-            .delay(2000, TimeUnit.MILLISECONDS)
+            .delay(1000, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { hideLoading(); _swipeRefresh.call() }
     }
