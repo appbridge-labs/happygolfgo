@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.reserveconfirm
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -26,7 +27,7 @@ class ReserveConfirmViewModel(
     private val cancelRepository: CancelRepository,
     private val timeChangeRepository: TimeChangeRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _status: MutableLiveData<ReservationStatus> = MutableLiveData()
     private val _plateModel: MutableLiveData<PlateResponse> = MutableLiveData()
     private val _lessonModel: MutableLiveData<LessonResponse> = MutableLiveData()
@@ -76,6 +77,13 @@ class ReserveConfirmViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    try {
+                        throw RuntimeException(TAG)
+                    } catch (e: Exception) {
+                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                    }
+                }
                 .subscribe({ response ->
                     val body = response.body()
                     if (response.isSuccessful && body != null) {
@@ -83,10 +91,18 @@ class ReserveConfirmViewModel(
                     } else {
                         _serverError.value = response.message()
                     }
-                }, { t ->
-                    when (t.message) {
-                        "Network Error" -> _networkFail.value = Unit
-                        else -> _serverError.value = t.message
+                }, {  t ->
+                    when (t) {
+                        is NetworkErrorException -> _networkFail.value = Unit
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                            _serverError.value = t.localizedMessage
+                        }
+                        else -> _serverError.value = t.localizedMessage
                     }
                 })
         )
@@ -103,6 +119,13 @@ class ReserveConfirmViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
+                    .doOnError { t ->
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                        }
+                    }
                     .subscribe({ response ->
                         val body = response.body()
                         if (response.isSuccessful && body != null) {
@@ -129,8 +152,16 @@ class ReserveConfirmViewModel(
                         }
                     }, { t ->
                         _buttonClickable.call()
-                        when (t.message) {
-                            "Network Error" -> _networkFail.value = Unit
+                        when (t) {
+                            is NetworkErrorException -> _networkFail.value = Unit
+                            is HttpException -> {
+                                try {
+                                    throw RuntimeException(TAG)
+                                } catch (e: Exception) {
+                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                                }
+                                _serverError.value = t.localizedMessage
+                            }
                             else -> _serverError.value = t.localizedMessage
                         }
                     })
@@ -151,6 +182,13 @@ class ReserveConfirmViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
+                    .doOnError { t ->
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                        }
+                    }
                     .subscribe({ response ->
                         val body = response.body()
                         if (response.isSuccessful && body != null) {
@@ -161,9 +199,17 @@ class ReserveConfirmViewModel(
                         }
                     }, { t ->
                         _buttonClickable.call()
-                        when (t.message) {
-                            "Network Error" -> _networkFail.value = Unit
-                            else -> _serverError.value = t.message
+                        when (t) {
+                            is NetworkErrorException -> _networkFail.value = Unit
+                            is HttpException -> {
+                                try {
+                                    throw RuntimeException(TAG)
+                                } catch (e: Exception) {
+                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                                }
+                                _serverError.value = t.localizedMessage
+                            }
+                            else -> _serverError.value = t.localizedMessage
                         }
                     })
             )
@@ -178,6 +224,13 @@ class ReserveConfirmViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
+            .doOnError { t ->
+                try {
+                    throw RuntimeException(TAG)
+                } catch (e: Exception) {
+                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                }
+            }
             .subscribe({ result ->
                 val body = result.body()
                 if (result.isSuccessful && body != null) {
@@ -186,9 +239,17 @@ class ReserveConfirmViewModel(
                     _serverError.value = result.message()
                 }
             }, { t ->
-                when (t.message) {
-                    "Network Error" -> _networkFail.value = Unit
-                    else -> _serverError.value = t.message
+                when (t) {
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    is HttpException -> {
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                        }
+                        _serverError.value = t.localizedMessage
+                    }
+                    else -> _serverError.value = t.localizedMessage
                 }
             }).addTo(compositeDisposable)
     }
@@ -199,6 +260,13 @@ class ReserveConfirmViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
+            .doOnError { t ->
+                try {
+                    throw RuntimeException(TAG)
+                } catch (e: Exception) {
+                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                }
+            }
             .subscribe({ result ->
                 val body = result.body()
                 if (result.isSuccessful && body != null) {
@@ -207,8 +275,16 @@ class ReserveConfirmViewModel(
                     _serverError.value = result.message()
                 }
             }, { t ->
-                when (t.message) {
-                    "Network Error" -> _networkFail.value = Unit
+                when (t) {
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    is HttpException -> {
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                        }
+                        _serverError.value = t.localizedMessage
+                    }
                     else -> _serverError.value = t.localizedMessage
                 }
             }).addTo(compositeDisposable)
@@ -221,13 +297,28 @@ class ReserveConfirmViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    try {
+                        throw RuntimeException(TAG)
+                    } catch (e: Exception) {
+                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                    }
+                }
                 .subscribe({
                     _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
                     _buttonClickable.call()
-                    when (t.message) {
-                        "Network Error" -> _networkFail.value = Unit
-                        else -> _status.value = ReservationStatus.CANCEL_FAIL
+                    when (t) {
+                        is NetworkErrorException -> _networkFail.value = Unit
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                            _status.value = ReservationStatus.CANCEL_FAIL
+                        }
+                        else ->  _status.value = ReservationStatus.CANCEL_FAIL
                     }
                 })
         )
@@ -240,12 +331,27 @@ class ReserveConfirmViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    try {
+                        throw RuntimeException(TAG)
+                    } catch (e: Exception) {
+                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                    }
+                }
                 .subscribe({
                     _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
                     _buttonClickable.call()
-                    when (t.message) {
-                        "Network Error" -> _networkFail.value = Unit
+                    when (t) {
+                        is NetworkErrorException -> _networkFail.value = Unit
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                            _status.value = ReservationStatus.CANCEL_FAIL
+                        }
                         else -> _status.value = ReservationStatus.CANCEL_FAIL
                     }
                 })
@@ -267,6 +373,13 @@ class ReserveConfirmViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
+            .doOnError { t ->
+                try {
+                    throw RuntimeException(TAG)
+                } catch (e: Exception) {
+                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                }
+            }
             .subscribe({ item ->
                 val plate = ReservationPlate(
                     id = item.id,
@@ -282,6 +395,7 @@ class ReserveConfirmViewModel(
                 _reservationTimeChange.value = plate
             }, { t ->
                 when (t) {
+                    is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
                         val gson = Gson()
                         val type = object : TypeToken<ApiError>() {}.type

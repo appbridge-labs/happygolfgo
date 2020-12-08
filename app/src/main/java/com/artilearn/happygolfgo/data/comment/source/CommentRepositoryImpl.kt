@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.comment.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.comment.CommentModel
 import com.artilearn.happygolfgo.data.comment.source.remote.CommentRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
@@ -16,7 +17,7 @@ class CommentRepositoryImpl(
         return if (networkManager.networkState()) {
             commentRemoteDataSource.remoteUploadComment(data)
         } else {
-            Completable.error(IllegalStateException("Network Error"))
+            Completable.error(NetworkErrorException("Network Error"))
         }
     }
 }

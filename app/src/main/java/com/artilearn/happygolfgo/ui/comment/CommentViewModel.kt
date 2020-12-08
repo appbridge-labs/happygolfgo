@@ -1,21 +1,24 @@
 package com.artilearn.happygolfgo.ui.comment
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.comment.CommentModel
 import com.artilearn.happygolfgo.data.comment.source.CommentRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function4
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import retrofit2.HttpException
 
 class CommentViewModel(
     private val commetRepository: CommentRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _bottomClick = PublishSubject.create<Unit>()
     private val _ratingScore = BehaviorSubject.createDefault(1f)
     private val _comment = BehaviorSubject.createDefault("")
@@ -85,12 +88,27 @@ class CommentViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
+            .doOnError { t ->
+                try {
+                    throw RuntimeException(TAG)
+                } catch (e: Exception) {
+                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                }
+            }
             .subscribe({
                 _success.call()
             }, { t ->
-                when (t.message) {
-                    "Network Error" -> _networkFail.value = Unit
-                    else -> _serverError.value = t.message
+                when (t) {
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    is HttpException -> {
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                        }
+                        _serverError.value = t.localizedMessage
+                    }
+                    else -> _serverError.value = t.localizedMessage
                 }
             }).addTo(compositeDisposable)
     }

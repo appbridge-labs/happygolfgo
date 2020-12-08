@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.home.reservation
 
+import android.accounts.NetworkErrorException
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,19 +9,21 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 
 class ReservationViewModel(
     private val repository: HomeRepository,
     private val koinContext: Context
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val reservationList: Subject<Unit> = PublishSubject.create()
     private val _refresh: Subject<Unit> = PublishSubject.create()
 
@@ -81,6 +84,13 @@ class ReservationViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
+            .doOnError { t ->
+                try {
+                    throw RuntimeException(TAG)
+                } catch (e: Exception) {
+                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                }
+            }
             .subscribe({
                 val body = it.body()
                 if (it.isSuccessful) {
@@ -94,9 +104,17 @@ class ReservationViewModel(
                     _serverError.value = it.message()
                 }
             }, { t ->
-                when (t.message) {
-                    "Network Error" -> _networkFail.value = Unit
-                    else -> _serverError.value = t.message
+                when (t) {
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    is HttpException -> {
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                        }
+                        _serverError.value = t.localizedMessage
+                    }
+                    else -> _serverError.value = t.localizedMessage
                 }
             }).addTo(compositeDisposable)
     }

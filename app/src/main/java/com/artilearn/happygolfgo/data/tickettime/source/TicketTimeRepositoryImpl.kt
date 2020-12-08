@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.tickettime.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.tickettime.TicketTimeResponse
 import com.artilearn.happygolfgo.data.tickettime.source.remote.TicketTimeRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
@@ -26,7 +27,7 @@ class TicketTimeRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -44,7 +45,7 @@ class TicketTimeRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 }

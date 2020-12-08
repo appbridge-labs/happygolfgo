@@ -1,18 +1,21 @@
 package com.artilearn.happygolfgo.ui.home.alram
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.data.alram.source.AlramRepository
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class AlramViewModel(
     private val repository: AlramRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _emptyAlramMessage: MutableLiveData<Boolean> = MutableLiveData()
     private val _alramMessages: MutableLiveData<ArrayList<Alram>> = MutableLiveData()
 
@@ -32,6 +35,13 @@ class AlramViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
+            .doOnError { t ->
+                try {
+                    throw RuntimeException(TAG)
+                } catch (e: Exception) {
+                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                }
+            }
             .subscribe({
                 val body = it.body()
                 if (it.isSuccessful && body != null) {
@@ -44,10 +54,18 @@ class AlramViewModel(
                 } else {
                     _serverError.value = it.message()
                 }
-            }, {
-                when (it.message) {
-                    "Network Error" -> _networkFail.value = Unit
-                    else -> _serverError.value = it.message
+            }, { t ->
+                when (t) {
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    is HttpException -> {
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                        }
+                        _serverError.value = t.localizedMessage
+                    }
+                    else -> _serverError.value = t.localizedMessage
                 }
             }).addTo(compositeDisposable)
     }

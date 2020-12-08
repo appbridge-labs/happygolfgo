@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.ticketdate.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.ticketdate.TicketDateResponse
 import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
@@ -25,7 +26,7 @@ class TicketDateRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -42,7 +43,7 @@ class TicketDateRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 }

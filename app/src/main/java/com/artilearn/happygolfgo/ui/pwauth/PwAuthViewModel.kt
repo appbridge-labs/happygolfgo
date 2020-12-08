@@ -8,6 +8,7 @@ import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepository
 import com.artilearn.happygolfgo.enummodel.PwAuthNumberType
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -15,12 +16,13 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 
 class PwAuthViewModel(
     private val pwAuthRepository: PwAuthRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private var disposable: Disposable? = null
     private val _phoneNumber = BehaviorSubject.createDefault("")
     private val _authNumber = BehaviorSubject.createDefault("")
@@ -73,16 +75,29 @@ class PwAuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
+            .doOnError { t ->
+                when (t.message) {
+                    "HTTP 404 Not Found" -> _phoneValueType.value = PwAuthPhoneType.EMPTY_USER
+                    "Network Error" -> _phoneValueType.value = PwAuthPhoneType.NETWORK_FAIL
+                    else -> _phoneValueType.value = PwAuthPhoneType.FAIL
+                }
+            }
             .subscribe({
                 rxTimerStart()
                 _phoneValueType.value = PwAuthPhoneType.SUCCESS
                 successPhone = phone
                 status = true
-            }, {
-                when (it.message) {
-                    "HTTP 404 Not Found" -> _phoneValueType.value = PwAuthPhoneType.EMPTY_USER
-                    "Network Error" -> _phoneValueType.value = PwAuthPhoneType.NETWORK_FAIL
-                    else -> _phoneValueType.value = PwAuthPhoneType.FAIL
+            }, { t ->
+                when (t) {
+                    is HttpException -> {
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                        }
+                        _serverError.value = t.localizedMessage
+                    }
+                    else -> _serverError.value = t.localizedMessage
                 }
             }).addTo(compositeDisposable)
     }
@@ -107,13 +122,26 @@ class PwAuthViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
-                .subscribe({
-                    _authValueType.value = PwAuthNumberType.SUCCESS
-                }, {
-                    when (it.message) {
+                .doOnError { t ->
+                    when(t.message) {
                         "Network Error" -> _authValueType.value = PwAuthNumberType.NETWORK_FAIL
                         "HTTP 406 Not Acceptable" -> _authValueType.value = PwAuthNumberType.AUTH_ERROR
                         else -> _authValueType.value = PwAuthNumberType.FAIL
+                    }
+                }
+                .subscribe({
+                    _authValueType.value = PwAuthNumberType.SUCCESS
+                }, { t ->
+                    when (t) {
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                            _serverError.value = t.localizedMessage
+                        }
+                        else -> _serverError.value = t.localizedMessage
                     }
                 }).addTo(compositeDisposable)
         } else if (successPhone != _phoneNumber.value) {

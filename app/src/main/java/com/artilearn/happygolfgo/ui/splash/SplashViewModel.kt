@@ -20,7 +20,7 @@ class SplashViewModel(
     private val splashRepository: SplashRepository,
     private val koinContext: Context
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _goHome: SingleLiveEvent<Unit> = SingleLiveEvent()
     private val _goLogin: SingleLiveEvent<Unit> = SingleLiveEvent()
     private val _goTutorial: SingleLiveEvent<Unit> = SingleLiveEvent()

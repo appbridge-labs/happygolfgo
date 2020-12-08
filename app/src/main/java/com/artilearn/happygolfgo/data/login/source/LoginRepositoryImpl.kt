@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.login.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.User
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
@@ -40,7 +41,7 @@ class LoginRepositoryImpl(
                     Single.just(it)
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 

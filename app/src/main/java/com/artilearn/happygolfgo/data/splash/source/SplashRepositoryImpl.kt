@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.splash.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.splash.*
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSource
@@ -45,7 +46,7 @@ class SplashRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -63,7 +64,7 @@ class SplashRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 
@@ -72,7 +73,7 @@ class SplashRepositoryImpl(
             splashRemoteDataSource.deleteUser()
                 .doOnComplete { preferenceManager.userLogout() }
         } else {
-            Completable.error(IllegalStateException("Network Error"))
+            Completable.error(NetworkErrorException("Network Error"))
         }
     }
 

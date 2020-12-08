@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.lessonlog.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.lessonlog.source.remote.LessonLogRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
@@ -25,7 +26,7 @@ class LessonLogRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 }

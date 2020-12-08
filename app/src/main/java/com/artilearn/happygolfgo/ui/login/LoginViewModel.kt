@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.login
 
+import android.accounts.NetworkErrorException
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,12 +11,14 @@ import com.artilearn.happygolfgo.util.Qnintuple
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.getAndroidID
 import com.artilearn.happygolfgo.util.getWidevineID
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 
 
@@ -23,7 +26,7 @@ class LoginViewModel(
     private val loginRepository: LoginRepository,
     private val koinContext: Context
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val _phone = BehaviorSubject.create<String>()
     private val _password = BehaviorSubject.create<String>()
     private val _passwordForget = PublishSubject.create<ButtonClickType>()
@@ -123,14 +126,26 @@ class LoginViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .subscribe({
-                _loginType.value = LoginType.SUCCESS
-            }, {
-                when (it.message) {
+            .doOnError { t ->
+                when (t.localizedMessage) {
                     "HTTP 401 Unauthorized", "HTTP 401 " -> _loginType.value = LoginType.FAIL_PASSWORD
                     "HTTP 404 Not Found", "HTTP 404 " -> _loginType.value = LoginType.NOT_FOUND_USER
-                    "Network Error" -> _networkFail.value = Unit
-                    else -> _serverError.value = it.message
+                    else -> _serverError.value = t.localizedMessage
+                }
+            }
+            .subscribe({
+                _loginType.value = LoginType.SUCCESS
+            }, { t ->
+                when (t) {
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    is HttpException -> {
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                        }
+                    }
+                    else -> _serverError.value = t.localizedMessage
                 }
             }).addTo(compositeDisposable)
     }

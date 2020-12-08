@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.alram.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.alram.source.remote.AlramRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
@@ -23,7 +24,7 @@ class AlramRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 }

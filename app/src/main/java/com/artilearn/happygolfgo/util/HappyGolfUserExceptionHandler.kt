@@ -62,16 +62,16 @@ class HappyGolfUserExceptionHandler(
         lastActivity?.run {
             val stringWriter = StringWriter()
             e.printStackTrace(PrintWriter(stringWriter))
-            Log.d(TAG, "uncaughtException: $e\n${e.localizedMessage}")
-//            try {
-//                throw RuntimeException(TAG)
-//            } catch (ex: Exception) {
-//                FirebaseCrashlytics.getInstance().log("""
-//                    activity: $lastActivity,
-//                    error: $e
-//                    message: $stringWriter
-//                """.trimIndent())
-//            }
+
+            try {
+                throw RuntimeException(TAG)
+            } catch (ex: Exception) {
+                FirebaseCrashlytics.getInstance().log("""
+                    activity: $lastActivity,
+                    error: $e
+                    message: $stringWriter
+                """.trimIndent())
+            }
 
             startErrorActivity(this, stringWriter.toString())
         } ?: defaultExceptionHandler.uncaughtException(t, e)

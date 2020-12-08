@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.reservelist.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.reservelist.ReserveListResponse
 import com.artilearn.happygolfgo.data.reservelist.source.remote.ReserveListRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
@@ -23,7 +24,7 @@ class ReserveListRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 }

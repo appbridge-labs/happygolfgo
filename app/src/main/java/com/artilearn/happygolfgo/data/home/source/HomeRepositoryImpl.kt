@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.data.home.source
 
+import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
@@ -25,7 +26,7 @@ class HomeRepositoryImpl(
                     }
                 }
         } else {
-            Single.error(IllegalStateException("Network Error"))
+            Single.error(NetworkErrorException("Network Error"))
         }
     }
 }

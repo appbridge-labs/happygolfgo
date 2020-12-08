@@ -6,6 +6,7 @@ import com.artilearn.happygolfgo.constants.PASSWORD_REGEX
 import com.artilearn.happygolfgo.data.pwreset.PwrestModel
 import com.artilearn.happygolfgo.data.pwreset.source.PwrestRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
@@ -13,12 +14,13 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import retrofit2.HttpException
 import java.util.regex.Pattern
 
 class PwResetViewModel(
     private val pwrestRepository: PwrestRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val currentPhone = BehaviorSubject.create<String>()
     private val _bottomClick = PublishSubject.create<Unit>()
     private val _password = BehaviorSubject.create<String>()
@@ -102,10 +104,17 @@ class PwResetViewModel(
             .doAfterTerminate { hideLoading() }
             .subscribe({
                 _success.call()
-            }, {
-                when (it.message) {
-                    "Network Error" -> _networkFail.value = Unit
-                    else -> _serverError.value = it.message
+            }, { t ->
+                when (t) {
+                    is HttpException -> {
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                        }
+                        _serverError.value = t.localizedMessage
+                    }
+                    else -> _serverError.value = t.localizedMessage
                 }
             }).addTo(compositeDisposable)
     }
