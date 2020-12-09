@@ -34,10 +34,10 @@ class ReservationFragment
     private fun initViewModelObserving() {
         with(viewModel) {
             serverError.observe(this@ReservationFragment, Observer {
-                showFragmentError(it)
+                showFragmentToast(ToastType.ERROR, it)
             })
             networkFail.observe(this@ReservationFragment, Observer {
-                showFragmentNetworkFail()
+                showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
             })
             reservationListButton.observe(this@ReservationFragment, Observer {
                 reservationListCheck(adapter.itemCount)

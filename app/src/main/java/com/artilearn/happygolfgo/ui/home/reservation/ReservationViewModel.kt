@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.home.reservation
 
 import android.accounts.NetworkErrorException
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.R
@@ -18,6 +19,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
+import kotlin.math.log
 
 class ReservationViewModel(
     private val repository: HomeRepository,
@@ -78,6 +80,7 @@ class ReservationViewModel(
             .doOnNext { hideLoading(); _swipeRefresh.call() }
     }
 
+    //todo 배포 전 주석 해제! (doOnError)
     private fun getTicket() {
         repository.requestHomeTicket()
             .subscribeOn(Schedulers.io())
@@ -85,11 +88,15 @@ class ReservationViewModel(
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
             .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
+                Log.d(TAG, "doOnError: $t")
+//                try {
+//                    throw RuntimeException(TAG)
+//                } catch (e: Exception) {
+//                    FirebaseCrashlytics.getInstance().log("""
+//                    throwalbe: $e
+//                    message: ${e.localizedMessage}
+//                """.trimIndent())
+//                }
             }
             .subscribe({
                 val body = it.body()
@@ -105,16 +112,9 @@ class ReservationViewModel(
                 }
             }, { t ->
                 when (t) {
-                    is NetworkErrorException -> _networkFail.value = Unit
-                    is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                        }
-                        _serverError.value = t.localizedMessage
-                    }
-                    else -> _serverError.value = t.localizedMessage
+                    is NetworkErrorException -> _networkFail.call()
+                    is HttpException -> _serverError.value = t.localizedMessage
+                    else -> _serverError.value = "UnKnown Error"
                 }
             }).addTo(compositeDisposable)
     }
