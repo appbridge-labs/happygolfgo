@@ -2,10 +2,12 @@ package com.artilearn.happygolfgo.ui.home.gamecenter
 
 import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentGamecenterBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.golfrank.GolfRankActivity
 import com.artilearn.happygolfgo.ui.golfgame.GolfGameActivity
 import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCAveragesModel
@@ -52,7 +54,10 @@ class GameCenterFragment :
                 binding.sumary = sumary
             })
             networkFail.observe(this@GameCenterFragment, Observer {
-                // toast
+                showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+            })
+            serverError.observe(this@GameCenterFragment, Observer {
+                showFragmentToast(ToastType.ERROR, it)
             })
         }
     }

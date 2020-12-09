@@ -93,9 +93,9 @@ data class GameCenterResponse(
         @Expose
         val id: Int,
 
-        @SerializedName("name")
+        @SerializedName("nickname")
         @Expose
-        val name: String,
+        val nickname: String?,
 
         @SerializedName("globalRank")
         @Expose

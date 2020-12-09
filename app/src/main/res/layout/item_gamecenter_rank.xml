@@ -68,7 +68,7 @@
                 app:layout_constraintStart_toEndOf="@id/iv_profile"
                 app:layout_constraintTop_toTopOf="parent"
                 bind:onIsMe="@{item.isMe}"
-                bind:onNickName="@{item.name}"
+                bind:onNickName="@{item.nickname}"
                 tools:text="닉네임" />
 
             <TextView

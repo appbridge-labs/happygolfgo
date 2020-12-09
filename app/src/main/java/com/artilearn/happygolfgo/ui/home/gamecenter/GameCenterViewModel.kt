@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit
 class GameCenterViewModel(
     private val repository: GameCenterRepository
 ) : BaseViewModel() {
-    val TAG = javaClass.simpleName
+    private val TAG = javaClass.simpleName
     private val _onRankDetailButton: Subject<ButtonType> = PublishSubject.create()
     private val _onGameDetailButton: Subject<ButtonType> = PublishSubject.create()
     private val _isGameDataSubject: PublishSubject<Unit> = PublishSubject.create()
@@ -75,12 +75,24 @@ class GameCenterViewModel(
             emptySubject, _isDefaultGameDataSubject, BiFunction { _: Unit, _: Unit -> Unit }
         ).replay(1).autoConnect()
 
+        //todo 배포 전 주석 해제! (doOnError)
         val gameData = defaultSubject
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { showLoading() }
             .switchMapSingle {
                 repository.getGames()
                     .subscribeOn(Schedulers.io())
+            }
+            .doOnError {
+                Log.d(TAG, "doOnError: $it")
+//                try {
+//                    throw RuntimeException(TAG)
+//                } catch (e: Exception) {
+//                    FirebaseCrashlytics.getInstance().log("""
+//                    throwalbe: $e
+//                    message: ${e.localizedMessage}
+//                """.trimIndent())
+//                }
             }
             .materialize()
             .observeOn(AndroidSchedulers.mainThread())
@@ -114,17 +126,15 @@ class GameCenterViewModel(
             .subscribe(_averages::setValue)
             .let(compositeDisposable::add)
 
-        //todo 에러일 때 예외처리 요망
-        gameData.filter { it.isOnError }
+        gameData.map { it.error }
+            .filter { true }
             .subscribe { e ->
-                val error = e.error
-                when(error) {
-                    is HttpException -> Log.d(TAG, "error ${error.localizedMessage} ")
-                    is NetworkErrorException -> _networkFail.value = Unit
-                    else -> Log.d(TAG, "else error: ${error?.localizedMessage}")
+                when (e) {
+                    is NetworkErrorException -> _networkFail.call()
+                    is HttpException -> _serverError.value = e.localizedMessage
+                    else -> _serverError.value = "UnKnown Error"
                 }
-            }
-            .let(compositeDisposable::add)
+            }.addTo(compositeDisposable)
     }
 
     private fun rankDetail(): Observable<ButtonType> {

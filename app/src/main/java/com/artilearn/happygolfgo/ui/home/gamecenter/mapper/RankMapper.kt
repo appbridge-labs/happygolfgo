@@ -10,7 +10,7 @@ object RankMapper : GameCenterMapper<List<GameCenterResponse.GameCenterRank>, Li
             GCRankModel(
                 globalRank = ranks.globalRank.toString(),
                 profileImage = ranks.profileImageURL,
-                name = ranks.name,
+                nickname = ranks.nickname ?: "닉네임 없음",
                 average = ranks.average.toString(),
                 isMe = ranks.isMe
             )
