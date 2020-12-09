@@ -8,7 +8,6 @@ import com.applandeo.materialcalendarview.EventDay
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
-import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.convertCalendar
 import com.artilearn.happygolfgo.util.convertDate
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -22,7 +21,7 @@ class TicketDateViewModel(
     private val ticketDateRepository: TicketDateRepository
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
-    private val _isCalendarLoading: MutableLiveData<Boolean> = MutableLiveData()
+    private val _isCalendarLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     private val _eventDayList: MutableLiveData<List<EventDay>> = MutableLiveData()
     private val _availableMinDate: MutableLiveData<Calendar> = MutableLiveData()
     private val _availableMaxDate: MutableLiveData<Calendar> = MutableLiveData()
@@ -46,6 +45,12 @@ class TicketDateViewModel(
     var eventList = arrayListOf<Calendar>()
     var availableList = arrayListOf<Calendar>()
 
+    private val _availablieList: MutableLiveData<List<Calendar?>> = MutableLiveData()
+    val availablieList: LiveData<List<Calendar?>>
+        get() = _availablieList
+    private val _dotList: MutableLiveData<List<EventDay>> = MutableLiveData()
+    val dotList: LiveData<List<EventDay>>
+        get() = _dotList
 
     fun selectDate(type: Int) {
         when (type) {
@@ -72,18 +77,6 @@ class TicketDateViewModel(
                     val body = response.body()
                     with(response) {
                         if (isSuccessful && body != null) {
-                            Log.d(TAG, "타석 예약가능한 갯수: ${body.data.availableDates.size}")
-                            val d = body.data.availableDates
-                            for ((i,v) in d.withIndex()) {
-                                val date = convertDate(v)
-                                val now = if (date != null) {
-                                    convertCalendar(date)
-                                } else {
-                                    null
-                                }
-
-                                Log.d(TAG, "i: $i, 서버 타석 가능 날짜: ${now?.get(Calendar.YEAR)}년 ${now?.get(Calendar.MONTH)?.plus(1)}월 ${now?.get(Calendar.DAY_OF_MONTH)}일")
-                            }
                             convertToEventDay(body.data.availableDates, body.data.eventDates)
                         } else {
                             _serverError.value = response.message()
@@ -96,7 +89,8 @@ class TicketDateViewModel(
                             try {
                                 throw RuntimeException(TAG)
                             } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                                FirebaseCrashlytics.getInstance()
+                                    .log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
                             }
                             _serverError.value = t.localizedMessage
                         }
@@ -124,19 +118,6 @@ class TicketDateViewModel(
                     val body = response.body()
                     with(response) {
                         if (isSuccessful && body != null) {
-                            Log.d(TAG, "레슨 예약 갯수: ${body.data.availableDates.size}")
-                            val d = body.data.availableDates
-                            for ((i,v) in d.withIndex()) {
-                                val date = convertDate(v)
-                                val now = if (date != null) {
-                                    convertCalendar(date)
-                                } else {
-                                    null
-                                }
-
-                                Log.d(TAG, "i: $i, 레슨 가능 날짜: ${now?.get(Calendar.YEAR)}년 ${now?.get(Calendar.MONTH)?.plus(1)}월 ${now?.get(Calendar.DAY_OF_MONTH)}일")
-                            }
-
                             convertToEventDay(body.data.availableDates, body.data.eventDates)
                         } else {
                             _serverError.value = response.message()
@@ -149,7 +130,8 @@ class TicketDateViewModel(
                             try {
                                 throw RuntimeException(TAG)
                             } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                                FirebaseCrashlytics.getInstance()
+                                    .log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
                             }
                             _serverError.value = t.localizedMessage
                         }
@@ -159,67 +141,188 @@ class TicketDateViewModel(
         }
     }
 
-    private fun convertToEventDay(available: List<String>?, event: List<String>?) {
-        //Log.d(TAG, "데이터 사이즈: ${available?.size}")
-        if (available != null) {
-            for ((i,v) in available.withIndex()) {
-                var calendar: Calendar?
-                val date = convertDate(v)
-                calendar = if (date != null) {
+    private fun convertToEventDay(available: List<String>, event: List<String>) {
+        Log.d(TAG, "available: ${available.size}, dot: ${event.size}")
+        for ((i, v) in available.withIndex()) {
+            val date = convertDate(v)
+            val calendar = if (date != null) {
+                convertCalendar(date)
+            } else {
+                null
+            }
+            Log.d(TAG, "번호: $i, 예약가능 날짜: ${calendar?.get(Calendar.YEAR)}년 ${calendar?.get(Calendar.MONTH)?.plus(1)}월, ${calendar?.get(Calendar.DAY_OF_MONTH)}일")
+        }
+
+        for ((i, v) in event.withIndex()) {
+            val date = convertDate(v)
+            val calendar = if (date != null) {
+                convertCalendar(date)
+            } else {
+                null
+            }
+            Log.d(TAG, "예약 번호: $i, 예약한 날짜: ${calendar?.get(Calendar.YEAR)}년 ${calendar?.get(Calendar.MONTH)?.plus(1)}월, ${calendar?.get(Calendar.DAY_OF_MONTH)}일")
+        }
+
+        if (available.isNotEmpty()) {
+            availableList = arrayListOf()
+            val calendarList = mutableListOf<Calendar?>()
+            Log.d(TAG, "available.isNotEmpty()")
+            for (i in available.indices) {
+                val date = convertDate(available[i])
+                val calendar = if (date != null) {
                     convertCalendar(date)
                 } else {
                     null
                 }
-                Log.d(TAG, "데이터 변경 i: $i, 예약가능 날짜: ${calendar?.get(Calendar.YEAR)}년 ${calendar?.get(Calendar.MONTH)?.plus(1)}월 ${calendar?.get(Calendar.DAY_OF_MONTH)}일")
+                availableList.add(calendar!!)
             }
+
+            _availablieList.value = availableList
+        } else {
+            Log.d(TAG, "available.empty()")
         }
 
-        available?.let {
-            with(it) {
-                if (isNotEmpty()) {
-                    val min = Collections.min(available)
-                    val max = Collections.max(available)
-                    val minDate = convertDate(min)
-                    val maxDate = convertDate(max)
-
-                    minDate?.let { calendarMin = convertCalendar(minDate) }
-                    maxDate?.let { calendarMax = convertCalendar(maxDate) }
-
-                    for (i in 0 until size) {
-                        val date = convertDate(this[i])
-                        date?.let { availableList.add(convertCalendar(date)) }
-                    }
+        if (event.isNotEmpty()) {
+            eventList = arrayListOf()
+            Log.d(TAG, "event.isNotEmpty()")
+            for (i in event.indices) {
+                val date = convertDate(event[i])
+                val calendar = if (date != null) {
+                    convertCalendar(date)
+                } else {
+                    null
                 }
+                eventList.add(calendar!!)
             }
-        }
 
-        event?.let {
-            with(it) {
-                if (isNotEmpty()) {
-                    for (i in 0 until size) {
-                        val date = convertDate(this[i])
-                        date?.let { eventList.add(convertCalendar(date)) }
-                    }
+            if (eventList.isNotEmpty()) {
+                for (i in 0 until eventList.size) {
+                    eventDays.add(EventDay(eventList[i], R.drawable.ic_calendar_event))
                 }
+
+                _dotList.value = eventDays
+            }
+        } else {
+            eventList = arrayListOf()
+            Log.d(TAG, "event.isNotEmpty()")
+            for (i in event.indices) {
+                val date = convertDate(event[i])
+                val calendar = if (date != null) {
+                    convertCalendar(date)
+                } else {
+                    null
+                }
+                eventList.add(Calendar.getInstance())
+            }
+
+            if (eventList.isNotEmpty()) {
+                for (i in 0 until eventList.size) {
+                    eventDays.add(EventDay(eventList[i], R.drawable.ic_calendar_event))
+                }
+
+                _dotList.value = eventDays
             }
         }
 
-        confirmDates()
+
+
     }
-
-    private fun confirmDates() {
-        if (eventList.isNotEmpty()) {
-            for (i in 0 until eventList.size) {
-                eventDays.add(EventDay(eventList[i], R.drawable.ic_calendar_event))
-            }
-
-            _eventDayList.value = eventDays
-        }
-
-        calendarMin?.let { _availableMinDate.value = it }
-        calendarMax?.let { _availableMaxDate.value = it }
-
-        _isCalendarLoading.value = true
-    }
-
 }
+
+//        available?.let {
+//            with(it) {
+//                if (isNotEmpty()) {
+//                    Log.d(TAG, "available isNotEmpty: ")
+//                    val min = Collections.min(available)
+//                    val max = Collections.max(available)
+//                    val minDate = convertDate(min)
+//                    val maxDate = convertDate(max)
+//
+//                    minDate?.let { calendarMin = convertCalendar(minDate) }
+//                    maxDate?.let { calendarMax = convertCalendar(maxDate) }
+//
+//                    for (i in 0 until size) {
+//                        val date = convertDate(this[i])
+//                        date?.let { availableList.add(convertCalendar(date)) }
+//                    }
+//                } else {
+//                    Log.d(TAG, "available empty ")
+//                }
+//            }
+//        }
+//
+//        event?.let {
+//            with(it) {
+//                if (isNotEmpty()) {
+//                    Log.d(TAG, "event isNotEmpty: ")
+//                    for (i in 0 until size) {
+//                        val date = convertDate(this[i])
+//                        date?.let { eventList.add(convertCalendar(date)) }
+//                    }
+//                } else {
+//                    Log.d(TAG, "event empty: ")
+//                }
+//            }
+//        }
+//
+////        available?.let { date ->
+////            with(date) {
+////                if (isNotEmpty()) {
+////                    val min = Collections.min(available)
+////                    val max = Collections.max(available)
+////                    val minDate = convertDate(min)
+////                    val maxDate = convertDate(max)
+////                    calendarMin = if (minDate != null) {
+////                        convertCalendar(minDate)
+////                    } else {
+////                        null
+////                    }
+////
+////                    calendarMax = if (maxDate != null) {
+////                        convertCalendar(maxDate)
+////                    } else {
+////                        null
+////                    }
+////
+////                    Log.d(TAG, "min: ${calendarMin?.get(Calendar.YEAR)}년 ${calendarMin?.get(Calendar.MONTH)?.plus(1)}월, ${calendarMin?.get(Calendar.DAY_OF_MONTH)}일")
+////                    Log.d(TAG, "max: ${calendarMax?.get(Calendar.YEAR)}년 ${calendarMax?.get(Calendar.MONTH)?.plus(1)}월, ${calendarMax?.get(Calendar.DAY_OF_MONTH)}일")
+////                }
+////
+////            }
+////        }
+////
+////        event?.let {
+////            with(it) {
+////                if (isNotEmpty()) {
+////                    for (i in 0 until size) {
+////                        val date = convertDate(this[i])
+////                        date?.let { eventList.add(convertCalendar(date)) }
+////                    }
+////                }
+////            }
+////        }
+//
+//        if (event?.size != 0) {
+//            Log.d(TAG, "event != null")
+//            confirmDates()
+//        } else {
+//            Log.d(TAG, "eventy null")
+//            calendarMin?.let { _availableMinDate.value = it }
+//            calendarMax?.let { _availableMaxDate.value = it }
+//
+//            _isCalendarLoading.value = true
+//        }
+//    private fun confirmDates() {
+//        if (eventList.isNotEmpty()) {
+//            for (i in 0 until eventList.size) {
+//                eventDays.add(EventDay(eventList[i], R.drawable.ic_calendar_event))
+//            }
+//
+//            _eventDayList.value = eventDays
+//        }
+//
+//        calendarMin?.let { _availableMinDate.value = it }
+//        calendarMax?.let { _availableMaxDate.value = it }
+//
+//        _isCalendarLoading.value = true
+//    }
