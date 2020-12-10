@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.util
 
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -14,6 +15,7 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.ui.home.alram.AlramAdapter
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationAdapter
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
 import java.util.*
@@ -59,12 +61,23 @@ fun ticketCount(
     }
 }
 
-@BindingAdapter("setTickets")
-fun RecyclerView.setTicketItems(tickes: List<Ticket>?) {
+@BindingAdapter("setTickets", "setScroll")
+fun RecyclerView.setTicketItems(tickes: List<Ticket>?, vm: ReservationViewModel) {
     with(adapter as ReservationAdapter) {
         this.clear()
         tickes?.let { this.setItems(it) }
     }
+
+    this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            when (recyclerView.scrollState) {
+                0 -> vm.onButtonState(true)
+                else -> vm.onButtonState(false)
+
+            }
+        }
+    })
 }
 
 @BindingAdapter("setLessonLog")

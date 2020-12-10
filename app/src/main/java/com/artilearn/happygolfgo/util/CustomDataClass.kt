@@ -1,6 +1,6 @@
 package com.artilearn.happygolfgo.util
 
-import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.io.Serializable
@@ -52,6 +52,6 @@ class LabelCustomFormatter : ValueFormatter() {
 class ScoreCustomFormatter : ValueFormatter() {
     override fun getFormattedValue(value: Float): String {
         val score = value.toString().split(".")
-        return score[0]+"점"
+        return score[0] + "점"
     }
 }

@@ -1,10 +1,7 @@
 package com.artilearn.happygolfgo.util.databinding
 
-import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.artilearn.happygolfgo.data.golfgame.GolfGameResponse
-import com.artilearn.happygolfgo.data.golfrank.GolfRankResponse
 import com.artilearn.happygolfgo.ui.golfgame.GolfGameAdapter
 import com.artilearn.happygolfgo.ui.golfgame.model.GolfGameModel
 import com.artilearn.happygolfgo.ui.golfrank.GolfRankAdapter

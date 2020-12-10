@@ -38,11 +38,11 @@ class AlramViewModel(
             .doAfterTerminate { hideLoading() }
             .doOnError { t ->
                 Log.d(TAG, "doOnError: $t")
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
+//                try {
+//                    throw RuntimeException(TAG)
+//                } catch (e: Exception) {
+//                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+//                }
             }
             .subscribe({
                 val body = it.body()

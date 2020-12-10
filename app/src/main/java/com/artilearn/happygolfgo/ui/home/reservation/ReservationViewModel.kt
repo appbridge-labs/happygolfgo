@@ -15,11 +15,11 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
-import kotlin.math.log
 
 class ReservationViewModel(
     private val repository: HomeRepository,
@@ -34,6 +34,7 @@ class ReservationViewModel(
     private val _reservationListButton: SingleLiveEvent<Unit> = SingleLiveEvent()
     private val _swipeRefresh: SingleLiveEvent<Unit> = SingleLiveEvent()
     private val _message = SingleLiveEvent<String>()
+    private val _buttonState: MutableLiveData<Boolean> = MutableLiveData(true)
 
     val emptyTicket: LiveData<Boolean>
         get() = _emptyTicket
@@ -50,9 +51,33 @@ class ReservationViewModel(
     val message: LiveData<String>
         get() = _message
 
+    val buttonState: LiveData<Boolean>
+        get() = _buttonState
+
     init {
         bindRx()
         getTicket()
+
+        //todo recordException 없이 log만 쌓아서 안나오는 현상을 발생? 그래서 테스트 중임 확인되면 전체 로그 쌓는데 record 추가할 것?? 좀더 확인
+        //todo (2020.12.10) 에러 리포트 파이어베이스 확인 하면 전체 로그쌓는데 확인 후 수정 후 배포해야함
+        try {
+            throw RuntimeException("$TAG error only record")
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+
+        try {
+            throw RuntimeException("$TAG error both")
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().recordException(e)
+            FirebaseCrashlytics.getInstance().log("error both test")
+        }
+
+        try {
+            throw RuntimeException("$TAG error only log")
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().log("only log")
+        }
     }
 
     fun onReservationList() {
@@ -138,6 +163,10 @@ class ReservationViewModel(
 
     private fun hideEmptyTicket() {
         _emptyTicket.value = false
+    }
+
+    fun onButtonState(result: Boolean) {
+        _buttonState.value = result
     }
 
 }
