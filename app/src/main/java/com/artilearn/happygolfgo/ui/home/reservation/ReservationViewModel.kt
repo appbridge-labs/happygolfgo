@@ -7,10 +7,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseViewModel
+import com.artilearn.happygolfgo.data.ApiError
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -60,12 +63,12 @@ class ReservationViewModel(
 
         //todo recordException 없이 log만 쌓아서 안나오는 현상을 발생? 그래서 테스트 중임 확인되면 전체 로그 쌓는데 record 추가할 것?? 좀더 확인
         //todo (2020.12.10) 에러 리포트 파이어베이스 확인 하면 전체 로그쌓는데 확인 후 수정 후 배포해야함  -> record + log로 하기
-        try {
-            throw RuntimeException("$TAG error both")
-        } catch (e: Exception) {
-            FirebaseCrashlytics.getInstance().recordException(e)
-            FirebaseCrashlytics.getInstance().log("error both test")
-        }
+//        try {
+//            throw RuntimeException("$TAG error both")
+//        } catch (e: Exception) {
+//            FirebaseCrashlytics.getInstance().recordException(e)
+//            FirebaseCrashlytics.getInstance().log("error both test")
+//        }
     }
 
     fun onReservationList() {
@@ -126,7 +129,7 @@ class ReservationViewModel(
             }, { t ->
                 when (t) {
                     is NetworkErrorException -> _networkFail.call()
-                    is HttpException -> _serverError.value = t.localizedMessage
+                    is HttpException -> { _serverError.value = t.localizedMessage }
                     else -> _serverError.value = "UnKnown Error"
                 }
             }).addTo(compositeDisposable)

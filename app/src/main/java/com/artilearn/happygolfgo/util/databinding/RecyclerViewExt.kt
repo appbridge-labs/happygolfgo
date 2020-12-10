@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.util.databinding
 
+import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.ui.golfgame.GolfGameAdapter
@@ -30,10 +31,19 @@ fun RecyclerView.bindRankList(list: List<GolfRankModel>?) {
 
 @BindingAdapter("onGolfGameList")
 fun RecyclerView.bindGolfGameList(list: List<GolfGameModel>?) {
+    val TAG = "test"
     with(adapter as GolfGameAdapter) {
         this.clear()
         list?.let { items ->
             this.setItems(items)
+
+            for ((i,v) in list.withIndex()) {
+                Log.d(TAG, "average: ${v.averageScore}")
+                Log.d(TAG, "club: ${v.club}")
+                Log.d(TAG, "dates: ${v.dates}")
+                Log.d(TAG, "highScore: ${v.highScore}")
+                Log.d(TAG, "scores: ${v.scores}")
+            }
         }
     }
 }

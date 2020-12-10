@@ -137,7 +137,7 @@
     <string name="fragment_gamecenter_iron_text">IRON</string>
     <string name="fragment_gamecenter_sw_text">S/W</string>
     <string name="fragment_gamecenter_putt_text">PUTT</string>
-    <string name="game_rank_toolbar_title">골프력 게임 스코어</string>
+    <string name="game_rank_toolbar_title">골프력 게임 랭킹</string>
     <string name="game_rank_tab_title_allgroup">전체</string>
     <string name="game_rank_tab_title_mygroup">훈련소</string>
     <string name="fragment_gamecenter_detail">자세히 보기</string>
@@ -153,4 +153,5 @@
     <string name="fragment_reservation_donot_refresh">가져올 티켓이 없습니다</string>
     <string name="golf_game_average_score">평균점수</string>
     <string name="golf_game_high_score">최고점수</string>
+    <string name="golf_game_score_toolbar_title">골프력 게임 스코어</string>
 </resources>

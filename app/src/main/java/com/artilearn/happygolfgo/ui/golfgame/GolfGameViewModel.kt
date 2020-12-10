@@ -49,6 +49,9 @@ class GolfGameViewModel(
                 repository.getGolfGames()
                     .subscribeOn(Schedulers.io())
             }
+            .doOnError { t ->
+
+            }
             .materialize()
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { hideLoading() }
@@ -99,17 +102,15 @@ class GolfGameViewModel(
             .subscribe(_golfGame::setValue)
             .addTo(compositeDisposable)
 
-        golfGameData.filter { it.isOnError }
+        golfGameData.map { it.error }
+            .filter { true }
             .subscribe { e ->
-                Log.d(TAG, "error: $e, ${e.error?.localizedMessage}")
-                val a = e.error
-                when(a) {
-                    is HttpException -> Log.d(TAG, "error ${a.localizedMessage} ")
-                    is NetworkErrorException -> _networkFail.value = Unit
-                    else -> Log.d(TAG, "else error: ${a?.localizedMessage}")
+                when (e) {
+                    is NetworkErrorException -> _networkFail.call()
+                    is HttpException -> _serverError.value = e.localizedMessage
+                    else -> _serverError.value = "UnKnown Error"
                 }
-            }
-            .let(compositeDisposable::add)
+            }.addTo(compositeDisposable)
     }
 
 }

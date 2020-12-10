@@ -1,8 +1,10 @@
 package com.artilearn.happygolfgo.util.databinding
 
 import android.graphics.Color
+import android.util.Log
 import androidx.databinding.BindingAdapter
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -46,12 +48,16 @@ private fun setLineData(score: List<Float>?, club: String): LineData {
     val dataSets = mutableListOf<ILineDataSet>()
     val entry = mutableListOf<Entry>()
 
-    for (i in 0..5) {
+    for (i in 0..4) {
         val index = i.toFloat()
-        val random = Random()
-        val range = random.nextInt(101).toFloat()
+        //val random = Random()
+        //val range = random.nextInt(101).toFloat()
 
-        entry.add(Entry(index, range))
+        if (score?.size != 0) {
+            entry.add(Entry(index, score?.get(i) ?: 0f))
+        } else {
+            entry.add(Entry(index, 0f))
+        }
     }
 
     val iLineDataSet = LineDataSet(entry, "내용없음")
