@@ -485,7 +485,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/five_guideline"
                         bind:list="@{vm.rank}"
-                        tools:itemCount="3"
+                        tools:itemCount="10"
                         tools:listitem="@layout/item_gamecenter_rank" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
