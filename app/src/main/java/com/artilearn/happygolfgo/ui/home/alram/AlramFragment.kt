@@ -38,10 +38,7 @@ class AlramFragment
                 showFragmentToast(ToastType.ERROR, it)
             })
             networkFail.observe(this@AlramFragment, Observer {
-                showFragmentToast(
-                    ToastType.WARNNING,
-                    getString(R.string.fragment_network_fail_content)
-                )
+                showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
             })
         }
     }

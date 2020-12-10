@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.ui.home
 import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
@@ -31,6 +32,13 @@ class HomeViewModel : BaseViewModel() {
 
     init {
         rxBind()
+
+        //todo recordException 없이 log만 쌓아서 안나오는 현상을 발생? 그래서 테스트 중임 확인되면 전체 로그 쌓는데 record 추가할 것
+        try {
+            throw RuntimeException("error test")
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
     }
 
     fun fcmOnNext(type: String) {

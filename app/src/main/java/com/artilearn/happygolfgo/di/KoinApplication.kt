@@ -48,12 +48,12 @@ class KoinApplication : Application() {
 
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
 
-        val fabricExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        val firebaseExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler(
             HappyGolfUserExceptionHandler(
                 this,
                 defaultExceptionHandler,
-                fabricExceptionHandler
+                firebaseExceptionHandler
             )
         )
     }

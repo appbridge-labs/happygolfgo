@@ -17,6 +17,7 @@ import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import kotlinx.android.synthetic.main.common_view.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+//todo 체크인 번호 서버 요망
 class MyPageFragment
     : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
 

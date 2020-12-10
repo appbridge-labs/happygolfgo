@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.home.alram
 
 import android.accounts.NetworkErrorException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -36,6 +37,7 @@ class AlramViewModel(
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
             .doOnError { t ->
+                Log.d(TAG, "doOnError: $t")
                 try {
                     throw RuntimeException(TAG)
                 } catch (e: Exception) {
@@ -57,14 +59,7 @@ class AlramViewModel(
             }, { t ->
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
-                    is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                        }
-                        _serverError.value = t.localizedMessage
-                    }
+                    is HttpException -> _serverError.value = t.localizedMessage
                     else -> _serverError.value = t.localizedMessage
                 }
             }).addTo(compositeDisposable)
