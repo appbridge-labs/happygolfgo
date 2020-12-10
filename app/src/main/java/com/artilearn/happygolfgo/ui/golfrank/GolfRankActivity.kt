@@ -1,9 +1,11 @@
 package com.artilearn.happygolfgo.ui.golfrank
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityGolfRankBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -15,12 +17,24 @@ class GolfRankActivity : BaseActivity<ActivityGolfRankBinding>(R.layout.activity
         super.onCreate(savedInstanceState)
 
         initBinding()
+        initViewModelObserving()
         initView()
         initPagerAdapter()
     }
 
     private fun initBinding() {
         binding.vm = viewModel
+    }
+
+    private fun initViewModelObserving() {
+        with(viewModel) {
+            serverError.observe(this@GolfRankActivity, Observer {
+                showToast(ToastType.ERROR, it)
+            })
+            networkFail.observe(this@GolfRankActivity, Observer {
+                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+            })
+        }
     }
 
     private fun initView() {

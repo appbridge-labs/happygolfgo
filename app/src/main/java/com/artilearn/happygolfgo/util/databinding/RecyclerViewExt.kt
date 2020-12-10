@@ -34,7 +34,6 @@ fun RecyclerView.bindGolfGameList(list: List<GolfGameModel>?) {
         this.clear()
         list?.let { items ->
             this.setItems(items)
-            //findRankPosition(this@bindGolfGameList, items)
         }
     }
 }
