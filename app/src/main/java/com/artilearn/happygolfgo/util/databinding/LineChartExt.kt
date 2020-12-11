@@ -49,14 +49,10 @@ private fun setLineData(score: List<Float>?, club: String): LineData {
     val entry = mutableListOf<Entry>()
 
     for (i in 0..4) {
-        val index = i.toFloat()
-        //val random = Random()
-        //val range = random.nextInt(101).toFloat()
-
         if (score?.size != 0) {
-            entry.add(Entry(index, score?.get(i) ?: 0f))
+            entry.add(Entry(i.toFloat(), score?.get(i) ?: 0f))
         } else {
-            entry.add(Entry(index, 0f))
+            entry.add(Entry(i.toFloat(), 0f))
         }
     }
 
