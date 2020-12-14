@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -28,7 +29,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <com.applandeo.materialcalendarview.CalendarView
             android:id="@+id/calendarview"
             android:layout_width="0dp"
@@ -37,6 +37,10 @@
             app:abbreviationsLabelsColor="@color/color_black"
             app:daysLabelsColor="@color/color_black"
             app:eventsEnabled="true"
+            app:type="classic"
+            android:visibility="invisible"
+            bind:bindAvailablie="@{vm.availablieList}"
+            bind:bindEvent="@{vm.eventDayList}"
             app:forwardButtonSrc="@drawable/ic_calendar_forward"
             app:headerColor="@color/color_white"
             app:headerLabelColor="@color/color_black"
