@@ -1,17 +1,16 @@
 package com.artilearn.happygolfgo.ui.ticketdate
 
 import android.accounts.NetworkErrorException
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
+import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
-import java.util.*
 
 class TicketDateViewModel(
     private val ticketDateRepository: TicketDateRepository
@@ -20,6 +19,7 @@ class TicketDateViewModel(
 
     private val _eventDayList: MutableLiveData<List<String>> = MutableLiveData()
     private val _availablieList: MutableLiveData<List<String>> = MutableLiveData()
+    private val _goNext: MutableLiveData<Pair<Ticket, String>> = MutableLiveData()
 
     val eventDayList: LiveData<List<String>>
         get() = _eventDayList
@@ -27,10 +27,10 @@ class TicketDateViewModel(
     val availablieList: LiveData<List<String>>
         get() = _availablieList
 
+    val goNext: LiveData<Pair<Ticket, String>>
+        get() = _goNext
 
     var ticketId: Int? = null
-    var eventList = arrayListOf<Calendar>()
-    var availableList = arrayListOf<Calendar>()
 
     fun selectDate(type: Int) {
         when (type) {
@@ -124,6 +124,10 @@ class TicketDateViewModel(
     private fun setMyDates(availablie: List<String>, events: List<String>) {
         _availablieList.value = availablie
         _eventDayList.value = events
+    }
+
+    fun calendarListener(ticket: Ticket, day: String) {
+        _goNext.value = Pair(ticket, day)
     }
 
 }

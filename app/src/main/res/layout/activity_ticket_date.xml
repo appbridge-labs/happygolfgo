@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -11,6 +11,10 @@
         <variable
             name="vm"
             type="com.artilearn.happygolfgo.ui.ticketdate.TicketDateViewModel" />
+
+        <variable
+            name="ticket"
+            type="com.artilearn.happygolfgo.data.Ticket" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,14 +37,11 @@
             android:id="@+id/calendarview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             app:abbreviationsBarColor="@color/color_white"
             app:abbreviationsLabelsColor="@color/color_black"
             app:daysLabelsColor="@color/color_black"
             app:eventsEnabled="true"
-            app:type="classic"
-            android:visibility="invisible"
-            bind:bindAvailablie="@{vm.availablieList}"
-            bind:bindEvent="@{vm.eventDayList}"
             app:forwardButtonSrc="@drawable/ic_calendar_forward"
             app:headerColor="@color/color_white"
             app:headerLabelColor="@color/color_black"
@@ -51,7 +52,12 @@
             app:previousButtonSrc="@drawable/ic_calendar_previous"
             app:selectionColor="#FF00FF"
             app:selectionLabelColor="@color/color_dark_red"
-            app:todayLabelColor="@color/color_dark_green" />
+            app:todayLabelColor="@color/color_dark_green"
+            app:type="classic"
+            bind:bindAvailablie="@{vm.availablieList}"
+            bind:bindClick="@{vm}"
+            bind:bindEvent="@{vm.eventDayList}"
+            bind:bindTicket="@{ticket}" />
 
         <ProgressBar
             android:id="@+id/progressbar"

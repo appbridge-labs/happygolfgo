@@ -6,26 +6,33 @@ import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.data.Ticket
+import com.artilearn.happygolfgo.ui.ticketdate.TicketDateViewModel
 import com.artilearn.happygolfgo.util.convertCalendar
 import com.artilearn.happygolfgo.util.convertDate
 import com.artilearn.happygolfgo.util.convertTime
+import com.artilearn.happygolfgo.util.snackbar
 import java.util.*
 
-@BindingAdapter("bindAvailablie", "bindEvent")
-fun CalendarView.bindDays(available: List<String>?, events: List<String>?) {
-    val eventDays: MutableList<Calendar>
+@BindingAdapter("bindAvailablie", "bindEvent", "bindTicket", "bindClick")
+fun CalendarView.bindDays(
+    available: List<String>?,
+    events: List<String>?,
+    ticket: Ticket,
+    viewModel: TicketDateViewModel
+) {
+    val calendarView = this
+    val eventDays: MutableList<Calendar> = mutableListOf()
 
     this.setMinimumDate(minimumDate())
     this.setMaximumDate(maximumDate())
 
     available?.let {
-        val disabled = setServerDates(it)
-        this.setDisabledDays(disabled)
+        this.setDisabledDays(setServerDates(it))
+        this.visibility = View.VISIBLE
     }
 
     events?.let {
-        eventDays = arrayListOf()
-
         for (i in events.indices) {
             val date = convertDate(events[i])
             val calendar = if (date != null) {
@@ -33,21 +40,32 @@ fun CalendarView.bindDays(available: List<String>?, events: List<String>?) {
             } else {
                 null
             }
-
             calendar?.let { eventDays.add(it) }
         }
-
         this.setEvents(setDots(eventDays))
     }
 
-
     this.setOnDayClickListener(object : OnDayClickListener {
         override fun onDayClick(eventDay: EventDay) {
-
+            val day = "${eventDay.calendar[Calendar.YEAR]}년 " +
+                    "${eventDay.calendar[Calendar.MONTH].plus(1)}월 " +
+                    "${eventDay.calendar[Calendar.DAY_OF_MONTH]}일"
+            val date =
+                "${eventDay.calendar.get(Calendar.YEAR)}-${eventDay.calendar.get(Calendar.MONTH) + 1}" +
+                        "-${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}"
+            if (eventDay.isEnabled) {
+                calendarView.snackbar("$day 예약 불가")
+            } else {
+                when (eventDay.calendar) {
+                    in eventDays -> {
+                        if (ticket.onlyOnceToday) calendarView.snackbar("1일 1회 예약 가능합니다")
+                        else viewModel.calendarListener(ticket, date)
+                    }
+                    else -> viewModel.calendarListener(ticket, date)
+                }
+            }
         }
     })
-
-    this.visibility = View.VISIBLE
 }
 
 private fun minimumDate(): Calendar {
