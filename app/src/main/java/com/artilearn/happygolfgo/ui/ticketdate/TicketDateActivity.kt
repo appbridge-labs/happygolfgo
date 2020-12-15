@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TicketDateActivity
     : BaseActivity<ActivityTicketDateBinding>(R.layout.activity_ticket_date) {
-    private val TAG = javaClass.simpleName
+
     private val viewModel: TicketDateViewModel by viewModel()
     private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
 

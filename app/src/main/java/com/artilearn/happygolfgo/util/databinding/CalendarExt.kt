@@ -22,14 +22,16 @@ fun CalendarView.bindDays(
     viewModel: TicketDateViewModel
 ) {
     val calendarView = this
+    val availableList: MutableList<Calendar> = mutableListOf()
     val eventDays: MutableList<Calendar> = mutableListOf()
 
-    this.setMinimumDate(minimumDate())
-    this.setMaximumDate(maximumDate())
+    setMinimumDate(minimumDate())
+    setMaximumDate(maximumDate())
 
     available?.let {
-        this.setDisabledDays(setServerDates(it))
-        this.visibility = View.VISIBLE
+        availableList.addAll(setServerDates(it))
+        setDisabledDays(availableList)
+        visibility = View.VISIBLE
     }
 
     events?.let {
@@ -42,10 +44,10 @@ fun CalendarView.bindDays(
             }
             calendar?.let { eventDays.add(it) }
         }
-        this.setEvents(setDots(eventDays))
+        setEvents(setDots(eventDays))
     }
 
-    this.setOnDayClickListener(object : OnDayClickListener {
+    setOnDayClickListener(object : OnDayClickListener {
         override fun onDayClick(eventDay: EventDay) {
             val day = "${eventDay.calendar[Calendar.YEAR]}년 " +
                     "${eventDay.calendar[Calendar.MONTH].plus(1)}월 " +
