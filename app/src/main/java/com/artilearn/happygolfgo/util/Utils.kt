@@ -151,3 +151,5 @@ fun getNowDate(): Date {
     val now = System.currentTimeMillis()
     return Date(now)
 }
+
+fun Calendar.convertLong() = timeInMillis
