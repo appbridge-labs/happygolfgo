@@ -31,7 +31,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/reserve_list_tablayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/reserve_list_toolbar"
@@ -43,8 +43,8 @@
             android:id="@+id/viewpager"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:paddingBottom="10dp"
             android:background="@color/color_line_gray"
+            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

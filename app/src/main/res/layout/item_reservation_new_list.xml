@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:elevation="4dp"
+        android:outlineProvider="none"
         app:cardCornerRadius="5dp"
         bind:setReservationCard="@{item.plateNumber}"
         bind:setReservationCardDay="@{item.startDate}">

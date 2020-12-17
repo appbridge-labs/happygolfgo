@@ -32,6 +32,7 @@
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/bg_reservation_card_default"
                     android:elevation="4dp"
+                    android:outlineProvider="none"
                     android:padding="16dp">
 
                     <ImageView
@@ -67,9 +68,9 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:textStyle="bold"
                             android:textColor="@color/color_black"
                             android:textSize="24dp"
+                            android:textStyle="bold"
                             tools:text="이름 (닉네임)" />
 
                         <TextView
@@ -90,10 +91,10 @@
                 <LinearLayout
                     android:id="@+id/update_layout"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
