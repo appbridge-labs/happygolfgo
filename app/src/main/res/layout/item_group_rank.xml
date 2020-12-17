@@ -17,7 +17,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="8dp"
         android:elevation="4dp"
-        android:outlineProvider="none"
+        app:cardCornerRadius="5dp"
         bind:onMyRank="@{item.isMe}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_rank"
-                app:layout_constraintEnd_toEndOf="@id/tv_nickname"
+                app:layout_constraintEnd_toStartOf="@id/tv_nickname"
                 app:layout_constraintStart_toEndOf="@id/tv_rank"
                 app:layout_constraintTop_toTopOf="@id/tv_rank"
                 app:srcCompat="@drawable/ratingbar_star"
