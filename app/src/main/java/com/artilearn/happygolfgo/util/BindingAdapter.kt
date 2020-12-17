@@ -1,6 +1,5 @@
 package com.artilearn.happygolfgo.util
 
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
