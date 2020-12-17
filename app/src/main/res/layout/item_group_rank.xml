@@ -17,6 +17,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="8dp"
         android:elevation="4dp"
+        android:outlineProvider="none"
         bind:onMyRank="@{item.isMe}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
