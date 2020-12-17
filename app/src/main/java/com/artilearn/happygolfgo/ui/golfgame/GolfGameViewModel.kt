@@ -1,7 +1,5 @@
 package com.artilearn.happygolfgo.ui.golfgame
 
-import android.accounts.NetworkErrorException
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.golfgame.source.GolfGameRepository
@@ -15,7 +13,6 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
-import retrofit2.HttpException
 
 class GolfGameViewModel(
     private val repository: GolfGameRepository
@@ -49,9 +46,9 @@ class GolfGameViewModel(
                 repository.getGolfGames()
                     .subscribeOn(Schedulers.io())
             }
-            .doOnError { t ->
-
-            }
+//            .doOnError { t ->
+//
+//            }
             .materialize()
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { hideLoading() }
@@ -102,15 +99,15 @@ class GolfGameViewModel(
             .subscribe(_golfGame::setValue)
             .addTo(compositeDisposable)
 
-        golfGameData.map { it.error }
-            .filter { true }
-            .subscribe { e ->
-                when (e) {
-                    is NetworkErrorException -> _networkFail.call()
-                    is HttpException -> _serverError.value = e.localizedMessage
-                    else -> _serverError.value = "UnKnown Error"
-                }
-            }.addTo(compositeDisposable)
+//        golfGameData.map { it.error }
+//            .filter { true }
+//            .subscribe { e ->
+//                when (e) {
+//                    is NetworkErrorException -> _networkFail.call()
+//                    is HttpException -> _serverError.value = e.localizedMessage
+//                    else -> _serverError.value = "UnKnown Error"
+//                }
+//            }.addTo(compositeDisposable)
     }
 
 }

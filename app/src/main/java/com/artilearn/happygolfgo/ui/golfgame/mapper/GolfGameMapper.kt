@@ -4,9 +4,9 @@ import com.artilearn.happygolfgo.data.golfgame.GolfGameResponse
 import com.artilearn.happygolfgo.ui.golfgame.model.GolfGameModel
 
 object GolfGameMapper
-    : GolfGameMapperModel<GolfGameResponse.DataClass, GolfGameModel> {
+    : GolfGameMapperModel<GolfGameResponse.GolfGameData, GolfGameModel> {
 
-    override fun driverMapper(from: GolfGameResponse.DataClass): GolfGameModel {
+    override fun driverMapper(from: GolfGameResponse.GolfGameData): GolfGameModel {
         return GolfGameModel(
             club = "드라이버",
             averageScore = from.driver.average.toString(),
@@ -20,7 +20,7 @@ object GolfGameMapper
         )
     }
 
-    override fun woodMapper(from: GolfGameResponse.DataClass): GolfGameModel {
+    override fun woodMapper(from: GolfGameResponse.GolfGameData): GolfGameModel {
         return GolfGameModel(
             club = "우드",
             averageScore = from.woodUtil.average.toString(),
@@ -34,7 +34,7 @@ object GolfGameMapper
         )
     }
 
-    override fun ironMapper(from: GolfGameResponse.DataClass): GolfGameModel {
+    override fun ironMapper(from: GolfGameResponse.GolfGameData): GolfGameModel {
         return GolfGameModel(
             club = "아이언",
             averageScore = from.iron.average.toString(),
@@ -48,7 +48,7 @@ object GolfGameMapper
         )
     }
 
-    override fun shortMapper(from: GolfGameResponse.DataClass): GolfGameModel {
+    override fun shortMapper(from: GolfGameResponse.GolfGameData): GolfGameModel {
         return GolfGameModel(
             club = "숏 아이언 / 웻지",
             averageScore = from.iron.average.toString(),
@@ -62,7 +62,7 @@ object GolfGameMapper
         )
     }
 
-    override fun puttMapper(from: GolfGameResponse.DataClass): GolfGameModel {
+    override fun puttMapper(from: GolfGameResponse.GolfGameData): GolfGameModel {
         return GolfGameModel(
             club = "퍼팅",
             averageScore = from.putter.average,
@@ -70,8 +70,8 @@ object GolfGameMapper
             scores = from.putter.games.map { game ->
                 game.score
             },
-            dates = from.putter.games.map { data ->
-                data.createdAt
+            dates = from.putter.games.map { date ->
+                date.createdAt
             }
         )
     }

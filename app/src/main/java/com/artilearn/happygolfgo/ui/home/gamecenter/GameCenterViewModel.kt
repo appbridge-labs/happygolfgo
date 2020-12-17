@@ -83,8 +83,8 @@ class GameCenterViewModel(
                 repository.getGames()
                     .subscribeOn(Schedulers.io())
             }
-            .doOnError {
-                Log.d(TAG, "doOnError: $it")
+//            .doOnError {
+//                Log.d(TAG, "doOnError: $it")
 //                try {
 //                    throw RuntimeException(TAG)
 //                } catch (e: Exception) {
@@ -93,7 +93,7 @@ class GameCenterViewModel(
 //                    message: ${e.localizedMessage}
 //                """.trimIndent())
 //                }
-            }
+//            }
             .materialize()
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { hideLoading() }
@@ -126,15 +126,15 @@ class GameCenterViewModel(
             .subscribe(_averages::setValue)
             .let(compositeDisposable::add)
 
-        gameData.map { it.error }
-            .filter { true }
-            .subscribe { e ->
-                when (e) {
-                    is NetworkErrorException -> _networkFail.call()
-                    is HttpException -> _serverError.value = e.localizedMessage
-                    else -> _serverError.value = "UnKnown Error"
-                }
-            }.addTo(compositeDisposable)
+//        gameData.map { it.error }
+//            .filter { true }
+//            .subscribe { e ->
+//                when (e) {
+//                    is NetworkErrorException -> _networkFail.call()
+//                    is HttpException -> _serverError.value = e.localizedMessage
+//                    else -> _serverError.value = "UnKnown Error"
+//                }
+//            }.addTo(compositeDisposable)
     }
 
     private fun rankDetail(): Observable<ButtonType> {

@@ -18,9 +18,9 @@ data class GolfGameResponse(
 
     @SerializedName("Data")
     @Expose
-    val data: DataClass
+    val data: GolfGameData
 ) {
-    data class DataClass(
+    data class GolfGameData(
         @field:SerializedName("driver")
         val driver: Driver,
 
