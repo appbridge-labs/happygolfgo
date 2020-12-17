@@ -41,7 +41,7 @@
                 <LinearLayout
                     android:id="@+id/ticketname_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="83dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_unserline"
                     android:orientation="vertical">
 
@@ -63,7 +63,7 @@
                         android:layout_marginBottom="16dp"
                         android:textColor="@color/color_black"
                         android:textSize="24dp"
-                        tools:text="티켓명~" />
+                        tools:text="티켓명" />
 
                     <View
                         android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                 <LinearLayout
                     android:id="@+id/ticketdate_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="83dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_unserline"
                     android:orientation="vertical">
 
@@ -105,7 +105,7 @@
                 <LinearLayout
                     android:id="@+id/tickettime_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="83dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_unserline"
                     android:orientation="vertical">
 
@@ -169,10 +169,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/bg_unserline"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
