@@ -3,7 +3,6 @@ package com.artilearn.happygolfgo.ui.home
 import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.util.SingleLiveEvent
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
@@ -12,7 +11,7 @@ import io.reactivex.subjects.Subject
 import java.util.concurrent.TimeUnit
 
 class HomeViewModel : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     private val bottomNavigation: Subject<BottomNavigationEvent> = PublishSubject.create()
     private val backPressed: Subject<Unit> = PublishSubject.create()
     private val fcmTypeSubject: Subject<String> = BehaviorSubject.create()
