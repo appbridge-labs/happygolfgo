@@ -307,6 +307,7 @@
                             android:layout_weight="0.2"
                             android:gravity="center_horizontal"
                             android:text="@{averages.driver}"
+                            android:textColor="@color/color_dr_text_color"
                             android:textSize="14dp"
                             android:textStyle="bold" />
 
@@ -316,6 +317,7 @@
                             android:layout_weight="0.2"
                             android:gravity="center_horizontal"
                             android:text="@{averages.woodUtil}"
+                            android:textColor="@color/color_wu_text_color"
                             android:textSize="14dp"
                             android:textStyle="bold" />
 
@@ -325,6 +327,7 @@
                             android:layout_weight="0.2"
                             android:gravity="center_horizontal"
                             android:text="@{averages.iron}"
+                            android:textColor="@color/color_iron_text_color"
                             android:textSize="14dp"
                             android:textStyle="bold" />
 
@@ -334,6 +337,7 @@
                             android:layout_weight="0.2"
                             android:gravity="center_horizontal"
                             android:text="@{averages.shortGame}"
+                            android:textColor="@color/color_sw_text_color"
                             android:textSize="14dp"
                             android:textStyle="bold" />
 
@@ -343,6 +347,7 @@
                             android:layout_weight="0.2"
                             android:gravity="center_horizontal"
                             android:text="@{averages.putter}"
+                            android:textColor="@color/color_putt_text_color"
                             android:textSize="14dp"
                             android:textStyle="bold" />
 
