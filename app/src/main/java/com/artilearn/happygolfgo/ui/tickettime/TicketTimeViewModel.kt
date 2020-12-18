@@ -39,11 +39,7 @@ class TicketTimeViewModel(
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
             .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
+
             }
             .subscribe({ response ->
                 val body = response.body()
@@ -61,12 +57,8 @@ class TicketTimeViewModel(
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                        }
-                        _serverError.value = t.localizedMessage
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = t.localizedMessage
                     }
                     else -> _serverError.value = t.localizedMessage
                 }
@@ -80,11 +72,7 @@ class TicketTimeViewModel(
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
             .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
+
             }
             .subscribe({ response ->
                 val body = response.body()
@@ -102,12 +90,8 @@ class TicketTimeViewModel(
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                        }
-                        _serverError.value = t.localizedMessage
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = t.localizedMessage
                     }
                     else -> _serverError.value = t.localizedMessage
                 }

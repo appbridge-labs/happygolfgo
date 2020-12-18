@@ -11,13 +11,20 @@ abstract class BaseViewModel : ViewModel() {
     protected val compositeDisposable = CompositeDisposable()
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
-    val isLoading: LiveData<Boolean> get() = _isLoading
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
 
     protected val _serverError = SingleLiveEvent<String>()
-    val serverError: LiveData<String> get() = _serverError
+    val serverError: LiveData<String>
+        get() = _serverError
 
     protected val _networkFail = SingleLiveEvent<Unit>()
-    val networkFail: LiveData<Unit> get() = _networkFail
+    val networkFail: LiveData<Unit>
+        get() = _networkFail
+
+    protected val _appRefresh = SingleLiveEvent<Unit>()
+    val appRefresh: LiveData<Unit>
+        get() = _appRefresh
 
     protected fun showLoading() {
         _isLoading.value = true

@@ -10,6 +10,7 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityTicketTimeBinding
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
+import com.artilearn.happygolfgo.ui.splash.SplashActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.activity_ticket_time) {
@@ -43,6 +44,9 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
             networkFail.observe(this@TicketTimeActivity, Observer {
                 showNetworkFail()
             })
+            appRefresh.observe(this@TicketTimeActivity, Observer {
+                goRefresh()
+            })
         }
     }
 
@@ -69,6 +73,12 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
             }
 
         startActivity(confirmIntent)
+    }
+
+    private fun goRefresh() {
+        val intent = Intent(this, SplashActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }
