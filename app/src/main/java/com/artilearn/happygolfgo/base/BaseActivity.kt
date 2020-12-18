@@ -17,6 +17,7 @@ import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.common.ErrorActivity
 import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
+import com.artilearn.happygolfgo.ui.splash.SplashActivity
 import es.dmoral.toasty.Toasty
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
@@ -95,6 +96,12 @@ abstract class BaseActivity<B : ViewDataBinding>(
             ToastType.ERROR -> Toasty.error(this, message, Toast.LENGTH_SHORT).show()
             ToastType.WARNNING -> Toasty.warning(this, message, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    protected fun goRefresh() {
+        val intent = Intent(this, SplashActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     open fun bottomAction() {}

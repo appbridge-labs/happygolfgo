@@ -10,6 +10,7 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -55,15 +56,6 @@ class ReservationViewModel(
     init {
         bindRx()
         getTicket()
-
-        //todo recordException 없이 log만 쌓아서 안나오는 현상을 발생? 그래서 테스트 중임 확인되면 전체 로그 쌓는데 record 추가할 것?? 좀더 확인
-        //todo (2020.12.10) 에러 리포트 파이어베이스 확인 하면 전체 로그쌓는데 확인 후 수정 후 배포해야함  -> record + log로 하기
-//        try {
-//            throw RuntimeException("$TAG error both")
-//        } catch (e: Exception) {
-//            FirebaseCrashlytics.getInstance().recordException(e)
-//            FirebaseCrashlytics.getInstance().log("error both test")
-//        }
     }
 
     fun onReservationList() {
@@ -91,24 +83,13 @@ class ReservationViewModel(
             .doOnNext { hideLoading(); _swipeRefresh.call() }
     }
 
-    //todo 배포 전 주석 해제! (doOnError)
     private fun getTicket() {
         repository.requestHomeTicket()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                Log.d(TAG, "doOnError: $t")
-//                try {
-//                    throw RuntimeException(t)
-//                } catch (e: Exception) {
-//                    FirebaseCrashlytics.getInstance().log("""
-//                    throwalbe: $e
-//                    message: ${e.localizedMessage}
-//                """.trimIndent())
-//                }
-            }
+            .doOnError { t ->  }
             .subscribe({
                 val body = it.body()
                 if (it.isSuccessful) {

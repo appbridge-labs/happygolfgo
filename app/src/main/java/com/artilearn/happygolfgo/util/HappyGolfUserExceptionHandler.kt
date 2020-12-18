@@ -63,15 +63,16 @@ class HappyGolfUserExceptionHandler(
             val stringWriter = StringWriter()
             e.printStackTrace(PrintWriter(stringWriter))
 
-            try {
-                throw RuntimeException(TAG)
-            } catch (ex: Exception) {
-                FirebaseCrashlytics.getInstance().log("""
-                    activity: $lastActivity,
-                    error: $e
-                    message: $stringWriter
-                """.trimIndent())
-            }
+            //todo 배포 전 주석 해제
+//            try {
+//                throw RuntimeException(TAG)
+//            } catch (ex: Exception) {
+//                FirebaseCrashlytics.getInstance().log("""
+//                    activity: $lastActivity,
+//                    error: $e
+//                    message: $stringWriter
+//                """.trimIndent())
+//            }
 
             startErrorActivity(this, stringWriter.toString())
         } ?: defaultExceptionHandler.uncaughtException(t, e)

@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.reserveconfirm
 
 import android.accounts.NetworkErrorException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -13,6 +14,7 @@ import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepositor
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.TimeChangeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -110,7 +112,7 @@ class ReserveConfirmViewModel(
 
     fun reservationPlate() {
         if (ticketId != null && plateAvailabilityId != null) {
-            val dataModel = ReservePlateModel(ticketId!!, plateAvailabilityId!!)
+            val dataModel = ReservePlateModel(1, plateAvailabilityId!!)
             val data = hashMapOf<String, ReservePlateModel>()
             data["Data"] = dataModel
             compositeDisposable.add(
@@ -119,13 +121,7 @@ class ReserveConfirmViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
-                    .doOnError { t ->
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                        }
-                    }
+                    .doOnError { t -> }
                     .subscribe({ response ->
                         val body = response.body()
                         if (response.isSuccessful && body != null) {

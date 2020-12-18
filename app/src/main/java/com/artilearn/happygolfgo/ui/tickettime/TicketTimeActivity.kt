@@ -75,10 +75,4 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
         startActivity(confirmIntent)
     }
 
-    private fun goRefresh() {
-        val intent = Intent(this, SplashActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
 }

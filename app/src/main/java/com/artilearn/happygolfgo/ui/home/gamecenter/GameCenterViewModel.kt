@@ -75,7 +75,6 @@ class GameCenterViewModel(
             emptySubject, _isDefaultGameDataSubject, BiFunction { _: Unit, _: Unit -> Unit }
         ).replay(1).autoConnect()
 
-        //todo 배포 전 주석 해제! (doOnError)
         val gameData = defaultSubject
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { showLoading() }

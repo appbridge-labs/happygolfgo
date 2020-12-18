@@ -6,6 +6,7 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.data.tickettime.source.TicketTimeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -38,9 +39,7 @@ class TicketTimeViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-
-            }
+            .doOnError { t ->  }
             .subscribe({ response ->
                 val body = response.body()
                 if (response.isSuccessful && body != null) {

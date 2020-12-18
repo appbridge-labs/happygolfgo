@@ -15,7 +15,6 @@ import org.koin.core.logger.Level
 import java.io.IOException
 import java.net.SocketException
 
-//todo 통신?실패에 따른 분기처리는 직접 타이핑 해서 전부 수정해서 배포할 것
 class KoinApplication : Application() {
     private val TAG = javaClass.simpleName
 
