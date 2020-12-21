@@ -29,6 +29,7 @@ class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error
             versionName.text = packageInfo.versionName
             throw  RuntimeException(TAG)
         } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().recordException(e)
             FirebaseCrashlytics.getInstance().log("""
                 errorMsg: $errorText
                 e: $e

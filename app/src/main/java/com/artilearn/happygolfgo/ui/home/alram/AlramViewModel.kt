@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.data.alram.source.AlramRepository
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -36,14 +37,7 @@ class AlramViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                Log.d(TAG, "doOnError: $t")
-//                try {
-//                    throw RuntimeException(TAG)
-//                } catch (e: Exception) {
-//                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-//                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
                 val body = it.body()
                 if (it.isSuccessful && body != null) {

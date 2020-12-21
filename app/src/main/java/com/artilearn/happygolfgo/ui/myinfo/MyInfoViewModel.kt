@@ -6,6 +6,7 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
 import com.artilearn.happygolfgo.data.myinfo.source.MyInfoRepository
 import com.artilearn.happygolfgo.enummodel.UploadProfileType
+import com.artilearn.happygolfgo.util.ext.errorLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
@@ -13,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 class MyInfoViewModel(
     private val myinfoRepository: MyInfoRepository
 ) : BaseViewModel() {
-
+    private val TAG = javaClass.simpleName
     val nickname = MutableLiveData("")
 
     private val _emptyNickName: MutableLiveData<Unit> = MutableLiveData()
@@ -69,6 +70,7 @@ class MyInfoViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
                 _upload.value = UploadProfileType.SUCCESS
             }, {

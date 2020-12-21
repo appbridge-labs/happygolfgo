@@ -14,6 +14,7 @@ import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCAveragesModel
 import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCRankModel
 import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCSumaryModel
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
@@ -82,17 +83,7 @@ class GameCenterViewModel(
                 repository.getGames()
                     .subscribeOn(Schedulers.io())
             }
-//            .doOnError {
-//                Log.d(TAG, "doOnError: $it")
-//                try {
-//                    throw RuntimeException(TAG)
-//                } catch (e: Exception) {
-//                    FirebaseCrashlytics.getInstance().log("""
-//                    throwalbe: $e
-//                    message: ${e.localizedMessage}
-//                """.trimIndent())
-//                }
-//            }
+            .doOnError { t -> errorLog(TAG, t) }
             .materialize()
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { hideLoading() }
@@ -125,15 +116,15 @@ class GameCenterViewModel(
             .subscribe(_averages::setValue)
             .let(compositeDisposable::add)
 
-//        gameData.map { it.error }
-//            .filter { true }
-//            .subscribe { e ->
-//                when (e) {
-//                    is NetworkErrorException -> _networkFail.call()
-//                    is HttpException -> _serverError.value = e.localizedMessage
-//                    else -> _serverError.value = "UnKnown Error"
-//                }
-//            }.addTo(compositeDisposable)
+        gameData.map { it.error }
+            .filter { true }
+            .subscribe { e ->
+                when (e) {
+                    is NetworkErrorException -> _networkFail.call()
+                    is HttpException -> _serverError.value = e.localizedMessage
+                    else -> _serverError.value = "UnKnown Error"
+                }
+            }.addTo(compositeDisposable)
     }
 
     private fun rankDetail(): Observable<ButtonType> {

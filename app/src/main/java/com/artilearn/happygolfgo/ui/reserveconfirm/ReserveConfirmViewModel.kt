@@ -79,13 +79,7 @@ class ReserveConfirmViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    try {
-                        throw RuntimeException(TAG)
-                    } catch (e: Exception) {
-                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                    }
-                }
+                .doOnError { t -> errorLog(TAG, t) }
                 .subscribe({ response ->
                     val body = response.body()
                     if (response.isSuccessful && body != null) {
@@ -121,7 +115,7 @@ class ReserveConfirmViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
-                    .doOnError { t -> }
+                    .doOnError { t -> errorLog(TAG, t) }
                     .subscribe({ response ->
                         val body = response.body()
                         if (response.isSuccessful && body != null) {
@@ -178,13 +172,7 @@ class ReserveConfirmViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
-                    .doOnError { t ->
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                        }
-                    }
+                    .doOnError { t -> errorLog(TAG, t) }
                     .subscribe({ response ->
                         val body = response.body()
                         if (response.isSuccessful && body != null) {
@@ -220,13 +208,7 @@ class ReserveConfirmViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({ result ->
                 val body = result.body()
                 if (result.isSuccessful && body != null) {
@@ -256,13 +238,7 @@ class ReserveConfirmViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({ result ->
                 val body = result.body()
                 if (result.isSuccessful && body != null) {
@@ -293,13 +269,7 @@ class ReserveConfirmViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    try {
-                        throw RuntimeException(TAG)
-                    } catch (e: Exception) {
-                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                    }
-                }
+                .doOnError { t -> errorLog(TAG, t) }
                 .subscribe({
                     _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
@@ -327,13 +297,7 @@ class ReserveConfirmViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    try {
-                        throw RuntimeException(TAG)
-                    } catch (e: Exception) {
-                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                    }
-                }
+                .doOnError { t -> errorLog(TAG, t) }
                 .subscribe({
                     _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
@@ -369,13 +333,7 @@ class ReserveConfirmViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({ item ->
                 val plate = ReservationPlate(
                     id = item.id,

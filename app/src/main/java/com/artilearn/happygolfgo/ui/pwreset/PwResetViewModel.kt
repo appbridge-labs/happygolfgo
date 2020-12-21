@@ -6,6 +6,7 @@ import com.artilearn.happygolfgo.constants.PASSWORD_REGEX
 import com.artilearn.happygolfgo.data.pwreset.PwrestModel
 import com.artilearn.happygolfgo.data.pwreset.source.PwrestRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -102,6 +103,7 @@ class PwResetViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
                 _success.call()
             }, { t ->

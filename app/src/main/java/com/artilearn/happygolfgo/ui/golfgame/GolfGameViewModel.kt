@@ -1,11 +1,13 @@
 package com.artilearn.happygolfgo.ui.golfgame
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.golfgame.source.GolfGameRepository
 import com.artilearn.happygolfgo.ui.golfgame.mapper.GolfGameMapper
 import com.artilearn.happygolfgo.ui.golfgame.model.GolfGameModel
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
@@ -13,6 +15,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import retrofit2.HttpException
 
 class GolfGameViewModel(
     private val repository: GolfGameRepository
@@ -46,9 +49,7 @@ class GolfGameViewModel(
                 repository.getGolfGames()
                     .subscribeOn(Schedulers.io())
             }
-//            .doOnError { t ->
-//
-//            }
+            .doOnError { t -> errorLog(TAG, t) }
             .materialize()
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { hideLoading() }
@@ -99,15 +100,15 @@ class GolfGameViewModel(
             .subscribe(_golfGame::setValue)
             .addTo(compositeDisposable)
 
-//        golfGameData.map { it.error }
-//            .filter { true }
-//            .subscribe { e ->
-//                when (e) {
-//                    is NetworkErrorException -> _networkFail.call()
-//                    is HttpException -> _serverError.value = e.localizedMessage
-//                    else -> _serverError.value = "UnKnown Error"
-//                }
-//            }.addTo(compositeDisposable)
+        golfGameData.map { it.error }
+            .filter { true }
+            .subscribe { e ->
+                when (e) {
+                    is NetworkErrorException -> _networkFail.call()
+                    is HttpException -> _serverError.value = e.localizedMessage
+                    else -> _serverError.value = "UnKnown Error"
+                }
+            }.addTo(compositeDisposable)
     }
 
 }

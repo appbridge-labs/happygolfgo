@@ -10,6 +10,7 @@ import com.artilearn.happygolfgo.data.golfrank.source.GolfRankRepository
 import com.artilearn.happygolfgo.ui.golfrank.mapper.GolfRankMapper
 import com.artilearn.happygolfgo.ui.golfrank.model.GolfRankModel
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
@@ -52,9 +53,7 @@ class GolfRankViewModel(
                 repository.getRanks()
                     .subscribeOn(Schedulers.io())
             }
-            .doOnError { t ->
-
-            }
+            .doOnError { t -> errorLog(TAG, t) }
             .materialize()
             .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { hideLoading() }

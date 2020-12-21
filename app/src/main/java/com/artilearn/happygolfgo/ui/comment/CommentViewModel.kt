@@ -6,6 +6,7 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.comment.CommentModel
 import com.artilearn.happygolfgo.data.comment.source.CommentRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function4
@@ -88,13 +89,7 @@ class CommentViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
                 _success.call()
             }, { t ->

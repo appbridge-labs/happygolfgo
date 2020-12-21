@@ -47,6 +47,7 @@ class TicketDateViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
+                .doOnError { t -> errorLog(TAG, t) }
                 .subscribe({ response ->
                     val body = response.body()
                     with(response) {
@@ -81,13 +82,7 @@ class TicketDateViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    try {
-                        throw RuntimeException(TAG)
-                    } catch (e: Exception) {
-                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                    }
-                }
+                .doOnError { t -> errorLog(TAG, t) }
                 .subscribe({ response ->
                     val body = response.body()
                     with(response) {

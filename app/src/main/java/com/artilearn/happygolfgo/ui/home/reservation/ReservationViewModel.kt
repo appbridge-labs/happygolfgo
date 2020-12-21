@@ -89,7 +89,7 @@ class ReservationViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->  }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
                 val body = it.body()
                 if (it.isSuccessful) {

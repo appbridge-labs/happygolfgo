@@ -6,6 +6,7 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.reservelist.ReserveListResponse
 import com.artilearn.happygolfgo.data.reservelist.source.ReserveListRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -27,6 +28,7 @@ class ReserveListViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({ response ->
                 val body = response.body()
                 if (response.isSuccessful && body != null) {

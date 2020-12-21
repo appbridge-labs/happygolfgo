@@ -7,6 +7,7 @@ import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.source.SplashRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.artilearn.happygolfgo.util.getAndroidID
 import com.artilearn.happygolfgo.util.getWidevineID
 import com.artilearn.happygolfgo.util.notificationCheck
@@ -86,6 +87,7 @@ class SplashViewModel(
         splashRepository.getAccessToken(hashMap)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
                 _goHome.call()
             }, { t ->
@@ -112,8 +114,7 @@ class SplashViewModel(
         splashRepository.userSynchronized(hashMap)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { }
-            .doAfterTerminate { }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
                 if (it.code() == 200) {
                     selectAccessToken()

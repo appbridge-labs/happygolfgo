@@ -9,6 +9,7 @@ import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.source.LoginRepository
 import com.artilearn.happygolfgo.util.Qnintuple
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.artilearn.happygolfgo.util.getAndroidID
 import com.artilearn.happygolfgo.util.getWidevineID
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -126,13 +127,14 @@ class LoginViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                when (t.localizedMessage) {
-                    "HTTP 401 Unauthorized", "HTTP 401 " -> _loginType.value = LoginType.FAIL_PASSWORD
-                    "HTTP 404 Not Found", "HTTP 404 " -> _loginType.value = LoginType.NOT_FOUND_USER
-                    else -> _serverError.value = t.localizedMessage
-                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
+//            .doOnError { t ->
+//                when (t.localizedMessage) {
+//                    "HTTP 401 Unauthorized", "HTTP 401 " -> _loginType.value = LoginType.FAIL_PASSWORD
+//                    "HTTP 404 Not Found", "HTTP 404 " -> _loginType.value = LoginType.NOT_FOUND_USER
+//                    else -> _serverError.value = t.localizedMessage
+//                }
+//            }
             .subscribe({
                 _loginType.value = LoginType.SUCCESS
             }, { t ->

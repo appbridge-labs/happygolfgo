@@ -67,6 +67,7 @@ class HappyGolfUserExceptionHandler(
 //            try {
 //                throw RuntimeException(TAG)
 //            } catch (ex: Exception) {
+//                FirebaseCrashlytics.getInstance().recordException(e)
 //                FirebaseCrashlytics.getInstance().log("""
 //                    activity: $lastActivity,
 //                    error: $e

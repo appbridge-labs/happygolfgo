@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.lessonlog.source.LessonLogRepository
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -35,13 +36,7 @@ class LessonPostListViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({ response ->
                 val body = response.body()
                 if (response.isSuccessful && body != null) {

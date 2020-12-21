@@ -8,6 +8,7 @@ import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepository
 import com.artilearn.happygolfgo.enummodel.PwAuthNumberType
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -75,13 +76,14 @@ class PwAuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                when (t.message) {
-                    "HTTP 404 Not Found" -> _phoneValueType.value = PwAuthPhoneType.EMPTY_USER
-                    "Network Error" -> _phoneValueType.value = PwAuthPhoneType.NETWORK_FAIL
-                    else -> _phoneValueType.value = PwAuthPhoneType.FAIL
-                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
+//            .doOnError { t ->
+//                when (t.message) {
+//                    "HTTP 404 Not Found" -> _phoneValueType.value = PwAuthPhoneType.EMPTY_USER
+//                    "Network Error" -> _phoneValueType.value = PwAuthPhoneType.NETWORK_FAIL
+//                    else -> _phoneValueType.value = PwAuthPhoneType.FAIL
+//                }
+//            }
             .subscribe({
                 rxTimerStart()
                 _phoneValueType.value = PwAuthPhoneType.SUCCESS
@@ -122,13 +124,14 @@ class PwAuthViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    when(t.message) {
-                        "Network Error" -> _authValueType.value = PwAuthNumberType.NETWORK_FAIL
-                        "HTTP 406 Not Acceptable" -> _authValueType.value = PwAuthNumberType.AUTH_ERROR
-                        else -> _authValueType.value = PwAuthNumberType.FAIL
-                    }
-                }
+                .doOnError { t -> errorLog(TAG, t) }
+//                .doOnError { t ->
+//                    when(t.message) {
+//                        "Network Error" -> _authValueType.value = PwAuthNumberType.NETWORK_FAIL
+//                        "HTTP 406 Not Acceptable" -> _authValueType.value = PwAuthNumberType.AUTH_ERROR
+//                        else -> _authValueType.value = PwAuthNumberType.FAIL
+//                    }
+//                }
                 .subscribe({
                     _authValueType.value = PwAuthNumberType.SUCCESS
                 }, { t ->
