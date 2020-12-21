@@ -5,6 +5,9 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface VersionRepository {
+    val name: String
+    val nickName: String?
+    val profileImage: String?
 
     fun getAppVersion(
         platform: Int = 1,

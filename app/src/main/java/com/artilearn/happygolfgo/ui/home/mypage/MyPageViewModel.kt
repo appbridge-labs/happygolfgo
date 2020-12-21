@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.version.source.VersionRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
@@ -24,6 +25,8 @@ class MyPageViewModel(
     private val _eventType: SingleLiveEvent<MyPageStateType> = SingleLiveEvent()
     private val _message = SingleLiveEvent<String>()
     private val _appVersion = SingleLiveEvent<String>()
+    private val _text: MutableLiveData<String> = MutableLiveData()
+    private val _image: MutableLiveData<String> = MutableLiveData()
 
     val message: LiveData<String>
         get() = _message
@@ -34,11 +37,18 @@ class MyPageViewModel(
     val appVersion: LiveData<String>
         get() = _appVersion
 
+    val text: LiveData<String>
+        get() = _text
+
+    val image: LiveData<String>
+        get() = _image
+
     private var packageInfo: PackageInfo? = null
 
     init {
         bindRx()
         getAppVersion()
+        initSetBinding()
     }
 
     fun appUpdateOnNext() {
@@ -56,6 +66,13 @@ class MyPageViewModel(
             }, {
                 _message.value = "로그아웃 불가\n${it.message}"
             }).addTo(compositeDisposable)
+    }
+
+    private fun initSetBinding() {
+        val pair = Pair(repository.name, " (${repository.nickName})")
+        _text.value = pair.first + pair.second
+
+        _image.value = repository.profileImage
     }
 
     private fun getAppVersion() {

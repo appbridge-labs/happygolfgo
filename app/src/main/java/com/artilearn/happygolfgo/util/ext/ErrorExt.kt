@@ -11,11 +11,13 @@ import retrofit2.HttpException
 fun errorLog(tag: String, t: Throwable) {
     when (t) {
         is HttpException -> {
-            val errorBody = t.response()?.errorBody()
-            val gson = Gson()
-            val type = object : TypeToken<ApiError>() {}.type
-            val errorResponse: ApiError = gson.fromJson(errorBody?.charStream(), type)
-            crashlyticsLog(tag, t, errorResponse)
+            if (t.code() != 419) {
+                val errorBody = t.response()?.errorBody()
+                val gson = Gson()
+                val type = object : TypeToken<ApiError>() {}.type
+                val errorResponse: ApiError = gson.fromJson(errorBody?.charStream(), type)
+                crashlyticsLog(tag, t, errorResponse)
+            }
         }
         else -> crashlyticsLog(tag, t)
     }
