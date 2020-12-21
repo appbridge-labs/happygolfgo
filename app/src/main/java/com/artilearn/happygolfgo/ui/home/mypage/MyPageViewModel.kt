@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.home.mypage
 
+import android.accounts.NetworkErrorException
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -14,6 +15,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 
 class MyPageViewModel(
@@ -65,8 +67,15 @@ class MyPageViewModel(
             .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
                 _eventType.value = MyPageStateType.LOGOUT
-            }, {
-                _message.value = "로그아웃 불가\n${it.message}"
+            }, { e ->
+                when (e) {
+                    is NetworkErrorException -> _networkFail.call()
+                    is HttpException -> {
+                        if (e.code() == 419) _appRefresh.call()
+                        else _message.value = "로그아웃 불가"
+                    }
+                    else -> _message.value = "알 수 없는 오류 발생"
+                }
             }).addTo(compositeDisposable)
     }
 

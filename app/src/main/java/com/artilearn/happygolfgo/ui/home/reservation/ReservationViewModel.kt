@@ -105,8 +105,11 @@ class ReservationViewModel(
             }, { t ->
                 when (t) {
                     is NetworkErrorException -> _networkFail.call()
-                    is HttpException -> { _serverError.value = t.localizedMessage }
-                    else -> _serverError.value = "UnKnown Error"
+                    is HttpException -> {
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = "데이터를 불러오는데 실패했습니다"
+                    }
+                    else -> _serverError.value = "알 수 없는 오류 발생"
                 }
             }).addTo(compositeDisposable)
     }

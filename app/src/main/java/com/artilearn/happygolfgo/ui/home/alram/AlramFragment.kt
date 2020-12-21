@@ -40,6 +40,9 @@ class AlramFragment
             networkFail.observe(this@AlramFragment, Observer {
                 showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
             })
+            appRefresh.observe(this@AlramFragment, Observer {
+                goRefreshFromFragment()
+            })
         }
     }
 

@@ -51,7 +51,7 @@ class ReservationFragment
                 showFragmentToast(ToastType.WARNNING, it)
             })
             appRefresh.observe(this@ReservationFragment, Observer {
-                //refresh
+                goRefreshFromFragment()
             })
         }
     }

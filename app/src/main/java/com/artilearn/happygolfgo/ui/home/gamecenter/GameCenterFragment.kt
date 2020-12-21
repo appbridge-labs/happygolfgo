@@ -59,6 +59,9 @@ class GameCenterFragment :
             serverError.observe(this@GameCenterFragment, Observer {
                 showFragmentToast(ToastType.ERROR, it)
             })
+            appRefresh.observe(this@GameCenterFragment, Observer {
+                goRefreshFromFragment()
+            })
         }
     }
 

@@ -15,6 +15,7 @@ import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.common.ErrorActivity
 import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
+import com.artilearn.happygolfgo.ui.splash.SplashActivity
 import es.dmoral.toasty.Toasty
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
@@ -68,6 +69,11 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
                 putExtra(EXTRA_INTENT, this)
             }
         startActivity(networkFailActivity)
+    }
+
+    protected fun goRefreshFromFragment() {
+        val intent = Intent(activity, SplashActivity::class.java)
+        startActivity(intent)
     }
 
 }

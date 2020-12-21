@@ -50,6 +50,12 @@ class MyPageFragment
             appVersion.observe(this@MyPageFragment, Observer { version ->
                 binding.tvVersion.text = String.format("v $version")
             })
+            networkFail.observe(this@MyPageFragment, Observer {
+                showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+            })
+            appRefresh.observe(this@MyPageFragment, Observer {
+                goRefreshFromFragment()
+            })
         }
     }
 
