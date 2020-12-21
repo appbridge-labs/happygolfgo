@@ -22,11 +22,11 @@ fun errorLog(tag: String, t: Throwable) {
 }
 
 private fun crashlyticsLog(tag: String, t: Throwable, error: ApiError? = null) {
-    try {
-        throw IllegalStateException(t)
-    } catch (e: Exception) {
-        FirebaseCrashlytics.getInstance().recordException(e)
-        FirebaseCrashlytics.getInstance().log("t: $tag, $t, ${t.localizedMessage}")
-        FirebaseCrashlytics.getInstance().log("error: $tag, ${error?.statusCode}, ${error?.resultCode}, ${error?.message}")
-    }
+//    try {
+//        throw IllegalStateException(t)
+//    } catch (e: Exception) {
+//        FirebaseCrashlytics.getInstance().recordException(e)
+//        FirebaseCrashlytics.getInstance().log("t: $tag, $t, ${t.localizedMessage}")
+//        FirebaseCrashlytics.getInstance().log("error: $tag, ${error?.statusCode}, ${error?.resultCode}, ${error?.message}")
+//    }
 }

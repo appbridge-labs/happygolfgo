@@ -54,7 +54,7 @@ class ReserveConfirmActivity :
     private fun initViewModelObserve() {
         with(viewModel) {
             networkFail.observe(this@ReserveConfirmActivity, Observer {
-                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+                showNetworkFail()
             })
             serverError.observe(this@ReserveConfirmActivity, Observer { errorMsg ->
                 showToast(ToastType.ERROR, errorMsg)
@@ -116,7 +116,7 @@ class ReserveConfirmActivity :
                 setReservationPolicy(it)
             })
             unKnowError.observe(this@ReserveConfirmActivity, Observer {
-
+                showToast(ToastType.WARNNING, "티켓 정보를 알 수 없습니다")
             })
             reservationPlate.observe(this@ReserveConfirmActivity, Observer {
                 goReserveSuccessPlate(it)
@@ -129,6 +129,9 @@ class ReserveConfirmActivity :
             })
             reservationTimeChange.observe(this@ReserveConfirmActivity, Observer {
                 goReserveSuccessPlateTime(it)
+            })
+            appRefresh.observe(this@ReserveConfirmActivity, Observer {
+                goRefresh()
             })
         }
     }

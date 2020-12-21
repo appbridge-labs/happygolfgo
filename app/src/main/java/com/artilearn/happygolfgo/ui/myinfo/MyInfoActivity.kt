@@ -44,6 +44,9 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
             upload.observe(this@MyInfoActivity, Observer {
                 uploadType(it)
             })
+            appRefresh.observe(this@MyInfoActivity, Observer {
+                goRefresh()
+            })
         }
     }
 
@@ -72,20 +75,13 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
 
     private fun uploadType(type: UploadProfileType) {
         when (type) {
-            UploadProfileType.SUCCESS -> showToast(
-                ToastType.SUCCESS,
-                getString(R.string.myinfo_upload_success)
-            )
-            UploadProfileType.NETWORK_FAIL -> showToast(
-                ToastType.WARNNING,
-                getString(R.string.myinfo_upload_fail)
-            )
-            UploadProfileType.UNKNOW_ERROR -> showToast(
-                ToastType.ERROR,
-                getString(R.string.myinfo_upload_error)
-            )
+            UploadProfileType.SUCCESS -> {
+                showToast(ToastType.SUCCESS, getString(R.string.myinfo_upload_success))
+                finish()
+            }
+            UploadProfileType.NETWORK_FAIL -> showToast(ToastType.WARNNING, getString(R.string.myinfo_upload_fail))
+            UploadProfileType.UNKNOW_ERROR -> showToast(ToastType.ERROR, getString(R.string.myinfo_upload_error))
         }
-        finish()
     }
 
     override fun bottomAction() {

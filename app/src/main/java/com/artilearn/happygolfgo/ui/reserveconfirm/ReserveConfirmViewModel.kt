@@ -85,20 +85,16 @@ class ReserveConfirmViewModel(
                     if (response.isSuccessful && body != null) {
                         _policy.value = body.data.policy.body
                     } else {
-                        _serverError.value = response.message()
+                        _serverError.value = "데이터를 불러오는데 실패했습니다"
                     }
                 }, {  t ->
                     when (t) {
                         is NetworkErrorException -> _networkFail.value = Unit
                         is HttpException -> {
-                            try {
-                                throw RuntimeException(TAG)
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                            }
-                            _serverError.value = t.localizedMessage
+                            if (t.code() == 419) _appRefresh.call()
+                            else _serverError.value = "데이터를 불러오는데 실패했습니다"
                         }
-                        else -> _serverError.value = t.localizedMessage
+                        else -> _serverError.value = "알 수 없는 오류 발생"
                     }
                 })
         )
@@ -106,7 +102,7 @@ class ReserveConfirmViewModel(
 
     fun reservationPlate() {
         if (ticketId != null && plateAvailabilityId != null) {
-            val dataModel = ReservePlateModel(1, plateAvailabilityId!!)
+            val dataModel = ReservePlateModel(ticketId!!, plateAvailabilityId!!)
             val data = hashMapOf<String, ReservePlateModel>()
             data["Data"] = dataModel
             compositeDisposable.add(
@@ -124,7 +120,7 @@ class ReserveConfirmViewModel(
                             _buttonClickable.call()
                             val erroBody = response.errorBody()
                             if (erroBody == null) {
-                                _serverError.value = "알 수 없는 오류 발생"
+                                _serverError.value = "오류로 인한 예약실패"
                             } else {
                                 val gson = Gson()
                                 val type = object : TypeToken<ApiError>() {}.type
@@ -145,14 +141,10 @@ class ReserveConfirmViewModel(
                         when (t) {
                             is NetworkErrorException -> _networkFail.value = Unit
                             is HttpException -> {
-                                try {
-                                    throw RuntimeException(TAG)
-                                } catch (e: Exception) {
-                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                                }
-                                _serverError.value = t.localizedMessage
+                                if (t.code() == 419) _appRefresh.call()
+                                else _serverError.value = "데이터를 불러오는데 실패했습니다"
                             }
-                            else -> _serverError.value = t.localizedMessage
+                            else -> _serverError.value = "알 수 없는 오류 발생"
                         }
                     })
             )
@@ -179,21 +171,17 @@ class ReserveConfirmViewModel(
                             _reservationLesson.value = body.data.lessonReservaion
                         } else {
                             _buttonClickable.call()
-                            _serverError.value = response.message()
+                            _serverError.value = "오류로 인한 예약실패"
                         }
                     }, { t ->
                         _buttonClickable.call()
                         when (t) {
                             is NetworkErrorException -> _networkFail.value = Unit
                             is HttpException -> {
-                                try {
-                                    throw RuntimeException(TAG)
-                                } catch (e: Exception) {
-                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                                }
-                                _serverError.value = t.localizedMessage
+                                if (t.code() == 419) _appRefresh.call()
+                                else _serverError.value = "데이터를 불러오는데 실패했습니다"
                             }
-                            else -> _serverError.value = t.localizedMessage
+                            else -> _serverError.value = "알 수 없는 오류 발생"
                         }
                     })
             )
@@ -214,20 +202,16 @@ class ReserveConfirmViewModel(
                 if (result.isSuccessful && body != null) {
                     _lessonModel.value = body.data
                 } else {
-                    _serverError.value = result.message()
+                    _serverError.value = "예약 정보를 가지고 오지 못했습니다"
                 }
             }, { t ->
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                        }
-                        _serverError.value = t.localizedMessage
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = "데이터를 불러오는데 실패했습니다"
                     }
-                    else -> _serverError.value = t.localizedMessage
+                    else -> _serverError.value = "알 수 없는 오류 발생"
                 }
             }).addTo(compositeDisposable)
     }
@@ -244,20 +228,16 @@ class ReserveConfirmViewModel(
                 if (result.isSuccessful && body != null) {
                     _plateModel.value = body.data
                 } else {
-                    _serverError.value = result.message()
+                    _serverError.value = "예약 정보를 가지고 오지 못했습니다"
                 }
             }, { t ->
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                        }
-                        _serverError.value = t.localizedMessage
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = "데이터를 불러오는데 실패했습니다"
                     }
-                    else -> _serverError.value = t.localizedMessage
+                    else -> _serverError.value = "알 수 없는 오류 발생"
                 }
             }).addTo(compositeDisposable)
     }
@@ -277,14 +257,10 @@ class ReserveConfirmViewModel(
                     when (t) {
                         is NetworkErrorException -> _networkFail.value = Unit
                         is HttpException -> {
-                            try {
-                                throw RuntimeException(TAG)
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                            }
-                            _status.value = ReservationStatus.CANCEL_FAIL
+                            if (t.code() == 419) _appRefresh.call()
+                            else _serverError.value = "데이터를 불러오는데 실패했습니다"
                         }
-                        else ->  _status.value = ReservationStatus.CANCEL_FAIL
+                        else -> _serverError.value = "알 수 없는 오류 발생"
                     }
                 })
         )
@@ -305,14 +281,10 @@ class ReserveConfirmViewModel(
                     when (t) {
                         is NetworkErrorException -> _networkFail.value = Unit
                         is HttpException -> {
-                            try {
-                                throw RuntimeException(TAG)
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                            }
-                            _status.value = ReservationStatus.CANCEL_FAIL
+                            if (t.code() == 419) _appRefresh.call()
+                            else _serverError.value = "데이터를 불러오는데 실패했습니다"
                         }
-                        else -> _status.value = ReservationStatus.CANCEL_FAIL
+                        else -> _serverError.value = "알 수 없는 오류 발생"
                     }
                 })
         )
@@ -351,14 +323,10 @@ class ReserveConfirmViewModel(
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
-                        val gson = Gson()
-                        val type = object : TypeToken<ApiError>() {}.type
-                        val errorResponse: ApiError =
-                            gson.fromJson(t.response()?.errorBody()?.charStream(), type)
-
-                        _serverError.value = errorResponse.message
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = "데이터를 불러오는데 실패했습니다"
                     }
-                    else -> _serverError.value = t.localizedMessage
+                    else -> _serverError.value = "알 수 없는 오류 발생"
                 }
             }).let(compositeDisposable::add)
     }

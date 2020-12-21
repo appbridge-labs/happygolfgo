@@ -52,6 +52,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     LoginViewModel.LoginType.SUCCESS -> goHome()
                 }
             })
+            appRefresh.observe(this@LoginActivity, Observer {
+                goRefresh()
+            })
         }
     }
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityReserveListBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,7 +48,10 @@ class ReserveListActivity :
                 showNetworkFail()
             })
             serverError.observe(this@ReserveListActivity, Observer {
-                showError(it)
+                showToast(ToastType.ERROR, it)
+            })
+            appRefresh.observe(this@ReserveListActivity, Observer {
+                goRefresh()
             })
         }
     }

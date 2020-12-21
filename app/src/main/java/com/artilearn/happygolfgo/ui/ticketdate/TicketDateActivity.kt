@@ -43,6 +43,9 @@ class TicketDateActivity
             goNext.observe(this@TicketDateActivity, Observer {
                 goSelectionTime(it.first, it.second)
             })
+            appRefresh.observe(this@TicketDateActivity, Observer {
+                goRefresh()
+            })
         }
     }
 

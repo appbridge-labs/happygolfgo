@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.login
 
 import android.accounts.NetworkErrorException
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -128,26 +129,20 @@ class LoginViewModel(
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
             .doOnError { t -> errorLog(TAG, t) }
-//            .doOnError { t ->
-//                when (t.localizedMessage) {
-//                    "HTTP 401 Unauthorized", "HTTP 401 " -> _loginType.value = LoginType.FAIL_PASSWORD
-//                    "HTTP 404 Not Found", "HTTP 404 " -> _loginType.value = LoginType.NOT_FOUND_USER
-//                    else -> _serverError.value = t.localizedMessage
-//                }
-//            }
             .subscribe({
                 _loginType.value = LoginType.SUCCESS
             }, { t ->
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                        when (t.code()) {
+                            401 -> _loginType.value = LoginType.FAIL_PASSWORD
+                            404 -> _loginType.value = LoginType.NOT_FOUND_USER
+                            419 -> _appRefresh.call()
+                            else -> _serverError.value = "로그인 실패"
                         }
                     }
-                    else -> _serverError.value = t.localizedMessage
+                    else -> _serverError.value = "알 수 없는 오류 발생"
                 }
             }).addTo(compositeDisposable)
     }

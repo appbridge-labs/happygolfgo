@@ -32,7 +32,10 @@ class GolfRankActivity : BaseActivity<ActivityGolfRankBinding>(R.layout.activity
                 showToast(ToastType.ERROR, it)
             })
             networkFail.observe(this@GolfRankActivity, Observer {
-                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+                showNetworkFail()
+            })
+            appRefresh.observe(this@GolfRankActivity, Observer {
+                goRefresh()
             })
         }
     }

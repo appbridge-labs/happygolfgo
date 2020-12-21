@@ -39,11 +39,20 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
 
     private fun initViewModelObserve() {
         with(viewModel) {
+            networkFail.observe(this@PwAuthActivity, Observer {
+                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+            })
+            serverError.observe(this@PwAuthActivity, Observer {
+                showToast(ToastType.ERROR, it)
+            })
             phoneValueType.observe(this@PwAuthActivity, Observer { phoneType ->
                 phoneType(phoneType)
             })
             authValueType.observe(this@PwAuthActivity, Observer { authType ->
                 authType(authType)
+            })
+            appRefresh.observe(this@PwAuthActivity, Observer {
+                goRefresh()
             })
         }
     }

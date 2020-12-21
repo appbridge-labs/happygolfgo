@@ -50,20 +50,16 @@ class LogViewModel(
                 if (response.isSuccessful && body != null) {
                     _logDetail.value = body.data.lessonLog
                 } else {
-                    _serverError.value = response.message()
+                    _serverError.value = "서버로부터 데이터를 불러오는데 실패했습니다"
                 }
             }, { t ->
                 when (t) {
-                    is NetworkErrorException -> _networkFail.value = Unit
+                    is NetworkErrorException -> _networkFail.call()
                     is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                        }
-                        _serverError.value = t.localizedMessage
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = "데이터를 불러오는데 실패했습니다"
                     }
-                    else -> _serverError.value = t.localizedMessage
+                    else -> _serverError.value = "알 수 없는 오류 발생"
                 }
             }).addTo(compositeDisposable)
     }

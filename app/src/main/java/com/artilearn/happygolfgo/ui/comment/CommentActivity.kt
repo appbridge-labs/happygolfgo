@@ -46,16 +46,19 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
                 goMyPage()
             })
             networkFail.observe(this@CommentActivity, Observer {
-                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+                showNetworkFail()
             })
             serverError.observe(this@CommentActivity, Observer { errorMsg ->
-                showToast(ToastType.ERROR, getString(R.string.comment_upload_fail) + "\n$errorMsg")
+                showToast(ToastType.ERROR, errorMsg)
             })
             commentType.observe(this@CommentActivity, Observer {
                 when (commentType.value) {
                     CommentViewModel.CommentEmptyType.EMPTY_COMMENT -> showEmptyComment()
                     CommentViewModel.CommentEmptyType.EMPTY_RATING -> showEmptyRating()
                 }
+            })
+            appRefresh.observe(this@CommentActivity, Observer {
+                goRefresh()
             })
         }
     }

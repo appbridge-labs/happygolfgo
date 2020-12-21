@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.pwreset
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.constants.PASSWORD_REGEX
@@ -108,15 +109,12 @@ class PwResetViewModel(
                 _success.call()
             }, { t ->
                 when (t) {
+                    is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                        }
-                        _serverError.value = t.localizedMessage
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = "비밀번호를 변경하는데 실패했습니다"
                     }
-                    else -> _serverError.value = t.localizedMessage
+                    else -> _serverError.value = "알 수 없는 오류 발생"
                 }
             }).addTo(compositeDisposable)
     }

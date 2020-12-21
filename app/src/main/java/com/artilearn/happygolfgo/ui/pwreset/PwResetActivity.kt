@@ -48,6 +48,9 @@ class PwResetActivity : BaseActivity<ActivityPwResetBinding>(R.layout.activity_p
                 showToast(ToastType.SUCCESS, getString(R.string.pwreset_change_success))
                 finish()
             })
+            appRefresh.observe(this@PwResetActivity, Observer {
+                goRefresh()
+            })
         }
     }
 

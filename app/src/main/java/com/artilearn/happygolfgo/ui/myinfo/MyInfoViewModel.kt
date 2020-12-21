@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.ui.myinfo
 
+import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -10,6 +11,7 @@ import com.artilearn.happygolfgo.util.ext.errorLog
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import retrofit2.HttpException
 
 class MyInfoViewModel(
     private val myinfoRepository: MyInfoRepository
@@ -73,11 +75,14 @@ class MyInfoViewModel(
             .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
                 _upload.value = UploadProfileType.SUCCESS
-            }, {
-                when (it.message) {
-                    "Network Error" -> _upload.value = UploadProfileType.NETWORK_FAIL
+            }, { t ->
+                when (t) {
+                    is NetworkErrorException -> _upload.value = UploadProfileType.NETWORK_FAIL
+                    is HttpException -> {
+                        if (t.code() == 419) _appRefresh.call()
+                        else _upload.value = UploadProfileType.UNKNOW_ERROR
+                    }
                     else -> _upload.value = UploadProfileType.UNKNOW_ERROR
-
                 }
             }).addTo(compositeDisposable)
     }

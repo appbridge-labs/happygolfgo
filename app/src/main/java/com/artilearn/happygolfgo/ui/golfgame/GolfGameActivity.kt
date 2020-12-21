@@ -32,7 +32,10 @@ class GolfGameActivity : BaseActivity<ActivityGolfGameBinding>(R.layout.activity
                 showToast(ToastType.ERROR, it)
             })
             networkFail.observe(this@GolfGameActivity, Observer {
-                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+                showNetworkFail()
+            })
+            appRefresh.observe(this@GolfGameActivity, Observer {
+                goRefresh()
             })
         }
     }

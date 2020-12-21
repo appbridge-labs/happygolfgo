@@ -100,7 +100,7 @@ class ReservationViewModel(
                         showEmptyTicket()
                     }
                 } else {
-                    _serverError.value = it.message()
+                    _serverError.value = "서버로부터 데이터를 불러오는데 실패했습니다"
                 }
             }, { t ->
                 when (t) {
