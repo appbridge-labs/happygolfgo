@@ -6,7 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.lessonlog.source.LessonLogRepository
+<<<<<<< HEAD
 import com.artilearn.happygolfgo.util.ext.errorLog
+=======
+>>>>>>> hot-test-3
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -27,6 +30,7 @@ class LessonPostListViewModel(
         get() = _lessonLog
     
     init {
+<<<<<<< HEAD
         requestLessonPostList()
     }
 
@@ -43,9 +47,34 @@ class LessonPostListViewModel(
                     if (body.data.lessonLogs.isNotEmpty()) {
                         _lessonLog.value = body.data.lessonLogs as ArrayList<LessonLog>
                         hideEmptyLessonLog()
+=======
+        compositeDisposable.add(
+            lessonLogRepository.lessonLog()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    try {
+                        throw RuntimeException(TAG)
+                    } catch (e: Exception) {
+                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                    }
+                }
+                .subscribe({
+                    val body = it.body()
+                    if (it.isSuccessful && body != null) {
+                        if (body.data.lessonLogs.isNotEmpty()) {
+                            _lessonLog.value = body.data.lessonLogs as ArrayList<LessonLog>
+                            hideEmptyLessonLog()
+                        } else {
+                            showEmptyLessonLog()
+                        }
+>>>>>>> hot-test-3
                     } else {
                         showEmptyLessonLog()
                     }
+<<<<<<< HEAD
                 } else {
                     _serverError.value = "서버로부터 데이터를 불러오는데 실패했습니다"
                 }
@@ -55,6 +84,20 @@ class LessonPostListViewModel(
                     is HttpException -> {
                         if (t.code() == 419) _appRefresh.call()
                         else _serverError.value = "데이터를 불러오는데 실패했습니다"
+=======
+                }, { t ->
+                    when (t) {
+                        is NetworkErrorException -> _networkFail.value = Unit
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                            _serverError.value = t.localizedMessage
+                        }
+                        else -> _serverError.value = t.localizedMessage
+>>>>>>> hot-test-3
                     }
                     else -> _serverError.value = "알 수 없는 오류 발생"
                 }

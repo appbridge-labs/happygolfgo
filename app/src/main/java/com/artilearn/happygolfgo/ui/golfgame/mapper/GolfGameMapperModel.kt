@@ -1,6 +1,6 @@
 package com.artilearn.happygolfgo.ui.golfgame.mapper
 
-interface GolfGameMapperModel<T, M> {
+interface GolfGameMapperModel<in T, out M> {
     fun driverMapper(from: T): M
     fun woodMapper(from: T): M
     fun ironMapper(from: T): M

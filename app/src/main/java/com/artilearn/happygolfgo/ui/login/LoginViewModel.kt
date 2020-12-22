@@ -1,7 +1,10 @@
 package com.artilearn.happygolfgo.ui.login
 
 import android.accounts.NetworkErrorException
+<<<<<<< HEAD
 import android.content.Context
+=======
+>>>>>>> hot-test-3
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,21 +17,29 @@ import com.artilearn.happygolfgo.util.ext.errorLog
 import com.artilearn.happygolfgo.util.getAndroidID
 import com.artilearn.happygolfgo.util.getWidevineID
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+<<<<<<< HEAD
 import io.reactivex.Observable
+=======
+>>>>>>> hot-test-3
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+<<<<<<< HEAD
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 
+=======
+import retrofit2.HttpException
+>>>>>>> hot-test-3
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
     private val koinContext: Context
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
+<<<<<<< HEAD
     private val _phone = BehaviorSubject.create<String>()
     private val _password = BehaviorSubject.create<String>()
     private val _passwordForget = PublishSubject.create<ButtonClickType>()
@@ -41,6 +52,16 @@ class LoginViewModel(
 
     val forgetPassword: LiveData<Unit>
         get() = _forgetPassword
+=======
+    private val applicationContext = MyApplication.getApplicationContext()
+
+    val phone = MutableLiveData("")
+    val password = MutableLiveData("")
+    private var count = 0
+
+    private var currentPhone = ""
+    private var currentPassword = ""
+>>>>>>> hot-test-3
 
     val developerOption: LiveData<Unit>
         get() = _developerOption
@@ -119,7 +140,39 @@ class LoginViewModel(
         val hashMap = hashMapOf<String, LoginDataModel>()
         hashMap["Data"] = dataModel
 
+<<<<<<< HEAD
         requestLogin(hashMap)
+=======
+        compositeDisposable.add(
+            loginRepository.repositoryLogin(hashMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
+                .doOnError { t ->
+                    when (t.localizedMessage) {
+                        "HTTP 401 Unauthorized", "HTTP 401 " -> _failPassword.value = Unit
+                        "HTTP 404 Not Found", "HTTP 404 " -> _emptyUser.value = Unit
+                        else -> _serverError.value = t.localizedMessage
+                    }
+                }
+                .subscribe({
+                    _loginSuccess.value = Unit
+                }, { t ->
+                    when (t) {
+                        is NetworkErrorException -> _networkFail.value = Unit
+                        is HttpException -> {
+                            try {
+                                throw RuntimeException(TAG)
+                            } catch (e: Exception) {
+                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                            }
+                        }
+                        else -> _serverError.value = t.localizedMessage
+                    }
+                })
+        )
+>>>>>>> hot-test-3
     }
 
     private fun requestLogin(model: HashMap<String, LoginDataModel>) {

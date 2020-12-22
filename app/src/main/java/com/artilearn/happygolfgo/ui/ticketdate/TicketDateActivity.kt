@@ -35,6 +35,10 @@ class TicketDateActivity
     private fun initViewModelObserve() {
         with(viewModel) {
             serverError.observe(this@TicketDateActivity, Observer {
+<<<<<<< HEAD
+=======
+                //showError(it)
+>>>>>>> hot-test-3
                 showToast(ToastType.ERROR, it)
             })
             networkFail.observe(this@TicketDateActivity, Observer {

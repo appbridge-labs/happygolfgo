@@ -6,7 +6,10 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.LogDetail
 import com.artilearn.happygolfgo.data.log.source.LogRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+<<<<<<< HEAD
 import com.artilearn.happygolfgo.util.ext.errorLog
+=======
+>>>>>>> hot-test-3
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -20,6 +23,7 @@ class LogViewModel(
     private val _logDetail: SingleLiveEvent<LogDetail> = SingleLiveEvent()
     private val _videoUrl: SingleLiveEvent<String> = SingleLiveEvent()
 
+<<<<<<< HEAD
     val logDetail: LiveData<LogDetail>
         get() = _logDetail
 
@@ -29,6 +33,48 @@ class LogViewModel(
     fun requestLog(lessonId: Int?) {
         lessonId?.let { id ->
             requestLessonLogDetail(id)
+=======
+    val logDetail: LiveData<LogDetail> get() = _logDetail
+    val videoUrl: LiveData<String> get() = _videoUrl
+
+    fun requestLessonLogDetail(lessonId: Int?) {
+        lessonId?.let {
+            compositeDisposable.add(
+                logRepository.lessonLogDetail(it)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe { showLoading() }
+                    .doAfterTerminate { hideLoading() }
+                    .doOnError { t ->
+                        try {
+                            throw RuntimeException(TAG)
+                        } catch (e: Exception) {
+                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+                        }
+                    }
+                    .subscribe({ response ->
+                        val body = response.body()
+                        if (response.isSuccessful && body != null) {
+                            _logDetail.value = body.data.lessonLog
+                        } else {
+                            _serverError.value = response.errorBody().toString()
+                        }
+                    }, { t ->
+                        when (t) {
+                            is NetworkErrorException -> _networkFail.value = Unit
+                            is HttpException -> {
+                                try {
+                                    throw RuntimeException(TAG)
+                                } catch (e: Exception) {
+                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
+                                }
+                                _serverError.value = t.localizedMessage
+                            }
+                            else -> _serverError.value = t.localizedMessage
+                        }
+                    })
+            )
+>>>>>>> hot-test-3
         }
     }
 

@@ -2,16 +2,31 @@ package com.artilearn.happygolfgo.ui.reservelist.fragment
 
 import android.content.Intent
 import android.os.Bundle
+<<<<<<< HEAD
 import android.view.View
+=======
+import android.util.Log
+import android.view.View
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+>>>>>>> hot-test-3
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.PLATE_ID
 import com.artilearn.happygolfgo.constants.RESERVATION_LIST
 import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.data.ReserveList
+import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.FragmentReservePlateBinding
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
+<<<<<<< HEAD
 import org.koin.androidx.viewmodel.ext.android.viewModel
+=======
+import com.artilearn.happygolfgo.util.convertCalendar
+import com.artilearn.happygolfgo.util.convertDate
+import java.util.*
+>>>>>>> hot-test-3
 
 class ReservePlateFragment
     : BaseFragment<FragmentReservePlateBinding, ReservePlateViewModel>(R.layout.fragment_reserve_plate) {
@@ -69,11 +84,33 @@ class ReservePlateFragment
     }
 
     private fun goReservationConfirm(item: ReserveList) {
+        val ticket = Ticket(
+            id = item.ticket?.id ?: 0,
+            type = item.ticket?.type ?: 0,
+            name = item.name,
+            period = item.ticket?.period ?: 0,
+            totalCount = item.totalCount,
+            usedCount = item.ticket?.usedCount ?: 0,
+            onlyOnceToday = item.ticket?.onlyOnceToday ?: false,
+            remainingCount = item.remainingCount,
+            isUnlimited = item.ticket?.isUnlimited ?: false,
+            startDate = item.startDate,
+            endDate = item.endDate,
+            allowToBook = false
+        )
+
+        val convertTime = convertDate(ticket.startDate)
+        val calendar = convertTime?.let { convertCalendar(it) }
+        val date = "${calendar?.get(Calendar.YEAR)}-${calendar?.get(Calendar.MONTH)?.plus(1)}-${calendar?.get(Calendar.DAY_OF_MONTH)}"
+        ticket.startDate = date
+
         val confirmIntent = Intent(activity, ReserveConfirmActivity::class.java)
             .apply {
                 putExtra(PLATE_ID, item.id)
                 putExtra(RESERVATION_TYPE, cancel)
+                putExtra(TICKET, ticket)
             }
+
         startActivity(confirmIntent)
     }
 }

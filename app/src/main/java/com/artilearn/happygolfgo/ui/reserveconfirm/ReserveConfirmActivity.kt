@@ -3,6 +3,10 @@ package com.artilearn.happygolfgo.ui.reserveconfirm
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+<<<<<<< HEAD
+=======
+import androidx.activity.viewModels
+>>>>>>> hot-test-3
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
@@ -16,13 +20,20 @@ import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.reservesuccess.ReserveSuccessActivity
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeActivity
+<<<<<<< HEAD
+=======
+import com.artilearn.happygolfgo.util.MyApplication
+>>>>>>> hot-test-3
 import com.artilearn.happygolfgo.util.convertCalendar
 import com.artilearn.happygolfgo.util.convertDate
 import com.artilearn.happygolfgo.util.convertTime
 import kotlinx.android.synthetic.main.activity_reserve_confirm.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
+<<<<<<< HEAD
 import org.koin.androidx.viewmodel.ext.android.viewModel
+=======
+>>>>>>> hot-test-3
 import java.util.*
 
 class ReserveConfirmActivity :
@@ -36,8 +47,50 @@ class ReserveConfirmActivity :
     private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
     private val timeChange by lazy { intent.getIntExtra(PLATE_TIME_CHANGE, 0) }
 
+<<<<<<< HEAD
     private lateinit var secondTicket: Ticket
     private var secondPlateId: Int? = null
+=======
+    private val lessonId by lazy {
+        intent.getIntExtra(LESSON_ID, 0)
+    }
+
+    private val plateId by lazy {
+        intent.getIntExtra(PLATE_ID, 0)
+    }
+
+    private val reservationType by lazy {
+        intent.getStringExtra(RESERVATION_TYPE)
+    }
+
+    private val ticketTime by lazy {
+        intent.getParcelableExtra<TicketTime>(TICKET_TIME)
+    }
+
+    private val ticket by lazy {
+        intent.getParcelableExtra<Ticket>(TICKET)
+    }
+
+    private val timeChange by lazy {
+        intent.getIntExtra(PLATE_TIME_CHANGE, 0)
+    }
+
+    private lateinit var secondTicket: Ticket
+    private var secondPlateId: Int? = null
+
+    private val viewModel: ReserveConfirmViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return ReserveConfirmViewModel(
+                    myApplication.reserveConfirmRepository,
+                    myApplication.reservationRepository,
+                    myApplication.cancelRepository,
+                    myApplication.plateTimeChangeRepository
+                ) as T
+            }
+        }
+    }
+>>>>>>> hot-test-3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +143,15 @@ class ReserveConfirmActivity :
                 }
                 if (it.plateReservation.isCancellable) {
                     showChangeTimeLayout()
+<<<<<<< HEAD
                     initBottomView(binding.reserveConfirmBottomView.bottom_layout, getString(R.string.reserve_confirm_cancel_bottom_title), BottimViewType.CANCEL_TYPE)
+=======
+                    initBottomView(
+                        binding.reserveConfirmBottomView.bottom_layout,
+                        getString(R.string.reserve_confirm_cancel_bottom_title),
+                        BottimViewType.CANCEL_TYPE
+                    )
+>>>>>>> hot-test-3
                 }
                 setReservationTicketName(it.plateReservation.name)
                 setReservationTicketDate(it.plateReservation.startDate)
@@ -130,15 +191,26 @@ class ReserveConfirmActivity :
             reservationTimeChange.observe(this@ReserveConfirmActivity, Observer {
                 goReserveSuccessPlateTime(it)
             })
+<<<<<<< HEAD
             appRefresh.observe(this@ReserveConfirmActivity, Observer {
                 goRefresh()
             })
+=======
+>>>>>>> hot-test-3
         }
     }
 
     private fun initView() {
         hideChangeTimeLayout()
+<<<<<<< HEAD
         initToolbar(reserve_confirm_toolbar.toolbar, getString(R.string.reserve_confirm_toolbar_title), true)
+=======
+        initToolbar(
+            reserve_confirm_toolbar.toolbar,
+            getString(R.string.reserve_confirm_toolbar_title),
+            true
+        )
+>>>>>>> hot-test-3
 
         when (reservationType) {
             "ReservationPlateFromAlram" -> viewModel.getReservationPlateDetail(plateId)
@@ -194,13 +266,23 @@ class ReserveConfirmActivity :
 
     private fun showChangeTimeLayout() {
         with(binding) {
+<<<<<<< HEAD
             llTimechange.visibility = View.VISIBLE
             llTimechange.setOnClickListener { goTicketTime() }
+=======
+            timeChangeLayout.visibility = View.VISIBLE
+            timeChangeLayout.tv_text.text = "예약시간 변경"
+            timeChangeLayout.setOnClickListener { goTicketTime() }
+>>>>>>> hot-test-3
         }
     }
 
     private fun hideChangeTimeLayout() {
+<<<<<<< HEAD
         binding.llTimechange.visibility = View.GONE
+=======
+        binding.timeChangeLayout.visibility = View.GONE
+>>>>>>> hot-test-3
     }
 
     private fun goReserveSuccessPlate(plate: ReservationPlate) {
@@ -256,7 +338,10 @@ class ReserveConfirmActivity :
         startActivity(intent)
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> hot-test-3
     private fun goReserveSuccessPlateTime(plate: ReservationPlate) {
         val plateIntent = Intent(this, ReserveSuccessActivity::class.java)
             .apply {
@@ -269,7 +354,10 @@ class ReserveConfirmActivity :
 
     override fun bottomAction() {
         super.bottomAction()
+<<<<<<< HEAD
 
+=======
+>>>>>>> hot-test-3
         when (reservationType) {
             "ReservationPlateFromAlram", "cancel_plate" -> viewModel.reservationPlateCancel(plateId)
             "ReservationLessonFromAlram", "cancel_lesson" -> viewModel.reservationLessonCancel(lessonId)

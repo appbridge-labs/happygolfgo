@@ -30,7 +30,6 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiInterface {
-
     @POST("auth/user/doSignin")
     fun login(
         @Body data: HashMap<String, LoginDataModel>

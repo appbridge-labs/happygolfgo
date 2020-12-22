@@ -24,14 +24,13 @@ val apiModule = module {
         }
     }
 
-    single { OkHttpClient.Builder()
-        .run {
-            addInterceptor(get<Interceptor>())
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build()
-        }
+    single {
+        OkHttpClient.Builder()
+            .addInterceptor(get<Interceptor>())
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .build()
     }
 
     single<GsonConverterFactory> { GsonConverterFactory.create() }

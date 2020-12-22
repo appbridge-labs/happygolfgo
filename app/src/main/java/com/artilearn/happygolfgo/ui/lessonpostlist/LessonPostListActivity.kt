@@ -37,10 +37,15 @@ class LessonPostListActivity
                 showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
             })
             serverError.observe(this@LessonPostListActivity, Observer {
+<<<<<<< HEAD
                 showToast(ToastType.ERROR, it)
             })
             appRefresh.observe(this@LessonPostListActivity, Observer {
                 goRefresh()
+=======
+                //showError(it)
+                showToast(ToastType.ERROR, it)
+>>>>>>> hot-test-3
             })
         }
     }

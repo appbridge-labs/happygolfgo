@@ -1,13 +1,22 @@
 package com.artilearn.happygolfgo.ui.reservelist
 
 import android.os.Bundle
+<<<<<<< HEAD
 import androidx.core.content.ContextCompat
+=======
+import android.util.Log
+import androidx.activity.viewModels
+>>>>>>> hot-test-3
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityReserveListBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
+<<<<<<< HEAD
 import com.google.android.material.tabs.TabLayout
+=======
+import com.artilearn.happygolfgo.util.MyApplication
+>>>>>>> hot-test-3
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -48,10 +57,15 @@ class ReserveListActivity :
                 showNetworkFail()
             })
             serverError.observe(this@ReserveListActivity, Observer {
+<<<<<<< HEAD
                 showToast(ToastType.ERROR, it)
             })
             appRefresh.observe(this@ReserveListActivity, Observer {
                 goRefresh()
+=======
+                //showError(it)
+                showToast(ToastType.ERROR, it)
+>>>>>>> hot-test-3
             })
         }
     }

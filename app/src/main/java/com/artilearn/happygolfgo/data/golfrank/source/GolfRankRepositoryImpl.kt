@@ -10,7 +10,7 @@ class GolfRankRepositoryImpl(
     private val remote: GolfRankRemoteDataSource,
     private val network: NetworkManager
 ) : GolfRankRepository {
-    private val TAG = javaClass.simpleName
+
     override fun getRanks(): Single<GolfRankResponse.Ranks> {
         return if (network.networkState()) {
             remote.getRanks()

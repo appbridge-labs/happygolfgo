@@ -8,7 +8,7 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.databinding.ItemGamecenterRankBinding
 import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCRankModel
 
-class GameCenterAdapter() : RecyclerView.Adapter<GameCenterAdapter.GameCenterViewHolder>() {
+class GameCenterAdapter : RecyclerView.Adapter<GameCenterAdapter.GameCenterViewHolder>() {
 
     private val items: ArrayList<GCRankModel> = arrayListOf()
     lateinit var binding: ItemGamecenterRankBinding

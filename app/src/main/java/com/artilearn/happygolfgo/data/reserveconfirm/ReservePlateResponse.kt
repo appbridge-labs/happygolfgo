@@ -15,7 +15,11 @@ data class ReservePlateResponse(
 
     @SerializedName("Data")
     @Expose
-    val data: ReservePlateInfo
+    val data: ReservePlateInfo,
+
+    @SerializedName("resultCode")
+    @Expose
+    val resultCode: Int
 )
 
 data class ReservePlateInfo(

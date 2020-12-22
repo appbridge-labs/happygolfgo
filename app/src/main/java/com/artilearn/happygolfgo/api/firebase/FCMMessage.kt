@@ -33,7 +33,6 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
-
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         sendNotification(remoteMessage.data)
     }

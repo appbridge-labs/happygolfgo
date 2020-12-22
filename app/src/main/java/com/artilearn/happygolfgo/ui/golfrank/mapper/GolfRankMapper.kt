@@ -1,11 +1,9 @@
 package com.artilearn.happygolfgo.ui.golfrank.mapper
 
-import android.util.Log
 import com.artilearn.happygolfgo.data.golfrank.GolfRankResponse
 import com.artilearn.happygolfgo.ui.golfrank.model.GolfRankModel
 
 object GolfRankMapper : GolfRankMapperModel<GolfRankResponse.Ranks, List<GolfRankModel>> {
-    private val TAG = "GolfRank"
     override fun localMapper(from: GolfRankResponse.Ranks): List<GolfRankModel> {
         return from.local.map { local ->
             GolfRankModel(

@@ -2,6 +2,11 @@ package com.artilearn.happygolfgo.ui.tickettime
 
 import android.content.Intent
 import android.os.Bundle
+<<<<<<< HEAD
+=======
+import android.util.Log
+import androidx.activity.viewModels
+>>>>>>> hot-test-3
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
@@ -24,6 +29,22 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
     private val date by lazy { intent.getStringExtra(SELECTION_DATE) }
     private val timeChange by lazy { intent.getIntExtra(PLATE_TIME_CHANGE, 0) }
 
+<<<<<<< HEAD
+=======
+    private val timeChange by lazy {
+        intent.getIntExtra(PLATE_TIME_CHANGE, 0)
+    }
+
+    private val viewModel: TicketTimeViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return TicketTimeViewModel(
+                    myApplication.ticketTimeRepository
+                ) as T
+            }
+        }
+    }
+>>>>>>> hot-test-3
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,6 +61,10 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
     private fun initViewModelObserve() {
         with(viewModel) {
             serverError.observe(this@TicketTimeActivity, Observer {
+<<<<<<< HEAD
+=======
+                //showError(it)
+>>>>>>> hot-test-3
                 showToast(ToastType.ERROR, it)
             })
             networkFail.observe(this@TicketTimeActivity, Observer {

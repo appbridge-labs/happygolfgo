@@ -19,13 +19,13 @@ class ReserveConfirmRepositoryImpl(
     private val timeChangeRemoteSource: TimeChangeRemoteSource,
     private val networkManager: NetworkManager
 ) : ReserveConfirmRepository, ReservationRepository, CancelRepository, TimeChangeRepository {
-    
+
     override fun requestPolicy(): Single<Response<PolicyResponse>> {
         return if (networkManager.networkState()) {
             reserveConfirmRemoteDataSource.remoteRequestPolicy()
                 .flatMap {
                     if (it.isSuccessful) {
-                      Single.just(it)
+                        Single.just(it)
                     } else {
                         Single.error(HttpException(it))
                     }
