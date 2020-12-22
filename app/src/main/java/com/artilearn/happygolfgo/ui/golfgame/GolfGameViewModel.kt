@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.golfgame
 
 import android.accounts.NetworkErrorException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.golfgame.source.GolfGameRepository
