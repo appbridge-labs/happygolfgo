@@ -25,10 +25,6 @@ class ReserveSuccessActivity :
     private val successType by lazy { intent.getStringExtra(RESERVATION_TYPE) }
     private val timeChnage by lazy { intent.getIntExtra(PLATE_TIME_CHANGE, 0) }
 
-    private val timeChnage by lazy {
-        intent.getIntExtra(PLATE_TIME_CHANGE, 0)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

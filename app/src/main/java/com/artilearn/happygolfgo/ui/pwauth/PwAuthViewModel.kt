@@ -8,31 +8,22 @@ import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
 import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepository
 import com.artilearn.happygolfgo.enummodel.PwAuthNumberType
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
-<<<<<<< HEAD
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
 import io.reactivex.Observable
-=======
-import com.google.firebase.crashlytics.FirebaseCrashlytics
->>>>>>> hot-test-3
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
-<<<<<<< HEAD
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
-=======
-import retrofit2.HttpException
->>>>>>> hot-test-3
 
 class PwAuthViewModel(
     private val pwAuthRepository: PwAuthRepository
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
-<<<<<<< HEAD
     private var disposable: Disposable? = null
     private val _phoneNumber = BehaviorSubject.createDefault("")
     private val _authNumber = BehaviorSubject.createDefault("")
@@ -44,11 +35,6 @@ class PwAuthViewModel(
 
     private val _phoneValueType = SingleLiveEvent<PwAuthPhoneType>()
     private val _authValueType = SingleLiveEvent<PwAuthNumberType>()
-=======
-    private val _phoneNumber: MutableLiveData<PwAuthPhoneType> = MutableLiveData()
-    private val _authNumber: MutableLiveData<PwAuthNumberType> = MutableLiveData()
-    private val _success: MutableLiveData<Boolean> = MutableLiveData()
->>>>>>> hot-test-3
 
     val phoneValueType: LiveData<PwAuthPhoneType>
         get() = _phoneValueType
@@ -85,7 +71,6 @@ class PwAuthViewModel(
         val hashMap = hashMapOf<String, GetAuthModel>()
         hashMap["Data"] = dataModel
 
-<<<<<<< HEAD
         pwAuthRepository.getAuthNumber(hashMap)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -109,36 +94,7 @@ class PwAuthViewModel(
                                 "Network Error" -> _phoneValueType.value = PwAuthPhoneType.NETWORK_FAIL
                                 else -> _phoneValueType.value = PwAuthPhoneType.FAIL
                             }
-=======
-        compositeDisposable.add(
-            pwAuthRepository.getAuthNumber(hashMap)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showLoading() }
-                .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    when (t.message) {
-                        "HTTP 404 Not Found" -> _phoneNumber.value = PwAuthPhoneType.EMPTY_USER
-                        "Network Error" -> _phoneNumber.value = PwAuthPhoneType.NETWORK_FAIL
-                        else -> _phoneNumber.value = PwAuthPhoneType.FAIL
-                    }
-                }
-                .subscribe({
-                    _phoneNumber.value = PwAuthPhoneType.SUCCESS
-                    successPhone = currentPhone
-                    status = true
-                }, { t ->
-                    when (t) {
-                        is HttpException -> {
-                            try {
-                                throw RuntimeException(TAG)
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                            }
-                            _serverError.value = t.localizedMessage
->>>>>>> hot-test-3
                         }
-                        else -> _serverError.value = t.localizedMessage
                     }
                     else -> _serverError.value = "알 수 없는 오류 발생"
                 }
@@ -160,7 +116,6 @@ class PwAuthViewModel(
             val hashMap = hashMapOf<String, ConfirmAuthModel>()
             hashMap["Data"] = dataModel
 
-<<<<<<< HEAD
             pwAuthRepository.confirmAuthNumber(hashMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -181,35 +136,7 @@ class PwAuthViewModel(
                                     "HTTP 406 Not Acceptable" -> _authValueType.value = PwAuthNumberType.AUTH_ERROR
                                     else -> _authValueType.value = PwAuthNumberType.FAIL
                                 }
-=======
-            compositeDisposable.add(
-                pwAuthRepository.confirmAuthNumber(hashMap)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe { showLoading() }
-                    .doAfterTerminate { hideLoading() }
-                    .doOnError { t ->
-                        when(t.message) {
-                            "Network Error" -> _authNumber.value = PwAuthNumberType.NETWORK_FAIL
-                            "HTTP 406 Not Acceptable" -> _authNumber.value = PwAuthNumberType.AUTH_ERROR
-                            else -> _authNumber.value = PwAuthNumberType.FAIL
-                        }
-                    }
-                    .subscribe({
-                        _authNumber.value = PwAuthNumberType.SUCCESS
-                        _success.value = true
-                    }, { t ->
-                        when (t) {
-                            is HttpException -> {
-                                try {
-                                    throw RuntimeException(TAG)
-                                } catch (e: Exception) {
-                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                                }
-                                _serverError.value = t.localizedMessage
->>>>>>> hot-test-3
                             }
-                            else -> _serverError.value = t.localizedMessage
                         }
                         else -> _serverError.value = "알 수 없는 오류 발생"
                     }
