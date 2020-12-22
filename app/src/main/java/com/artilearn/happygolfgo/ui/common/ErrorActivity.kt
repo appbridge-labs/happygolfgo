@@ -21,16 +21,24 @@ class ErrorActivity : BaseActivity<ActivityErrorBinding>(R.layout.activity_error
         super.onCreate(savedInstanceState)
         versionName = findViewById(R.id.tv_version)
 
-        try {
-            val packageInfo = this.packageManager.getPackageInfo(this.packageName, 0)
-            versionName.text = packageInfo.versionName
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
-
         showEvent()
         initClickListener()
 
+        try {
+            val packageInfo = this.packageManager.getPackageInfo(this.packageName, 0)
+            versionName.text = packageInfo.versionName
+            throw  RuntimeException(TAG)
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().recordException(e)
+            FirebaseCrashlytics.getInstance().log("""
+                errorMsg: $errorText
+                e: $e
+                intent: $lastActivityIntent
+            """.trimIndent()
+            )
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
     }
 
     private fun showEvent() {
