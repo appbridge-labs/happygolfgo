@@ -12,7 +12,6 @@
             type="com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmViewModel" />
     </data>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,12 +30,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-<<<<<<< HEAD
             app:layout_constraintTop_toBottomOf="@id/reserve_confirm_toolbar"
             app:layout_constraintVertical_bias="1.0">
-=======
-            app:layout_constraintTop_toBottomOf="@id/reserve_confirm_toolbar">
->>>>>>> hot-test-3
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,11 +41,7 @@
                 <LinearLayout
                     android:id="@+id/ticketname_layout"
                     android:layout_width="match_parent"
-<<<<<<< HEAD
                     android:layout_height="wrap_content"
-=======
-                    android:layout_height="83dp"
->>>>>>> hot-test-3
                     android:background="@drawable/bg_unserline"
                     android:orientation="vertical">
 
@@ -72,11 +63,7 @@
                         android:layout_marginBottom="16dp"
                         android:textColor="@color/color_black"
                         android:textSize="24dp"
-<<<<<<< HEAD
                         tools:text="티켓명" />
-=======
-                        tools:text="티켓명~" />
->>>>>>> hot-test-3
 
                     <View
                         android:layout_width="match_parent"
@@ -89,11 +76,7 @@
                 <LinearLayout
                     android:id="@+id/ticketdate_layout"
                     android:layout_width="match_parent"
-<<<<<<< HEAD
                     android:layout_height="wrap_content"
-=======
-                    android:layout_height="83dp"
->>>>>>> hot-test-3
                     android:background="@drawable/bg_unserline"
                     android:orientation="vertical">
 
@@ -122,11 +105,7 @@
                 <LinearLayout
                     android:id="@+id/tickettime_layout"
                     android:layout_width="match_parent"
-<<<<<<< HEAD
                     android:layout_height="wrap_content"
-=======
-                    android:layout_height="83dp"
->>>>>>> hot-test-3
                     android:background="@drawable/bg_unserline"
                     android:orientation="vertical">
 
@@ -152,7 +131,6 @@
 
                 </LinearLayout>
 
-<<<<<<< HEAD
                 <LinearLayout
                     android:id="@+id/ll_timechange"
                     android:layout_width="match_parent"
@@ -196,21 +174,6 @@
                     android:background="@drawable/bg_unserline"
                     android:orientation="vertical"
                     android:paddingBottom="20dp">
-=======
-                <include
-                    android:id="@+id/time_change_layout"
-                    layout="@layout/common_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_unserline"
-                    android:orientation="vertical">
->>>>>>> hot-test-3
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -257,5 +220,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

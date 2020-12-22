@@ -76,15 +76,6 @@ class HappyGolfUserExceptionHandler(
 //            }
 
             startErrorActivity(this, stringWriter.toString())
-            try {
-                throw RuntimeException(TAG)
-            } catch (ex: Exception) {
-                FirebaseCrashlytics.getInstance().log("""
-                    activity: $lastActivity,
-                    error: $e
-                    message: $stringWriter
-                """.trimIndent())
-            }
         } ?: defaultExceptionHandler.uncaughtException(t, e)
 
         Process.killProcess(Process.myPid())
