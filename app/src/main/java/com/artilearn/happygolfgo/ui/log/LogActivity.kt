@@ -68,10 +68,6 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
                 showVideoView()
             })
             serverError.observe(this@LogActivity, Observer { errorMsg ->
-<<<<<<< HEAD
-=======
-                //showError(errorMsg)
->>>>>>> hot-test-3
                 showToast(ToastType.ERROR, errorMsg)
             })
             networkFail.observe(this@LogActivity, Observer {
