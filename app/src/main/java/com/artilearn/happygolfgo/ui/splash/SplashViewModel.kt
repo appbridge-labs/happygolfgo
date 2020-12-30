@@ -119,23 +119,25 @@ class SplashViewModel(
                 if (it.code() == 200) {
                     selectAccessToken()
                 } else {
-                    deleteUser()
+                    //deleteUser()
+                    splashRepository.deleteUser()
+                    _goLogin.call()
                 }
             }, {
                 selectAccessToken()
             }).addTo(compositeDisposable)
     }
 
-    private fun deleteUser() {
-        splashRepository.deleteUser()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                _needUpdate.value = "최신 업데이트와 보안상의 이유로 다시 한번 로그인 부탁드립니다"
-            }, {
-                _goLogin.call()
-            }).addTo(compositeDisposable)
-    }
+//    private fun deleteUser() {
+//        splashRepository.deleteUser()
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({
+//                _needUpdate.value = "최신 업데이트와 보안상의 이유로 다시 한번 로그인 부탁드립니다"
+//            }, {
+//                _goLogin.call()
+//            }).addTo(compositeDisposable)
+//    }
 
     private fun getFcmToken() {
         splashRepository.getFcmToken()

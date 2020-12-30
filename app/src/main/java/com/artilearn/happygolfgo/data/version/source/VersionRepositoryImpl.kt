@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.data.version.source
 
 import android.accounts.NetworkErrorException
+import com.artilearn.happygolfgo.data.version.LogoutModel
 import com.artilearn.happygolfgo.data.version.VersionResponse
 import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSource
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSource
@@ -40,9 +41,11 @@ class VersionRepositoryImpl(
        }
     }
 
-    override fun userLogout(): Completable {
+    override fun userLogout(
+        data: HashMap<String, LogoutModel>
+    ): Completable {
         return if (networkManager.networkState()) {
-            versionRemoteDataSource.userLogout()
+            versionRemoteDataSource.userLogout(data)
                 .doOnComplete { preferenceManager.userLogout() }
         } else {
             Completable.error(NetworkErrorException("Network Error"))

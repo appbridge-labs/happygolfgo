@@ -7,9 +7,11 @@ import android.content.pm.PackageManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
+import com.artilearn.happygolfgo.data.version.LogoutModel
 import com.artilearn.happygolfgo.data.version.source.VersionRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
+import com.artilearn.happygolfgo.util.getWidevineID
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
@@ -59,7 +61,11 @@ class MyPageViewModel(
     }
 
     fun logout() {
-        repository.userLogout()
+        val logoutModel = LogoutModel(identifier = getWidevineID())
+        val data = hashMapOf<String, LogoutModel>()
+        data["Data"] = logoutModel
+
+        repository.userLogout(data)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }

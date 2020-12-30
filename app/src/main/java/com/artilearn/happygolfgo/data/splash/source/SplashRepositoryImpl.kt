@@ -68,14 +68,14 @@ class SplashRepositoryImpl(
         }
     }
 
-    override fun deleteUser(): Completable {
-        return if (networkManager.networkState()) {
-            splashRemoteDataSource.deleteUser()
-                .doOnComplete { preferenceManager.userLogout() }
-        } else {
-            Completable.error(NetworkErrorException("Network Error"))
-        }
-    }
+//    override fun deleteUser(): Completable {
+//        return if (networkManager.networkState()) {
+//            splashRemoteDataSource.deleteUser()
+//                .doOnComplete { preferenceManager.userLogout() }
+//        } else {
+//            Completable.error(NetworkErrorException("Network Error"))
+//        }
+//    }
 
     override fun getFcmToken(): Single<String?> {
         return splashRemoteDataSource.getFcmToken()
@@ -84,6 +84,10 @@ class SplashRepositoryImpl(
                     saveFcmToken(it)
                 }
             }
+    }
+
+    override fun deleteUser() {
+        return splashLocalDataSource.deleteUser()
     }
 
     private fun saveFcmToken(token: String?) {

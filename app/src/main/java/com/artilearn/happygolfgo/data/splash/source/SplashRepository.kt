@@ -23,7 +23,9 @@ interface SplashRepository {
         data: HashMap<String, SynchronizedDataModel>
     ): Single<Response<SynchronizedResponse>>
 
-    fun deleteUser(): Completable
+    //fun deleteUser(): Completable
 
     fun getFcmToken(): Single<String?>
+
+    fun deleteUser()
 }

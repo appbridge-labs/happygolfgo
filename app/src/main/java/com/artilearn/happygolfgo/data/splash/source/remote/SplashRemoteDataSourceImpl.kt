@@ -27,9 +27,9 @@ class SplashRemoteDataSourceImpl(
         return apiInterface.userSynchronized(data)
     }
 
-    override fun deleteUser(): Completable {
-        return apiInterface.userLogout()
-    }
+//    override fun deleteUser(): Completable {
+//        return apiInterface.userLogout()
+//    }
 
     override fun getFcmToken(): Single<String?> {
         return Single.create { emitter ->

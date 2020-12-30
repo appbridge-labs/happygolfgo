@@ -23,6 +23,7 @@ import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
 import com.artilearn.happygolfgo.data.ticketdate.TicketDateResponse
 import com.artilearn.happygolfgo.data.tickettime.TicketTimeResponse
+import com.artilearn.happygolfgo.data.version.LogoutModel
 import com.artilearn.happygolfgo.data.version.VersionResponse
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -148,8 +149,10 @@ interface ApiInterface {
         @Path("plateReservationID") plateId: Int
     ): Single<Response<ReservationPlateDetail>>
 
-    @PUT("mypage/signOut")
-    fun userLogout(): Completable
+    @PUT("auth/user/doSignout")
+    fun userLogout(
+        @Body data: HashMap<String, LogoutModel>
+    ): Completable
 
     @POST("reservation/user/plateReservation/changeTime")
     fun plateTimeChange(
