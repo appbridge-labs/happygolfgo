@@ -64,7 +64,7 @@ class HomeViewModel : BaseViewModel() {
     fun bottomNavigation(name: String) {
         when (name) {
             HomeActivity.RESERVATION -> bottomNavigation.onNext(BottomNavigationEvent.RESERVATION)
-            HomeActivity.GAME_CENTER -> bottomNavigation.onNext(BottomNavigationEvent.GAME_CENTER)
+            //HomeActivity.GAME_CENTER -> bottomNavigation.onNext(BottomNavigationEvent.GAME_CENTER)
             HomeActivity.ALRAM -> bottomNavigation.onNext(BottomNavigationEvent.ALRAM)
             HomeActivity.MY_PAGE -> bottomNavigation.onNext(BottomNavigationEvent.MY_PAGE)
         }

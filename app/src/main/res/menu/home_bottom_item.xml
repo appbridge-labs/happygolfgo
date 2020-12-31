@@ -6,11 +6,11 @@
         android:icon="@drawable/ic_home_reservation"
         app:showAsAction="ifRoom"
         android:title="예약" />
-    <item
-        android:id="@+id/gamecenter"
-        android:icon="@drawable/ic_home_gamecenter"
-        app:showAsAction="ifRoom"
-        android:title="게임센터" />
+<!--    <item-->
+<!--        android:id="@+id/gamecenter"-->
+<!--        android:icon="@drawable/ic_home_gamecenter"-->
+<!--        app:showAsAction="ifRoom"-->
+<!--        android:title="게임센터" />-->
     <item
         android:id="@+id/alram"
         android:icon="@drawable/ic_home_alram"

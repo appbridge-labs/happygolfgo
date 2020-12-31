@@ -9,6 +9,7 @@ import android.util.Log
 import com.artilearn.happygolfgo.constants.EXTRA_ERROR_TEXT
 import com.artilearn.happygolfgo.constants.EXTRA_INTENT
 import com.artilearn.happygolfgo.ui.common.ErrorActivity
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import java.io.PrintWriter
 import java.io.StringWriter
@@ -63,17 +64,7 @@ class HappyGolfUserExceptionHandler(
             val stringWriter = StringWriter()
             e.printStackTrace(PrintWriter(stringWriter))
 
-            //todo 배포 전 주석 해제
-//            try {
-//                throw RuntimeException(TAG)
-//            } catch (ex: Exception) {
-//                FirebaseCrashlytics.getInstance().recordException(e)
-//                FirebaseCrashlytics.getInstance().log("""
-//                    activity: $lastActivity,
-//                    error: $e
-//                    message: $stringWriter
-//                """.trimIndent())
-//            }
+            errorLog(TAG, e)
 
             startErrorActivity(this, stringWriter.toString())
         } ?: defaultExceptionHandler.uncaughtException(t, e)
