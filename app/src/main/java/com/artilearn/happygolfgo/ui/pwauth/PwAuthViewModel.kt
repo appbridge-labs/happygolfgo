@@ -66,7 +66,22 @@ class PwAuthViewModel(
         _confirmButton.onNext(Unit)
     }
 
-    private fun requestAuthNumber(phone: String) {
+    private fun loginAndNumberCheck(phone: String) {
+        when {
+            pwAuthRepository.autoLogin -> {
+                if (pwAuthRepository.phoneNumber == phone) {
+                    authNumber(phone)    
+                } else {
+                    _serverError.value = "로그인한 핸드폰 번호와 일치하지 않습니다"
+                }
+            }
+            else -> {
+                authNumber(phone)
+            }
+        }
+    }
+
+    private fun authNumber(phone: String) {
         val dataModel = GetAuthModel(phone)
         val hashMap = hashMapOf<String, GetAuthModel>()
         hashMap["Data"] = dataModel
@@ -189,7 +204,7 @@ class PwAuthViewModel(
                         with(_phoneNumber.value) {
                             when {
                                 isNullOrEmpty() -> _phoneValueType.value = PwAuthPhoneType.EMPTY
-                                this?.length == 11 -> requestAuthNumber(this)
+                                this?.length == 11 -> loginAndNumberCheck(this)
                                 else -> _phoneValueType.value = PwAuthPhoneType.LEGNTH_FAIL
                             }
                         }

@@ -46,4 +46,10 @@ class LoginLocalDataSourceImpl(
         set(value) {
             preferenceManager.fcmToken = value
         }
+
+    override var phoneNumber: String
+        get() = preferenceManager.phoneNumber
+        set(value) {
+            preferenceManager.phoneNumber = value
+        }
 }

@@ -65,6 +65,7 @@ class PreferenceManager(context: Context) {
             remove(CLIENT_SECRETKEY).apply()
             remove(AUTO_LOGIN).apply()
             remove(ACCESS_TOKEN).apply()
+            remove(PHONE_NUMBER).apply()
         }
     }
 

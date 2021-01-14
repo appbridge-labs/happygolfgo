@@ -55,7 +55,7 @@ val repositoryModule = module {
 
     single<MyInfoRepository> { MyInfoRepositoryImpl(get(), get(), get()) }
 
-    single<PwAuthRepository> { PwAuthRepositoryImpl(get(), get()) }
+    single<PwAuthRepository> { PwAuthRepositoryImpl(get(), get(), get()) }
 
     single<PwrestRepository> { PwrestRepositoryImpl(get(), get(), get()) }
 
