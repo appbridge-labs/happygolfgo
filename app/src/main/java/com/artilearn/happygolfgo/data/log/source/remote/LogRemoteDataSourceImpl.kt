@@ -13,8 +13,5 @@ class LogRemoteDataSourceImpl(
         lessonId: Int
     ): Single<Response<LogResponse>> {
         return apiInterface.lessonLogDetail(lessonId)
-            .map {
-                it
-            }
     }
 }

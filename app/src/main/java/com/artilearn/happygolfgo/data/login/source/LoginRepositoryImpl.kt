@@ -58,6 +58,7 @@ class LoginRepositoryImpl(
             profileImageURL = user.profileImageURL
             autoLogin = true
             nickname = user.nickname
+            phoneNumber = user.phoneNumber
         }
     }
 

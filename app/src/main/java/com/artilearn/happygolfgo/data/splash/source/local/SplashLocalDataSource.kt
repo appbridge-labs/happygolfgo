@@ -12,4 +12,6 @@ interface SplashLocalDataSource {
     var dateOfBirth: String
     var fcmToken: String?
 
+    fun deleteUser()
+
 }

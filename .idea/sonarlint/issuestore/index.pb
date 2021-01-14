@@ -236,6 +236,8 @@ s
 Capp/src/main/java/com/artilearn/happygolfgo/data/login/LoginData.kt,3/3/33e2335d28cf049176a6ea69f7f59b1441de7d3c
 h
 8app/src/main/java/com/artilearn/happygolfgo/data/User.kt,7/c/7ce4690313fb93398c8595340b21ef2d8a0248a5
+<<<<<<< HEAD
+=======
 ã
 [app/src/main/java/com/artilearn/happygolfgo/data/login/source/local/LoginLocalDataSource.kt,a/1/a19d449a9b3f37f3ad2085d3223abac8ad5dac7d
 Ä
@@ -252,10 +254,29 @@ Napp/src/main/java/com/artilearn/happygolfgo/data/splash/SplashTokenResponse.kt
 Lapp/src/main/java/com/artilearn/happygolfgo/data/splash/SplashTokenDetail.kt,d/a/da75fd9ac7ba31639b1f98279e25b3a5ebc140b7
 à
 Xapp/src/main/java/com/artilearn/happygolfgo/data/version/source/VersionRepositoryImpl.kt,6/e/6e14c2fa53aec96e3826c425f0a8201305f79cdc
+>>>>>>> HG-Dev-1.11.4
 ë
 aapp/src/main/java/com/artilearn/happygolfgo/data/version/source/remote/VersionRemoteDataSource.kt,d/d/dde2d40d32d5dc9c6b616cf13e7f850c5059ae7a
 ï
 eapp/src/main/java/com/artilearn/happygolfgo/data/version/source/remote/VersionRemoteDataSourceImpl.kt,d/0/d095dfb308303e2b9a7ddfae72a549f82238ec56
+<<<<<<< HEAD
+Ñ
+Tapp/src/main/java/com/artilearn/happygolfgo/data/version/source/VersionRepository.kt,4/c/4cfea0f5c9a2e664ec0c844cd7c0553337ca4f98
+à
+Xapp/src/main/java/com/artilearn/happygolfgo/data/version/source/VersionRepositoryImpl.kt,6/e/6e14c2fa53aec96e3826c425f0a8201305f79cdc
+z
+Japp/src/main/java/com/artilearn/happygolfgo/ui/home/alram/AlramFragment.kt,d/5/d5575f312b49746a4ecf7c4c26ab81b101556406
+|
+Lapp/src/main/java/com/artilearn/happygolfgo/ui/home/mypage/MyPageFragment.kt,7/f/7f636be0a36983d142e7afd33b0167dd0110b69f
+Ü
+Vapp/src/main/java/com/artilearn/happygolfgo/ui/home/reservation/ReservationFragment.kt,7/6/76eb3dbc30958cc9c5434822c4b592114a002fc9
+Ñ
+Tapp/src/main/java/com/artilearn/happygolfgo/ui/home/gamecenter/GameCenterFragment.kt,3/1/31016ef3d1ae41166827ce35943dedd783ccb63b
+~
+Napp/src/main/java/com/artilearn/happygolfgo/data/home/source/HomeRepository.kt,1/5/155365bc829e54c431caaef65b38d611920cb27c
+Ç
+Rapp/src/main/java/com/artilearn/happygolfgo/data/home/source/HomeRepositoryImpl.kt,a/0/a09c44f13685725174e44b3fc1240be51cfdb143
+=======
 ì
 capp/src/main/java/com/artilearn/happygolfgo/data/splash/source/remote/SplashRemoteDataSourceImpl.kt,9/e/9e4165336e1900e69fbe59e270b2c51160bae9a4
 è
@@ -266,19 +287,72 @@ Tapp/src/main/java/com/artilearn/happygolfgo/data/version/source/VersionReposito
 Papp/src/main/java/com/artilearn/happygolfgo/data/alram/source/AlramRepository.kt,0/f/0f8b86c978ac81935ae17e73bc3284c7f1e9edc4
 ~
 Napp/src/main/java/com/artilearn/happygolfgo/data/home/source/HomeRepository.kt,1/5/155365bc829e54c431caaef65b38d611920cb27c
+>>>>>>> HG-Dev-1.11.4
 ã
 [app/src/main/java/com/artilearn/happygolfgo/data/home/source/remote/HomeRemoteDataSource.kt,a/5/a5febff897383182b434118bded9ee476ccede7b
 è
 _app/src/main/java/com/artilearn/happygolfgo/data/home/source/remote/HomeRemoteDataSourceImpl.kt,e/7/e7641e792e9cf3cff647aba90fdc2cf060c3517e
-Ç
-Rapp/src/main/java/com/artilearn/happygolfgo/data/home/source/HomeRepositoryImpl.kt,a/0/a09c44f13685725174e44b3fc1240be51cfdb143
+<<<<<<< HEAD
+Ö
+Uapp/src/main/java/com/artilearn/happygolfgo/ui/home/reservation/ReservationAdapter.kt,1/8/18f65b45427c1cbfcc69ae7207fbed892f5e5bc4
+á
+Wapp/src/main/java/com/artilearn/happygolfgo/ui/home/reservation/ReservationViewModel.kt,2/0/205e2b6684a1965070c859edf2cc6d78bc104136
+{
+Kapp/src/main/java/com/artilearn/happygolfgo/ui/home/alram/AlramViewModel.kt,c/7/c7195959205fbad10d708e856c0c78750a516595
+y
+Iapp/src/main/java/com/artilearn/happygolfgo/ui/home/alram/AlramAdapter.kt,e/1/e119bb858813733f8fee281a51fae5ec2d02c534
+è
+_app/src/main/java/com/artilearn/happygolfgo/data/splash/source/remote/SplashRemoteDataSource.kt,7/d/7dfe97175c0f538e256bffa4f833ac19e92e906d
+ã
+[app/src/main/java/com/artilearn/happygolfgo/data/login/source/local/LoginLocalDataSource.kt,a/1/a19d449a9b3f37f3ad2085d3223abac8ad5dac7d
+ì
+capp/src/main/java/com/artilearn/happygolfgo/data/splash/source/remote/SplashRemoteDataSourceImpl.kt,9/e/9e4165336e1900e69fbe59e270b2c51160bae9a4
 è
 _app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/ReservationRepository.kt,6/3/63a67c371e4e0305779d244f0ac4b87a5ee74bc3
+
+Oapp/src/main/java/com/artilearn/happygolfgo/data/reservelist/ReserveListInfo.kt,f/e/fe1aa524dd3e46caf3c25b76bbd742e696c48d30
+É
+Sapp/src/main/java/com/artilearn/happygolfgo/data/reservelist/ReserveListResponse.kt,2/7/2738514de9ce710f8599f0bdf5ecd2c410f7c0c1
+Ö
+Uapp/src/main/java/com/artilearn/happygolfgo/ui/home/gamecenter/GameCenterViewModel.kt,b/0/b0d881a7959cdc12b3cd9b4e3554bd37775148fd
+~
+Napp/src/main/java/com/artilearn/happygolfgo/ui/gamescore/GameScoreViewModel.kt,b/4/b4e4712e9219c7394041828cfde525607b458e93
+}
+Mapp/src/main/java/com/artilearn/happygolfgo/ui/gamescore/GameScoreActivity.kt,0/6/060c6f2488461d85fa438421d64f409db4a36db4
+|
+Lapp/src/main/java/com/artilearn/happygolfgo/ui/gamerank/GameRankViewModel.kt,5/f/5f420efac5600452416ad94a0f95dd8092d98693
+Ö
+Uapp/src/main/java/com/artilearn/happygolfgo/ui/gamerank/allgroup/AllGroupViewModel.kt,7/0/7016f9d364a2746a3e24eb49816a0b7d61d9d2ca
+É
+Sapp/src/main/java/com/artilearn/happygolfgo/ui/gamerank/mygroup/MyGroupViewModel.kt,1/a/1acdd180910e1b3e68a0136957d0a5811195005e
+Ç
+Rapp/src/main/java/com/artilearn/happygolfgo/ui/gamerank/mygroup/MyGroupFragment.kt,8/5/85c13dee39fbbf38f18b2efe816745667d9bd1d3
+Ñ
+Tapp/src/main/java/com/artilearn/happygolfgo/ui/gamerank/allgroup/AllGroupFragment.kt,f/3/f3c6721c466b4781f9dd958ae23dda6d85c15643
+
+Oapp/src/main/java/com/artilearn/happygolfgo/ui/gamerank/GameRankPagerAdapter.kt,3/5/35b5cff5071994e7e7704bdf01391b51a662f259
+{
+Kapp/src/main/java/com/artilearn/happygolfgo/ui/gamerank/GameRankActivity.kt,a/3/a3a0ec00b086c946c05f6c172864d2e2081a62b5
+=======
+Ç
+Rapp/src/main/java/com/artilearn/happygolfgo/data/home/source/HomeRepositoryImpl.kt,a/0/a09c44f13685725174e44b3fc1240be51cfdb143
+<<<<<<< HEAD
+>>>>>>> HG-Dev-1.11.4
+=======
+è
+_app/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/source/ReservationRepository.kt,6/3/63a67c371e4e0305779d244f0ac4b87a5ee74bc3
+<<<<<<< HEAD
+>>>>>>> HG-Dev-1.12.0
+=======
 Ñ
 Tapp/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/ReservePlateModel.kt,1/b/1b7100c2533bd27da2ad63dc160517988cebeb02
+<<<<<<< HEAD
+>>>>>>> HG-Hotfix-1.12.1
+=======
 Ö
 Uapp/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/ReserveLessonModel.kt,d/c/dc7682d5e4111c4eceff5570f3aab788e55a08c6
 }
 Mapp/src/main/java/com/artilearn/happygolfgo/data/reserveconfirm/PolicyInfo.kt,f/2/f28e6dec6256eef490a24203ad86d874a0b0cc86
 s
 Capp/src/main/java/com/artilearn/happygolfgo/data/ResponseWrapper.kt,d/f/df9707f9f0de0996100ba5d752a113b9aaad5e68
+>>>>>>> hot-test-3

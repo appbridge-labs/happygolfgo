@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.reserveconfirm
 
 import android.accounts.NetworkErrorException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -13,6 +14,7 @@ import com.artilearn.happygolfgo.data.reserveconfirm.source.ReservationRepositor
 import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmRepository
 import com.artilearn.happygolfgo.data.reserveconfirm.source.TimeChangeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
+import com.artilearn.happygolfgo.util.ext.errorLog
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -38,15 +40,32 @@ class ReserveConfirmViewModel(
     private val _buttonClickable: SingleLiveEvent<Unit> = SingleLiveEvent()
     private val _reservationTimeChange: MutableLiveData<ReservationPlate> = MutableLiveData()
 
-    val status: LiveData<ReservationStatus> get() = _status
-    val plateModel: LiveData<PlateResponse> get() = _plateModel
-    val lessonModel: LiveData<LessonResponse> get() = _lessonModel
-    val policy: LiveData<String> get() = _policy
-    val unKnowError: LiveData<Unit> get() = _unKnowError
-    val reservationPlate: LiveData<ReservationPlate> get() = _reservationPlate
-    val reservationLesson: LiveData<ReservationLesson> get() = _reservationLesson
-    val buttonClickable: LiveData<Unit> get() = _buttonClickable
-    val reservationTimeChange: LiveData<ReservationPlate> get() = _reservationTimeChange
+    val status: LiveData<ReservationStatus>
+        get() = _status
+
+    val plateModel: LiveData<PlateResponse>
+        get() = _plateModel
+
+    val lessonModel: LiveData<LessonResponse>
+        get() = _lessonModel
+
+    val policy: LiveData<String>
+        get() = _policy
+
+    val unKnowError: LiveData<Unit>
+        get() = _unKnowError
+
+    val reservationPlate: LiveData<ReservationPlate>
+        get() = _reservationPlate
+
+    val reservationLesson: LiveData<ReservationLesson>
+        get() = _reservationLesson
+
+    val buttonClickable: LiveData<Unit>
+        get() = _buttonClickable
+
+    val reservationTimeChange: LiveData<ReservationPlate>
+        get() = _reservationTimeChange
 
     var plateAvailabilityId: Int? = null
     var lessonAvailabilityId: Int? = null
@@ -60,32 +79,22 @@ class ReserveConfirmViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    try {
-                        throw RuntimeException(TAG)
-                    } catch (e: Exception) {
-                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                    }
-                }
+                .doOnError { t -> errorLog(TAG, t) }
                 .subscribe({ response ->
                     val body = response.body()
                     if (response.isSuccessful && body != null) {
                         _policy.value = body.data.policy.body
                     } else {
-                        _serverError.value = response.message()
+                        _serverError.value = "데이터를 불러오는데 실패했습니다"
                     }
                 }, {  t ->
                     when (t) {
                         is NetworkErrorException -> _networkFail.value = Unit
                         is HttpException -> {
-                            try {
-                                throw RuntimeException(TAG)
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                            }
-                            _serverError.value = t.localizedMessage
+                            if (t.code() == 419) _appRefresh.call()
+                            else _serverError.value = "데이터를 불러오는데 실패했습니다"
                         }
-                        else -> _serverError.value = t.localizedMessage
+                        else -> _serverError.value = "알 수 없는 오류 발생"
                     }
                 })
         )
@@ -102,13 +111,7 @@ class ReserveConfirmViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
-                    .doOnError { t ->
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                        }
-                    }
+                    .doOnError { t -> errorLog(TAG, t) }
                     .subscribe({ response ->
                         val body = response.body()
                         if (response.isSuccessful && body != null) {
@@ -117,7 +120,7 @@ class ReserveConfirmViewModel(
                             _buttonClickable.call()
                             val erroBody = response.errorBody()
                             if (erroBody == null) {
-                                _serverError.value = "알 수 없는 오류 발생"
+                                _serverError.value = "오류로 인한 예약실패"
                             } else {
                                 val gson = Gson()
                                 val type = object : TypeToken<ApiError>() {}.type
@@ -138,14 +141,10 @@ class ReserveConfirmViewModel(
                         when (t) {
                             is NetworkErrorException -> _networkFail.value = Unit
                             is HttpException -> {
-                                try {
-                                    throw RuntimeException(TAG)
-                                } catch (e: Exception) {
-                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                                }
-                                _serverError.value = t.localizedMessage
+                                if (t.code() == 419) _appRefresh.call()
+                                else _serverError.value = "데이터를 불러오는데 실패했습니다"
                             }
-                            else -> _serverError.value = t.localizedMessage
+                            else -> _serverError.value = "알 수 없는 오류 발생"
                         }
                     })
             )
@@ -165,34 +164,24 @@ class ReserveConfirmViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe { showLoading() }
                     .doAfterTerminate { hideLoading() }
-                    .doOnError { t ->
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                        }
-                    }
+                    .doOnError { t -> errorLog(TAG, t) }
                     .subscribe({ response ->
                         val body = response.body()
                         if (response.isSuccessful && body != null) {
                             _reservationLesson.value = body.data.lessonReservaion
                         } else {
                             _buttonClickable.call()
-                            _serverError.value = response.message()
+                            _serverError.value = "오류로 인한 예약실패"
                         }
                     }, { t ->
                         _buttonClickable.call()
                         when (t) {
                             is NetworkErrorException -> _networkFail.value = Unit
                             is HttpException -> {
-                                try {
-                                    throw RuntimeException(TAG)
-                                } catch (e: Exception) {
-                                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                                }
-                                _serverError.value = t.localizedMessage
+                                if (t.code() == 419) _appRefresh.call()
+                                else _serverError.value = "데이터를 불러오는데 실패했습니다"
                             }
-                            else -> _serverError.value = t.localizedMessage
+                            else -> _serverError.value = "알 수 없는 오류 발생"
                         }
                     })
             )
@@ -207,32 +196,22 @@ class ReserveConfirmViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({ result ->
                 val body = result.body()
                 if (result.isSuccessful && body != null) {
                     _lessonModel.value = body.data
                 } else {
-                    _serverError.value = result.message()
+                    _serverError.value = "예약 정보를 가지고 오지 못했습니다"
                 }
             }, { t ->
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                        }
-                        _serverError.value = t.localizedMessage
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = "데이터를 불러오는데 실패했습니다"
                     }
-                    else -> _serverError.value = t.localizedMessage
+                    else -> _serverError.value = "알 수 없는 오류 발생"
                 }
             }).addTo(compositeDisposable)
     }
@@ -243,32 +222,22 @@ class ReserveConfirmViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({ result ->
                 val body = result.body()
                 if (result.isSuccessful && body != null) {
                     _plateModel.value = body.data
                 } else {
-                    _serverError.value = result.message()
+                    _serverError.value = "예약 정보를 가지고 오지 못했습니다"
                 }
             }, { t ->
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
-                        try {
-                            throw RuntimeException(TAG)
-                        } catch (e: Exception) {
-                            FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                        }
-                        _serverError.value = t.localizedMessage
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = "데이터를 불러오는데 실패했습니다"
                     }
-                    else -> _serverError.value = t.localizedMessage
+                    else -> _serverError.value = "알 수 없는 오류 발생"
                 }
             }).addTo(compositeDisposable)
     }
@@ -280,13 +249,7 @@ class ReserveConfirmViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    try {
-                        throw RuntimeException(TAG)
-                    } catch (e: Exception) {
-                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                    }
-                }
+                .doOnError { t -> errorLog(TAG, t) }
                 .subscribe({
                     _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
@@ -294,14 +257,10 @@ class ReserveConfirmViewModel(
                     when (t) {
                         is NetworkErrorException -> _networkFail.value = Unit
                         is HttpException -> {
-                            try {
-                                throw RuntimeException(TAG)
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                            }
-                            _status.value = ReservationStatus.CANCEL_FAIL
+                            if (t.code() == 419) _appRefresh.call()
+                            else _serverError.value = "데이터를 불러오는데 실패했습니다"
                         }
-                        else ->  _status.value = ReservationStatus.CANCEL_FAIL
+                        else -> _serverError.value = "알 수 없는 오류 발생"
                     }
                 })
         )
@@ -314,13 +273,7 @@ class ReserveConfirmViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { showLoading() }
                 .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    try {
-                        throw RuntimeException(TAG)
-                    } catch (e: Exception) {
-                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                    }
-                }
+                .doOnError { t -> errorLog(TAG, t) }
                 .subscribe({
                     _status.value = ReservationStatus.CANCEL_SUCCESS
                 }, { t ->
@@ -328,14 +281,10 @@ class ReserveConfirmViewModel(
                     when (t) {
                         is NetworkErrorException -> _networkFail.value = Unit
                         is HttpException -> {
-                            try {
-                                throw RuntimeException(TAG)
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                            }
-                            _status.value = ReservationStatus.CANCEL_FAIL
+                            if (t.code() == 419) _appRefresh.call()
+                            else _serverError.value = "데이터를 불러오는데 실패했습니다"
                         }
-                        else -> _status.value = ReservationStatus.CANCEL_FAIL
+                        else -> _serverError.value = "알 수 없는 오류 발생"
                     }
                 })
         )
@@ -356,13 +305,7 @@ class ReserveConfirmViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { showLoading() }
             .doAfterTerminate { hideLoading() }
-            .doOnError { t ->
-                try {
-                    throw RuntimeException(TAG)
-                } catch (e: Exception) {
-                    FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                }
-            }
+            .doOnError { t -> errorLog(TAG, t) }
             .subscribe({ item ->
                 val plate = ReservationPlate(
                     id = item.id,
@@ -380,14 +323,10 @@ class ReserveConfirmViewModel(
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
                     is HttpException -> {
-                        val gson = Gson()
-                        val type = object : TypeToken<ApiError>() {}.type
-                        val errorResponse: ApiError =
-                            gson.fromJson(t.response()?.errorBody()?.charStream(), type)
-
-                        _serverError.value = errorResponse.message
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = "데이터를 불러오는데 실패했습니다"
                     }
-                    else -> _serverError.value = t.localizedMessage
+                    else -> _serverError.value = "알 수 없는 오류 발생"
                 }
             }).let(compositeDisposable::add)
     }

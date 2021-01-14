@@ -4,7 +4,6 @@ import com.artilearn.happygolfgo.data.splash.SplashTokenModel
 import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
-import com.google.firebase.iid.FirebaseInstanceId
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response
@@ -24,7 +23,9 @@ interface SplashRepository {
         data: HashMap<String, SynchronizedDataModel>
     ): Single<Response<SynchronizedResponse>>
 
-    fun deleteUser(): Completable
+    //fun deleteUser(): Completable
 
     fun getFcmToken(): Single<String?>
+
+    fun deleteUser()
 }

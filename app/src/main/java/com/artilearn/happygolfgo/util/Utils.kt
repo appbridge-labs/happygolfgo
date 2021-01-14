@@ -134,3 +134,22 @@ fun getWidevineID(): String {
     }
 }
 
+fun String.convertMonth(): String {
+    return if (this.startsWith("0")) {
+        this.substring(1)
+    } else {
+        this
+    }
+}
+
+fun Date.convertString(): String {
+    val test = SimpleDateFormat("yyyy-MM-dd")
+    return test.format(this)
+}
+
+fun getNowDate(): Date {
+    val now = System.currentTimeMillis()
+    return Date(now)
+}
+
+fun Calendar.convertLong() = timeInMillis

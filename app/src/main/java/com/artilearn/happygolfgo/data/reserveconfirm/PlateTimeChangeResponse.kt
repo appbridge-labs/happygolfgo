@@ -20,7 +20,6 @@ data class PlateTimeChangeResponse(
     @Expose
     val data: ChangePlateReservation
 ) {
-
     data class ChangePlateReservation(
         @SerializedName("plateReservation")
         @Expose

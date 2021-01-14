@@ -1,47 +1,32 @@
 package com.artilearn.happygolfgo.ui.reservelist
 
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
-import com.artilearn.happygolfgo.data.ReserveList
 import com.artilearn.happygolfgo.databinding.ActivityReserveListBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
-import com.artilearn.happygolfgo.util.MyApplication
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_reserve_list.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReserveListActivity :
     BaseActivity<ActivityReserveListBinding>(R.layout.activity_reserve_list) {
 
+    private val viewModel: ReserveListViewModel by viewModel()
     private lateinit var pagerAdaper: ReservePagerListAdapter
-    private lateinit var myApplication: MyApplication
-
-    private val viewModel: ReserveListViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return ReserveListViewModel(
-                    myApplication.reserveListRepository
-                ) as T
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
         initView()
+        initTabListener()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
         binding.vm = viewModel
     }
 
@@ -63,14 +48,41 @@ class ReserveListActivity :
                 showNetworkFail()
             })
             serverError.observe(this@ReserveListActivity, Observer {
-                //showError(it)
                 showToast(ToastType.ERROR, it)
+            })
+            appRefresh.observe(this@ReserveListActivity, Observer {
+                goRefresh()
             })
         }
     }
 
     private fun initView() {
         initToolbar(binding.reserveListToolbar.toolbar, getString(R.string.reserve_list_toolbar_title), true)
+    }
+
+    private fun initTabListener() {
+        with(binding) {
+            reserveListTablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabReselected(tab: TabLayout.Tab?) = Unit
+                override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    when (tab?.position) {
+                        0 -> tab.parent?.setSelectedTabIndicatorColor(
+                            ContextCompat.getColor(
+                                this@ReserveListActivity,
+                                R.color.color_green
+                            )
+                        )
+                        1 -> tab.parent?.setSelectedTabIndicatorColor(
+                            ContextCompat.getColor(
+                                this@ReserveListActivity,
+                                R.color.color_reservation_lesson_text_month
+                            )
+                        )
+                    }
+                }
+            })
+        }
     }
 
 }

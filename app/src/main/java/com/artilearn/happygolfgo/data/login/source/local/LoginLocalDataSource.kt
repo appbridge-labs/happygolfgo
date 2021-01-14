@@ -9,4 +9,5 @@ interface LoginLocalDataSource {
     var accessToken: String
     var autoLogin: Boolean
     var fcmToken: String?
+    var phoneNumber: String
 }

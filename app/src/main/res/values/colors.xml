@@ -13,6 +13,23 @@
     <color name="color_blue">#4C7BE5</color>
     <color name="color_lucky_gray">#777777</color>
     <color name="color_reserve_color">#49BBC4</color>
-    <color name="color_alram_read">#DDFFDD</color>
+    <color name="color_alram_unread">#DDFFDD</color>
     <color name="color_yellow">#FFFF00</color>
+    <color name="color_reservation_lesson">#DBE3F0</color>
+    <color name="color_reservation_lesson_text_month">#4071C0</color>
+    <color name="color_reservation_lesson_text_day">#1B4383</color>
+    <color name="color_reservation_plate">#DBF0DF</color>
+    <color name="color_reservation_plate_text_month">#2F9E44</color>
+    <color name="color_reservation_plate_text_day">#147126</color>
+    <color name="color_dr_text_color">#CC5DE8</color>
+    <color name="color_wu_text_color">#845EF7</color>
+    <color name="color_iron_text_color">#5C7CFA</color>
+    <color name="color_sw_text_color">#22B8CF</color>
+    <color name="color_putt_text_color">#51CF66</color>
+    <color name="color_mypage_update">#F23C3C</color>
+    <color name="color_graph_dr">#CC5DE8</color>
+    <color name="color_graph_wu">#845EF7</color>
+    <color name="color_graph_iron">#5C7CFA</color>
+    <color name="color_graph_sw">#22B8CF</color>
+    <color name="color_graph_putt">#51CF66</color>
 </resources>

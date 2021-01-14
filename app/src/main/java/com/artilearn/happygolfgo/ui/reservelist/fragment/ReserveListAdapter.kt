@@ -6,19 +6,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.ReserveList
-import com.artilearn.happygolfgo.databinding.ItemReserveListBinding
+import com.artilearn.happygolfgo.databinding.ItemReservationNewListBinding
 
 class ReserveListAdapter(
     private val itemClick: (ReserveList) -> Unit
 ) : RecyclerView.Adapter<ReserveListAdapter.ListViewHolder>() {
 
-    lateinit var binding: ItemReserveListBinding
+    lateinit var binding: ItemReservationNewListBinding
     private val items: ArrayList<ReserveList> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_reserve_list,
+            R.layout.item_reservation_new_list,
             parent,
             false
         )
@@ -38,11 +38,11 @@ class ReserveListAdapter(
     override fun getItemCount() = items.size
 
     class ListViewHolder(
-        private val binding: ItemReserveListBinding
+        private val binding: ItemReservationNewListBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(lesson: ReserveList) {
-            binding.reservation = lesson
+        fun bind(item: ReserveList) {
+            binding.item = item
             binding.executePendingBindings()
         }
 

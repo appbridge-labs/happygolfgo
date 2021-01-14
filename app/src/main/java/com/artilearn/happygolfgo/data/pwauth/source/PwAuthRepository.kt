@@ -5,6 +5,8 @@ import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
 import io.reactivex.Completable
 
 interface PwAuthRepository {
+    val phoneNumber: String
+    val autoLogin: Boolean
 
     fun getAuthNumber(
         data: HashMap<String, GetAuthModel>

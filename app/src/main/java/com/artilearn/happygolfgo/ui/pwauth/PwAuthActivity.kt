@@ -2,11 +2,8 @@ package com.artilearn.happygolfgo.ui.pwauth
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.core.widget.doOnTextChanged
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.PHONE_NUMBER
@@ -16,64 +13,64 @@ import com.artilearn.happygolfgo.enummodel.PwAuthNumberType
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
-import com.artilearn.happygolfgo.util.MyApplication
-import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Observable
 import io.reactivex.rxkotlin.addTo
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_auth) {
 
-    private val phonePublishSubject = PublishSubject.create<String>()
-    private val authPulishSubject = PublishSubject.create<String>()
+    private val viewModel: PwAuthViewModel by viewModel()
     private var status = false
-    private lateinit var myApplication: MyApplication
-
-    private val viewModel: PwAuthViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return PwAuthViewModel(
-                    myApplication.pwAuthRepository
-                ) as T
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
         initView()
-        rxPhoneNumber()
-        rxAuthNumber()
+        initTextListener()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
         binding.vm = viewModel
     }
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            phoneNumber.observe(this@PwAuthActivity, Observer {
-                phoneType(it)
+            networkFail.observe(this@PwAuthActivity, Observer {
+                showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
             })
-            authNumber.observe(this@PwAuthActivity, Observer {
-                authType(it)
+            serverError.observe(this@PwAuthActivity, Observer {
+                showToast(ToastType.ERROR, it)
             })
-            success.observe(this@PwAuthActivity, Observer {
-                status = it
-                rxDelayGoPwReset()
+            phoneValueType.observe(this@PwAuthActivity, Observer { phoneType ->
+                phoneType(phoneType)
+            })
+            authValueType.observe(this@PwAuthActivity, Observer { authType ->
+                authType(authType)
+            })
+            appRefresh.observe(this@PwAuthActivity, Observer {
+                goRefresh()
             })
         }
     }
 
     private fun initView() {
         initToolbar(binding.pwauthToolbar.toolbar, getString(R.string.pwauth_toolbar_title), true)
-        initBottomView(binding.pwauthBottomView.bottom_layout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
+        initBottomView(
+            binding.pwauthBottomView.bottom_layout,
+            getString(R.string.bottom_view_default),
+            BottimViewType.DEFAULT_TYPE
+        )
+    }
+
+    private fun initTextListener() {
+        with(binding) {
+            etPhone.addTextChangedListener { viewModel.phoneOnNext(it.toString()) }
+            etAuth.addTextChangedListener { viewModel.authOnNext(it.toString()) }
+        }
     }
 
     private fun phoneType(type: PwAuthPhoneType) {
@@ -92,59 +89,40 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
             PwAuthNumberType.EMPTY -> binding.etAuth.error = getString(R.string.pwauth_empty_auth)
             PwAuthNumberType.FAIL -> showToast(ToastType.ERROR, getString(R.string.pwauth_error_auth))
             PwAuthNumberType.NETWORK_FAIL -> showToast(ToastType.WARNNING, getString(R.string.pwauth_network_fail))
-            PwAuthNumberType.SUCCESS -> showToast(ToastType.SUCCESS, getString(R.string.pwauth_success_auth))
             PwAuthNumberType.UNCREATE -> showToast(ToastType.WARNNING, getString(R.string.pwauth_uncreate_auth))
             PwAuthNumberType.AUTH_ERROR -> showToast(ToastType.ERROR, getString(R.string.pwauth_fail_auth))
             PwAuthNumberType.MODEL_FAIL -> showToast(ToastType.ERROR, getString(R.string.pwauth_model_fail))
-        }
-    }
-
-    private fun rxPhoneNumber() {
-        binding.etPhone.doOnTextChanged { phone, _, _, _ ->
-            phonePublishSubject.onNext(phone.toString())
-        }
-        phonePublishSubject.observeOn(AndroidSchedulers.mainThread())
-            .subscribe { phone ->
-                viewModel.currentPhone = phone
-            }.addTo(compositeDisposable)
-    }
-
-    private fun rxAuthNumber() {
-        binding.etAuth.doOnTextChanged { auth, _, _, _ ->
-            authPulishSubject.onNext(auth.toString())
-        }
-        authPulishSubject.observeOn(AndroidSchedulers.mainThread())
-            .subscribe { auth ->
-                viewModel.currentAuth = auth
-            }.addTo(compositeDisposable)
-    }
-
-    private fun rxDelayGoPwReset() {
-        compositeDisposable.add(
-            Completable.create { emitter ->
-                emitter.onComplete()
+            PwAuthNumberType.TIMER_OVER -> showToast(ToastType.ERROR, getString(R.string.pwauth_timer_over))
+            PwAuthNumberType.SUCCESS -> {
+                rxDelay()
+                showToast(ToastType.SUCCESS, getString(R.string.pwauth_success_auth))
+                status = true
             }
-                .delay(500L, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    goPwReset()
-                }
-        )
+        }
     }
 
-    private fun goPwReset() {
-        val resetIntent = Intent(this, PwResetActivity::class.java)
-            .apply {
-                putExtra(PHONE_NUMBER, viewModel.currentPhone)
-            }
-        startActivity(resetIntent)
+    private fun rxDelay() {
+        Observable.just(1)
+            .delay(500, TimeUnit.MILLISECONDS)
+            .subscribe { goPasswordReset() }
+            .addTo(compositeDisposable)
+    }
+
+    private fun goPasswordReset() {
+        val intent = Intent(this, PwResetActivity::class.java).apply {
+            putExtra(PHONE_NUMBER, viewModel.getPhoneNumber())
+        }
+
+        startActivity(intent)
         finish()
     }
 
     override fun bottomAction() {
         super.bottomAction()
-        if (status) {
-            goPwReset()
+        if (!status) {
+            showToast(ToastType.WARNNING, "인증을 완료해 주세요")
+        } else {
+            rxDelay()
         }
     }
 }

@@ -2,6 +2,9 @@ package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.comment.CommentModel
+import com.artilearn.happygolfgo.data.gamecenter.GameCenterResponse
+import com.artilearn.happygolfgo.data.golfgame.GolfGameResponse
+import com.artilearn.happygolfgo.data.golfrank.GolfRankResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.log.LogResponse
@@ -20,6 +23,7 @@ import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
 import com.artilearn.happygolfgo.data.ticketdate.TicketDateResponse
 import com.artilearn.happygolfgo.data.tickettime.TicketTimeResponse
+import com.artilearn.happygolfgo.data.version.LogoutModel
 import com.artilearn.happygolfgo.data.version.VersionResponse
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -145,11 +149,22 @@ interface ApiInterface {
         @Path("plateReservationID") plateId: Int
     ): Single<Response<ReservationPlateDetail>>
 
-    @PUT("mypage/signOut")
-    fun userLogout(): Completable
+    @PUT("auth/user/doSignout")
+    fun userLogout(
+        @Body data: HashMap<String, LogoutModel>
+    ): Completable
 
     @POST("reservation/user/plateReservation/changeTime")
     fun plateTimeChange(
         @Body data: HashMap<String, PlateTimeChangeModel>
     ): Single<Response<PlateTimeChangeResponse>>
+
+    @GET("hgGame")
+    fun getGameCenter(): Single<GameCenterResponse>
+
+    @GET("hgGame/ranks")
+    fun getGameRanks(): Single<GolfRankResponse>
+
+    @GET("hgGame/individualGames")
+    fun getGolfGames(): Single<GolfGameResponse>
 }

@@ -7,7 +7,7 @@
     <data>
 
         <variable
-            name="ticket"
+            name="item"
             type="com.artilearn.happygolfgo.data.Ticket" />
     </data>
 
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="@{ticket.name}"
+            android:text="@{item.name}"
             android:textColor="@color/color_black"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -45,8 +45,8 @@
             android:textStyle="normal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_ticket_name"
-            bind:setTicketEndDate="@{ticket.endDate}"
-            bind:setTicketStartDate="@{ticket.startDate}"
+            bind:setTicketEndDate="@{item.endDate}"
+            bind:setTicketStartDate="@{item.startDate}"
             tools:text="00.00~00.00" />
 
         <TextView
@@ -61,10 +61,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_ticket_date"
-            bind:setTicketIsUnLimited="@{ticket.unlimited}"
-            bind:setTicketOnlyOnceToday="@{ticket.onlyOnceToday}"
-            bind:setTicketRemainingCount="@{ticket.remainingCount}"
-            bind:setTicketTotalCount="@{ticket.totalCount}"
+            bind:setTicketIsUnLimited="@{item.unlimited}"
+            bind:setTicketOnlyOnceToday="@{item.onlyOnceToday}"
+            bind:setTicketRemainingCount="@{item.remainingCount}"
+            bind:setTicketTotalCount="@{item.totalCount}"
             tools:text="00회 중 0회 남음" />
 
         <ImageButton

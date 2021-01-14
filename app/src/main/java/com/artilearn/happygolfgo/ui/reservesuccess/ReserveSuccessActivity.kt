@@ -20,21 +20,10 @@ import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 class ReserveSuccessActivity :
     BaseActivity<ActivityReserveSuccessBinding>(R.layout.activity_reserve_success) {
 
-    private val reservationPlate by lazy {
-        intent.getParcelableExtra<ReservationPlate>(RESERVATION_PLATE)
-    }
-
-    private val reservationLesson by lazy {
-        intent.getParcelableExtra<ReservationLesson>(RESERVATION_LESSON)
-    }
-
-    private val successType by lazy {
-        intent.getStringExtra(RESERVATION_TYPE)
-    }
-
-    private val timeChnage by lazy {
-        intent.getIntExtra(PLATE_TIME_CHANGE, 0)
-    }
+    private val reservationPlate by lazy { intent.getParcelableExtra<ReservationPlate>(RESERVATION_PLATE) }
+    private val reservationLesson by lazy { intent.getParcelableExtra<ReservationLesson>(RESERVATION_LESSON) }
+    private val successType by lazy { intent.getStringExtra(RESERVATION_TYPE) }
+    private val timeChnage by lazy { intent.getIntExtra(PLATE_TIME_CHANGE, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +32,7 @@ class ReserveSuccessActivity :
     }
 
     private fun initView() {
-        initBottomView(
-            binding.reserveSuccessBottomView.bottom_layout,
-            getString(R.string.reserve_success_bottom_title),
-            BottimViewType.DEFAULT_TYPE
-        )
+        initBottomView(binding.reserveSuccessBottomView.bottom_layout, getString(R.string.reserve_success_bottom_title), BottimViewType.DEFAULT_TYPE)
         when (successType) {
             "reservation" -> setReservationText()
             else -> setCancelText()

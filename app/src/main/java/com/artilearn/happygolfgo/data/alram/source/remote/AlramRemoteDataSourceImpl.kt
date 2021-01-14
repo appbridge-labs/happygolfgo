@@ -11,8 +11,5 @@ class AlramRemoteDataSourceImpl(
 
     override fun remoteGetAlramMessage(): Single<Response<AlramResponse>> {
         return apiInterface.getAlramMessage()
-            .map {
-                it
-            }
     }
 }

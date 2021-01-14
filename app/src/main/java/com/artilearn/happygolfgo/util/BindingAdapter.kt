@@ -2,6 +2,8 @@ package com.artilearn.happygolfgo.util
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,18 +12,29 @@ import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
-import com.artilearn.happygolfgo.ui.alram.AlramAdapter
-import com.artilearn.happygolfgo.ui.home.HomeAdapter
+import com.artilearn.happygolfgo.ui.home.alram.AlramAdapter
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationAdapter
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
 import java.util.*
+
+@BindingAdapter("setTicketType")
+fun setTicketType(iv: ImageView, type: Int) {
+    when (type) {
+        0 -> iv.setImageResource(R.drawable.ic_reservation_lesson_point)
+        2 -> iv.setImageResource(R.drawable.ic_home_reservation_ticket_point)
+        else -> iv.setImageResource(R.drawable.ic_home_reservation_ticket_point)
+    }
+}
 
 @BindingAdapter("setTicketStartDate", "setTicketEndDate")
 fun ticketDate(tv: TextView, startDate: String, endDate: String) {
     val startTime = convertTime(startDate).trim().split(":")
     val endTime = convertTime(endDate).trim().split(":")
 
-    tv.text = "${startTime[1]}.${startTime[2]}~${endTime[1]}.${endTime[2]}"
+    val text = "${startTime[1]}.${startTime[2]}~${endTime[1]}.${endTime[2]}"
+    tv.text = text
 }
 
 @BindingAdapter(
@@ -42,16 +55,28 @@ fun ticketCount(
     } else if (isUnlimited && !onceToday) {
         tv.text = "무제한 사용"
     } else {
-        tv.text = "${total}회 중 ${remaining}회 남음"
+        val text = "${total}회 중 ${remaining}회 남음"
+        tv.text = text
     }
 }
 
-@BindingAdapter("setTickets")
-fun RecyclerView.setTicketItems(tickes: List<Ticket>?) {
-    with(adapter as HomeAdapter) {
+@BindingAdapter("setTickets", "setScroll")
+fun RecyclerView.setTicketItems(tickes: List<Ticket>?, vm: ReservationViewModel) {
+    with(adapter as ReservationAdapter) {
         this.clear()
         tickes?.let { this.setItems(it) }
     }
+
+    this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            when (recyclerView.scrollState) {
+                0 -> vm.onButtonState(true)
+                else -> vm.onButtonState(false)
+
+            }
+        }
+    })
 }
 
 @BindingAdapter("setLessonLog")
@@ -65,8 +90,8 @@ fun RecyclerView.setLessonLogItems(logs: List<LessonLog>?) {
 @BindingAdapter("setLogTime", "setLogCoachName")
 fun setLessonLogItem(tv: TextView, time: String, coach: String) {
     val logTime = convertTime(time).trim().split(":")
-
-    tv.text = "${logTime[0]}. ${logTime[1]}. ${logTime[2]} / $coach"
+    val text = "${logTime[0]}. ${logTime[1]}. ${logTime[2]} / $coach"
+    tv.text = text
 }
 
 @BindingAdapter("setAlramMessage")
@@ -111,7 +136,8 @@ fun setTicketTimeDate(tv: TextView, start: String, end: String) {
     val startTime = convertTime(start).trim().split(":")
     val endTime = convertTime(end).trim().split(":")
 
-    tv.text = "${startTime[3]}:${startTime[4]}~${endTime[3]}:${endTime[4]}"
+    val text = "${startTime[3]}:${startTime[4]}~${endTime[3]}:${endTime[4]}"
+    tv.text = text
 }
 
 @BindingAdapter("setTicketLessonStatus", "setTicketPlateAllCount")
@@ -120,7 +146,8 @@ fun setTicketTimeTitle(tv: TextView, lessonStauts: Int?, plateAllCount: Int?) {
         tv.text = "상태"
     }
     plateAllCount?.let {
-        tv.text = "총 ${plateAllCount}석"
+        val text = "총 ${plateAllCount}석"
+        tv.text = text
     }
 }
 
@@ -133,32 +160,16 @@ fun setTicketTimeDetail(tv: TextView, lessonStatus: Int?, plateAvailableCount: I
 
     plateAvailableCount?.let {
         if (it != 0) {
-            tv.text = "잔여 ${it}석"
+            val text = "잔여 ${it}석"
+            tv.text = text
             tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_black))
         }
     }
 }
 
 @BindingAdapter("setTicketName")
-fun setTicketName(tv:TextView, name: String) {
+fun setTicketName(tv: TextView, name: String) {
     tv.text = name
-}
-
-@BindingAdapter("setReservationDate")
-fun setReservationStartTime(tv: TextView, time: String) {
-    val start = convertTime(time).trim().split(":")
-    tv.text = "${start[1]}.${start[2]}"
-}
-
-@BindingAdapter("setTicketStatus")
-fun setReservationStatus(tv: TextView, status: Int) {
-    when (status) {
-        0 -> tv.text = "예약완료"
-        1 -> tv.text = "1번"
-        2 -> tv.text = "2번"
-        3 -> tv.text = "3번"
-        else -> tv.text = "else"
-    }
 }
 
 @BindingAdapter("setLogThumbNail")
@@ -174,3 +185,97 @@ fun setLogComment(tv: TextView, comment: String?) {
         tv.text = it
     }
 }
+
+@BindingAdapter("setReservationStartTime")
+fun setReservationStartTime(tv: TextView, startTime: String) {
+    val time = convertTime(startTime).trim().split(":")
+    tv.text = String.format("%s:%s", time[3], time[4])
+}
+
+@BindingAdapter("setReservationEndTime")
+fun setReservationEndTime(tv: TextView, endTime: String) {
+    val time = convertTime(endTime).trim().split(":")
+    tv.text = String.format("%s:%s", time[3], time[4])
+}
+
+@BindingAdapter("setReservationPoint")
+fun setReservationType(
+    iv: ImageView,
+    plateNumber: Int?
+) {
+    if (plateNumber == null) {
+        iv.setImageResource(R.drawable.ic_reservation_lesson_point)
+    } else {
+        iv.setImageResource(R.drawable.ic_home_reservation_ticket_point)
+    }
+}
+
+@BindingAdapter("setReservationCalendarColor")
+fun setReservationCalendarColor(
+    cl: ConstraintLayout,
+    plateNumber: Int?
+) {
+    if (plateNumber == null) {
+        cl.setBackgroundResource(R.drawable.bg_reservation_list_calendar_lesson)
+    } else {
+        cl.setBackgroundResource(R.drawable.bg_reservation_list_calendar_plate)
+    }
+}
+
+@BindingAdapter("setReservationMonth", "setReservationMonthType")
+fun setReservationMonth(
+    tv: TextView,
+    startDate: String,
+    plateNumber: Int?
+) {
+    val date = convertTime(startDate).trim().split(":")
+    val month = date[1].convertMonth()
+    tv.text = String.format("%s월", month)
+
+    if (plateNumber == null) {
+        tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_reservation_lesson_text_month))
+    } else {
+        tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_reservation_plate_text_month))
+    }
+}
+
+@BindingAdapter("setReservationDay", "setReservationDayType")
+fun setReservationDay(
+    tv: TextView,
+    startDate: String,
+    plateNumber: Int?
+) {
+    val date = convertTime(startDate).trim().split(":")
+    tv.text = String.format("%s", date[2])
+
+    if (plateNumber == null) {
+        tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_reservation_lesson_text_day))
+    } else {
+        tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_reservation_plate_text_day))
+    }
+}
+
+@BindingAdapter("setReservationCard", "setReservationCardDay")
+fun setReservationCard(
+    cv: CardView,
+    plateNumber: Int?,
+    today: String
+) {
+    val currentDate = getNowDate()
+    val reservationDate = convertDate(today)
+
+    if (plateNumber == null) {
+        if (currentDate.convertString() == reservationDate?.convertString()) {
+            cv.setBackgroundResource(R.drawable.bg_reservation_list_card_lesson)
+        } else {
+            cv.setBackgroundResource(R.drawable.bg_reservation_card_default)
+        }
+    } else {
+        if (currentDate.convertString() == reservationDate?.convertString()) {
+            cv.setBackgroundResource(R.drawable.bg_reservation_list_card_plate)
+        } else {
+            cv.setBackgroundResource(R.drawable.bg_reservation_card_default)
+        }
+    }
+}
+

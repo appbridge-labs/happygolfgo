@@ -1,45 +1,29 @@
 package com.artilearn.happygolfgo.ui.myinfo
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityMyInfoBinding
 import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.enummodel.UploadProfileType
-import com.artilearn.happygolfgo.util.MyApplication
-import kotlinx.android.synthetic.main.activity_my_info.*
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
-import kotlinx.android.synthetic.main.custom_toolbar.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_info) {
 
-    private lateinit var myApplication: MyApplication
-
-    private val viewModel: MyInfoViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MyInfoViewModel(
-                    myApplication.myinfoRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: MyInfoViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
         initView()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
         binding.vm = viewModel
     }
 
@@ -59,6 +43,9 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
             })
             upload.observe(this@MyInfoActivity, Observer {
                 uploadType(it)
+            })
+            appRefresh.observe(this@MyInfoActivity, Observer {
+                goRefresh()
             })
         }
     }
@@ -88,20 +75,13 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
 
     private fun uploadType(type: UploadProfileType) {
         when (type) {
-            UploadProfileType.SUCCESS -> showToast(
-                ToastType.SUCCESS,
-                getString(R.string.myinfo_upload_success)
-            )
-            UploadProfileType.NETWORK_FAIL -> showToast(
-                ToastType.WARNNING,
-                getString(R.string.myinfo_upload_fail)
-            )
-            UploadProfileType.UNKNOW_ERROR -> showToast(
-                ToastType.ERROR,
-                getString(R.string.myinfo_upload_error)
-            )
+            UploadProfileType.SUCCESS -> {
+                showToast(ToastType.SUCCESS, getString(R.string.myinfo_upload_success))
+                finish()
+            }
+            UploadProfileType.NETWORK_FAIL -> showToast(ToastType.WARNNING, getString(R.string.myinfo_upload_fail))
+            UploadProfileType.UNKNOW_ERROR -> showToast(ToastType.ERROR, getString(R.string.myinfo_upload_error))
         }
-        finish()
     }
 
     override fun bottomAction() {

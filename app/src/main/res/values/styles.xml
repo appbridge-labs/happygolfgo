@@ -20,6 +20,7 @@
 
     <style name="MainToolbarTheme" parent="">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20dp</item>
     </style>
 
     <style name="MyReservationTabView" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
@@ -40,6 +41,22 @@
 
     <style name="custom_ratingbar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ratingbar_star</item>
+    </style>
+
+    <style name="BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationView.Active</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNavigationView.Inactive</item>
+    </style>
+
+    <style name="TextAppearance"/>
+    <style name="TextAppearance.BottomNavigationView"/>
+
+    <style name="TextAppearance.BottomNavigationView.Inactive">
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="TextAppearance.BottomNavigationView.Active">
+        <item name="android:textSize">12dp</item>
     </style>
 
 </resources>

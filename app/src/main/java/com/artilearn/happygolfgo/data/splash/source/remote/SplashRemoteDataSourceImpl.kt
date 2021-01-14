@@ -14,27 +14,22 @@ class SplashRemoteDataSourceImpl(
     private val apiInterface: ApiInterface,
     private val firebase: FirebaseInstanceId
 ) : SplashRemoteDataSource {
+
     override fun remoteGetAccessToken(
         data: HashMap<String, SplashTokenModel>
     ): Single<Response<SplashTokenResponse>> {
         return apiInterface.getAccessToken(data)
-            .map {
-                it
-            }
     }
 
     override fun remoteUserSynchronized(
         data: HashMap<String, SynchronizedDataModel>
     ): Single<Response<SynchronizedResponse>> {
         return apiInterface.userSynchronized(data)
-            .map {
-                it
-            }
     }
 
-    override fun deleteUser(): Completable {
-        return apiInterface.userLogout()
-    }
+//    override fun deleteUser(): Completable {
+//        return apiInterface.userLogout()
+//    }
 
     override fun getFcmToken(): Single<String?> {
         return Single.create { emitter ->

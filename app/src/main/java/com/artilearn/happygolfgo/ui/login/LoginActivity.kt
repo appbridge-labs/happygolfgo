@@ -2,10 +2,8 @@ package com.artilearn.happygolfgo.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityLoginBinding
@@ -13,31 +11,21 @@ import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.common.DeveloperOptionFragment
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
-import com.artilearn.happygolfgo.util.MyApplication
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
-    private lateinit var myApplication: MyApplication
-
-    private val viewModel: LoginViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return LoginViewModel(
-                    myApplication.loginRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
+        initTextListener()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
         binding.vm = viewModel
     }
 
@@ -49,27 +37,31 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             serverError.observe(this@LoginActivity, Observer {
                 showToast(ToastType.ERROR, it)
             })
-            emptyPhone.observe(this@LoginActivity, Observer {
-                showEmptyPhone()
-            })
-            emptyPassword.observe(this@LoginActivity, Observer {
-                showEmptyPassword()
-            })
-            emptyUser.observe(this@LoginActivity, Observer {
-                showEmptyUser()
-            })
-            failPassword.observe(this@LoginActivity, Observer {
-                showFailPassword()
-            })
-            loginSuccess.observe(this@LoginActivity, Observer {
-                goHome()
-            })
-            passwordClick.observe(this@LoginActivity, Observer {
+            forgetPassword.observe(this@LoginActivity, Observer {
                 goPasswordAuth()
             })
             developerOption.observe(this@LoginActivity, Observer {
                 openDeveloperOption()
             })
+            loginType.observe(this@LoginActivity, Observer {
+                when (loginType.value) {
+                    LoginViewModel.LoginType.EMPTY_PHONE -> showEmptyPhone()
+                    LoginViewModel.LoginType.EMPTY_PASSWORD -> showEmptyPassword()
+                    LoginViewModel.LoginType.NOT_FOUND_USER -> showEmptyUser()
+                    LoginViewModel.LoginType.FAIL_PASSWORD -> showFailPassword()
+                    LoginViewModel.LoginType.SUCCESS -> goHome()
+                }
+            })
+            appRefresh.observe(this@LoginActivity, Observer {
+                goRefresh()
+            })
+        }
+    }
+
+    private fun initTextListener() {
+        with(binding) {
+            etPhone.addTextChangedListener { viewModel.phoneOnNext(it.toString()) }
+            etPw.addTextChangedListener { viewModel.passwordOnNext(it.toString()) }
         }
     }
 

@@ -1,8 +1,5 @@
 package com.artilearn.happygolfgo.constants
 
-const val CONNECT_TIMEOUT = 15L
-const val WRITE_TIMEOUT = 15L
-const val READ_TIMEOUT = 15L
 const val HAPPY_GOLF_USER = "HAPPY_GOLF_USER"
 const val TUTORIAL = "TUTORIAL"
 const val AUTO_LOGIN = "AUTO_LOGIN"
@@ -34,4 +31,5 @@ const val LESSON_DATE = "LESSON_DATE"
 const val RESERVATION_TYPE = "RESERVATION_TYPE"
 const val FCM_EVENT_TYPE = "FCM_EVENT_TYPE"
 const val PLAY_STORE = "https://play.google.com/store/apps/details?id=com.artilearn.happygolfgo"
+const val PASSWORD_REGEX = "^[A-Za-z0-9+]{8,20}\$"
 const val PLATE_TIME_CHANGE = "plate_time_change"

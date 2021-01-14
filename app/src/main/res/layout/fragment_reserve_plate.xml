@@ -27,8 +27,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_reserve_list" />
+            tools:itemCount="5"
+            tools:listitem="@layout/item_reservation_new_list" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/empty_plate_layout"

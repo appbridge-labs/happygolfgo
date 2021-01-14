@@ -1,91 +1,90 @@
 package com.artilearn.happygolfgo.ui.home
 
-import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
-import com.artilearn.happygolfgo.data.Ticket
-import com.artilearn.happygolfgo.data.home.source.HomeRepository
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import retrofit2.HttpException
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
+import java.util.concurrent.TimeUnit
 
-class HomeViewModel(
-    private val homeRepository: HomeRepository
-) : BaseViewModel() {
+class HomeViewModel : BaseViewModel() {
     private val TAG = javaClass.simpleName
-    private val _myPage: MutableLiveData<Unit> = MutableLiveData()
-    private val _alram: MutableLiveData<Unit> = MutableLiveData()
-    private val _emptyTicket: MutableLiveData<Boolean> = MutableLiveData()
-    private val _tickets: MutableLiveData<ArrayList<Ticket>> = MutableLiveData()
+    private val bottomNavigation: Subject<BottomNavigationEvent> = PublishSubject.create()
+    private val backPressed: Subject<Unit> = PublishSubject.create()
+    private val fcmTypeSubject: Subject<String> = BehaviorSubject.create()
 
-    val myPage: LiveData<Unit> get() = _myPage
-    val alram: LiveData<Unit> get() = _alram
-    val emptyTicket: LiveData<Boolean> get() = _emptyTicket
-    val tickets: LiveData<ArrayList<Ticket>> get() = _tickets
+    private val _bottomNavigationButton: SingleLiveEvent<BottomNavigationEvent> = SingleLiveEvent()
+    private val _backPressedEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
+    private val _eventType: SingleLiveEvent<FcmTypeMoveModel> = SingleLiveEvent()
+
+    val bottomNavigationButton: LiveData<BottomNavigationEvent>
+        get() = _bottomNavigationButton
+
+    val backPressedEvent: LiveData<Unit>
+        get() = _backPressedEvent
+
+    val eventType: LiveData<FcmTypeMoveModel>
+        get() = _eventType
 
     init {
-        requestTicket()
+        rxBind()
     }
 
-    fun onMyPageClick() {
-        _myPage.value = Unit
+    fun fcmOnNext(type: String) {
+        fcmTypeSubject.onNext(type)
     }
 
-    fun onAlramClick() {
-        _alram.value = Unit
-    }
+    private fun rxBind() {
+        bottomNavigation
+            .distinctUntilChanged()
+            .startWith(BottomNavigationEvent.RESERVATION)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { _bottomNavigationButton.value = it }
+            .addTo(compositeDisposable)
 
-    fun requestTicket() {
-        compositeDisposable.add(
-            homeRepository.requestHomeTicket()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showLoading() }
-                .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    try {
-                        throw RuntimeException(TAG)
-                    } catch (e: Exception) {
-                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
-                    }
+        backPressed.observeOn(AndroidSchedulers.mainThread())
+            .subscribe { _backPressedEvent.call() }
+            .addTo(compositeDisposable)
+
+        fcmTypeSubject.delay(100, TimeUnit.MILLISECONDS)
+            .distinctUntilChanged()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { result ->
+                when (result) {
+                    "3" -> _eventType.value = FcmTypeMoveModel.PLATE
+                    "4" -> _eventType.value = FcmTypeMoveModel.LESSON
+                    "6" -> _eventType.value = FcmTypeMoveModel.LOG
                 }
-                .subscribe({
-                    val body = it.body()
-                    if (it.isSuccessful) {
-                        if (body != null && body.data.tickets.isNotEmpty()) {
-                            hideEmptyTicket()
-                            _tickets.value = body.data.tickets as ArrayList<Ticket>
-                        } else {
-                            showEmptyTicket()
-                        }
-                    } else {
-                        _serverError.value = it.message()
-                    }
-                }, { t ->
-                    when (t) {
-                        is NetworkErrorException -> _networkFail.value = Unit
-                        is HttpException -> {
-                            try {
-                                throw RuntimeException(TAG)
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                            }
-                            _serverError.value = t.localizedMessage
-                        }
-                        else -> _serverError.value = t.localizedMessage
-                    }
-                })
-        )
+            }.addTo(compositeDisposable)
     }
 
-    private fun showEmptyTicket() {
-        _emptyTicket.value = true
+    fun bottomNavigation(name: String) {
+        when (name) {
+            HomeActivity.RESERVATION -> bottomNavigation.onNext(BottomNavigationEvent.RESERVATION)
+            //HomeActivity.GAME_CENTER -> bottomNavigation.onNext(BottomNavigationEvent.GAME_CENTER)
+            HomeActivity.ALRAM -> bottomNavigation.onNext(BottomNavigationEvent.ALRAM)
+            HomeActivity.MY_PAGE -> bottomNavigation.onNext(BottomNavigationEvent.MY_PAGE)
+        }
     }
 
-    private fun hideEmptyTicket() {
-        _emptyTicket.value = false
+    fun backPressed() {
+        backPressed.onNext(Unit)
+    }
+
+    enum class BottomNavigationEvent {
+        RESERVATION,
+        GAME_CENTER,
+        ALRAM,
+        MY_PAGE
+    }
+
+    enum class FcmTypeMoveModel {
+        PLATE,
+        LESSON,
+        LOG
     }
 
 }

@@ -31,22 +31,20 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/reserve_list_tablayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/reserve_list_toolbar"
-            app:tabIndicatorColor="@color/color_green"
             app:tabSelectedTextColor="@color/color_black"
             app:tabTextAppearance="@style/MyReservationTabView"
-            app:tabTextColor="@color/color_lucky_gray">
-
-        </com.google.android.material.tabs.TabLayout>
+            app:tabTextColor="@color/color_lucky_gray" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginBottom="10dp"
+            android:background="@color/color_line_gray"
+            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

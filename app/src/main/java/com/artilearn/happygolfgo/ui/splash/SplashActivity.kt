@@ -2,42 +2,28 @@ package com.artilearn.happygolfgo.ui.splash
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivitySplashBinding
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.tutorial.TutorialActivity
-import com.artilearn.happygolfgo.util.MyApplication
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_splash) {
 
-    private lateinit var myApplication: MyApplication
-
-    private val viewModel: SplashViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return SplashViewModel(
-                    myApplication.splashRepository
-                ) as T
-            }
-        }
-    }
+    private val viewModel: SplashViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        inject()
+        initBinding()
         initViewModelObserve()
     }
 
-    private fun inject() {
-        myApplication = application as MyApplication
+    private fun initBinding() {
         binding.vm = viewModel
     }
 

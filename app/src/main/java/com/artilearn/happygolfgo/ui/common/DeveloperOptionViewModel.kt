@@ -15,9 +15,14 @@ class DeveloperOptionViewModel(
     private val _test = SingleLiveEvent<String>()
     private val _developer = SingleLiveEvent<String>()
 
-    val prodution: LiveData<String> get() = _prodution
-    val test: LiveData<String> get() = _test
-    val developer: LiveData<String> get() = _developer
+    val prodution: LiveData<String>
+        get() = _prodution
+
+    val test: LiveData<String>
+        get() = _test
+
+    val developer: LiveData<String>
+        get() = _developer
 
     fun onProdution() {
         developerOptionRepository.environmentMode = "https://happygolfgoapi.com/happygolfgo/appClient/"
@@ -25,7 +30,7 @@ class DeveloperOptionViewModel(
     }
 
     fun onTest() {
-        developerOptionRepository.environmentMode = " http://172.30.1.42:7000/appClient/"
+        developerOptionRepository.environmentMode = "http://172.30.1.42:7000/appClient/"
         _test.value = " http://172.30.1.42:7000/appClient/"
     }
 

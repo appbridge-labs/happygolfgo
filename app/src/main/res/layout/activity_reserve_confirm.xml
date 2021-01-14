@@ -12,7 +12,6 @@
             type="com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmViewModel" />
     </data>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,8 +28,10 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/reserve_confirm_bottom_view"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reserve_confirm_toolbar">
+            app:layout_constraintTop_toBottomOf="@id/reserve_confirm_toolbar"
+            app:layout_constraintVertical_bias="1.0">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,7 +41,7 @@
                 <LinearLayout
                     android:id="@+id/ticketname_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="83dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_unserline"
                     android:orientation="vertical">
 
@@ -62,7 +63,7 @@
                         android:layout_marginBottom="16dp"
                         android:textColor="@color/color_black"
                         android:textSize="24dp"
-                        tools:text="티켓명~" />
+                        tools:text="티켓명" />
 
                     <View
                         android:layout_width="match_parent"
@@ -75,7 +76,7 @@
                 <LinearLayout
                     android:id="@+id/ticketdate_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="83dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_unserline"
                     android:orientation="vertical">
 
@@ -104,7 +105,7 @@
                 <LinearLayout
                     android:id="@+id/tickettime_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="83dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_unserline"
                     android:orientation="vertical">
 
@@ -130,19 +131,49 @@
 
                 </LinearLayout>
 
-                <include
-                    android:id="@+id/time_change_layout"
-                    layout="@layout/common_view"
+                <LinearLayout
+                    android:id="@+id/ll_timechange"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_unserline"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="20dp"
+                            android:layout_weight="9"
+                            android:text="예약시간 변경"
+                            android:textColor="@color/color_black"
+                            android:textSize="16dp" />
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="20dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_right" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/bg_unserline"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -189,5 +220,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

@@ -7,7 +7,7 @@
     <data>
 
         <variable
-            name="ticketTime"
+            name="item"
             type="com.artilearn.happygolfgo.data.TicketTime" />
     </data>
 
@@ -28,8 +28,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:setTicketTimeEnd="@{ticketTime.endDate}"
-            bind:setTicketTimeStart="@{ticketTime.startDate}"
+            bind:setTicketTimeEnd="@{item.endDate}"
+            bind:setTicketTimeStart="@{item.startDate}"
             tools:text="00:00 ~ 00:00" />
 
         <TextView
@@ -43,8 +43,8 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_ticket_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_ticket_time"
-            bind:setTicketLessonStatus="@{ticketTime.lessonAvailabilityId}"
-            bind:setTicketPlateAllCount="@{ticketTime.totalCount}"
+            bind:setTicketLessonStatus="@{item.lessonAvailabilityId}"
+            bind:setTicketPlateAllCount="@{item.totalCount}"
             tools:text="상태(레슨) or 총 6석(타석)" />
 
         <TextView
@@ -59,8 +59,8 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_ticket_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_ticket_time"
-            bind:setTicketLessonNowStatus="@{ticketTime.status}"
-            bind:setTicketPlateAvailableCount="@{ticketTime.availableCount}"
+            bind:setTicketLessonNowStatus="@{item.status}"
+            bind:setTicketPlateAvailableCount="@{item.availableCount}"
             tools:text="예약가능(레슨) or 잔여 0석(타석)" />
 
         <View

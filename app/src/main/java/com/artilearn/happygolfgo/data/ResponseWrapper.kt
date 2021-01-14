@@ -16,12 +16,3 @@ data class ResponseWrapper<T>(
     @SerializedName("Data")
     val data: @RawValue T? = null
 ) : Parcelable
-
-data class ApiError(
-    @SerializedName("statusCode")
-    val statusCode: Int,
-    @SerializedName("message")
-    val message: String,
-    @SerializedName("resultCode")
-    val resultCode: Int
-)

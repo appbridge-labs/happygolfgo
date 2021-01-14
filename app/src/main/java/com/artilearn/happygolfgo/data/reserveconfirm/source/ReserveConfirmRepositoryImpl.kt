@@ -1,7 +1,6 @@
 package com.artilearn.happygolfgo.data.reserveconfirm.source
 
 import android.accounts.NetworkErrorException
-import android.util.Log
 import com.artilearn.happygolfgo.data.reserveconfirm.*
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.CancelRemoteDataSource
 import com.artilearn.happygolfgo.data.reserveconfirm.source.remote.ReservationRemoteDataSource

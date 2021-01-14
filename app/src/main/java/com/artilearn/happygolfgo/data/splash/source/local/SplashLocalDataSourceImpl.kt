@@ -54,4 +54,7 @@ class SplashLocalDataSourceImpl(
             preferenceManager.fcmToken = value
         }
 
+    override fun deleteUser() {
+        return preferenceManager.userLogout()
+    }
 }

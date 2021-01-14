@@ -44,7 +44,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/phone_layout"
             android:layout_width="match_parent"
-            android:layout_height="92dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
@@ -63,14 +63,14 @@
             <EditText
                 android:id="@+id/et_phone"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/color_line_gray"
                 android:gravity="start"
                 android:hint="@string/login_phone_hint"
                 android:inputType="number"
-                android:maxLength="11"
-                android:text="@={vm.phone}"
+                android:maxLength="15"
+                android:maxLines="1"
                 android:textColorHint="@color/color_sub_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/pw_layout"
             android:layout_width="match_parent"
-            android:layout_height="92dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
@@ -100,39 +100,28 @@
             <EditText
                 android:id="@+id/et_pw"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/color_line_gray"
                 android:gravity="start"
                 android:hint="@string/login_password_hint"
                 android:inputType="textPassword"
+                android:maxLength="20"
                 android:maxLines="1"
-                android:text="@={vm.password}"
                 android:textColorHint="@color/color_sub_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_pw_title" />
 
-            <TextView
-                android:id="@+id/tv_empty_pw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:textColor="@color/color_red"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_pw" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/iv_bottom"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:scaleType="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/img_golf_filed" />
 
@@ -172,10 +161,10 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/pw_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/phone_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

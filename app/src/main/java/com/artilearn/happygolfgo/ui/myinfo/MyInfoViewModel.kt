@@ -7,8 +7,9 @@ import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
 import com.artilearn.happygolfgo.data.myinfo.source.MyInfoRepository
 import com.artilearn.happygolfgo.enummodel.UploadProfileType
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.artilearn.happygolfgo.util.ext.errorLog
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 
@@ -24,11 +25,20 @@ class MyInfoViewModel(
     private val _localNickName: MutableLiveData<String> = MutableLiveData()
     private val _upload: MutableLiveData<UploadProfileType> = MutableLiveData()
 
-    val emptyNickName: LiveData<Unit> get() = _emptyNickName
-    val failNickName: LiveData<Unit> get() = _failNickName
-    val localName: LiveData<String> get() = _localName
-    val localNickName: LiveData<String> get() = _localNickName
-    val upload: LiveData<UploadProfileType> get() = _upload
+    val emptyNickName: LiveData<Unit>
+        get() = _emptyNickName
+
+    val failNickName: LiveData<Unit>
+        get() = _failNickName
+
+    val localName: LiveData<String>
+        get() = _localName
+
+    val localNickName: LiveData<String>
+        get() = _localNickName
+
+    val upload: LiveData<UploadProfileType>
+        get() = _upload
 
     private var currentNickName = ""
 
@@ -45,16 +55,10 @@ class MyInfoViewModel(
         currentNickName = nickname.value.toString()
 
         when {
-            currentNickName.isEmpty() -> {
-                _emptyNickName.value = Unit
-            }
-            currentNickName.length < 2 ||
-                    currentNickName.length > 8 -> {
-                _failNickName.value = Unit
-            }
-            else -> {
-                uploadUserProfile()
-            }
+            currentNickName.isEmpty() -> _emptyNickName.value = Unit
+            currentNickName.length < 2
+                    || currentNickName.length > 8 -> _failNickName.value = Unit
+            else -> uploadUserProfile()
         }
     }
 
@@ -63,35 +67,23 @@ class MyInfoViewModel(
         val hashMap = hashMapOf<String, MyInfoModel>()
         hashMap["Data"] = myInfoModel
 
-        compositeDisposable.add(
-            myinfoRepository.uploadProfile(hashMap)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showLoading() }
-                .doAfterTerminate { hideLoading() }
-                .doOnError { t ->
-                    try {
-                        throw RuntimeException(TAG)
-                    } catch (e: Exception) {
-                        FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}")
+        myinfoRepository.uploadProfile(hashMap)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .doOnError { t -> errorLog(TAG, t) }
+            .subscribe({
+                _upload.value = UploadProfileType.SUCCESS
+            }, { t ->
+                when (t) {
+                    is NetworkErrorException -> _upload.value = UploadProfileType.NETWORK_FAIL
+                    is HttpException -> {
+                        if (t.code() == 419) _appRefresh.call()
+                        else _upload.value = UploadProfileType.UNKNOW_ERROR
                     }
+                    else -> _upload.value = UploadProfileType.UNKNOW_ERROR
                 }
-                .subscribe({
-                    _upload.value = UploadProfileType.SUCCESS
-                }, { t ->
-                    when (t) {
-                        is NetworkErrorException -> _upload.value = UploadProfileType.NETWORK_FAIL
-                        is HttpException -> {
-                            try {
-                                throw RuntimeException(TAG)
-                            } catch (e: Exception) {
-                                FirebaseCrashlytics.getInstance().log("$t\n${t.localizedMessage}\n${t.code()}\n${t.message()}")
-                            }
-                            _upload.value = UploadProfileType.UNKNOW_ERROR
-                        }
-                        else -> _upload.value = UploadProfileType.UNKNOW_ERROR
-                    }
-                })
-        )
+            }).addTo(compositeDisposable)
     }
 }
