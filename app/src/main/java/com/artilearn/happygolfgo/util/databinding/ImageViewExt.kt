@@ -11,7 +11,11 @@ import com.bumptech.glide.request.RequestOptions
 
 @BindingAdapter("onBindProfile")
 fun ImageView.bindImage(imagePath: String?) {
-    if (imagePath != null) {
+    if (imagePath.isNullOrEmpty()) {
+        Glide.with(this)
+            .load(R.drawable.ic_empty_user_profile)
+            .into(this)
+    } else {
         Glide.with(this)
             .load(imagePath)
             .apply(RequestOptions.bitmapTransform(
@@ -20,10 +24,6 @@ fun ImageView.bindImage(imagePath: String?) {
                     CircleCrop()
                 )
             ))
-            .into(this)
-    } else {
-        Glide.with(this)
-            .load(R.drawable.ic_empty_user_profile)
             .into(this)
     }
 }
