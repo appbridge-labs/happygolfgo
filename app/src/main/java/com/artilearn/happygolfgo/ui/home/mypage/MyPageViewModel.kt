@@ -107,8 +107,8 @@ class MyPageViewModel(
 
     private fun compareAppVersion(version: String?) {
         version?.let {
-            val server = it.substring(2).toFloat()
-            val local = loadCurrentAppVersion()?.substring(2)?.toFloat()
+            val server = it.replace(".", "").toInt()
+            val local = loadCurrentAppVersion()?.replace(".", "")?.toInt()
 
             if (local == null) {
                 _eventType.value = MyPageStateType.NECESSARY_UPDATE

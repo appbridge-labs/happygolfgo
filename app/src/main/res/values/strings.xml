@@ -154,4 +154,5 @@
     <string name="golf_game_average_score">평균점수</string>
     <string name="golf_game_high_score">최고점수</string>
     <string name="golf_game_score_toolbar_title">골프력 게임 스코어</string>
+    <string name="tickettime_dont_reservation">예약불가</string>
 </resources>

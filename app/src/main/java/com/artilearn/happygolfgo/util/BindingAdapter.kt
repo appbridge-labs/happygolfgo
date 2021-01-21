@@ -1,5 +1,6 @@
 package com.artilearn.happygolfgo.util
 
+import android.graphics.Typeface
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -163,6 +164,10 @@ fun setTicketTimeDetail(tv: TextView, lessonStatus: Int?, plateAvailableCount: I
             val text = "잔여 ${it}석"
             tv.text = text
             tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_black))
+        } else {
+            tv.text = "예약불가"
+            tv.setTypeface(null, Typeface.BOLD)
+            tv.setTextColor(ContextCompat.getColor(tv.context, R.color.color_red))
         }
     }
 }

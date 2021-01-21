@@ -11,7 +11,7 @@ import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.databinding.ActivityTicketTimeBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
-import com.artilearn.happygolfgo.ui.splash.SplashActivity
+import com.artilearn.happygolfgo.util.snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.activity_ticket_time) {
@@ -58,7 +58,10 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
 
     private fun initAdapter() {
         adapter = TicketTimeAdapter { ticketTime ->
-            goReserveConfirm(ticketTime)
+            if (ticketTime.availableCount != null && ticketTime.availableCount == 0)
+                binding.root.snackbar(getString(R.string.tickettime_dont_reservation))
+            else
+                goReserveConfirm(ticketTime)
         }
 
         binding.recyclerview.adapter = adapter
