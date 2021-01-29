@@ -1,8 +1,10 @@
 package com.artilearn.happygolfgo.ui.home.mypage
 
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
@@ -65,7 +67,7 @@ class MyPageFragment
             includeRecord.tv_text.text = getString(R.string.mypage_lesson_title)
             includePassword.tv_text.text = getString(R.string.mypage_password_change)
             includeLogout.tv_text.text = getString(R.string.mypage_logout)
-
+            includeBranch.tv_text.text = getString(R.string.mypage_branch_change)
             includeUpdate.tv_text.text = getString(R.string.mypage_update)
             includeUpdate.tv_text.setTextColor(ContextCompat.getColor(includeUpdate.tv_text.context, R.color.color_mypage_update))
             includeUpdate.parent_card.setBackgroundResource(R.drawable.bg_mypage_update)
@@ -79,6 +81,11 @@ class MyPageFragment
             includeRecord.setOnClickListener { goLessonLog() }
             includeLogout.setOnClickListener { viewModel.logout() }
             includePassword.setOnClickListener { goPwAuth() }
+            includeBranch.setOnClickListener {
+                val dialog = Dialog(requireActivity())
+                dialog.setContentView(R.layout.dialog_training)
+                dialog.show()
+            }
         }
     }
 
