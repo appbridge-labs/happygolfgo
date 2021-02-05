@@ -20,7 +20,23 @@ android {
         testInstrumentationRunner "androidx.ratingbar_star.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions "flavors"
+    productFlavors {
+        development {
+            minSdkVersion 23
+        }
+        dev {
+            resConfigs('en', 'xhdpi')
+        }
+    }
+
     buildTypes {
+        debug {
+            splits.abi.enable = false
+            splits.density.enable = false
+            aaptOptions.cruncherEnabled = false
+            ext.alwaysUpdateBuildId = false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -120,5 +136,8 @@ dependencies {
 
     // mp chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // rv anim
+    implementation 'jp.wasabeef:recyclerview-animators:4.0.0'
 
 }

@@ -12,6 +12,7 @@ import com.artilearn.happygolfgo.databinding.ActivityTicketTimeBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import com.artilearn.happygolfgo.util.snackbar
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.activity_ticket_time) {
@@ -64,6 +65,9 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
                 goReserveConfirm(ticketTime)
         }
 
+        binding.recyclerview.itemAnimator = SlideInUpAnimator().apply {
+            addDuration = 300
+        }
         binding.recyclerview.adapter = adapter
     }
 

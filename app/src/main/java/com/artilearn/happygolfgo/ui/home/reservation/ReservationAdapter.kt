@@ -3,44 +3,43 @@ package com.artilearn.happygolfgo.ui.home.reservation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.ItemHomeReservationTicketBinding
 
+typealias OnRecyclerViewItemClick = (Ticket) -> Unit
+
 class ReservationAdapter(
-    private val itemClick: (Ticket) -> Unit
-) : RecyclerView.Adapter<ReservationAdapter.TicketViewHolder>() {
+    private val onItemClick: OnRecyclerViewItemClick? = null
+) : ListAdapter<Ticket, ReservationAdapter.TicketViewHolder>(object : DiffUtil.ItemCallback<Ticket>() {
+    override fun areItemsTheSame(oldItem: Ticket, newItem: Ticket): Boolean {
+        return oldItem.identifier == newItem.identifier
+    }
 
-    lateinit var binding: ItemHomeReservationTicketBinding
-    private val items: ArrayList<Ticket> = arrayListOf()
-
+    override fun areContentsTheSame(oldItem: Ticket, newItem: Ticket): Boolean {
+        return oldItem == newItem
+    }
+})  {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
-        binding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_home_reservation_ticket,
-            parent,
-            false
-        )
-
-        return TicketViewHolder(binding).also {
-            binding.root.setOnClickListener { position ->
-                itemClick(items[it.adapterPosition])
+        return TicketViewHolder.from(parent).also {
+            if (onItemClick == null) {
+                return@also
+            } else {
+                it.itemView.setOnClickListener { _ ->
+                    val currentItem = currentList.getOrNull(it.adapterPosition) ?: return@setOnClickListener
+                    onItemClick.invoke(currentItem)
+                }
             }
         }
     }
 
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(currentList[position])
     }
 
-    override fun getItemCount() = items.size
-
-    class TicketViewHolder(
-        private val binding: ItemHomeReservationTicketBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-
+    class TicketViewHolder(private val binding: ItemHomeReservationTicketBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Ticket) {
             binding.item = item
             when (item.type) {
@@ -50,15 +49,13 @@ class ReservationAdapter(
             binding.executePendingBindings()
         }
 
-    }
+        companion object Factory {
+            fun from(parent: ViewGroup): TicketViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemHomeReservationTicketBinding.inflate(layoutInflater, parent, false)
 
-    fun setItems(tickets: List<Ticket>) {
-        this.items.addAll(tickets)
-        notifyDataSetChanged()
-    }
-
-    fun clear() {
-        this.items.clear()
-        notifyDataSetChanged()
+                return TicketViewHolder(binding)
+            }
+        }
     }
 }
