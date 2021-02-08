@@ -38,6 +38,7 @@ class ReserveConfirmActivity :
 
     private lateinit var secondTicket: Ticket
     private var secondPlateId: Int? = null
+    private lateinit var date: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +91,11 @@ class ReserveConfirmActivity :
                 }
                 if (it.plateReservation.isCancellable) {
                     showChangeTimeLayout()
-                    initBottomView(binding.reserveConfirmBottomView.bottom_layout, getString(R.string.reserve_confirm_cancel_bottom_title), BottimViewType.CANCEL_TYPE)
+                    initBottomView(
+                        binding.reserveConfirmBottomView.bottom_layout,
+                        getString(R.string.reserve_confirm_cancel_bottom_title),
+                        BottimViewType.CANCEL_TYPE
+                    )
                 }
                 setReservationTicketName(it.plateReservation.name)
                 setReservationTicketDate(it.plateReservation.startDate)
@@ -236,10 +241,8 @@ class ReserveConfirmActivity :
         if (ticket == null) {
             val convertTime = convertDate(secondTicket.startDate)
             val calendar = convertTime?.let { convertCalendar(it) }
-            val date = "${calendar?.get(Calendar.YEAR)}-${calendar?.get(Calendar.MONTH)?.plus(1)}-${calendar?.get(
+            date = "${calendar?.get(Calendar.YEAR)}-${calendar?.get(Calendar.MONTH)?.plus(1)}-${calendar?.get(
                 Calendar.DAY_OF_MONTH)}"
-            secondTicket.startDate = date
-
             with(intent) {
                 putExtra(TICKET, secondTicket)
                 putExtra(SELECTION_DATE, date)

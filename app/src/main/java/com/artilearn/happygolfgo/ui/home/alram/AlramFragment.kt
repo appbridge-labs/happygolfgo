@@ -63,7 +63,7 @@ class AlramFragment
             recyclerview.itemAnimator = SlideInUpAnimator().apply {
                 addDuration = 300
             }
-            swipeToDelete(recyclerview)
+            //swipeToDelete(recyclerview)
             recyclerview.adapter = adapter
         }
     }
