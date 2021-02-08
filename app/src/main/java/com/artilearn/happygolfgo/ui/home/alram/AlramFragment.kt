@@ -2,10 +2,13 @@ package com.artilearn.happygolfgo.ui.home.alram
 
 import android.content.Intent
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.api.firebase.FCMMessage.Companion.reservationLesson
 import com.artilearn.happygolfgo.api.firebase.FCMMessage.Companion.reservationPlate
 import com.artilearn.happygolfgo.base.BaseFragment
+import com.artilearn.happygolfgo.base.BaseSwipeDelete
 import com.artilearn.happygolfgo.constants.LESSON_ID
 import com.artilearn.happygolfgo.constants.PLATE_ID
 import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
@@ -13,6 +16,7 @@ import com.artilearn.happygolfgo.databinding.FragmentAlramBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AlramFragment
@@ -55,7 +59,30 @@ class AlramFragment
             }
         }
 
-        binding.recyclerview.adapter = adapter
+        with(binding) {
+            recyclerview.itemAnimator = SlideInUpAnimator().apply {
+                addDuration = 300
+            }
+            //swipeToDelete(recyclerview)
+            recyclerview.adapter = adapter
+        }
+    }
+
+    private fun swipeToDelete(rv: RecyclerView) {
+        val swipeCallback = object : BaseSwipeDelete() {
+            override fun onSwipe(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                // 삭제 API 추가되면 활성화
+//                val currentItem = adapter.currentList[viewHolder.adapterPosition]
+//                viewModel.deleteToAlram()
+                val testList = adapter.currentList.toMutableList()
+                val deleteItem = testList[viewHolder.adapterPosition]
+                testList.remove(deleteItem)
+                adapter.submitList(testList)
+            }
+        }
+
+        val itemHelper = ItemTouchHelper(swipeCallback)
+        itemHelper.attachToRecyclerView(rv)
     }
 
     private fun goReservationLesson(lessonId: Int) {

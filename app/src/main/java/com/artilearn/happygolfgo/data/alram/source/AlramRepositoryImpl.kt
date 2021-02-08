@@ -27,4 +27,8 @@ class AlramRepositoryImpl(
             Single.error(NetworkErrorException("Network Error"))
         }
     }
+
+    override fun deleteAlram() {
+
+    }
 }

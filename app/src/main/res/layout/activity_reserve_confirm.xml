@@ -134,14 +134,15 @@
                 <LinearLayout
                     android:id="@+id/ll_timechange"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/bg_unserline"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:paddingTop="24dp"
+                        android:paddingBottom="24dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -152,8 +153,9 @@
                             android:layout_marginStart="20dp"
                             android:layout_weight="9"
                             android:text="예약시간 변경"
-                            android:textColor="@color/color_black"
-                            android:textSize="16dp" />
+                            android:textColor="@color/color_red"
+                            android:textStyle="bold"
+                            android:textSize="20dp" />
 
                         <ImageView
                             android:layout_width="0dp"

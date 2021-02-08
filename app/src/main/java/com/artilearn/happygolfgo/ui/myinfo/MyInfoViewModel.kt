@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.myinfo
 
 import android.accounts.NetworkErrorException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel

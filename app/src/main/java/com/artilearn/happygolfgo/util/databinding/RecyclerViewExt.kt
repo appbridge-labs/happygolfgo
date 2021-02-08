@@ -2,10 +2,14 @@ package com.artilearn.happygolfgo.util.databinding
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.artilearn.happygolfgo.base.BaseRecyclerViewAdapter
+import com.artilearn.happygolfgo.base.Identifiable
+import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.ui.golfgame.GolfGameAdapter
 import com.artilearn.happygolfgo.ui.golfgame.model.GolfGameModel
 import com.artilearn.happygolfgo.ui.golfrank.GolfRankAdapter
 import com.artilearn.happygolfgo.ui.golfrank.model.GolfRankModel
+import com.artilearn.happygolfgo.ui.home.alram.AlramAdapter
 import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterAdapter
 import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCRankModel
 
@@ -35,6 +39,14 @@ fun RecyclerView.bindGolfGameList(list: List<GolfGameModel>?) {
         list?.let { items ->
             this.setItems(items)
         }
+    }
+}
+
+@BindingAdapter("setAlramMessage")
+fun <T : Identifiable> RecyclerView.setAlramItems(list: List<T>?) {
+    if (this.adapter is BaseRecyclerViewAdapter<*>) {
+        val adapter = this.adapter as BaseRecyclerViewAdapter<T>
+        adapter.submitList(list)
     }
 }
 

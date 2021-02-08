@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.data
 
 import android.os.Parcelable
+import com.artilearn.happygolfgo.base.Identifiable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
@@ -54,4 +55,7 @@ data class Ticket(
     @SerializedName("allowToBook")
     @Expose
     var allowToBook: Boolean?
-) : Parcelable
+) : Parcelable, Identifiable {
+    override val identifier: Any
+        get() = id
+}

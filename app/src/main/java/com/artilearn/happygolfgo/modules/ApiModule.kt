@@ -1,9 +1,12 @@
 package com.artilearn.happygolfgo.modules
 
+import com.artilearn.happygolfgo.BuildConfig
 import com.artilearn.happygolfgo.api.ApiInterface
+import com.artilearn.happygolfgo.util.CurrentVersion
 import com.artilearn.happygolfgo.util.PreferenceManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -13,11 +16,22 @@ import java.util.concurrent.TimeUnit
 val apiModule = module {
 
     single {
+        HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
+        }
+    }
+
+    single {
         Interceptor { chain ->
             with(chain) {
                 val request = request().newBuilder()
                     .addHeader("authorization", get<PreferenceManager>().accessToken)
                     .addHeader("platform", "Android")
+                    .addHeader("version", get<CurrentVersion>().version)
                     .build()
                 proceed(request)
             }
@@ -27,6 +41,7 @@ val apiModule = module {
     single {
         OkHttpClient.Builder()
             .addInterceptor(get<Interceptor>())
+            .addInterceptor(get<HttpLoggingInterceptor>())
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)

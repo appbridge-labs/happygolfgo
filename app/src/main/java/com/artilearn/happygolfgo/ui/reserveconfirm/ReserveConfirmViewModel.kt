@@ -31,7 +31,7 @@ class ReserveConfirmViewModel(
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
     private val _status: MutableLiveData<ReservationStatus> = MutableLiveData()
-    private val _plateModel: MutableLiveData<PlateResponse> = MutableLiveData()
+    private val _plateModel: SingleLiveEvent<PlateResponse> = SingleLiveEvent()
     private val _lessonModel: MutableLiveData<LessonResponse> = MutableLiveData()
     private val _policy: MutableLiveData<String> = MutableLiveData()
     private val _unKnowError: SingleLiveEvent<Unit> = SingleLiveEvent()

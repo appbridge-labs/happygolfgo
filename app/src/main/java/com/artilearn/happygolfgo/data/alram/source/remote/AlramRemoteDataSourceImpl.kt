@@ -12,4 +12,8 @@ class AlramRemoteDataSourceImpl(
     override fun remoteGetAlramMessage(): Single<Response<AlramResponse>> {
         return apiInterface.getAlramMessage()
     }
+
+    override fun deleteAlram() {
+
+    }
 }

@@ -18,6 +18,7 @@ import com.artilearn.happygolfgo.ui.home.reservation.ReservationAdapter
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import java.util.*
 
 @BindingAdapter("setTicketType")
@@ -64,8 +65,9 @@ fun ticketCount(
 @BindingAdapter("setTickets", "setScroll")
 fun RecyclerView.setTicketItems(tickes: List<Ticket>?, vm: ReservationViewModel) {
     with(adapter as ReservationAdapter) {
-        this.clear()
-        tickes?.let { this.setItems(it) }
+        tickes?.let {
+            this.submitList(it)
+        }
     }
 
     this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -93,14 +95,6 @@ fun setLessonLogItem(tv: TextView, time: String, coach: String) {
     val logTime = convertTime(time).trim().split(":")
     val text = "${logTime[0]}. ${logTime[1]}. ${logTime[2]} / $coach"
     tv.text = text
-}
-
-@BindingAdapter("setAlramMessage")
-fun RecyclerView.setAlramMessageItems(message: List<Alram>?) {
-    with(adapter as AlramAdapter) {
-        this.clear()
-        message?.let { setItems(it) }
-    }
 }
 
 @BindingAdapter("setAlramDate")

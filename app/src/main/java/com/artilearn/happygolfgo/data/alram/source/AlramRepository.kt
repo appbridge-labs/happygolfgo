@@ -7,4 +7,6 @@ import retrofit2.Response
 interface AlramRepository {
 
     fun getAlramMessage(): Single<Response<AlramResponse>>
+
+    fun deleteAlram()
 }

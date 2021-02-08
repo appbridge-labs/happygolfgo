@@ -6,43 +6,39 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.base.BaseRecyclerViewAdapter
+import com.artilearn.happygolfgo.base.Identifiable
 import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.databinding.ItemHomeAlramBinding
 
+typealias OnAlramItemClick = (Alram) -> Unit
+
 class AlramAdapter(
-    private val itemClick: (Alram) -> Unit
-) : RecyclerView.Adapter<AlramAdapter.AlramHolder>() {
+    private val onItemClick: OnAlramItemClick? = null
+) : BaseRecyclerViewAdapter<Alram>() {
 
-    lateinit var binding: ItemHomeAlramBinding
-    private val items: ArrayList<Alram> = arrayListOf()
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlramHolder {
-        binding = DataBindingUtil.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Alram> {
+        return AlramViewHolder(ItemHomeAlramBinding.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_home_alram,
             parent,
             false
-        )
-
-        return AlramHolder(binding).also {
-            binding.root.setOnClickListener { position ->
-                itemClick(items[it.adapterPosition])
+        )).also {
+            if (onItemClick == null) {
+                return@also
+            } else {
+                it.itemView.setOnClickListener { _ ->
+                    val currentItem = currentList.getOrNull(it.adapterPosition) ?: return@setOnClickListener
+                    onItemClick.invoke(currentItem)
+                }
             }
         }
     }
 
-    override fun onBindViewHolder(holder: AlramHolder, position: Int) {
-        holder.bind(items[position])
-    }
-
-    override fun getItemCount() = items.size
-
-    class AlramHolder(
+    class AlramViewHolder(
         private val binding: ItemHomeAlramBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: Alram) {
-            binding.item = item
+    ) : BaseViewHolder<Alram>(binding) {
+        override fun bind(item: Alram) {
+            super.bind(item)
 
             when (item.eventType) {
                 "3", "4", "6", "7" -> binding.ivArrow.visibility = View.VISIBLE
@@ -50,21 +46,9 @@ class AlramAdapter(
             }
 
             when (item.isRead) {
-                false -> binding.parentLayout.setBackgroundResource(R.drawable.bg_alram_unread)
-                true -> binding.parentLayout.setBackgroundResource(R.drawable.bg_alram_read)
+                false -> binding.root.setBackgroundResource(R.drawable.bg_alram_unread)
+                true -> binding.root.setBackgroundResource(R.drawable.bg_alram_read)
             }
-
-            binding.executePendingBindings()
         }
-    }
-
-    fun setItems(alram: List<Alram>) {
-        this.items.addAll(alram)
-        notifyDataSetChanged()
-    }
-
-    fun clear() {
-        this.items.clear()
-        notifyDataSetChanged()
     }
 }

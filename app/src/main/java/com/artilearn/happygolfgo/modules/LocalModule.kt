@@ -18,6 +18,7 @@ import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSou
 import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSource
 import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSourceImpl
+import com.artilearn.happygolfgo.util.CurrentVersion
 import com.artilearn.happygolfgo.util.PreferenceManager
 import org.koin.dsl.module
 
@@ -42,4 +43,6 @@ val localModule = module {
     single<GameCenterLocalDataSource> { GameCenterLocalDataSourceImpl(get()) }
 
     single<PwAuthLocalDataSource> { PwAuthLocalDataSourceImpl(get()) }
+
+    single { CurrentVersion(get()) }
 }
