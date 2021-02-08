@@ -283,7 +283,7 @@ class ReserveConfirmActivity :
             }
         }
 
-        //binding.reserveConfirmBottomView.bottom_layout.isClickable = false
+        binding.reserveConfirmBottomView.bottom_layout.isClickable = false
     }
 
 }

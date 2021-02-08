@@ -101,7 +101,6 @@ class ReserveConfirmViewModel(
     }
 
     fun reservationPlate() {
-        Log.d(TAG, "call")
         if (ticketId != null && plateAvailabilityId != null) {
             val dataModel = ReservePlateModel(ticketId!!, plateAvailabilityId!!)
             val data = hashMapOf<String, ReservePlateModel>()
@@ -115,11 +114,10 @@ class ReserveConfirmViewModel(
                     .doOnError { t -> errorLog(TAG, t) }
                     .subscribe({ response ->
                         val body = response.body()
-                        Log.d(TAG, "success: $body}")
                         if (response.isSuccessful && body != null) {
                             _reservationPlate.value = body.data.plateReservation
                         } else {
-                            //_buttonClickable.call()
+                            _buttonClickable.call()
                             val erroBody = response.errorBody()
                             if (erroBody == null) {
                                 _serverError.value = "오류로 인한 예약실패"
@@ -139,8 +137,7 @@ class ReserveConfirmViewModel(
                             }
                         }
                     }, { t ->
-                        Log.d(TAG, "fail: $t")
-                        //_buttonClickable.call()
+                        _buttonClickable.call()
                         when (t) {
                             is NetworkErrorException -> _networkFail.value = Unit
                             is HttpException -> {

@@ -27,7 +27,7 @@ class MyInfoRepositoryImpl(
         return if (networkManager.networkState()) {
             myInfoRemoteDataSource.remoteUploadProfile(data)
                 .flatMap {
-                    saveUserInfo(it.data.user)
+                    saveUserInfo(it.data)
                     Single.just(it)
                 }
         } else {
