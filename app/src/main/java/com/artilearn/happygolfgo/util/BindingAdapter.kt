@@ -97,14 +97,6 @@ fun setLessonLogItem(tv: TextView, time: String, coach: String) {
     tv.text = text
 }
 
-@BindingAdapter("setAlramMessage")
-fun RecyclerView.setAlramMessageItems(message: List<Alram>?) {
-    with(adapter as AlramAdapter) {
-        this.clear()
-        message?.let { setItems(it) }
-    }
-}
-
 @BindingAdapter("setAlramDate")
 fun setAlramDate(tv: TextView, time: String) {
     val long = convertStringtoLong(time)

@@ -12,23 +12,30 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import retrofit2.HttpException
 
 class AlramViewModel(
     private val repository: AlramRepository
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
+
+    private val _deleteSubject: PublishSubject<Unit> = PublishSubject.create()
+
     private val _emptyAlramMessage: MutableLiveData<Boolean> = MutableLiveData()
-    private val _alramMessages: MutableLiveData<ArrayList<Alram>> = MutableLiveData()
+    private val _alramMessages: MutableLiveData<List<Alram>> = MutableLiveData()
 
     val emptyAlramMessage: LiveData<Boolean>
         get() = _emptyAlramMessage
 
-    val alramMessages: LiveData<ArrayList<Alram>>
+    val alramMessages: LiveData<List<Alram>>
         get() = _alramMessages
 
     init {
         requestMessage()
+
+        _deleteSubject.subscribe { repository.deleteAlram() }
+            .addTo(compositeDisposable)
     }
 
     private fun requestMessage() {
@@ -43,7 +50,7 @@ class AlramViewModel(
                 if (it.isSuccessful && body != null) {
                     if (body.data.notifications.isNotEmpty()) {
                         hideEmptyAlramMessage()
-                        _alramMessages.value = body.data.notifications as ArrayList<Alram>
+                        _alramMessages.value = body.data.notifications
                     } else {
                         showEmptyAlramMessage()
                     }
@@ -69,4 +76,6 @@ class AlramViewModel(
     private fun hideEmptyAlramMessage() {
         _emptyAlramMessage.value = false
     }
+
+    fun deleteToAlram() = _deleteSubject.onNext(Unit)
 }

@@ -96,9 +96,6 @@ class ReservationViewModel(
                     if (body != null && body.data.tickets.isNotEmpty()) {
                         hideEmptyTicket()
                         _tickets.value = body.data.tickets as ArrayList<Ticket>
-                        body.data.tickets.forEach {
-                            Log.d(TAG, "getTicket: $it")
-                        }
                     } else {
                         showEmptyTicket()
                     }
