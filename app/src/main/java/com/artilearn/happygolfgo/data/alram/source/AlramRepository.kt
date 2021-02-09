@@ -9,4 +9,6 @@ interface AlramRepository {
     fun getAlramMessage(): Single<Response<AlramResponse>>
 
     fun deleteAlram()
+
+    fun deleteAll()
 }

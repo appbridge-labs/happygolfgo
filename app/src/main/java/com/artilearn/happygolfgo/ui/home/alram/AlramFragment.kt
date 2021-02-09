@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.home.alram
 
 import android.content.Intent
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import com.artilearn.happygolfgo.base.BaseSwipeDelete
 import com.artilearn.happygolfgo.constants.LESSON_ID
 import com.artilearn.happygolfgo.constants.PLATE_ID
 import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
+import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.databinding.FragmentAlramBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.log.LogActivity
@@ -30,6 +32,7 @@ class AlramFragment
         initBinding()
         initViewModelObserving()
         initAdapter()
+        setHasOptionsMenu(true)
     }
 
     private fun initBinding() {
@@ -63,17 +66,17 @@ class AlramFragment
             recyclerview.itemAnimator = SlideInUpAnimator().apply {
                 addDuration = 300
             }
-            //swipeToDelete(recyclerview)
+            swipeToDelete(recyclerview)
             recyclerview.adapter = adapter
         }
     }
 
+    //todo 삭제 API 추가되면 활성화
     private fun swipeToDelete(rv: RecyclerView) {
         val swipeCallback = object : BaseSwipeDelete() {
             override fun onSwipe(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                // 삭제 API 추가되면 활성화
-//                val currentItem = adapter.currentList[viewHolder.adapterPosition]
-//                viewModel.deleteToAlram()
+                val currentItem = adapter.currentList[viewHolder.adapterPosition]
+                viewModel.deleteToAlram()
                 val testList = adapter.currentList.toMutableList()
                 val deleteItem = testList[viewHolder.adapterPosition]
                 testList.remove(deleteItem)
@@ -109,6 +112,22 @@ class AlramFragment
                 putExtra(LESSON_ID, lessonId)
             }
         startActivity(logIntent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_alram, menu)
+    }
+
+    //todo 삭제 API 추가되면 활성화 II
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_delete_all) {
+            viewModel.deleteAll()
+            val testList = adapter.currentList.toMutableList()
+            testList.removeAll { true }
+            adapter.submitList(testList)
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
 }

@@ -15,7 +15,6 @@ import com.artilearn.happygolfgo.constants.PLATE_ID
 import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.ui.home.alram.AlramFragment
-import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterFragment
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageFragment
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationFragment
 import com.artilearn.happygolfgo.ui.log.LogActivity
@@ -41,6 +40,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         initViewModelObserving()
         initView()
         bottomNavigationListener()
+        setSupportActionBar((binding.homeToolbar.toolbar))
     }
 
     private fun initBinding() {
@@ -88,6 +88,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
                 fragment = ReservationFragment()
                 loadFragment(fragment)
+
             }
 //            HomeViewModel.BottomNavigationEvent.GAME_CENTER -> {
 //                initToolbar(binding.homeToolbar.toolbar, getString(R.string.gamecenter_toolbar_title), false)

@@ -16,4 +16,8 @@ class AlramRemoteDataSourceImpl(
     override fun deleteAlram() {
 
     }
+
+    override fun deleteAll() {
+
+    }
 }

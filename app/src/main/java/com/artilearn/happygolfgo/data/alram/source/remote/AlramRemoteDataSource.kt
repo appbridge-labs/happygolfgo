@@ -9,4 +9,6 @@ interface AlramRemoteDataSource {
     fun remoteGetAlramMessage(): Single<Response<AlramResponse>>
 
     fun deleteAlram()
+
+    fun deleteAll()
 }

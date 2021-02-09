@@ -21,6 +21,7 @@ class AlramViewModel(
     private val TAG = javaClass.simpleName
 
     private val _deleteSubject: PublishSubject<Unit> = PublishSubject.create()
+    private val _deleteAllSubject: PublishSubject<Unit> = PublishSubject.create()
 
     private val _emptyAlramMessage: MutableLiveData<Boolean> = MutableLiveData()
     private val _alramMessages: MutableLiveData<List<Alram>> = MutableLiveData()
@@ -35,6 +36,9 @@ class AlramViewModel(
         requestMessage()
 
         _deleteSubject.subscribe { repository.deleteAlram() }
+            .addTo(compositeDisposable)
+
+        _deleteAllSubject.subscribe { repository.deleteAll(); showEmptyAlramMessage() }
             .addTo(compositeDisposable)
     }
 
@@ -78,4 +82,5 @@ class AlramViewModel(
     }
 
     fun deleteToAlram() = _deleteSubject.onNext(Unit)
+    fun deleteAll() = _deleteAllSubject.onNext(Unit)
 }

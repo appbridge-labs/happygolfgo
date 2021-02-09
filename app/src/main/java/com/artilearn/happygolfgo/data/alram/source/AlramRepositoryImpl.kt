@@ -31,4 +31,8 @@ class AlramRepositoryImpl(
     override fun deleteAlram() {
 
     }
+
+    override fun deleteAll() {
+
+    }
 }

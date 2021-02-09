@@ -156,4 +156,5 @@
     <string name="golf_game_score_toolbar_title">골프력 게임 스코어</string>
     <string name="tickettime_dont_reservation">예약불가</string>
     <string name="mypage_branch_change">훈련소 지점 변경</string>
+    <string name="menu_alram_toolbar_title">전체삭제</string>
 </resources>
