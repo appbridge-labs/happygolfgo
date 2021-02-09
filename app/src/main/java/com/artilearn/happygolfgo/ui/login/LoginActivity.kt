@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.ui.login
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
@@ -16,6 +17,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private val viewModel: LoginViewModel by viewModel()
+    private val loginBottomView by lazy(::LoginBottomFragment)
+    private val devOptionView by lazy(::DeveloperOptionFragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +26,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         initBinding()
         initViewModelObserve()
         initTextListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loginBottomView.show(supportFragmentManager, loginBottomView.tag)
     }
 
     private fun initBinding() {
@@ -41,7 +49,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 goPasswordAuth()
             })
             developerOption.observe(this@LoginActivity, Observer {
-                openDeveloperOption()
+                devOptionView.show(supportFragmentManager, devOptionView.tag)
             })
             loginType.observe(this@LoginActivity, Observer {
                 when (loginType.value) {
@@ -90,9 +98,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         startActivity(Intent(this, PwAuthActivity::class.java))
     }
 
-    private fun openDeveloperOption() {
-        val bottom = DeveloperOptionFragment()
-        bottom.show(supportFragmentManager, bottom.tag)
+    override fun onBackPressed() {
+        showToast(ToastType.ERROR, "sibal")
     }
-
 }
