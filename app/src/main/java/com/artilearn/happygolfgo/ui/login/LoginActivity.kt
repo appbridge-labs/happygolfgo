@@ -12,6 +12,7 @@ import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.common.DeveloperOptionFragment
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
+import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
@@ -55,7 +56,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 showToast(ToastType.ERROR, it)
             })
             forgetPassword.observe(this@LoginActivity, Observer {
-                goPasswordAuth()
+                //goPasswordAuth()
+                startActivity(Intent(this@LoginActivity, PwResetActivity::class.java))
             })
             developerOption.observe(this@LoginActivity, Observer {
                 devOptionView.show(supportFragmentManager, devOptionView.tag)
