@@ -10,13 +10,17 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import com.artilearn.happygolfgo.BR
 import com.artilearn.happygolfgo.base.BaseBottomSheetFragment
 import com.artilearn.happygolfgo.databinding.FragmentBottomLoginBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_bottom_login.view.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginBottomFragment : BaseBottomSheetFragment() {
-
+    private val viewModel: LoginViewModel by sharedViewModel()
     private val args by lazy {
         arguments?.getStringArrayList("test")
     }
@@ -35,13 +39,10 @@ class LoginBottomFragment : BaseBottomSheetFragment() {
     ): View {
         _binding = FragmentBottomLoginBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
+        binding.setVariable(BR.viewModel, viewModel)
 
         args?.let {
             createTextView(it)
-        }
-
-        binding.root.setOnClickListener {
-            dismiss()
         }
 
         return binding.root
@@ -62,6 +63,11 @@ class LoginBottomFragment : BaseBottomSheetFragment() {
                 textSize = 30.0f
                 setTextColor(Color.WHITE)
                 setPadding(0, 4, 0, 4)
+                setOnClickListener {
+                    viewModel.branchIdClick(text.toString())
+                    Toast.makeText(this@LoginBottomFragment.context, "$text click", Toast.LENGTH_SHORT).show()
+                    dismiss()
+                }
             }
 
             addLayout(tv)

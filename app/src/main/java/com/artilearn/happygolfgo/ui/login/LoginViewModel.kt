@@ -147,6 +147,10 @@ class LoginViewModel(
             }).addTo(compositeDisposable)
     }
 
+    fun branchIdClick(branch: String) {
+        println("$branch click")
+    }
+
     enum class ButtonClickType {
         LOGIN,
         FORGET_PASSWORD

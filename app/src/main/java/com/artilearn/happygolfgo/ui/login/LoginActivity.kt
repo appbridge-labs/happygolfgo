@@ -56,8 +56,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 showToast(ToastType.ERROR, it)
             })
             forgetPassword.observe(this@LoginActivity, Observer {
-                //goPasswordAuth()
-                startActivity(Intent(this@LoginActivity, PwResetActivity::class.java))
+                goPasswordAuth()
             })
             developerOption.observe(this@LoginActivity, Observer {
                 devOptionView.show(supportFragmentManager, devOptionView.tag)
