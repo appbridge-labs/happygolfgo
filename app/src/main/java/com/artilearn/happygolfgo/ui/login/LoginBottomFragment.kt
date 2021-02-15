@@ -1,39 +1,46 @@
 package com.artilearn.happygolfgo.ui.login
 
+import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import com.artilearn.happygolfgo.base.BaseBottomSheetFragment
 import com.artilearn.happygolfgo.databinding.FragmentBottomLoginBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.fragment_bottom_login.view.*
 
 class LoginBottomFragment : BaseBottomSheetFragment() {
 
-//    private lateinit var callback: OnBackPressedCallback
-//
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        println("onAttach")
-//        callback = object : OnBackPressedCallback(false) {
-//            override fun handleOnBackPressed() {
-//                println("nope nope")
-//            }
-//        }
-//
-//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-//    }
+    private val args by lazy {
+        arguments?.getStringArrayList("test")
+    }
+
+    private val layoutParams by lazy {
+        LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        println("onCreateView")
-       _binding = FragmentBottomLoginBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentBottomLoginBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
 
+        args?.let {
+            createTextView(it)
+        }
+
         binding.root.setOnClickListener {
-            println("dismiss")
             dismiss()
         }
 
@@ -42,18 +49,48 @@ class LoginBottomFragment : BaseBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        println("onViewCreated")
         dialog?.let {
             it.setCanceledOnTouchOutside(false)
             it.setCancelable(true)
         }
     }
 
+    private fun createTextView(items: ArrayList<String>) {
+        for (i in items.indices) {
+            val tv = TextView(this.context).apply {
+                text = items[i]
+                textSize = 30.0f
+                setTextColor(Color.WHITE)
+                setPadding(0, 4, 0, 4)
+            }
+
+            addLayout(tv)
+        }
+    }
+
+    private fun addLayout(tv: TextView) {
+        layoutParams.apply {
+            gravity = Gravity.CENTER
+            bottomMargin = 10
+            topMargin = 10
+        }
+
+        tv.layoutParams = layoutParams
+
+        binding.root.linear_layout.addView(tv)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        println("destroy")
         _binding = null
-        //callback.remove()
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return object : BottomSheetDialog(requireContext(), theme) {
+            override fun onBackPressed() {
+                Toast.makeText(this@LoginBottomFragment.context, "you don't go back", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 }

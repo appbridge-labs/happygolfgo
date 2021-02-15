@@ -17,5 +17,4 @@ open class BaseBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
-
 }
