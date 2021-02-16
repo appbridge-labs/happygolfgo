@@ -21,6 +21,7 @@ import com.artilearn.happygolfgo.ui.reservelist.fragment.ReserveLessonViewModel
 import com.artilearn.happygolfgo.ui.reservelist.fragment.ReservePlateViewModel
 import com.artilearn.happygolfgo.ui.splash.SplashViewModel
 import com.artilearn.happygolfgo.ui.ticketdate.TicketDateViewModel
+import com.artilearn.happygolfgo.ui.ticketmanager.TicketManagerViewModel
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeViewModel
 import com.artilearn.happygolfgo.ui.tutorial.TutorialViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -73,5 +74,7 @@ val viewModelModule = module {
     viewModel { DeveloperOptionViewModel(get()) }
 
     viewModel { GolfGameViewModel(get()) }
+
+    viewModel { TicketManagerViewModel() }
 
 }

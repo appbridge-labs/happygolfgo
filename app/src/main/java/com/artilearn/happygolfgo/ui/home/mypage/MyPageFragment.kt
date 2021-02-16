@@ -1,10 +1,8 @@
 package com.artilearn.happygolfgo.ui.home.mypage
 
-import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.view.View
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
@@ -16,6 +14,7 @@ import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
+import com.artilearn.happygolfgo.ui.ticketmanager.TicketManagerActivity
 import kotlinx.android.synthetic.main.common_view.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -81,6 +80,7 @@ class MyPageFragment
             includeRecord.setOnClickListener { goLessonLog() }
             includeLogout.setOnClickListener { viewModel.logout() }
             includePassword.setOnClickListener { goPwAuth() }
+            includeTicket.setOnClickListener { goTicketManager() }
         }
     }
 
@@ -118,6 +118,10 @@ class MyPageFragment
 
     private fun goLessonLog() {
         startActivity(Intent(activity, LessonPostListActivity::class.java))
+    }
+
+    private fun  goTicketManager() {
+        startActivity(Intent(activity, TicketManagerActivity::class.java))
     }
 
 }
