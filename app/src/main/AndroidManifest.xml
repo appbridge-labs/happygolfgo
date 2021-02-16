@@ -13,10 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.golfrank.GolfRankActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.golfgame.GolfGameActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ticketmanager.TicketManagerActivity"></activity>
+        <activity
+            android:name=".ui.golfrank.GolfRankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.golfgame.GolfGameActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.comment.CommentActivity"
             android:screenOrientation="portrait"
