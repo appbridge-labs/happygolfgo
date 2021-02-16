@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.ticketmanager
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
@@ -40,10 +41,17 @@ class TicketManagerActivity : BaseActivity<ActivityTicketManagerBinding>(
 
     private fun initFragment(position: Int) {
         when (position) {
-            0 -> supportFragmentManager.beginTransaction().replace(R.id.frame_layout, useFragment).commit()
-            1 -> supportFragmentManager.beginTransaction().replace(R.id.frame_layout, overFragment).commit()
-            2 -> supportFragmentManager.beginTransaction().replace(R.id.frame_layout, historyFragment).commit()
+            0 -> setFragment(useFragment)
+            1 -> setFragment(overFragment)
+            2 -> setFragment(historyFragment)
             else -> throw IndexOutOfBoundsException("Not Found TicketManager Position: $position")
+        }
+    }
+
+    private fun setFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().run {
+            setCustomAnimations(R.anim.from_up_in, R.anim.from_up_out)
+            replace(R.id.frame_layout, fragment).commit()
         }
     }
 
