@@ -4,6 +4,7 @@ import android.accounts.NetworkErrorException
 import com.artilearn.happygolfgo.data.version.LogoutModel
 import com.artilearn.happygolfgo.data.version.VersionResponse
 import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSource
+import com.artilearn.happygolfgo.data.version.source.model.MyPageLocalModel
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
 import com.artilearn.happygolfgo.util.PreferenceManager
@@ -16,15 +17,6 @@ class VersionRepositoryImpl(
     private val preferenceManager: PreferenceManager,
     private val networkManager: NetworkManager
 ) : VersionRepository {
-
-    override val name: String
-        get() = preferenceManager.name
-
-    override val nickName: String?
-        get() = preferenceManager.nickName
-
-    override val profileImage: String?
-        get() = preferenceManager.profileImageURL
 
     override fun getAppVersion(
         platform: Int,
@@ -50,5 +42,9 @@ class VersionRepositoryImpl(
         } else {
             Completable.error(NetworkErrorException("Network Error"))
         }
+    }
+
+    override fun getMypageData(): MyPageLocalModel {
+        return versionLocalDataSource.getMypageData()
     }
 }

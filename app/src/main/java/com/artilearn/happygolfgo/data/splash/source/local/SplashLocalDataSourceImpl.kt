@@ -54,6 +54,12 @@ class SplashLocalDataSourceImpl(
             preferenceManager.fcmToken = value
         }
 
+    override var checkinId: String
+        get() = preferenceManager.checkinId
+        set(value) {
+            preferenceManager.checkinId = value
+        }
+
     override fun deleteUser() {
         return preferenceManager.userLogout()
     }

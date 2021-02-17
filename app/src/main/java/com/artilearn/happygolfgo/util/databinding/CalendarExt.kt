@@ -32,6 +32,7 @@ fun CalendarView.bindDays(
         availableList.addAll(setServerDates(it))
         setDisabledDays(availableList)
         visibility = View.VISIBLE
+
         setCalendarDayLayout(R.layout.custom_calendar_day)
     }
 

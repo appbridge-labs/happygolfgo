@@ -5,10 +5,11 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.version.LogoutModel
 import com.artilearn.happygolfgo.data.version.source.VersionRepository
+import com.artilearn.happygolfgo.ui.home.mypage.mapper.MyPageMapper
+import com.artilearn.happygolfgo.ui.home.mypage.model.MyPage
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
 import com.artilearn.happygolfgo.util.getWidevineID
@@ -26,12 +27,16 @@ class MyPageViewModel(
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
     private val _appUpdate: Subject<Unit> = PublishSubject.create()
+    private val _myPageData: SingleLiveEvent<MyPage> = SingleLiveEvent()
 
     private val _eventType: SingleLiveEvent<MyPageStateType> = SingleLiveEvent()
     private val _message = SingleLiveEvent<String>()
     private val _appVersion = SingleLiveEvent<String>()
-    private val _text: MutableLiveData<String> = MutableLiveData()
-    private val _image: MutableLiveData<String> = MutableLiveData()
+
+    private val mapper: MyPageMapper = MyPageMapper
+
+    val myPageData: LiveData<MyPage>
+        get() = _myPageData
 
     val message: LiveData<String>
         get() = _message
@@ -42,18 +47,13 @@ class MyPageViewModel(
     val appVersion: LiveData<String>
         get() = _appVersion
 
-    val text: LiveData<String>
-        get() = _text
-
-    val image: LiveData<String>
-        get() = _image
-
     private var packageInfo: PackageInfo? = null
 
     init {
         bindRx()
         getAppVersion()
-        initSetBinding()
+
+        _myPageData.value = mapper.myPageMapper(repository.getMypageData())
     }
 
     fun appUpdateOnNext() {
@@ -83,13 +83,6 @@ class MyPageViewModel(
                     else -> _message.value = "알 수 없는 오류 발생"
                 }
             }).addTo(compositeDisposable)
-    }
-
-    private fun initSetBinding() {
-        val pair = Pair(repository.name, " (${repository.nickName})")
-        _text.value = pair.first + pair.second
-
-        _image.value = repository.profileImage
     }
 
     private fun getAppVersion() {

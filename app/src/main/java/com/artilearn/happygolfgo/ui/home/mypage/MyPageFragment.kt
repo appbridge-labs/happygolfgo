@@ -60,6 +60,7 @@ class MyPageFragment
         }
     }
 
+    //todo 티켓관리 xml 배포 전 추가할 것인지 냅둘 것인지 판단
     private fun initView() {
         with(binding) {
             includeInfor.tv_text.text = getString(R.string.mypage_info_change)

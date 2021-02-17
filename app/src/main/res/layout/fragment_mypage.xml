@@ -42,7 +42,7 @@
                         android:layout_height="80dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        bind:onBindProfile="@{vm.image}"
+                        bind:onBindProfile="@{vm.myPageData.profileImage}"
                         tools:srcCompat="@drawable/ic_rating_star" />
 
                     <!--                    <ImageView-->
@@ -70,7 +70,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="@{vm.text}"
+                            android:text="@{vm.myPageData.nameAndNickName}"
                             android:textColor="@color/color_black"
                             android:textSize="24dp"
                             android:textStyle="bold"
@@ -83,6 +83,7 @@
                             android:layout_marginTop="4dp"
                             android:ellipsize="end"
                             android:maxLines="1"
+                            android:text="@{vm.myPageData.checkinId}"
                             android:textColor="@color/color_black"
                             android:textSize="14dp"
                             tools:text="checkin id: 0000" />
