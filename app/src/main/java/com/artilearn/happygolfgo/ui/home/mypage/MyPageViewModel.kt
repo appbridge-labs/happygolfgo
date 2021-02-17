@@ -52,7 +52,9 @@ class MyPageViewModel(
     init {
         bindRx()
         getAppVersion()
+    }
 
+    fun loadMyInfo() {
         _myPageData.value = mapper.myPageMapper(repository.getMypageData())
     }
 

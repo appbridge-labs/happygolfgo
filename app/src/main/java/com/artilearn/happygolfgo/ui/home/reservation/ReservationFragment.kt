@@ -71,7 +71,13 @@ class ReservationFragment
             }
         }
 
-        binding.recyclerview.adapter = adapter
+        with(binding) {
+            recyclerview.itemAnimator = SlideInUpAnimator().apply {
+                addDuration = 300
+            }
+            recyclerview.adapter = adapter
+        }
+        //binding.recyclerview.adapter = adapter
     }
 
     private fun initSwipeRefresh() {

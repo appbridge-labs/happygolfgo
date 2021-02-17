@@ -125,4 +125,9 @@ class MyPageFragment
         startActivity(Intent(activity, TicketManagerActivity::class.java))
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.loadMyInfo()
+    }
+
 }
