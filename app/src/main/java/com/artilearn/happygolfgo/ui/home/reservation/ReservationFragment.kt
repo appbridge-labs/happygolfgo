@@ -53,7 +53,7 @@ class ReservationFragment
             message.observe(this@ReservationFragment, Observer {
                 showFragmentToast(ToastType.WARNNING, it)
             })
-            appRefresh.observe(this@ReservationFragment, Observer {
+            appRefresh.observe(viewLifecycleOwner, Observer {
                 goRefreshFromFragment()
             })
         }

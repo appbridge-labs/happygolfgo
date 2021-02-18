@@ -1,14 +1,12 @@
 package com.artilearn.happygolfgo.ui.home.alram
 
 import android.accounts.NetworkErrorException
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.data.alram.source.AlramRepository
 import com.artilearn.happygolfgo.util.ext.errorLog
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers

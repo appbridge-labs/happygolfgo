@@ -141,4 +141,7 @@ dependencies {
     // rv anim
     implementation 'jp.wasabeef:recyclerview-animators:4.0.0'
 
+    // rx permission
+    implementation 'gun0912.ted:tedpermission-rx2:2.2.2'
+
 }

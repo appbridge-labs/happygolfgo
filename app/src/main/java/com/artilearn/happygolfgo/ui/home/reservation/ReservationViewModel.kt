@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.ui.home.reservation
 
 import android.accounts.NetworkErrorException
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.R

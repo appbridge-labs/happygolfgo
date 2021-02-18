@@ -11,7 +11,6 @@ import io.reactivex.subjects.Subject
 import java.util.concurrent.TimeUnit
 
 class HomeViewModel : BaseViewModel() {
-    private val TAG = javaClass.simpleName
     private val bottomNavigation: Subject<BottomNavigationEvent> = PublishSubject.create()
     private val backPressed: Subject<Unit> = PublishSubject.create()
     private val fcmTypeSubject: Subject<String> = BehaviorSubject.create()
