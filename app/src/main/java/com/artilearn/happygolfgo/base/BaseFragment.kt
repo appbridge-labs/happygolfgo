@@ -17,11 +17,13 @@ import com.artilearn.happygolfgo.ui.common.ErrorActivity
 import com.artilearn.happygolfgo.ui.common.NetworkErrorActivity
 import com.artilearn.happygolfgo.ui.splash.SplashActivity
 import es.dmoral.toasty.Toasty
+import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     @LayoutRes val layoutId: Int
 ) : Fragment() {
 
+    protected val compositeDisposable = CompositeDisposable()
     protected lateinit var binding: B
     protected abstract val viewModel: VM
 
@@ -74,6 +76,11 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     protected fun goRefreshFromFragment() {
         val intent = Intent(activity, SplashActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        compositeDisposable.clear()
+        super.onDestroyView()
     }
 
 }

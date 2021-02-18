@@ -13,6 +13,7 @@ import com.artilearn.happygolfgo.ui.home.mypage.model.MyPage
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
 import com.artilearn.happygolfgo.util.getWidevineID
+import com.tedpark.tedpermission.rx2.TedRx2Permission
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
@@ -27,6 +28,8 @@ class MyPageViewModel(
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
     private val _appUpdate: Subject<Unit> = PublishSubject.create()
+    private val _permissionSubject = PublishSubject.create<MyPageStateType>()
+
     private val _myPageData: SingleLiveEvent<MyPage> = SingleLiveEvent()
 
     private val _eventType: SingleLiveEvent<MyPageStateType> = SingleLiveEvent()
@@ -117,6 +120,8 @@ class MyPageViewModel(
         }
     }
 
+    fun onProfileClick() = _permissionSubject.onNext(MyPageStateType.PERMISSION)
+
     private fun loadCurrentAppVersion(): String? {
         try {
             packageInfo = koinContext.packageManager
@@ -133,13 +138,18 @@ class MyPageViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { _eventType.value = MyPageStateType.PLAY_STORE }
             .addTo(compositeDisposable)
+
+        _permissionSubject.throttleFirst(1, TimeUnit.SECONDS)
+            .subscribe { _eventType.value = MyPageStateType.PERMISSION }
+            .addTo(compositeDisposable)
     }
 
     enum class MyPageStateType {
         NECESSARY_UPDATE,
         NEED_UPDATE,
         LOGOUT,
-        PLAY_STORE
+        PLAY_STORE,
+        PERMISSION
     }
 
 }

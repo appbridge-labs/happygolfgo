@@ -43,16 +43,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         bind:onBindProfile="@{vm.myPageData.profileImage}"
+                        bind:onClick="@{() -> vm.onProfileClick()}"
                         tools:srcCompat="@drawable/ic_rating_star" />
 
-                    <!--                    <ImageView-->
-                    <!--                        android:id="@+id/iv_profile_add"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginBottom="6dp"-->
-                    <!--                        app:layout_constraintBottom_toBottomOf="@id/iv_profile"-->
-                    <!--                        app:layout_constraintEnd_toEndOf="@id/iv_profile"-->
-                    <!--                        app:srcCompat="@drawable/ic_home_mypage_image_add" />-->
+                    <ImageView
+                        android:id="@+id/iv_profile_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_profile"
+                        app:layout_constraintEnd_toEndOf="@id/iv_profile"
+                        app:srcCompat="@drawable/ic_home_mypage_image_add" />
 
                     <LinearLayout
                         android:layout_width="0dp"
