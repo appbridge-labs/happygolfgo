@@ -34,3 +34,5 @@ const val PLAY_STORE = "https://play.google.com/store/apps/details?id=com.artile
 const val PASSWORD_REGEX = "^[A-Za-z0-9+]{8,20}\$"
 const val PLATE_TIME_CHANGE = "plate_time_change"
 const val CHECK_IN_ID = "CHECK_IN_ID"
+const val REQUEST_KEY = "REQUEST_KEY"
+const val BUNDLE_KEY = "BUNDEL_KEY"

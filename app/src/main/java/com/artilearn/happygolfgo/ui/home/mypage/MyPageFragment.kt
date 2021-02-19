@@ -4,11 +4,15 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
+import com.artilearn.happygolfgo.constants.BUNDLE_KEY
 import com.artilearn.happygolfgo.constants.PLAY_STORE
+import com.artilearn.happygolfgo.constants.REQUEST_KEY
 import com.artilearn.happygolfgo.databinding.FragmentMypageBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
@@ -25,6 +29,7 @@ class MyPageFragment
     : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
 
     override val viewModel: MyPageViewModel by viewModel()
+    private val profileChangeFragment by lazy(::MyPageBottomFragment)
 
     override fun init() {
 
@@ -32,6 +37,7 @@ class MyPageFragment
         initViewModelObserving()
         initView()
         initClickListener()
+        resultListener()
     }
 
     private fun initBinding() {
@@ -138,17 +144,28 @@ class MyPageFragment
             .request()
             .subscribe({ result ->
                 if (result.isGranted) {
-                    showFragmentToast(ToastType.SUCCESS, "ok")
-                } else {
-                    showFragmentToast(ToastType.SUCCESS, "need permission")
+                    profileChangeFragment.show(parentFragmentManager, profileChangeFragment.tag)
                 }
-            }, {
-                showFragmentToast(ToastType.SUCCESS, "fail")
-            }).addTo(compositeDisposable)
+            }, {})
+            .addTo(compositeDisposable)
+    }
+
+    private fun resultListener() {
+        setFragmentResultListener(REQUEST_KEY) { key, bundle ->
+            if (bundle.getBoolean(BUNDLE_KEY)) {
+                println("갤러리로 이동")
+                goGallery()
+            }
+        }
     }
 
     private fun goGallery() {
-
+        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            // Handle the returned Uri
+        }
+//        val intent = Intent(Intent.ACTION_PICK)
+//        intent.type = "image/*"
+//        this.startActivityForResult(intent, 1)
     }
 
     override fun onStart() {

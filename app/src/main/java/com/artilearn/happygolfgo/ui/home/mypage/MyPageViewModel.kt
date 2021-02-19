@@ -13,7 +13,6 @@ import com.artilearn.happygolfgo.ui.home.mypage.model.MyPage
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
 import com.artilearn.happygolfgo.util.getWidevineID
-import com.tedpark.tedpermission.rx2.TedRx2Permission
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
@@ -28,10 +27,12 @@ class MyPageViewModel(
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
     private val _appUpdate: Subject<Unit> = PublishSubject.create()
-    private val _permissionSubject = PublishSubject.create<MyPageStateType>()
+    private val _profileClickSubject: Subject<Unit> = PublishSubject.create()
+    private val _bottomState: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val bottomState: LiveData<Boolean>
+        get() = _bottomState
 
     private val _myPageData: SingleLiveEvent<MyPage> = SingleLiveEvent()
-
     private val _eventType: SingleLiveEvent<MyPageStateType> = SingleLiveEvent()
     private val _message = SingleLiveEvent<String>()
     private val _appVersion = SingleLiveEvent<String>()
@@ -53,8 +54,15 @@ class MyPageViewModel(
     private var packageInfo: PackageInfo? = null
 
     init {
-        bindRx()
         getAppVersion()
+
+        _appUpdate.throttleFirst(1000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { _eventType.value = MyPageStateType.PLAY_STORE }
+            .addTo(compositeDisposable)
+
+        _profileClickSubject.subscribe { _eventType.value = MyPageStateType.PERMISSION }
+            .addTo(compositeDisposable)
     }
 
     fun loadMyInfo() {
@@ -90,17 +98,32 @@ class MyPageViewModel(
             }).addTo(compositeDisposable)
     }
 
+    fun onProfileClick() = _profileClickSubject.onNext(Unit)
+
+    fun onGalleryCancel() {
+        _bottomState.value = false
+    }
+
+    fun onGallery() {
+        _bottomState.value = true
+    }
+
     private fun getAppVersion() {
         repository.getAppVersion()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
-                _appVersion.value = loadCurrentAppVersion()
+                setVersion()
                 compareAppVersion(it.data.latestVersion)
             }, {
-                _appVersion.value = loadCurrentAppVersion()
+                setVersion()
             }).addTo(compositeDisposable)
+    }
+
+    private fun setVersion() {
+        val version = loadCurrentAppVersion() ?: "0.0.0"
+        _appVersion.value = version
     }
 
     private fun compareAppVersion(version: String?) {
@@ -120,8 +143,6 @@ class MyPageViewModel(
         }
     }
 
-    fun onProfileClick() = _permissionSubject.onNext(MyPageStateType.PERMISSION)
-
     private fun loadCurrentAppVersion(): String? {
         try {
             packageInfo = koinContext.packageManager
@@ -131,17 +152,6 @@ class MyPageViewModel(
         }
 
         return packageInfo?.versionName
-    }
-
-    private fun bindRx() {
-        _appUpdate.throttleFirst(1000, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { _eventType.value = MyPageStateType.PLAY_STORE }
-            .addTo(compositeDisposable)
-
-        _permissionSubject.throttleFirst(1, TimeUnit.SECONDS)
-            .subscribe { _eventType.value = MyPageStateType.PERMISSION }
-            .addTo(compositeDisposable)
     }
 
     enum class MyPageStateType {

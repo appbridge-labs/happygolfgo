@@ -1,47 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.artilearn.happygolfgo.ui.home.mypage.MyPageViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
 
         <TextView
-            android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
+            android:layout_marginTop="4dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:text="프로필 설정"
             android:textColor="@color/color_lucky_gray"
-            android:text="프로필 설정" />
+            android:textSize="16dp" />
 
         <View
-            android:layout_marginTop="6dp"
-            android:background="@drawable/bg_unserline"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_unserline" />
 
         <TextView
-            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="앨범에서 사진 선택"
+            android:textColor="@color/color_blue"
             android:textSize="24dp"
             android:textStyle="bold"
-            android:textColor="@color/color_blue"
-            android:text="앨범에서 사진 선택" />
+            bind:onClick="@{() -> viewModel.onGallery()}" />
 
         <Button
-            android:background="@drawable/home_reservation_button"
-            android:layout_marginTop="30dp"
-            android:textSize="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/home_reservation_button"
+            android:text="취소"
             android:textColor="@color/color_white"
-            android:text="취소" />
+            android:textSize="16dp"
+            bind:onClick="@{() -> viewModel.onGalleryCancel()}" />
 
 
     </LinearLayout>
