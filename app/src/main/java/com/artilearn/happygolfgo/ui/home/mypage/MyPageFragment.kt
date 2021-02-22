@@ -1,6 +1,8 @@
 package com.artilearn.happygolfgo.ui.home.mypage
 
 import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Intent
 import android.net.Uri
 import android.view.View
@@ -21,6 +23,7 @@ import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
+import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.ui.ticketmanager.TicketManagerActivity
 import com.tedpark.tedpermission.rx2.TedRx2Permission
 import io.reactivex.rxkotlin.addTo
@@ -32,6 +35,17 @@ class MyPageFragment
 
     override val viewModel: MyPageViewModel by viewModel()
     private val profileChangeFragment by lazy(::MyPageBottomFragment)
+//    val requestActivity = registerForActivityResult(
+//        ActivityResultContracts.StartActivityForResult()
+//    ) { activityResult ->
+//
+//    }
+//
+//    val requestPermission = registerForActivityResult(
+//        ActivityResultContracts.RequestPermission()
+//    ) { isGranted ->
+//        println("success: $isGranted")
+//    }
 
     override fun init() {
 
@@ -39,7 +53,6 @@ class MyPageFragment
         initViewModelObserving()
         initView()
         initClickListener()
-        resultListener()
     }
 
     private fun initBinding() {
@@ -140,35 +153,22 @@ class MyPageFragment
     private fun checkPermission() {
         TedRx2Permission.with(this.context)
             .setPermissions(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                WRITE_EXTERNAL_STORAGE,
+                READ_EXTERNAL_STORAGE
             )
             .request()
             .subscribe({ result ->
                 if (result.isGranted) {
-                    startActivity(Intent(requireActivity(), ProfileChangeActivity::class.java))
+                    startActivity(Intent(activity, ProfileChangeActivity::class.java))
+                } else {
+                    println("need")
                 }
-            }, {})
+                println("sibal: ${result.isGranted}, ${result.deniedPermissions}")
+            }, {
+                it.printStackTrace()
+                println("error: ${it.printStackTrace()}")
+            })
             .addTo(compositeDisposable)
-    }
-
-    private fun resultListener() {
-        setFragmentResultListener(REQUEST_KEY) { key, bundle ->
-            when (bundle.getInt(BUNDLE_KEY)) {
-                0 -> println("cancel")
-                1 -> println("기본이미지 변경")
-                2 -> goGallery()
-            }
-        }
-    }
-
-    private fun goGallery() {
-//        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-//            // Handle the returned Uri
-//        }
-//        val intent = Intent(Intent.ACTION_PICK)
-//        intent.type = "image/*"
-//        this.startActivityForResult(intent, 1)
     }
 
     override fun onStart() {

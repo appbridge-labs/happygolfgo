@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.home.mypage.profilechange.ProfileChangeActivity"></activity>
+        <activity
+            android:name=".ui.home.mypage.profilechange.ProfileChangeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ticketmanager.TicketManagerActivity"
             android:screenOrientation="portrait" />
