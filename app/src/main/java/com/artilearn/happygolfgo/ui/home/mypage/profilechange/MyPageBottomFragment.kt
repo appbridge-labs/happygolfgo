@@ -1,4 +1,4 @@
-package com.artilearn.happygolfgo.ui.home.mypage
+package com.artilearn.happygolfgo.ui.home.mypage.profilechange
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +12,14 @@ import com.artilearn.happygolfgo.base.BaseBottomSheetFragment
 import com.artilearn.happygolfgo.constants.BUNDLE_KEY
 import com.artilearn.happygolfgo.constants.REQUEST_KEY
 import com.artilearn.happygolfgo.databinding.FragmentBottomMypageBinding
+import com.artilearn.happygolfgo.ui.home.mypage.MyPageViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MyPageBottomFragment : BaseBottomSheetFragment() {
 
     private val viewModel: MyPageViewModel by sharedViewModel()
     private var flag = false
+    private var result = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +31,16 @@ class MyPageBottomFragment : BaseBottomSheetFragment() {
         binding.setVariable(BR.viewModel, viewModel)
 
         viewModel.bottomState.observe(viewLifecycleOwner, Observer {
-            flag = it
+            it.getContentIfNotHandled()?.let { state ->
+                flag = true
+                result = when (state) {
+                    MyPageViewModel.BottomFragmentState.CANCEL -> 0
+                    MyPageViewModel.BottomFragmentState.DEFAULT_IMAGE -> 1
+                    MyPageViewModel.BottomFragmentState.GALLERY -> 2
+                }
+
+                setFragmentResult(REQUEST_KEY, bundleOf(BUNDLE_KEY to result))
+            }
             dismiss()
         })
 
@@ -38,10 +49,11 @@ class MyPageBottomFragment : BaseBottomSheetFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        if (flag) {
-            setFragmentResult(REQUEST_KEY, bundleOf(BUNDLE_KEY to flag))
-        }
+        _binding = null
+//        if (flag) {
+//            setFragmentResult(REQUEST_KEY, bundleOf(BUNDLE_KEY to result))
+//        }
     }
+
 
 }

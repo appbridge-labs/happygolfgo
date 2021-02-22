@@ -15,6 +15,8 @@ import com.artilearn.happygolfgo.constants.PLAY_STORE
 import com.artilearn.happygolfgo.constants.REQUEST_KEY
 import com.artilearn.happygolfgo.databinding.FragmentMypageBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.home.mypage.profilechange.MyPageBottomFragment
+import com.artilearn.happygolfgo.ui.home.mypage.profilechange.ProfileChangeActivity
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
@@ -144,7 +146,7 @@ class MyPageFragment
             .request()
             .subscribe({ result ->
                 if (result.isGranted) {
-                    profileChangeFragment.show(parentFragmentManager, profileChangeFragment.tag)
+                    startActivity(Intent(requireActivity(), ProfileChangeActivity::class.java))
                 }
             }, {})
             .addTo(compositeDisposable)
@@ -152,17 +154,18 @@ class MyPageFragment
 
     private fun resultListener() {
         setFragmentResultListener(REQUEST_KEY) { key, bundle ->
-            if (bundle.getBoolean(BUNDLE_KEY)) {
-                println("갤러리로 이동")
-                goGallery()
+            when (bundle.getInt(BUNDLE_KEY)) {
+                0 -> println("cancel")
+                1 -> println("기본이미지 변경")
+                2 -> goGallery()
             }
         }
     }
 
     private fun goGallery() {
-        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            // Handle the returned Uri
-        }
+//        val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+//            // Handle the returned Uri
+//        }
 //        val intent = Intent(Intent.ACTION_PICK)
 //        intent.type = "image/*"
 //        this.startActivityForResult(intent, 1)

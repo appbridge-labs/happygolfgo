@@ -8,6 +8,7 @@ import com.artilearn.happygolfgo.ui.home.HomeViewModel
 import com.artilearn.happygolfgo.ui.home.alram.AlramViewModel
 import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterViewModel
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageViewModel
+import com.artilearn.happygolfgo.ui.home.mypage.profilechange.ProfileChangeViewModel
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListViewModel
 import com.artilearn.happygolfgo.ui.log.LogViewModel
@@ -77,4 +78,5 @@ val viewModelModule = module {
 
     viewModel { TicketManagerViewModel() }
 
+    viewModel { ProfileChangeViewModel(get()) }
 }

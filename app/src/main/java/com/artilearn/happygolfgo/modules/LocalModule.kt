@@ -8,6 +8,8 @@ import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSource
 import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.myinfo.source.local.MyInfoLocalDataSource
 import com.artilearn.happygolfgo.data.myinfo.source.local.MyInfoLocalDataSourceImpl
+import com.artilearn.happygolfgo.data.profilechange.source.local.ProfileChangeLocalDataSource
+import com.artilearn.happygolfgo.data.profilechange.source.local.ProfileChangeLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.pwauth.source.local.PwAuthLocalDataSource
 import com.artilearn.happygolfgo.data.pwauth.source.local.PwAuthLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSource
@@ -45,4 +47,6 @@ val localModule = module {
     single<PwAuthLocalDataSource> { PwAuthLocalDataSourceImpl(get()) }
 
     single { CurrentVersion(get()) }
+
+    single<ProfileChangeLocalDataSource> { ProfileChangeLocalDataSourceImpl(get()) }
 }
