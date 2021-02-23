@@ -1,7 +1,9 @@
 package com.artilearn.happygolfgo.ui.home
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
+import com.artilearn.happygolfgo.util.Event
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -11,22 +13,21 @@ import io.reactivex.subjects.Subject
 import java.util.concurrent.TimeUnit
 
 class HomeViewModel : BaseViewModel() {
-    private val bottomNavigation: Subject<BottomNavigationEvent> = PublishSubject.create()
     private val backPressed: Subject<Unit> = PublishSubject.create()
     private val fcmTypeSubject: Subject<String> = BehaviorSubject.create()
+    private val _bottomSubject: BehaviorSubject<String> = BehaviorSubject.createDefault("예약")
 
-    private val _bottomNavigationButton: SingleLiveEvent<BottomNavigationEvent> = SingleLiveEvent()
     private val _backPressedEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
-    private val _eventType: SingleLiveEvent<FcmTypeMoveModel> = SingleLiveEvent()
-
-    val bottomNavigationButton: LiveData<BottomNavigationEvent>
-        get() = _bottomNavigationButton
-
     val backPressedEvent: LiveData<Unit>
         get() = _backPressedEvent
 
+    private val _eventType: SingleLiveEvent<FcmTypeMoveModel> = SingleLiveEvent()
     val eventType: LiveData<FcmTypeMoveModel>
         get() = _eventType
+
+    private val _bottom: SingleLiveEvent<String> = SingleLiveEvent()
+    val bottom: LiveData<String>
+        get() = _bottom
 
     init {
         rxBind()
@@ -37,11 +38,9 @@ class HomeViewModel : BaseViewModel() {
     }
 
     private fun rxBind() {
-        bottomNavigation
-            .distinctUntilChanged()
-            .startWith(BottomNavigationEvent.RESERVATION)
+        _bottomSubject.distinctUntilChanged()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { _bottomNavigationButton.value = it }
+            .subscribe(_bottom::setValue)
             .addTo(compositeDisposable)
 
         backPressed.observeOn(AndroidSchedulers.mainThread())
@@ -60,25 +59,8 @@ class HomeViewModel : BaseViewModel() {
             }.addTo(compositeDisposable)
     }
 
-    fun bottomNavigation(name: String) {
-        when (name) {
-            HomeActivity.RESERVATION -> bottomNavigation.onNext(BottomNavigationEvent.RESERVATION)
-            //HomeActivity.GAME_CENTER -> bottomNavigation.onNext(BottomNavigationEvent.GAME_CENTER)
-            HomeActivity.ALRAM -> bottomNavigation.onNext(BottomNavigationEvent.ALRAM)
-            HomeActivity.MY_PAGE -> bottomNavigation.onNext(BottomNavigationEvent.MY_PAGE)
-        }
-    }
-
-    fun backPressed() {
-        backPressed.onNext(Unit)
-    }
-
-    enum class BottomNavigationEvent {
-        RESERVATION,
-        GAME_CENTER,
-        ALRAM,
-        MY_PAGE
-    }
+    fun onNextBottomEvent(name: String) = _bottomSubject.onNext(name)
+    fun backPressed() = backPressed.onNext(Unit)
 
     enum class FcmTypeMoveModel {
         PLATE,

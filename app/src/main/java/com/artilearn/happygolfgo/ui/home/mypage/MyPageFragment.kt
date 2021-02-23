@@ -35,17 +35,6 @@ class MyPageFragment
 
     override val viewModel: MyPageViewModel by viewModel()
     private val profileChangeFragment by lazy(::MyPageBottomFragment)
-//    val requestActivity = registerForActivityResult(
-//        ActivityResultContracts.StartActivityForResult()
-//    ) { activityResult ->
-//
-//    }
-//
-//    val requestPermission = registerForActivityResult(
-//        ActivityResultContracts.RequestPermission()
-//    ) { isGranted ->
-//        println("success: $isGranted")
-//    }
 
     override fun init() {
 
@@ -160,13 +149,9 @@ class MyPageFragment
             .subscribe({ result ->
                 if (result.isGranted) {
                     startActivity(Intent(activity, ProfileChangeActivity::class.java))
-                } else {
-                    println("need")
                 }
-                println("sibal: ${result.isGranted}, ${result.deniedPermissions}")
             }, {
                 it.printStackTrace()
-                println("error: ${it.printStackTrace()}")
             })
             .addTo(compositeDisposable)
     }
