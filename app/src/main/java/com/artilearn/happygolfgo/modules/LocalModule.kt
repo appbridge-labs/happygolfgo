@@ -16,6 +16,8 @@ import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSource
 import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSourceImpl
+import com.artilearn.happygolfgo.data.ticketdate.source.local.TicketDateLocalDataSource
+import com.artilearn.happygolfgo.data.ticketdate.source.local.TicketDateLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSource
 import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSource
@@ -49,4 +51,6 @@ val localModule = module {
     single { CurrentVersion(get()) }
 
     single<ProfileChangeLocalDataSource> { ProfileChangeLocalDataSourceImpl(get()) }
+
+    single<TicketDateLocalDataSource> { TicketDateLocalDataSourceImpl(get()) }
 }

@@ -63,6 +63,10 @@ class PreferenceManager(context: Context) {
         get() = prefs.getString(CHECK_IN_ID, "") ?: ""
         set(value) = editor.putString(CHECK_IN_ID, value).apply()
 
+    var calendarUsed: Boolean
+        get() = prefs.getBoolean(CALENDAR_GET_USED, false)
+        set(value) = editor.putBoolean(CALENDAR_GET_USED, value).apply()
+
     fun userLogout() {
         with(editor) {
             remove(NAME).apply()

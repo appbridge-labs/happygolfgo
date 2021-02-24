@@ -65,7 +65,7 @@ val repositoryModule = module {
 
     single<AlramRepository> { AlramRepositoryImpl(get(), get()) }
 
-    single<TicketDateRepository> { TicketDateRepositoryImpl(get(), get()) }
+    single<TicketDateRepository> { TicketDateRepositoryImpl(get(), get(), get()) }
 
     single<TicketTimeRepository> { TicketTimeRepositoryImpl(get(), get()) }
 

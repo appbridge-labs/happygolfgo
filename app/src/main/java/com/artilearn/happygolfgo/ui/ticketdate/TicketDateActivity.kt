@@ -19,6 +19,7 @@ class TicketDateActivity
 
     private val viewModel: TicketDateViewModel by viewModel()
     private val ticket by lazy { intent.getParcelableExtra<Ticket>(TICKET) }
+    private val useCalendar by lazy(::TicketDateDialog)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +47,9 @@ class TicketDateActivity
             })
             appRefresh.observe(this@TicketDateActivity, Observer {
                 goRefresh()
+            })
+            used.observe(this@TicketDateActivity, Observer {
+                if (!it) useCalendar.show(supportFragmentManager, useCalendar.tag)
             })
         }
     }

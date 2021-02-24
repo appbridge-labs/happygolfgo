@@ -27,8 +27,8 @@ fun CalendarView.bindDays(
     val availableList: MutableList<Calendar> = mutableListOf()
     val eventDays: MutableList<Calendar> = mutableListOf()
 
-    setForwordImage(this, ContextCompat.getDrawable(this.context, R.drawable.ic_calendar_forward))
-    setPreviosImage(this, ContextCompat.getDrawable(this.context, R.drawable.ic_calendar_previous))
+//    setForwordImage(this, ContextCompat.getDrawable(this.context, R.drawable.ic_calendar_forward))
+//    setPreviosImage(this, ContextCompat.getDrawable(this.context, R.drawable.ic_calendar_previous))
     setMinimumDate(minimumDate())
     setMaximumDate(maximumDate())
 
