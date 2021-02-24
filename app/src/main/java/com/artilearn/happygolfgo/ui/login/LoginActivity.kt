@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.base.BaseLoadingFragment
+import com.artilearn.happygolfgo.constants.LOADING
 import com.artilearn.happygolfgo.databinding.ActivityLoginBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.common.DeveloperOptionFragment
@@ -20,6 +22,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private val viewModel: LoginViewModel by viewModel()
     private val loginBottomView by lazy(::LoginBottomFragment)
     private val devOptionView by lazy(::DeveloperOptionFragment)
+    private val loadingView by lazy { BaseLoadingFragment(R.layout.fragment_loading) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +71,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     LoginViewModel.LoginType.NOT_FOUND_USER -> showEmptyUser()
                     LoginViewModel.LoginType.FAIL_PASSWORD -> showFailPassword()
                     LoginViewModel.LoginType.SUCCESS -> goHome()
+                    LoginViewModel.LoginType.SHOW_LOADING -> loadingView.show(supportFragmentManager, LOADING)
+                    LoginViewModel.LoginType.HIDE_LOADING -> loadingView.dismissAllowingStateLoss()
                 }
             })
             appRefresh.observe(this@LoginActivity, Observer {

@@ -126,8 +126,8 @@ class LoginViewModel(
         loginRepository.repositoryLogin(model)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { showLoading() }
-            .doAfterTerminate { hideLoading() }
+            .doOnSubscribe { _loginType.value = LoginType.SHOW_LOADING }
+            .doAfterTerminate { _loginType.value = LoginType.HIDE_LOADING }
             .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
                 _loginType.value = LoginType.SUCCESS
@@ -161,7 +161,9 @@ class LoginViewModel(
         EMPTY_PASSWORD,
         NOT_FOUND_USER,
         FAIL_PASSWORD,
-        SUCCESS
+        SUCCESS,
+        SHOW_LOADING,
+        HIDE_LOADING
     }
 
 }

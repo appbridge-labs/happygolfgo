@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="vm"
             type="com.artilearn.happygolfgo.ui.login.LoginViewModel" />
@@ -155,16 +153,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/btn_login"
             app:layout_constraintTop_toBottomOf="@+id/btn_login" />
-
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:visibility="@{vm.isLoading ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@id/pw_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/phone_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
