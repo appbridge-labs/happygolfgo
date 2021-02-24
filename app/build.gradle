@@ -148,4 +148,7 @@ dependencies {
     // rx permission
     implementation 'gun0912.ted:tedpermission-rx2:2.2.2'
 
+    // lottie
+    implementation "com.airbnb.android:lottie:3.6.0"
+
 }
