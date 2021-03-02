@@ -36,9 +36,8 @@ class FragmentUseTicket : BaseFragment<FragmentUsiesTicketBinding, TicketManager
     private fun dummyData() {
         val list = mutableListOf<UseTicketModel>()
         for (i in 0..9) {
-            println("?: $i")
             val item = UseTicketModel(
-                "티켓 $i 번",
+                "티켓이름 $i 번",
                 "날짜 $i 번",
                 true
             )
