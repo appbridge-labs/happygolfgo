@@ -59,7 +59,7 @@ class LoginRepositoryImpl(
             autoLogin = true
             nickname = user.nickname
             phoneNumber = user.phoneNumber
-            checkinId = user.checkinId
+            //checkinId = user.checkinId
         }
     }
 

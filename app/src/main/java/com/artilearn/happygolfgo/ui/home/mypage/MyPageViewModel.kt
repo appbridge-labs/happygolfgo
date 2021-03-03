@@ -63,13 +63,13 @@ class MyPageViewModel(
         compositeDisposable.addAll(
             _appUpdate.throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { _eventType.value = MyPageStateType.PLAY_STORE },
+                .subscribe { _eventType.value = MyPageStateType.PLAY_STORE }
 
-            _profileClickSubject.subscribe { _eventType.value = MyPageStateType.PERMISSION },
-
-            _defaultImageSubject.subscribe { _bottomState.value = Event(BottomFragmentState.DEFAULT_IMAGE) },
-            _gallerySubject.subscribe { _bottomState.value = Event(BottomFragmentState.GALLERY) },
-            _bottomFragmentCancelSubject.subscribe { _bottomState.value = Event(BottomFragmentState.CANCEL) }
+//            _profileClickSubject.subscribe { _eventType.value = MyPageStateType.PERMISSION },
+//
+//            _defaultImageSubject.subscribe { _bottomState.value = Event(BottomFragmentState.DEFAULT_IMAGE) },
+//            _gallerySubject.subscribe { _bottomState.value = Event(BottomFragmentState.GALLERY) },
+//            _bottomFragmentCancelSubject.subscribe { _bottomState.value = Event(BottomFragmentState.CANCEL) }
         )
     }
 

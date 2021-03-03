@@ -167,4 +167,12 @@ interface ApiInterface {
 
     @GET("hgGame/individualGames")
     fun getGolfGames(): Single<GolfGameResponse>
+
+    @DELETE("main/user/notifications/deleteAll")
+    fun alramDeleteAll(): Completable
+
+    @DELETE("main/user/notifications/delete/{notificationID}")
+    fun alramDelete(
+        @Path("notificationID") notifiCationId: Int
+    ): Completable
 }

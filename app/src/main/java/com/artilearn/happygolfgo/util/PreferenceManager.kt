@@ -85,7 +85,7 @@ class PreferenceManager(context: Context) {
         return MyPageLocalModel(
             name,
             nickName!!,
-            checkinId,
+            //checkinId,
             profileImageURL!!
         )
     }
