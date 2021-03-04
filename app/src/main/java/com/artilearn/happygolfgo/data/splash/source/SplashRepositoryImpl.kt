@@ -104,7 +104,7 @@ class SplashRepositoryImpl(
                 fcmToken = user.fcmToken
                 accessToken = user.accessToken
                 dateOfBirth = user.dateOfBirth
-                //checkinId = user.checkinId
+                checkinId = user.checkinId
             }
         }
     }

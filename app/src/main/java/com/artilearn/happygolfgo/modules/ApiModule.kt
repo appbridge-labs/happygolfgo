@@ -56,7 +56,8 @@ val apiModule = module {
 
     single<Retrofit> {
         Retrofit.Builder()
-            .baseUrl(get<PreferenceManager>().environmentMode)
+            //.baseUrl(get<PreferenceManager>().environmentMode)
+            .baseUrl(BuildConfig.HG_BASE_URL)
             .client(get())
             .addConverterFactory(get<GsonConverterFactory>())
             .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())

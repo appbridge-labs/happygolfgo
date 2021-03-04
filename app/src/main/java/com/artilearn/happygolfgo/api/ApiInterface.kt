@@ -31,7 +31,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiInterface {
-    @POST("auth/user/doSignin")
+    @POST("auth/user/doSigninBranch")
     fun login(
         @Body data: HashMap<String, LoginDataModel>
     ): Single<LoginResponse>

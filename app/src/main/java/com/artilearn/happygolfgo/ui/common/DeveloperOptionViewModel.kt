@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.developeroption.source.DeveloperOptionRepository
+import com.artilearn.happygolfgo.data.remote.retrofit.RetrofitApi
+import com.artilearn.happygolfgo.modules.apiModule
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.Single
+import java.util.*
 
 class DeveloperOptionViewModel(
     private val developerOptionRepository: DeveloperOptionRepository
@@ -30,8 +33,8 @@ class DeveloperOptionViewModel(
     }
 
     fun onTest() {
-        developerOptionRepository.environmentMode = "http://172.30.1.48:7000/appClient/"
-        _test.value = " http://172.30.1.48:7000/appClient/"
+        developerOptionRepository.environmentMode = "http://172.30.1.17:7000/appClient/"
+        _test.value = "http://172.30.1.17:7000/appClient/"
     }
 
     fun onDeveloper() {

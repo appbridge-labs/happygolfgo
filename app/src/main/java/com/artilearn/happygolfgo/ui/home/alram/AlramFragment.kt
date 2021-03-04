@@ -84,7 +84,7 @@ class AlramFragment
         }
     }
 
-    //todo 삭제 API 추가되면 활성화
+    //todo 완성..배포전 스티커 확인 후 체크인 번호 추가
     private fun swipeToDelete(rv: RecyclerView) {
         val swipeCallback = object : BaseSwipeDelete() {
             override fun onSwipe(viewHolder: RecyclerView.ViewHolder, direction: Int) {

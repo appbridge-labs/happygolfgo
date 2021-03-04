@@ -25,6 +25,7 @@ import com.artilearn.happygolfgo.ui.ticketdate.TicketDateViewModel
 import com.artilearn.happygolfgo.ui.ticketmanager.TicketManagerViewModel
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeViewModel
 import com.artilearn.happygolfgo.ui.tutorial.TutorialViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

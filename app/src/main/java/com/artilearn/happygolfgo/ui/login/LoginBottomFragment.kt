@@ -13,7 +13,9 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.artilearn.happygolfgo.BR
 import com.artilearn.happygolfgo.base.BaseBottomSheetFragment
+import com.artilearn.happygolfgo.constants.OVERLAP_USER
 import com.artilearn.happygolfgo.databinding.FragmentBottomLoginBinding
+import com.artilearn.happygolfgo.ui.login.model.LoginOverlap
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_bottom_login.view.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -22,7 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LoginBottomFragment : BaseBottomSheetFragment() {
     private val viewModel: LoginViewModel by sharedViewModel()
     private val args by lazy {
-        arguments?.getStringArrayList("test")
+        arguments?.getParcelableArrayList<LoginOverlap>(OVERLAP_USER)
     }
 
     private val layoutParams by lazy {
@@ -56,16 +58,16 @@ class LoginBottomFragment : BaseBottomSheetFragment() {
         }
     }
 
-    private fun createTextView(items: ArrayList<String>) {
+    private fun createTextView(items: ArrayList<LoginOverlap>) {
         for (i in items.indices) {
             val tv = TextView(this.context).apply {
-                text = items[i]
+                text = items[i].training
                 textSize = 30.0f
                 setTextColor(Color.WHITE)
                 setPadding(0, 4, 0, 4)
                 setOnClickListener {
-                    viewModel.branchIdClick(text.toString())
-                    Toast.makeText(this@LoginBottomFragment.context, "$text click", Toast.LENGTH_SHORT).show()
+                    viewModel.branchIdClick(items[i])
+                    Toast.makeText(this@LoginBottomFragment.context, "$text 선택", Toast.LENGTH_SHORT).show()
                     dismiss()
                 }
             }
@@ -94,7 +96,7 @@ class LoginBottomFragment : BaseBottomSheetFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return object : BottomSheetDialog(requireContext(), theme) {
             override fun onBackPressed() {
-                Toast.makeText(this@LoginBottomFragment.context, "you don't go back", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginBottomFragment.context, "사용할 지점을 선택해주세요", Toast.LENGTH_SHORT).show()
             }
         }
     }

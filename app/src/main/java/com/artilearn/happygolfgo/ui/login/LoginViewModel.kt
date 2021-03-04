@@ -8,6 +8,9 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.source.LoginRepository
+import com.artilearn.happygolfgo.ui.golfrank.model.GolfRankModel
+import com.artilearn.happygolfgo.ui.login.mapper.LoginOverlapMapper
+import com.artilearn.happygolfgo.ui.login.model.LoginOverlap
 import com.artilearn.happygolfgo.util.Qnintuple
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
@@ -35,9 +38,11 @@ class LoginViewModel(
     private val _developerServer = PublishSubject.create<Unit>()
     private val _login = PublishSubject.create<ButtonClickType>()
 
+    private val mapper: LoginOverlapMapper = LoginOverlapMapper
     private val _forgetPassword = SingleLiveEvent<Unit>()
     private val _developerOption: MutableLiveData<Unit> = MutableLiveData()
     private val _loginType: SingleLiveEvent<LoginType> = SingleLiveEvent()
+    private val _overlapUser: SingleLiveEvent<List<LoginOverlap>> = SingleLiveEvent()
 
     val forgetPassword: LiveData<Unit>
         get() = _forgetPassword
@@ -47,6 +52,9 @@ class LoginViewModel(
 
     val loginType: LiveData<LoginType>
         get() = _loginType
+
+    val overlapUser: LiveData<List<LoginOverlap>>
+        get() = _overlapUser
 
     init {
         bindRx()
@@ -84,7 +92,7 @@ class LoginViewModel(
         when {
             _phone.value.isNullOrEmpty() -> _loginType.value = LoginType.EMPTY_PHONE
             _password.value.isNullOrEmpty() -> _loginType.value = LoginType.EMPTY_PASSWORD
-            else -> setDataModel(_phone.value!!, _password.value!!)
+            else -> setDataModel(_phone.value!!, _password.value!!, false, null)
         }
     }
 
@@ -111,10 +119,16 @@ class LoginViewModel(
             .addTo(compositeDisposable)
     }
 
-    private fun setDataModel(phone: String, password: String) {
+    private fun setDataModel(phone: String, password: String, overlapResult: Boolean, branchId: Int?) {
         val id = getAndroidID(koinContext)
         val uuid = getWidevineID()
-        val dataModel = LoginDataModel(phone, password, loginRepository.fcmToken, uuid, id)
+        val dataModel: LoginDataModel
+
+        dataModel = if (overlapResult) {
+            LoginDataModel(phone, password, loginRepository.fcmToken, uuid, id, branchId)
+        } else {
+            LoginDataModel(phone, password, loginRepository.fcmToken, uuid, id)
+        }
 
         val hashMap = hashMapOf<String, LoginDataModel>()
         hashMap["Data"] = dataModel
@@ -130,7 +144,13 @@ class LoginViewModel(
             .doAfterTerminate { _loginType.value = LoginType.HIDE_LOADING }
             .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
-                _loginType.value = LoginType.SUCCESS
+                with(it.data.user) {
+                    if (overlapUser == null) {
+                        _loginType.value = LoginType.SUCCESS
+                    } else {
+                        _overlapUser.value = mapper.mapper(overlapUser)
+                    }
+                }
             }, { t ->
                 when (t) {
                     is NetworkErrorException -> _networkFail.value = Unit
@@ -147,8 +167,8 @@ class LoginViewModel(
             }).addTo(compositeDisposable)
     }
 
-    fun branchIdClick(branch: String) {
-        println("$branch click")
+    fun branchIdClick(item: LoginOverlap) {
+        setDataModel(_phone.value!!, _password.value!!, true, item.branchId)
     }
 
     enum class ButtonClickType {

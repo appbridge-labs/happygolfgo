@@ -20,15 +20,27 @@ android {
         testInstrumentationRunner "androidx.ratingbar_star.runner.AndroidJUnitRunner"
     }
 
-//    flavorDimensions "flavors"
-//    productFlavors {
-//        development {
-//            minSdkVersion 23
-//        }
-//        dev {
-//            resConfigs('en', 'xhdpi')
-//        }
-//    }
+    flavorDimensions "type"
+    productFlavors {
+        local {
+            dimension "type"
+            minSdkVersion 23
+            resConfigs('en', 'xhdpi')
+            buildConfigField "String", "HG_BASE_URL", "\"http://172.30.1.17:7000/appClient/\""
+        }
+
+        dev {
+            dimension "type"
+            minSdkVersion 23
+            resConfigs('en', 'xhdpi')
+            buildConfigField "String", "HG_BASE_URL", "\"http://52.79.253.238/development/appClient/\""
+        }
+
+        prod {
+            dimension "type"
+            buildConfigField "String", "HG_BASE_URL", "\"https://happygolfgoapi.com/happygolfgo/appClient/\""
+        }
+    }
 
     buildTypes {
         debug {
