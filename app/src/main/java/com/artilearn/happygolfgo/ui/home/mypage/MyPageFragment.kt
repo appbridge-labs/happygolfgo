@@ -1,20 +1,15 @@
 package com.artilearn.happygolfgo.ui.home.mypage
 
-import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Intent
 import android.net.Uri
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
-import com.artilearn.happygolfgo.constants.BUNDLE_KEY
 import com.artilearn.happygolfgo.constants.PLAY_STORE
-import com.artilearn.happygolfgo.constants.REQUEST_KEY
 import com.artilearn.happygolfgo.databinding.FragmentMypageBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.home.mypage.profilechange.MyPageBottomFragment
@@ -23,7 +18,6 @@ import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
-import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.ui.ticketmanager.TicketManagerActivity
 import com.tedpark.tedpermission.rx2.TedRx2Permission
 import io.reactivex.rxkotlin.addTo
@@ -81,7 +75,7 @@ class MyPageFragment
             includeRecord.tv_text.text = getString(R.string.mypage_lesson_title)
             includePassword.tv_text.text = getString(R.string.mypage_password_change)
             includeLogout.tv_text.text = getString(R.string.mypage_logout)
-            includeTicket.tv_text.text = "티켓관리"
+            //includeTicket.tv_text.text = "티켓관리"
             includeUpdate.tv_text.text = getString(R.string.mypage_update)
             includeUpdate.tv_text.setTextColor(ContextCompat.getColor(includeUpdate.tv_text.context, R.color.color_mypage_update))
             includeUpdate.parent_card.setBackgroundResource(R.drawable.bg_mypage_update)
@@ -95,7 +89,7 @@ class MyPageFragment
             includeRecord.setOnClickListener { goLessonLog() }
             includeLogout.setOnClickListener { viewModel.logout() }
             includePassword.setOnClickListener { goPwAuth() }
-            includeTicket.setOnClickListener { goTicketManager() }
+            //includeTicket.setOnClickListener { goTicketManager() }
         }
     }
 

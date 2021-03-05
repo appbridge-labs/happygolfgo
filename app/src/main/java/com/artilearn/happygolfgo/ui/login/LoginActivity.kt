@@ -35,20 +35,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         initTextListener()
     }
 
-    override fun onStart() {
-        super.onStart()
-
-//        //todo 버그리스트 19번 여러지점 등록 시 클라이언트가 지점 선택
-//        val bundle = Bundle()
-//        val test = ArrayList<String>()
-//        test.add("삼성점")
-//        test.add("의왕점")
-//        test.add("제주점")
-//        bundle.putStringArrayList("test", test)
-//        loginBottomView.arguments = bundle
-//        loginBottomView.show(supportFragmentManager, loginBottomView.tag)
-    }
-
     private fun initBinding() {
         binding.vm = viewModel
     }

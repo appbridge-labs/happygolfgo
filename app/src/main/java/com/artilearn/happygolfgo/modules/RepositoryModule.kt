@@ -91,6 +91,6 @@ val repositoryModule = module {
 
     single<GolfGameRepository> { GolfGameRepositoryImpl(get(), get()) }
 
-    single<ProfileChangeRepository> { ProfileChangeRepositoryImpl(get()) }
+    single<ProfileChangeRepository> { ProfileChangeRepositoryImpl(get(), get()) }
 
 }

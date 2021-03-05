@@ -20,6 +20,8 @@ import com.artilearn.happygolfgo.data.login.source.remote.LoginRemoteDataSource
 import com.artilearn.happygolfgo.data.login.source.remote.LoginRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.myinfo.source.remote.MyInfoRemoteDataSource
 import com.artilearn.happygolfgo.data.myinfo.source.remote.MyInfoRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.profilechange.source.remote.ProfileChangeRemoteDataSource
+import com.artilearn.happygolfgo.data.profilechange.source.remote.ProfileChangeRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.pwauth.source.remote.PwAuthRemoteDataSource
 import com.artilearn.happygolfgo.data.pwauth.source.remote.PwAuthRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.pwreset.source.remote.PwrestRemoteDataSource
@@ -80,4 +82,6 @@ val remoteModule = module {
     single<GolfRankRemoteDataSource> { GolfRankRemoteDataSourceImpl(get()) }
 
     single<GolfGameRemoteDataSource> { GolfGameRemoteDataSourceImpl(get()) }
+
+    single<ProfileChangeRemoteDataSource> { ProfileChangeRemoteDataSourceImpl(get()) }
 }

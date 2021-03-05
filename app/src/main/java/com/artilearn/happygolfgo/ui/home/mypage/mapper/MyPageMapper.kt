@@ -12,11 +12,11 @@ object MyPageMapper : MyPageMapperModel<MyPageLocalModel, MyPage> {
                 from.name.isNotEmpty() && from.nickname.isEmpty() -> "${from.name} / 닉네임 없음"
                 else -> "${from.name} / ${from.nickname}"
             },
-//            checkinId = if (from.checkinId.isEmpty()) {
-//                "체크인 번호 없음"
-//            } else {
-//                "체크인 번호 : ${from.checkinId}"
-//            },
+            checkinId = if (from.checkinId.isEmpty()) {
+                "체크인 번호 없음"
+            } else {
+                "체크인 번호 : ${from.checkinId}"
+            },
             profileImage = if (from.profileImage.isNullOrEmpty()) {
                 null
             } else {

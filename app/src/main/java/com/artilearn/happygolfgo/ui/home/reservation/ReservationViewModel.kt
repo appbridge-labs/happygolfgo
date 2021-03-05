@@ -54,7 +54,7 @@ class ReservationViewModel(
 
     init {
         bindRx()
-        getTicket()
+        //getTicket()
     }
 
     fun onReservationList() {
@@ -82,7 +82,7 @@ class ReservationViewModel(
             .doOnNext { hideLoading(); _swipeRefresh.call() }
     }
 
-    private fun getTicket() {
+    fun getTicket() {
         repository.requestHomeTicket()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

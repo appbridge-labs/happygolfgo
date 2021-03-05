@@ -32,6 +32,16 @@ class ReservationFragment
         initSwipeRefresh()
     }
 
+    override fun onStart() {
+        super.onStart()
+        /**
+         * 뷰모델에 있었지만 현재 급한 관계로 여기서 통신함...
+         * 각 화면에서 유저 액션이 있을 경우 리시버로 해당 아이템모델을 교체해줄 필요
+         * 혹은 캐싱데이터로 가지고 놀기, 여유있을 때 수정요망
+         */
+        viewModel.getTicket()
+    }
+
     private fun initBinding() {
         binding.vm = viewModel
     }
@@ -77,7 +87,6 @@ class ReservationFragment
             }
             recyclerview.adapter = adapter
         }
-        //binding.recyclerview.adapter = adapter
     }
 
     private fun initSwipeRefresh() {

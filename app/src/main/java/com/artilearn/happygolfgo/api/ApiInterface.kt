@@ -12,6 +12,7 @@ import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
 import com.artilearn.happygolfgo.data.myinfo.MyInfoModel
 import com.artilearn.happygolfgo.data.myinfo.MyInfoResponse
+import com.artilearn.happygolfgo.data.profilechange.ProfileImageResponse
 import com.artilearn.happygolfgo.data.pwauth.ConfirmAuthModel
 import com.artilearn.happygolfgo.data.pwauth.GetAuthModel
 import com.artilearn.happygolfgo.data.pwreset.PwrestModel
@@ -27,6 +28,7 @@ import com.artilearn.happygolfgo.data.version.LogoutModel
 import com.artilearn.happygolfgo.data.version.VersionResponse
 import io.reactivex.Completable
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -175,4 +177,13 @@ interface ApiInterface {
     fun alramDelete(
         @Path("notificationID") notifiCationId: Int
     ): Completable
+
+    @Multipart
+    @POST("main/user/uploadProfileImage")
+    fun uploadProfileImage(
+        @Part profileImage: MultipartBody.Part
+    ): Single<ProfileImageResponse>
+
+    @PUT("main/user/resetProfileImage")
+    fun uploadDefaultProfileImage(): Completable
 }
