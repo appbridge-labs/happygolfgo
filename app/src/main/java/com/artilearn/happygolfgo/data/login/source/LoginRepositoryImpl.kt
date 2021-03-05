@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.data.login.source
 
 import android.accounts.NetworkErrorException
+import android.util.Log
 import com.artilearn.happygolfgo.data.User
 import com.artilearn.happygolfgo.data.login.LoginDataModel
 import com.artilearn.happygolfgo.data.login.LoginResponse
@@ -30,15 +31,18 @@ class LoginRepositoryImpl(
             loginLocalDataSource.fcmToken = value
         }
 
-
     override fun repositoryLogin(
         data: HashMap<String, LoginDataModel>
     ): Single<LoginResponse> {
         return if (networkManager.networkState()) {
             loginRemoteDataSource.remoteLogin(data)
                 .flatMap {
-                    saveLocalData(it.data.user)
-                    Single.just(it)
+                    if (it.data.user.overlapUser == null) {
+                        saveLocalData(it.data.user)
+                        Single.just(it)
+                    } else {
+                        Single.just(it)
+                    }
                 }
         } else {
             Single.error(NetworkErrorException("Network Error"))
@@ -59,6 +63,7 @@ class LoginRepositoryImpl(
             autoLogin = true
             nickname = user.nickname
             phoneNumber = user.phoneNumber
+            checkinId = user.checkinId
         }
     }
 

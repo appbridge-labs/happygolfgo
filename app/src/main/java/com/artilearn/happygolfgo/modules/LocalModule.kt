@@ -8,12 +8,16 @@ import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSource
 import com.artilearn.happygolfgo.data.login.source.local.LoginLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.myinfo.source.local.MyInfoLocalDataSource
 import com.artilearn.happygolfgo.data.myinfo.source.local.MyInfoLocalDataSourceImpl
+import com.artilearn.happygolfgo.data.profilechange.source.local.ProfileChangeLocalDataSource
+import com.artilearn.happygolfgo.data.profilechange.source.local.ProfileChangeLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.pwauth.source.local.PwAuthLocalDataSource
 import com.artilearn.happygolfgo.data.pwauth.source.local.PwAuthLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSource
 import com.artilearn.happygolfgo.data.pwreset.source.local.PwrestLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSource
 import com.artilearn.happygolfgo.data.splash.source.local.SplashLocalDataSourceImpl
+import com.artilearn.happygolfgo.data.ticketdate.source.local.TicketDateLocalDataSource
+import com.artilearn.happygolfgo.data.ticketdate.source.local.TicketDateLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSource
 import com.artilearn.happygolfgo.data.tutorial.source.local.TutorialLocalDataSourceImpl
 import com.artilearn.happygolfgo.data.version.source.local.VersionLocalDataSource
@@ -45,4 +49,8 @@ val localModule = module {
     single<PwAuthLocalDataSource> { PwAuthLocalDataSourceImpl(get()) }
 
     single { CurrentVersion(get()) }
+
+    single<ProfileChangeLocalDataSource> { ProfileChangeLocalDataSourceImpl(get()) }
+
+    single<TicketDateLocalDataSource> { TicketDateLocalDataSourceImpl(get()) }
 }

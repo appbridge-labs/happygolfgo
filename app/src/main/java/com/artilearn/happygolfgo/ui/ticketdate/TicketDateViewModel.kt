@@ -6,32 +6,56 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
+import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import retrofit2.HttpException
+import java.util.concurrent.TimeUnit
 
 class TicketDateViewModel(
     private val ticketDateRepository: TicketDateRepository
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
 
-    private val _eventDayList: MutableLiveData<List<String>> = MutableLiveData()
-    private val _availablieList: MutableLiveData<List<String>> = MutableLiveData()
-    private val _goNext: MutableLiveData<Pair<Ticket, String>> = MutableLiveData()
+    private val _dialogCloseSubject: Subject<Unit> = PublishSubject.create()
+    private val _dialogNeverSubject: Subject<Unit> = PublishSubject.create()
 
+    private val _eventDayList: MutableLiveData<List<String>> = MutableLiveData()
     val eventDayList: LiveData<List<String>>
         get() = _eventDayList
 
+    private val _availablieList: MutableLiveData<List<String>> = MutableLiveData()
     val availablieList: LiveData<List<String>>
         get() = _availablieList
 
+    private val _goNext: MutableLiveData<Pair<Ticket, String>> = MutableLiveData()
     val goNext: LiveData<Pair<Ticket, String>>
         get() = _goNext
 
+    private val _used: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val used: LiveData<Boolean>
+        get() = _used
+
+    private val _close: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val close: LiveData<Unit>
+        get() = _close
+
     var ticketId: Int? = null
+
+    init {
+        compositeDisposable.addAll(
+            _dialogCloseSubject.throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe { _close.call() },
+
+            _dialogNeverSubject.throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe { dontNeedDialog(); _close.call() }
+        )
+    }
 
     fun selectDate(type: Int) {
         when (type) {
@@ -103,10 +127,18 @@ class TicketDateViewModel(
     private fun setMyDates(availablie: List<String>, events: List<String>) {
         _availablieList.value = availablie
         _eventDayList.value = events
+        _used.value = ticketDateRepository.getUsed
     }
 
     fun calendarListener(ticket: Ticket, day: String) {
         _goNext.value = Pair(ticket, day)
+    }
+
+    fun onClose() = _dialogCloseSubject.onNext(Unit)
+    fun onNeverClose() = _dialogNeverSubject.onNext(Unit)
+
+    private fun dontNeedDialog() {
+        ticketDateRepository.getUsed = true
     }
 
 }

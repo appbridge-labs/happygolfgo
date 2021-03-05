@@ -66,5 +66,23 @@ data class User(
 
     @SerializedName("accessToken")
     @Expose
-    val accessToken: String
+    val accessToken: String,
+
+    @SerializedName("checkinID")
+    @Expose
+    val checkinId: String,
+
+    @SerializedName("branches")
+    @Expose
+    val overlapUser: List<OverlapUser>? = null
+)
+
+data class OverlapUser(
+    @SerializedName("branchID")
+    @Expose
+    val branchID: Int,
+
+    @SerializedName("name")
+    @Expose
+    val name: String
 )

@@ -22,6 +22,8 @@ import com.artilearn.happygolfgo.data.login.source.LoginRepository
 import com.artilearn.happygolfgo.data.login.source.LoginRepositoryImpl
 import com.artilearn.happygolfgo.data.myinfo.source.MyInfoRepository
 import com.artilearn.happygolfgo.data.myinfo.source.MyInfoRepositoryImpl
+import com.artilearn.happygolfgo.data.profilechange.source.ProfileChangeRepository
+import com.artilearn.happygolfgo.data.profilechange.source.ProfileChangeRepositoryImpl
 import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepository
 import com.artilearn.happygolfgo.data.pwauth.source.PwAuthRepositoryImpl
 import com.artilearn.happygolfgo.data.pwreset.source.PwrestRepository
@@ -63,7 +65,7 @@ val repositoryModule = module {
 
     single<AlramRepository> { AlramRepositoryImpl(get(), get()) }
 
-    single<TicketDateRepository> { TicketDateRepositoryImpl(get(), get()) }
+    single<TicketDateRepository> { TicketDateRepositoryImpl(get(), get(), get()) }
 
     single<TicketTimeRepository> { TicketTimeRepositoryImpl(get(), get()) }
 
@@ -88,4 +90,7 @@ val repositoryModule = module {
     single<GolfRankRepository> { GolfRankRepositoryImpl(get(), get()) }
 
     single<GolfGameRepository> { GolfGameRepositoryImpl(get(), get()) }
+
+    single<ProfileChangeRepository> { ProfileChangeRepositoryImpl(get(), get()) }
+
 }

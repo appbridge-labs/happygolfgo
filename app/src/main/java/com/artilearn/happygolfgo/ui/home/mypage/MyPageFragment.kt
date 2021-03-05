@@ -1,10 +1,10 @@
 package com.artilearn.happygolfgo.ui.home.mypage
 
-import android.app.Dialog
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Intent
 import android.net.Uri
 import android.view.View
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
@@ -12,10 +12,15 @@ import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.PLAY_STORE
 import com.artilearn.happygolfgo.databinding.FragmentMypageBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.home.mypage.profilechange.MyPageBottomFragment
+import com.artilearn.happygolfgo.ui.home.mypage.profilechange.ProfileChangeActivity
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
 import com.artilearn.happygolfgo.ui.login.LoginActivity
 import com.artilearn.happygolfgo.ui.myinfo.MyInfoActivity
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
+import com.artilearn.happygolfgo.ui.ticketmanager.TicketManagerActivity
+import com.tedpark.tedpermission.rx2.TedRx2Permission
+import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.common_view.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,6 +28,7 @@ class MyPageFragment
     : BaseFragment<FragmentMypageBinding, MyPageViewModel>(R.layout.fragment_mypage) {
 
     override val viewModel: MyPageViewModel by viewModel()
+    private val profileChangeFragment by lazy(::MyPageBottomFragment)
 
     override fun init() {
 
@@ -47,6 +53,7 @@ class MyPageFragment
                     MyPageViewModel.MyPageStateType.NECESSARY_UPDATE -> hideUpdate()
                     MyPageViewModel.MyPageStateType.NEED_UPDATE -> showUpdate()
                     MyPageViewModel.MyPageStateType.PLAY_STORE -> goPlayStore()
+                    MyPageViewModel.MyPageStateType.PERMISSION -> checkPermission()
                 }
             })
             appVersion.observe(this@MyPageFragment, Observer { version ->
@@ -61,13 +68,14 @@ class MyPageFragment
         }
     }
 
+    //todo 티켓관리 xml 배포 전 추가할 것인지 냅둘 것인지 판단
     private fun initView() {
         with(binding) {
             includeInfor.tv_text.text = getString(R.string.mypage_info_change)
             includeRecord.tv_text.text = getString(R.string.mypage_lesson_title)
             includePassword.tv_text.text = getString(R.string.mypage_password_change)
             includeLogout.tv_text.text = getString(R.string.mypage_logout)
-            //includeBranch.tv_text.text = getString(R.string.mypage_branch_change)
+            //includeTicket.tv_text.text = "티켓관리"
             includeUpdate.tv_text.text = getString(R.string.mypage_update)
             includeUpdate.tv_text.setTextColor(ContextCompat.getColor(includeUpdate.tv_text.context, R.color.color_mypage_update))
             includeUpdate.parent_card.setBackgroundResource(R.drawable.bg_mypage_update)
@@ -81,11 +89,7 @@ class MyPageFragment
             includeRecord.setOnClickListener { goLessonLog() }
             includeLogout.setOnClickListener { viewModel.logout() }
             includePassword.setOnClickListener { goPwAuth() }
-//            includeBranch.setOnClickListener {
-//                val dialog = Dialog(requireActivity())
-//                dialog.setContentView(R.layout.dialog_training)
-//                dialog.show()
-//            }
+            //includeTicket.setOnClickListener { goTicketManager() }
         }
     }
 
@@ -123,6 +127,32 @@ class MyPageFragment
 
     private fun goLessonLog() {
         startActivity(Intent(activity, LessonPostListActivity::class.java))
+    }
+
+    private fun  goTicketManager() {
+        startActivity(Intent(activity, TicketManagerActivity::class.java))
+    }
+
+    private fun checkPermission() {
+        TedRx2Permission.with(this.context)
+            .setPermissions(
+                WRITE_EXTERNAL_STORAGE,
+                READ_EXTERNAL_STORAGE
+            )
+            .request()
+            .subscribe({ result ->
+                if (result.isGranted) {
+                    startActivity(Intent(activity, ProfileChangeActivity::class.java))
+                }
+            }, {
+                it.printStackTrace()
+            })
+            .addTo(compositeDisposable)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.loadMyInfo()
     }
 
 }

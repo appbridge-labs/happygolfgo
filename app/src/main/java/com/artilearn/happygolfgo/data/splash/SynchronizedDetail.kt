@@ -58,5 +58,9 @@ data class SynchronizedDetail(
 
     @SerializedName("accessToken")
     @Expose
-    val accessToken: String
+    val accessToken: String,
+
+    @SerializedName("checkinID")
+    @Expose
+    val checkinId: String
 )

@@ -13,7 +13,7 @@ import com.artilearn.happygolfgo.enummodel.PwAuthNumberType
 import com.artilearn.happygolfgo.enummodel.PwAuthPhoneType
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
-import io.reactivex.Observable
+import io.reactivex.Completable
 import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -102,9 +102,8 @@ class PwAuthActivity : BaseActivity<ActivityPwAuthBinding>(R.layout.activity_pw_
     }
 
     private fun rxDelay() {
-        Observable.just(1)
-            .delay(500, TimeUnit.MILLISECONDS)
-            .subscribe { goPasswordReset() }
+        Completable.timer(500, TimeUnit.MILLISECONDS)
+            .subscribe(::goPasswordReset)
             .addTo(compositeDisposable)
     }
 

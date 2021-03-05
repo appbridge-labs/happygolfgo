@@ -1,9 +1,10 @@
 package com.artilearn.happygolfgo.data.version.source.local
 
+import com.artilearn.happygolfgo.data.version.source.model.MyPageLocalModel
+
 interface VersionLocalDataSource {
 
     var appVersion: String
-    val name: String
-    val nickName: String?
-    val profileImage: String?
+
+    fun getMypageData(): MyPageLocalModel
 }

@@ -52,4 +52,10 @@ class LoginLocalDataSourceImpl(
         set(value) {
             preferenceManager.phoneNumber = value
         }
+
+    override var checkinId: String
+        get() = preferenceManager.checkinId
+        set(value) {
+            preferenceManager.checkinId = value
+        }
 }

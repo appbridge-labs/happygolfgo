@@ -70,7 +70,9 @@ class PwResetViewModel(
     }
 
     private fun passwordValidator(): Observable<Boolean> {
-        return _password.map { p -> Pattern.matches(PASSWORD_REGEX, p) }
+//        return _password.map { p -> Pattern.matches(PASSWORD_REGEX, p) }
+//            .doOnNext { _passwordValue.value = it }
+        return _password.map { p -> p.length >= 4 }
             .doOnNext { _passwordValue.value = it }
     }
 

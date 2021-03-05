@@ -11,6 +11,7 @@ interface SplashLocalDataSource {
     var nickname: String?
     var dateOfBirth: String
     var fcmToken: String?
+    var checkinId: String
 
     fun deleteUser()
 

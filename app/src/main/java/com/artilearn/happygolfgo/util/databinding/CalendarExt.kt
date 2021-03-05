@@ -1,6 +1,8 @@
 package com.artilearn.happygolfgo.util.databinding
 
+import android.graphics.drawable.Drawable
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.EventDay
@@ -25,6 +27,8 @@ fun CalendarView.bindDays(
     val availableList: MutableList<Calendar> = mutableListOf()
     val eventDays: MutableList<Calendar> = mutableListOf()
 
+//    setForwordImage(this, ContextCompat.getDrawable(this.context, R.drawable.ic_calendar_forward))
+//    setPreviosImage(this, ContextCompat.getDrawable(this.context, R.drawable.ic_calendar_previous))
     setMinimumDate(minimumDate())
     setMaximumDate(maximumDate())
 
@@ -32,6 +36,8 @@ fun CalendarView.bindDays(
         availableList.addAll(setServerDates(it))
         setDisabledDays(availableList)
         visibility = View.VISIBLE
+
+        setCalendarDayLayout(R.layout.custom_calendar_day)
     }
 
     events?.let {
@@ -139,5 +145,19 @@ private fun setDots(event: List<Calendar>?): List<EventDay> {
 
     return eventDays
 }
+
+private fun setForwordImage(view: CalendarView,image: Drawable?) =
+    image?.let {
+        view.apply {
+            setForwardButtonImage(it)
+        }
+    }
+
+private fun setPreviosImage(view: CalendarView, image: Drawable?) =
+    image?.let {
+        view.apply {
+            setPreviousButtonImage(it)
+        }
+    }
 
 data class CalendarDay(val id: Int, val calendar: Calendar)

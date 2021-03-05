@@ -9,6 +9,9 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.version.LogoutModel
 import com.artilearn.happygolfgo.data.version.source.VersionRepository
+import com.artilearn.happygolfgo.ui.home.mypage.mapper.MyPageMapper
+import com.artilearn.happygolfgo.ui.home.mypage.model.MyPage
+import com.artilearn.happygolfgo.util.Event
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
 import com.artilearn.happygolfgo.util.getWidevineID
@@ -26,34 +29,51 @@ class MyPageViewModel(
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
     private val _appUpdate: Subject<Unit> = PublishSubject.create()
+    private val _profileClickSubject: Subject<Unit> = PublishSubject.create()
+    private val _defaultImageSubject: Subject<Unit> = PublishSubject.create()
+    private val _bottomFragmentCancelSubject: Subject<Unit> = PublishSubject.create()
+    private val _gallerySubject: Subject<Unit> = PublishSubject.create()
+
+    private val _bottomState: MutableLiveData<Event<BottomFragmentState>> = MutableLiveData()
+    val bottomState: LiveData<Event<BottomFragmentState>>
+        get() = _bottomState
+
+    private val _myPageData: SingleLiveEvent<MyPage> = SingleLiveEvent()
+    val myPageData: LiveData<MyPage>
+        get() = _myPageData
 
     private val _eventType: SingleLiveEvent<MyPageStateType> = SingleLiveEvent()
-    private val _message = SingleLiveEvent<String>()
-    private val _appVersion = SingleLiveEvent<String>()
-    private val _text: MutableLiveData<String> = MutableLiveData()
-    private val _image: MutableLiveData<String> = MutableLiveData()
-
-    val message: LiveData<String>
-        get() = _message
-
     val eventType: LiveData<MyPageStateType>
         get() = _eventType
 
+    private val _message = SingleLiveEvent<String>()
+    val message: LiveData<String>
+        get() = _message
+
+    private val _appVersion = SingleLiveEvent<String>()
     val appVersion: LiveData<String>
         get() = _appVersion
 
-    val text: LiveData<String>
-        get() = _text
-
-    val image: LiveData<String>
-        get() = _image
-
+    private val mapper: MyPageMapper = MyPageMapper
     private var packageInfo: PackageInfo? = null
 
     init {
-        bindRx()
         getAppVersion()
-        initSetBinding()
+
+        compositeDisposable.addAll(
+            _appUpdate.throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { _eventType.value = MyPageStateType.PLAY_STORE },
+
+            _profileClickSubject.subscribe { _eventType.value = MyPageStateType.PERMISSION },
+            _defaultImageSubject.subscribe { _bottomState.value = Event(BottomFragmentState.DEFAULT_IMAGE) },
+            _gallerySubject.subscribe { _bottomState.value = Event(BottomFragmentState.GALLERY) },
+            _bottomFragmentCancelSubject.subscribe { _bottomState.value = Event(BottomFragmentState.CANCEL) }
+        )
+    }
+
+    fun loadMyInfo() {
+        _myPageData.value = mapper.myPageMapper(repository.getMypageData())
     }
 
     fun appUpdateOnNext() {
@@ -85,12 +105,10 @@ class MyPageViewModel(
             }).addTo(compositeDisposable)
     }
 
-    private fun initSetBinding() {
-        val pair = Pair(repository.name, " (${repository.nickName})")
-        _text.value = pair.first + pair.second
-
-        _image.value = repository.profileImage
-    }
+    fun onProfileClick() = _profileClickSubject.onNext(Unit)
+    fun onGalleryClick() = _gallerySubject.onNext(Unit)
+    fun onDefaultImageClick() = _defaultImageSubject.onNext(Unit)
+    fun onBottomFragmentCancel() = _bottomFragmentCancelSubject.onNext(Unit)
 
     private fun getAppVersion() {
         repository.getAppVersion()
@@ -98,11 +116,16 @@ class MyPageViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .doOnError { t -> errorLog(TAG, t) }
             .subscribe({
-                _appVersion.value = loadCurrentAppVersion()
+                setVersion()
                 compareAppVersion(it.data.latestVersion)
             }, {
-                _appVersion.value = loadCurrentAppVersion()
+                setVersion()
             }).addTo(compositeDisposable)
+    }
+
+    private fun setVersion() {
+        val version = loadCurrentAppVersion() ?: "0.0.0"
+        _appVersion.value = version
     }
 
     private fun compareAppVersion(version: String?) {
@@ -133,18 +156,22 @@ class MyPageViewModel(
         return packageInfo?.versionName
     }
 
-    private fun bindRx() {
-        _appUpdate.throttleFirst(1000, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { _eventType.value = MyPageStateType.PLAY_STORE }
-            .addTo(compositeDisposable)
+    fun test() {
+        _bottomState.value = Event(BottomFragmentState.DEFAULT_IMAGE)
     }
 
     enum class MyPageStateType {
         NECESSARY_UPDATE,
         NEED_UPDATE,
         LOGOUT,
-        PLAY_STORE
+        PLAY_STORE,
+        PERMISSION
+    }
+
+    enum class BottomFragmentState {
+        GALLERY,
+        DEFAULT_IMAGE,
+        CANCEL
     }
 
 }

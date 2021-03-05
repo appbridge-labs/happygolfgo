@@ -3,20 +3,31 @@
     package="com.artilearn.happygolfgo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".di.KoinApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.golfrank.GolfRankActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.golfgame.GolfGameActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.home.mypage.profilechange.ProfileChangeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ticketmanager.TicketManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.golfrank.GolfRankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.golfgame.GolfGameActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.comment.CommentActivity"
             android:screenOrientation="portrait"

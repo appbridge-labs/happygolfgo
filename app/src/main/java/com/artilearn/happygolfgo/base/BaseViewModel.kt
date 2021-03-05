@@ -7,7 +7,6 @@ import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseViewModel : ViewModel() {
-
     protected val compositeDisposable = CompositeDisposable()
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()

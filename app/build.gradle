@@ -14,21 +14,33 @@ android {
         applicationId "com.artilearn.happygolfgo"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 33
-        versionName "2.0.3"
+        versionCode 35
+        versionName "2.1.1"
 
         testInstrumentationRunner "androidx.ratingbar_star.runner.AndroidJUnitRunner"
     }
 
-//    flavorDimensions "flavors"
-//    productFlavors {
-//        development {
-//            minSdkVersion 23
-//        }
-//        dev {
-//            resConfigs('en', 'xhdpi')
-//        }
-//    }
+    flavorDimensions "type"
+    productFlavors {
+        local {
+            dimension "type"
+            minSdkVersion 23
+            resConfigs('en', 'xhdpi')
+            buildConfigField "String", "HG_BASE_URL", "\"http://172.30.1.43:7000/appClient/\""
+        }
+
+        dev {
+            dimension "type"
+            minSdkVersion 23
+            resConfigs('en', 'xhdpi')
+            buildConfigField "String", "HG_BASE_URL", "\"http://52.79.253.238/development/appClient/\""
+        }
+
+        prod {
+            dimension "type"
+            buildConfigField "String", "HG_BASE_URL", "\"https://happygolfgoapi.com/happygolfgo/appClient/\""
+        }
+    }
 
     buildTypes {
         debug {
@@ -77,6 +89,10 @@ dependencies {
 
     implementation "androidx.preference:preference-ktx:1.1.1"
 
+    // ktx
+    implementation 'androidx.activity:activity-ktx:1.3.0-alpha02'
+    implementation 'androidx.fragment:fragment-ktx:1.3.0'
+
     // retrofit, okhttp log
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
@@ -88,7 +104,8 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:2.2.0'
 
     // material calendar
-    implementation 'com.applandeo:material-calendar-view:1.8.0-rc01'
+    //implementation 'com.applandeo:material-calendar-view:1.8.0-rc01'
+    implementation 'com.applandeo:material-calendar-view:1.9.0-rc01'
 
     // firebase
     implementation 'com.google.firebase:firebase-analytics-ktx:17.5.0'
@@ -118,8 +135,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.10.5'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.5'
 
-    // lazy viewmodels
-    implementation 'androidx.fragment:fragment-ktx:1.2.5'
+    // ktx fragment
+    implementation "androidx.fragment:fragment-ktx:1.3.0"
 
     // stetho
     implementation 'com.facebook.stetho:stetho:1.5.1'
@@ -139,5 +156,11 @@ dependencies {
 
     // rv anim
     implementation 'jp.wasabeef:recyclerview-animators:4.0.0'
+
+    // rx permission
+    implementation 'gun0912.ted:tedpermission-rx2:2.2.2'
+
+    // lottie
+    implementation "com.airbnb.android:lottie:3.6.0"
 
 }

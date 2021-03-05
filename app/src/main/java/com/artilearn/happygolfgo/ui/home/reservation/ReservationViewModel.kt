@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.ui.home.reservation
 
 import android.accounts.NetworkErrorException
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.R
@@ -55,7 +54,7 @@ class ReservationViewModel(
 
     init {
         bindRx()
-        getTicket()
+        //getTicket()
     }
 
     fun onReservationList() {
@@ -83,7 +82,7 @@ class ReservationViewModel(
             .doOnNext { hideLoading(); _swipeRefresh.call() }
     }
 
-    private fun getTicket() {
+    fun getTicket() {
         repository.requestHomeTicket()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

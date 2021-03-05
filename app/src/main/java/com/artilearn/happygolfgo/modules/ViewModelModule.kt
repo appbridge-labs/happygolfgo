@@ -8,6 +8,7 @@ import com.artilearn.happygolfgo.ui.home.HomeViewModel
 import com.artilearn.happygolfgo.ui.home.alram.AlramViewModel
 import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterViewModel
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageViewModel
+import com.artilearn.happygolfgo.ui.home.mypage.profilechange.ProfileChangeViewModel
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListViewModel
 import com.artilearn.happygolfgo.ui.log.LogViewModel
@@ -21,8 +22,11 @@ import com.artilearn.happygolfgo.ui.reservelist.fragment.ReserveLessonViewModel
 import com.artilearn.happygolfgo.ui.reservelist.fragment.ReservePlateViewModel
 import com.artilearn.happygolfgo.ui.splash.SplashViewModel
 import com.artilearn.happygolfgo.ui.ticketdate.TicketDateViewModel
+import com.artilearn.happygolfgo.ui.ticketmanager.TicketManagerViewModel
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeViewModel
 import com.artilearn.happygolfgo.ui.tutorial.TutorialViewModel
+import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -74,4 +78,7 @@ val viewModelModule = module {
 
     viewModel { GolfGameViewModel(get()) }
 
+    viewModel { TicketManagerViewModel() }
+
+    viewModel { ProfileChangeViewModel(get(), androidApplication()) }
 }

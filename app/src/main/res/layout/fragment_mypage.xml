@@ -36,23 +36,24 @@
                     android:outlineProvider="none"
                     android:padding="16dp">
 
+<!--                    bind:onClick="@{() -> vm.onProfileClick()}"-->
                     <ImageView
                         android:id="@+id/iv_profile"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        bind:onBindProfile="@{vm.image}"
+                        bind:onBindProfile="@{vm.myPageData.profileImage}"
                         tools:srcCompat="@drawable/ic_rating_star" />
 
-                    <!--                    <ImageView-->
-                    <!--                        android:id="@+id/iv_profile_add"-->
-                    <!--                        android:layout_width="wrap_content"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginBottom="6dp"-->
-                    <!--                        app:layout_constraintBottom_toBottomOf="@id/iv_profile"-->
-                    <!--                        app:layout_constraintEnd_toEndOf="@id/iv_profile"-->
-                    <!--                        app:srcCompat="@drawable/ic_home_mypage_image_add" />-->
+<!--                    <ImageView-->
+<!--                        android:id="@+id/iv_profile_add"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="6dp"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@id/iv_profile"-->
+<!--                        app:layout_constraintEnd_toEndOf="@id/iv_profile"-->
+<!--                        app:srcCompat="@drawable/ic_home_mypage_image_add" />-->
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -70,7 +71,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="@{vm.text}"
+                            android:text="@{vm.myPageData.nameAndNickName}"
                             android:textColor="@color/color_black"
                             android:textSize="24dp"
                             android:textStyle="bold"
@@ -83,6 +84,7 @@
                             android:layout_marginTop="4dp"
                             android:ellipsize="end"
                             android:maxLines="1"
+                            android:text="@{vm.myPageData.checkinId}"
                             android:textColor="@color/color_black"
                             android:textSize="14dp"
                             tools:text="checkin id: 0000" />
@@ -151,7 +153,7 @@
                         android:textSize="14dp" />
 
 <!--                    <include-->
-<!--                        android:id="@+id/include_branch"-->
+<!--                        android:id="@+id/include_ticket"-->
 <!--                        layout="@layout/common_view"-->
 <!--                        android:layout_width="match_parent"-->
 <!--                        android:layout_height="wrap_content"-->

@@ -15,19 +15,18 @@ import com.artilearn.happygolfgo.constants.PLATE_ID
 import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
 import com.artilearn.happygolfgo.ui.home.alram.AlramFragment
-import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterFragment
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageFragment
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationFragment
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
-
     private val vm: HomeViewModel by viewModel()
-    private lateinit var fragment: Fragment
-    private lateinit var bottomNavigation: BottomNavigationView
+
+    private lateinit var reservationFragment: ReservationFragment
+    private lateinit var alramFragment: AlramFragment
+    private lateinit var myPageFragment: MyPageFragment
 
     private val fcmEventType by lazy { intent.getStringExtra(FCM_EVENT_TYPE) }
     private val reservationType by lazy { intent.getStringExtra(RESERVATION_TYPE) }
@@ -39,8 +38,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
         initBinding()
         initViewModelObserving()
-        initView()
-        bottomNavigationListener()
+        setSupportActionBar((binding.homeToolbar.toolbar))
     }
 
     private fun initBinding() {
@@ -49,9 +47,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initViewModelObserving() {
         with(vm) {
-            bottomNavigationButton.observe(this@HomeActivity, Observer { event ->
-                initFragment(event)
-            })
             backPressedEvent.observe(this@HomeActivity, Observer {
                 showAppFinish()
             })
@@ -62,47 +57,49 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                     HomeViewModel.FcmTypeMoveModel.LOG -> goLessonLogFromFCM()
                 }
             })
+            bottom.observe(this@HomeActivity, Observer {
+                toolbarText(it)
+                initFragment(it)
+            })
         }
     }
 
-    private fun initView() {
-        initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
-        bottomNavigation = binding.bottomNavigation
+    private fun toolbarText(name: String) {
+        var title = getString(R.string.home_toolbar_text)
+
+        when (name) {
+            "예약" ->  title = getString(R.string.home_toolbar_text)
+            "알림" -> title = getString(R.string.alram_toolbar_title)
+            "마이페이지" -> title = getString(R.string.mypage_toolbar_title)
+        }
+
+        initToolbar(binding.homeToolbar.toolbar, title, false)
     }
 
-    private fun bottomNavigationListener() {
-        bottomNavigation.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.reservation -> { vm.bottomNavigation(RESERVATION) }
-                //R.id.gamecenter -> { vm.bottomNavigation(GAME_CENTER) }
-                R.id.alram -> { vm.bottomNavigation(ALRAM) }
-                R.id.mypage -> { vm.bottomNavigation(MY_PAGE) }
+    private fun initFragment(name: String) {
+        when (name) {
+            "예약" -> {
+                reservationFragment = ReservationFragment()
+                loadFragment(reservationFragment)
             }
-            true
+            "알림" -> {
+                alramFragment = AlramFragment()
+                loadFragment(alramFragment)
+            }
+            "마이페이지" -> {
+                myPageFragment = MyPageFragment()
+                loadFragment(myPageFragment)
+            }
         }
     }
 
-    private fun initFragment(type: HomeViewModel.BottomNavigationEvent) {
-        when (type) {
-            HomeViewModel.BottomNavigationEvent.RESERVATION -> {
-                initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
-                fragment = ReservationFragment()
-                loadFragment(fragment)
-            }
-//            HomeViewModel.BottomNavigationEvent.GAME_CENTER -> {
-//                initToolbar(binding.homeToolbar.toolbar, getString(R.string.gamecenter_toolbar_title), false)
-//                fragment = GameCenterFragment()
-//                loadFragment(fragment)
-//            }
-            HomeViewModel.BottomNavigationEvent.ALRAM -> {
-                initToolbar(binding.homeToolbar.toolbar, getString(R.string.alram_toolbar_title), false)
-                fragment = AlramFragment()
-                loadFragment(fragment)
-            }
-            HomeViewModel.BottomNavigationEvent.MY_PAGE -> {
-                initToolbar(binding.homeToolbar.toolbar, getString(R.string.mypage_toolbar_title), false)
-                fragment = MyPageFragment()
-                loadFragment(fragment)
+    private fun menuIsCheckItem(name: String) {
+        with(binding.bottomNavigation) {
+            when (name) {
+                "예약" -> menu.findItem(R.id.reservation).isChecked = true
+                //"게임센터" -> menu.findItem(R.id.gamecenter).isChecked = true
+                "알림" -> menu.findItem(R.id.alram).isChecked = true
+                "마이페이지" -> menu.findItem(R.id.mypage).isChecked = true
             }
         }
     }
@@ -110,71 +107,40 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun loadFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
-
+        var tagName = ""
         when (fragment) {
-            is ReservationFragment -> {
-                menuIsCheckItem("예약")
-                fragmentManager.popBackStack(getString(R.string.home_tag_name_reservation), FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                transaction.replace(R.id.frame_layout, fragment, getString(R.string.home_tag_name_reservation))
-                transaction.addToBackStack(getString(R.string.home_tag_name_reservation))
-            }
-//            is GameCenterFragment -> {
-//                menuIsCheckItem("게임센터")
-//                fragmentManager.popBackStack(getString(R.string.home_tag_name_gamecenter), FragmentManager.POP_BACK_STACK_INCLUSIVE)
-//                transaction.replace(R.id.frame_layout, fragment, getString(R.string.home_tag_name_gamecenter))
-//                transaction.addToBackStack(getString(R.string.home_tag_name_gamecenter))
-//            }
-            is AlramFragment -> {
-                menuIsCheckItem("알림")
-                fragmentManager.popBackStack(getString(R.string.home_tag_name_alram), FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                transaction.replace(R.id.frame_layout, fragment, getString(R.string.home_tag_name_alram))
-                transaction.addToBackStack(getString(R.string.home_tag_name_alram))
-            }
-            is MyPageFragment -> {
-                menuIsCheckItem("마이페이지")
-                fragmentManager.popBackStack(getString(R.string.home_tag_name_mypage), FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                transaction.replace(R.id.frame_layout, fragment, getString(R.string.home_tag_name_mypage))
-                transaction.addToBackStack(getString(R.string.home_tag_name_mypage))
-            }
+            is ReservationFragment -> tagName = "예약"
+            is AlramFragment -> tagName = "알림"
+            is MyPageFragment -> tagName = "마이페이지"
         }
 
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit()
-        transaction.isAddToBackStackAllowed
+        menuIsCheckItem(tagName)
+        fragmentManager.popBackStack(tagName, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        transaction.apply {
+            replace(R.id.frame_layout, fragment, tagName)
+            addToBackStack(tagName)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit()
+            isAddToBackStackAllowed
+        }
     }
 
     private fun backButtonBottomNavigationListener() {
         val reservation = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_reservation))
-        //val gamecenter = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_gamecenter))
         val alram = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_alram))
         val mypage = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_mypage))
 
         when {
             reservation != null && reservation.isVisible -> {
-                initToolbar(binding.homeToolbar.toolbar, getString(R.string.home_toolbar_text), false)
+                toolbarText("예약")
                 menuIsCheckItem("예약")
             }
-//            gamecenter != null && gamecenter.isVisible -> {
-//                initToolbar(binding.homeToolbar.toolbar, getString(R.string.gamecenter_toolbar_title), false)
-//                menuIsCheckItem("게임센터")
-//            }
             alram != null && alram.isVisible -> {
-                initToolbar(binding.homeToolbar.toolbar, getString(R.string.alram_toolbar_title), false)
+                toolbarText("알림")
                 menuIsCheckItem("알림")
             }
             mypage != null && mypage.isVisible -> {
-                initToolbar(binding.homeToolbar.toolbar, getString(R.string.mypage_toolbar_title), false)
+                toolbarText("마이페이지")
                 menuIsCheckItem("마이페이지")
-            }
-        }
-    }
-
-    private fun menuIsCheckItem(name: String) {
-        with(bottomNavigation) {
-            when (name) {
-                "예약" -> menu.findItem(R.id.reservation).isChecked = true
-                //"게임센터" -> menu.findItem(R.id.gamecenter).isChecked = true
-                "알림" -> menu.findItem(R.id.alram).isChecked = true
-                "마이페이지" -> menu.findItem(R.id.mypage).isChecked = true
             }
         }
     }
@@ -189,7 +155,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     }
 
     private fun goAlramFCM() {
-        vm.bottomNavigation(ALRAM)
+        vm.onNextBottomEvent(getString(R.string.alram_toolbar_title))
     }
 
     private fun goReservaitonPlateFromFCM() {
@@ -233,14 +199,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         } else {
             super.onBackPressed()
             backButtonBottomNavigationListener()
+            vm.onNextBottomEvent("음")
         }
-    }
-
-    companion object {
-        const val RESERVATION = "예약"
-        const val GAME_CENTER = "게임센터"
-        const val ALRAM = "알림"
-        const val MY_PAGE = "마이페이지"
     }
 
 }

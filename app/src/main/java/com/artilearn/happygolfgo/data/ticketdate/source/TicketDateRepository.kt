@@ -5,6 +5,7 @@ import io.reactivex.Single
 import retrofit2.Response
 
 interface TicketDateRepository {
+    var getUsed: Boolean
 
     fun selectPlateDate(
         ticketId: Int

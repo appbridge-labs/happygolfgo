@@ -2,20 +2,30 @@ package com.artilearn.happygolfgo.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.base.BaseLoadingFragment
+import com.artilearn.happygolfgo.constants.LOADING
+import com.artilearn.happygolfgo.constants.OVERLAP_USER
 import com.artilearn.happygolfgo.databinding.ActivityLoginBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.common.DeveloperOptionFragment
 import com.artilearn.happygolfgo.ui.home.HomeActivity
+import com.artilearn.happygolfgo.ui.login.model.LoginOverlap
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
+import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private val viewModel: LoginViewModel by viewModel()
+    private val loginBottomView by lazy(::LoginBottomFragment)
+    private val devOptionView by lazy(::DeveloperOptionFragment)
+    private val loadingView by lazy { BaseLoadingFragment(R.layout.fragment_loading) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +51,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 goPasswordAuth()
             })
             developerOption.observe(this@LoginActivity, Observer {
-                openDeveloperOption()
+                devOptionView.show(supportFragmentManager, devOptionView.tag)
             })
             loginType.observe(this@LoginActivity, Observer {
                 when (loginType.value) {
@@ -50,10 +60,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     LoginViewModel.LoginType.NOT_FOUND_USER -> showEmptyUser()
                     LoginViewModel.LoginType.FAIL_PASSWORD -> showFailPassword()
                     LoginViewModel.LoginType.SUCCESS -> goHome()
+                    LoginViewModel.LoginType.SHOW_LOADING -> loadingView.show(supportFragmentManager, LOADING)
+                    LoginViewModel.LoginType.HIDE_LOADING -> loadingView.dismissAllowingStateLoss()
                 }
             })
             appRefresh.observe(this@LoginActivity, Observer {
                 goRefresh()
+            })
+            overlapUser.observe(this@LoginActivity, Observer { users ->
+                println("ok!: $users")
+                setOverlapUser(users)
             })
         }
     }
@@ -63,6 +79,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             etPhone.addTextChangedListener { viewModel.phoneOnNext(it.toString()) }
             etPw.addTextChangedListener { viewModel.passwordOnNext(it.toString()) }
         }
+    }
+
+    private fun setOverlapUser(item: List<LoginOverlap>) {
+        val bundle = Bundle()
+        val newItem = ArrayList<LoginOverlap>()
+        newItem.addAll(item)
+        bundle.putParcelableArrayList(OVERLAP_USER, newItem)
+        loginBottomView.arguments = bundle
+        loginBottomView.show(supportFragmentManager, loginBottomView.tag)
     }
 
     private fun showEmptyUser() {
@@ -88,11 +113,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun goPasswordAuth() {
         startActivity(Intent(this, PwAuthActivity::class.java))
-    }
-
-    private fun openDeveloperOption() {
-        val bottom = DeveloperOptionFragment()
-        bottom.show(supportFragmentManager, bottom.tag)
     }
 
 }

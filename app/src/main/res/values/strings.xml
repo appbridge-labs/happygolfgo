@@ -69,7 +69,7 @@
     <string name="pwreset_pw_hint">********</string>
     <string name="pwrest_pw_title">비밀번호</string>
     <string name="pwreset_pw_text">비밀번호 확인</string>
-    <string name="pwreset_title">영문과 숫자를 사용해 8자리 이상을 입력하세요</string>
+    <string name="pwreset_title">새로운 비밀번호를 입력해 주세요</string>
     <string name="pwreset_fail_password">비밀번호가 같지 않습니다</string>
     <string name="pwreset_input_fail_password">비밀번호를 바르게 입력해 주세요</string>
     <string name="pwreset_unspecial_password">특수문자를 포함할 수 없습니다</string>
@@ -155,5 +155,5 @@
     <string name="golf_game_high_score">최고점수</string>
     <string name="golf_game_score_toolbar_title">골프력 게임 스코어</string>
     <string name="tickettime_dont_reservation">예약불가</string>
-    <string name="mypage_branch_change">훈련소 지점 변경</string>
+    <string name="menu_alram_toolbar_title">전체삭제</string>
 </resources>

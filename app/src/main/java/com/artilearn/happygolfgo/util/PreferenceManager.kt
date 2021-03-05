@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.util
 import android.content.Context
 import android.content.SharedPreferences
 import com.artilearn.happygolfgo.constants.*
+import com.artilearn.happygolfgo.data.version.source.model.MyPageLocalModel
 
 class PreferenceManager(context: Context) {
 
@@ -58,6 +59,14 @@ class PreferenceManager(context: Context) {
         get() = prefs.getString(APP_VERSION, "1.0.0") ?: ""
         set(value) = editor.putString(APP_VERSION, value).apply()
 
+    var checkinId: String
+        get() = prefs.getString(CHECK_IN_ID, "") ?: ""
+        set(value) = editor.putString(CHECK_IN_ID, value).apply()
+
+    var calendarUsed: Boolean
+        get() = prefs.getBoolean(CALENDAR_GET_USED, false)
+        set(value) = editor.putBoolean(CALENDAR_GET_USED, value).apply()
+
     fun userLogout() {
         with(editor) {
             remove(NAME).apply()
@@ -66,7 +75,19 @@ class PreferenceManager(context: Context) {
             remove(AUTO_LOGIN).apply()
             remove(ACCESS_TOKEN).apply()
             remove(PHONE_NUMBER).apply()
+            remove(NICK_NAME).apply()
+            remove(CHECK_IN_ID).apply()
+            remove(PROFILE_IMAGE).apply()
         }
+    }
+
+    fun getMypageInfor(): MyPageLocalModel {
+        return MyPageLocalModel(
+            name,
+            nickName!!,
+            checkinId,
+            profileImageURL!!
+        )
     }
 
 }
