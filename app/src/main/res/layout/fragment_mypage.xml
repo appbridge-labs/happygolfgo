@@ -36,7 +36,6 @@
                     android:outlineProvider="none"
                     android:padding="16dp">
 
-<!--                    bind:onClick="@{() -> vm.onProfileClick()}"-->
                     <ImageView
                         android:id="@+id/iv_profile"
                         android:layout_width="80dp"
@@ -44,16 +43,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         bind:onBindProfile="@{vm.myPageData.profileImage}"
+                        bind:onClick="@{() -> vm.onProfileClick()}"
                         tools:srcCompat="@drawable/ic_rating_star" />
 
-<!--                    <ImageView-->
-<!--                        android:id="@+id/iv_profile_add"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginBottom="6dp"-->
-<!--                        app:layout_constraintBottom_toBottomOf="@id/iv_profile"-->
-<!--                        app:layout_constraintEnd_toEndOf="@id/iv_profile"-->
-<!--                        app:srcCompat="@drawable/ic_home_mypage_image_add" />-->
+                    <ImageView
+                        android:id="@+id/iv_profile_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_profile"
+                        app:layout_constraintEnd_toEndOf="@id/iv_profile"
+                        app:srcCompat="@drawable/ic_home_mypage_image_add" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -152,12 +152,12 @@
                         android:text="@string/fragment_mypage_setting_title"
                         android:textSize="14dp" />
 
-<!--                    <include-->
-<!--                        android:id="@+id/include_ticket"-->
-<!--                        layout="@layout/common_view"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="12dp" />-->
+                    <!--                    <include-->
+                    <!--                        android:id="@+id/include_ticket"-->
+                    <!--                        layout="@layout/common_view"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="12dp" />-->
 
                     <include
                         android:id="@+id/include_infor"
