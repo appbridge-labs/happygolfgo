@@ -15,10 +15,14 @@ class FragmentExpiredTicket : BaseFragment<FragmentExpiredTicketBinding, TicketM
     private lateinit var adapter: FragmentExpiredTicketAdapter
 
     override fun init() {
+        initBinding()
         initRecyclerView()
-        dummyData()
 
         viewModel.getExpiredickets()
+    }
+
+    private fun initBinding() {
+        binding.viewModel = viewModel
     }
 
     private fun initRecyclerView() {
@@ -34,26 +38,4 @@ class FragmentExpiredTicket : BaseFragment<FragmentExpiredTicketBinding, TicketM
         }
     }
 
-    private fun dummyData() {
-        val list = mutableListOf<ExpiredTicketModel>()
-        for (i in 0..9) {
-            val item: ExpiredTicketModel = if (i % 2 == 0) {
-                ExpiredTicketModel(
-                    "레슨 티켓 이름 $i 번",
-                    "날짜 $i 번",
-                    0
-                )
-            } else {
-                ExpiredTicketModel(
-                    "타석 티켓 이름 $i 번",
-                    "날짜 $i 번",
-                    1
-                )
-            }
-
-            list.add(item)
-        }
-
-        adapter.submitList(list)
-    }
 }

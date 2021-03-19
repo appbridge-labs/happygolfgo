@@ -1,11 +1,10 @@
 package com.artilearn.happygolfgo.ui.ticketmanager.pause
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.artilearn.happygolfgo.base.BaseRecyclerViewAdapter
 import com.artilearn.happygolfgo.databinding.ItemPauseTicketBinding
-import com.artilearn.happygolfgo.ui.ticketmanager.pause.model.PauseModel
+import com.artilearn.happygolfgo.ui.ticketmanager.model.PauseModel
 
 typealias OnRecyclerViewItemClick = (PauseModel) -> Unit
 

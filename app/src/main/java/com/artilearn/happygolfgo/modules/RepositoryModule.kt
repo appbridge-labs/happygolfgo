@@ -95,6 +95,6 @@ val repositoryModule = module {
 
     single<ProfileChangeRepository> { ProfileChangeRepositoryImpl(get(), get()) }
 
-    single<TicketManagerRepository> { TicketManagerRepositoryImpl(get()) }
+    single<TicketManagerRepository> { TicketManagerRepositoryImpl(get(), get()) }
 
 }

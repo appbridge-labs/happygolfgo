@@ -2,13 +2,13 @@ package com.artilearn.happygolfgo.data.ticketmanager.source.mapper
 
 import com.artilearn.happygolfgo.data.ticketmanager.TicketModelItem
 import com.artilearn.happygolfgo.data.ticketmanager.source.model.PeriodsList
-import com.artilearn.happygolfgo.data.ticketmanager.source.model.TicketManaerModel
+import com.artilearn.happygolfgo.data.ticketmanager.source.model.RemotePasueTicketModel
 import com.artilearn.happygolfgo.mapper.Mapper
 import com.artilearn.happygolfgo.util.convertTime
 
-object TicketManagerRemoteMapper : Mapper<TicketModelItem, TicketManaerModel> {
-    override fun mapper(item: TicketModelItem): TicketManaerModel {
-        return TicketManaerModel(
+object RemotePauseMapper : Mapper<TicketModelItem, RemotePasueTicketModel> {
+    override fun mapper(item: TicketModelItem): RemotePasueTicketModel {
+        return RemotePasueTicketModel(
             name = item.name,
             type = item.type,
             startDate = convertTime(item.startDate),
@@ -21,4 +21,5 @@ object TicketManagerRemoteMapper : Mapper<TicketModelItem, TicketManaerModel> {
             }
         )
     }
+
 }

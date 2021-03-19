@@ -10,7 +10,7 @@
 
         <variable
             name="item"
-            type="com.artilearn.happygolfgo.ui.ticketmanager.pause.model.PauseModel" />
+            type="com.artilearn.happygolfgo.ui.ticketmanager.model.PauseModel" />
     </data>
 
     <androidx.cardview.widget.CardView

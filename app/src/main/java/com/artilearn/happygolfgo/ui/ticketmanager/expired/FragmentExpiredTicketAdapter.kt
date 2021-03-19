@@ -5,16 +5,17 @@ import android.view.ViewGroup
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseRecyclerViewAdapter
 import com.artilearn.happygolfgo.databinding.ItemExpiredTicketBinding
+import com.artilearn.happygolfgo.ui.ticketmanager.model.ExpiredModel
 
-typealias OnRecyclerViewItemClcik = (ExpiredTicketModel) -> Unit
+typealias OnRecyclerViewItemClcik = (ExpiredModel) -> Unit
 
 class FragmentExpiredTicketAdapter(
     private val onItemClick: OnRecyclerViewItemClcik? = null
-) : BaseRecyclerViewAdapter<ExpiredTicketModel>() {
+) : BaseRecyclerViewAdapter<ExpiredModel>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseViewHolder<ExpiredTicketModel> {
+    ): BaseViewHolder<ExpiredModel> {
         return ItemViewHolder(
             ItemExpiredTicketBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -35,14 +36,10 @@ class FragmentExpiredTicketAdapter(
 
     class ItemViewHolder(
         private val binding: ItemExpiredTicketBinding
-    ) : BaseViewHolder<ExpiredTicketModel>(binding) {
-        override fun bind(item: ExpiredTicketModel) {
+    ) : BaseViewHolder<ExpiredModel>(binding) {
+        override fun bind(item: ExpiredModel) {
             super.bind(item)
 
-            when (item.type) {
-                0 -> binding.ivPoint.setImageResource(R.drawable.ic_reservation_lesson_point)
-                else -> binding.ivPoint.setImageResource(R.drawable.ic_home_reservation_ticket_point)
-            }
         }
     }
 }

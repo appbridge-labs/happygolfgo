@@ -54,7 +54,11 @@ data class TicketModelItem(
 
     @SerializedName("pausesPeriods")
     @Expose
-    val pasuePeriods: List<TicketPausePeriodsModel>
+    val pasuePeriods: List<TicketPausePeriodsModel>,
+
+    @SerializedName("totalPrice")
+    @Expose
+    val totalPrice: Int
 )
 
 data class TicketPausePeriodsModel(
