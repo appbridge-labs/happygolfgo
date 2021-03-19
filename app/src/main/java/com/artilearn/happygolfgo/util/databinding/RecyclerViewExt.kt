@@ -50,6 +50,14 @@ fun <T : Identifiable> RecyclerView.setAlramItems(list: List<T>?) {
     }
 }
 
+@BindingAdapter("bindPauseList")
+fun <T: Identifiable> RecyclerView.setPasueList(list: List<T>?) {
+    if (this.adapter is BaseRecyclerViewAdapter<*>) {
+        val adapter = this.adapter as BaseRecyclerViewAdapter<T>
+        adapter.submitList(list)
+    }
+}
+
 private fun <T> findRankPosition(rv: RecyclerView, items: List<T>) {
     var itemPosition = 0
 

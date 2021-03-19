@@ -1,14 +1,15 @@
 package com.artilearn.happygolfgo.ui.ticketmanager
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityTicketManagerBinding
 import com.artilearn.happygolfgo.ui.ticketmanager.history.FragmentHistoryTicket
-import com.artilearn.happygolfgo.ui.ticketmanager.over.FragmentOverTicket
-import com.artilearn.happygolfgo.ui.ticketmanager.use.FragmentUseTicket
+import com.artilearn.happygolfgo.ui.ticketmanager.expired.FragmentExpiredTicket
+import com.artilearn.happygolfgo.ui.ticketmanager.pause.FragmentPauseTicket
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TicketManagerActivity : BaseActivity<ActivityTicketManagerBinding>(
@@ -16,15 +17,36 @@ class TicketManagerActivity : BaseActivity<ActivityTicketManagerBinding>(
 ) {
 
     private val viewModel: TicketManagerViewModel by viewModel()
-    private val useFragment by lazy(::FragmentUseTicket)
-    private val overFragment by lazy(::FragmentOverTicket)
+    private val useFragment by lazy(::FragmentPauseTicket)
+    private val overFragment by lazy(::FragmentExpiredTicket)
     private val historyFragment by lazy(::FragmentHistoryTicket)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
 
         initBinding()
         initViewModelObserving()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_edit_in, R.anim.slide_edit_out)
+    }
+
+    override fun onDestroy() {
+        overridePendingTransition(R.anim.slide_edit_in, R.anim.slide_edit_out)
+        super.onDestroy()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initBinding()  {
@@ -50,7 +72,7 @@ class TicketManagerActivity : BaseActivity<ActivityTicketManagerBinding>(
 
     private fun setFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().run {
-            setCustomAnimations(R.anim.from_up_in, R.anim.from_up_out)
+            setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
             replace(R.id.frame_layout, fragment).commit()
         }
     }

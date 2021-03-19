@@ -1,8 +1,8 @@
-package com.artilearn.happygolfgo.ui.ticketmanager.use
+package com.artilearn.happygolfgo.ui.ticketmanager.pause
 
 import com.artilearn.happygolfgo.base.Identifiable
 
-data class UseTicketModel(
+data class PauseTicketModel(
     var ticketTitle: String,
     var ticketDate: String,
     var isStoped: Boolean

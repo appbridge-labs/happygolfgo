@@ -35,6 +35,8 @@ import com.artilearn.happygolfgo.data.splash.source.SplashRepository
 import com.artilearn.happygolfgo.data.splash.source.SplashRepositoryImpl
 import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepository
 import com.artilearn.happygolfgo.data.ticketdate.source.TicketDateRepositoryImpl
+import com.artilearn.happygolfgo.data.ticketmanager.source.TicketManagerRepository
+import com.artilearn.happygolfgo.data.ticketmanager.source.TicketManagerRepositoryImpl
 import com.artilearn.happygolfgo.data.tickettime.source.TicketTimeRepository
 import com.artilearn.happygolfgo.data.tickettime.source.TicketTimeRepositoryImpl
 import com.artilearn.happygolfgo.data.tutorial.source.TutorialRepository
@@ -92,5 +94,7 @@ val repositoryModule = module {
     single<GolfGameRepository> { GolfGameRepositoryImpl(get(), get()) }
 
     single<ProfileChangeRepository> { ProfileChangeRepositoryImpl(get(), get()) }
+
+    single<TicketManagerRepository> { TicketManagerRepositoryImpl(get()) }
 
 }

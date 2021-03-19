@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.artilearn.happygolfgo.ui.ticketmanager.over.OverTicketModel" />
+            type="com.artilearn.happygolfgo.ui.ticketmanager.expired.ExpiredTicketModel" />
     </data>
 
     <androidx.cardview.widget.CardView

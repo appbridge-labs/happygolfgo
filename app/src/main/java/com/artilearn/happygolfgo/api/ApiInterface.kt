@@ -23,6 +23,7 @@ import com.artilearn.happygolfgo.data.splash.SplashTokenResponse
 import com.artilearn.happygolfgo.data.splash.SynchronizedDataModel
 import com.artilearn.happygolfgo.data.splash.SynchronizedResponse
 import com.artilearn.happygolfgo.data.ticketdate.TicketDateResponse
+import com.artilearn.happygolfgo.data.ticketmanager.TicketManagerResponse
 import com.artilearn.happygolfgo.data.tickettime.TicketTimeResponse
 import com.artilearn.happygolfgo.data.version.LogoutModel
 import com.artilearn.happygolfgo.data.version.VersionResponse
@@ -186,4 +187,10 @@ interface ApiInterface {
 
     @PUT("main/user/resetProfileImage")
     fun uploadDefaultProfileImage(): Completable
+
+    @GET("main/user/pausedTickets")
+    fun getPauseTickets(): Single<TicketManagerResponse>
+
+    @GET("main/user/expiredTickets")
+    fun getExpiredTickets(): Single<TicketManagerResponse>
 }

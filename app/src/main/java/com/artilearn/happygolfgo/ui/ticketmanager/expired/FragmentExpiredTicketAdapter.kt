@@ -1,22 +1,22 @@
-package com.artilearn.happygolfgo.ui.ticketmanager.over
+package com.artilearn.happygolfgo.ui.ticketmanager.expired
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseRecyclerViewAdapter
-import com.artilearn.happygolfgo.databinding.ItemOverTicketBinding
+import com.artilearn.happygolfgo.databinding.ItemExpiredTicketBinding
 
-typealias OnRecyclerViewItemClcik = (OverTicketModel) -> Unit
+typealias OnRecyclerViewItemClcik = (ExpiredTicketModel) -> Unit
 
-class FragmentOverTicketAdapter(
+class FragmentExpiredTicketAdapter(
     private val onItemClick: OnRecyclerViewItemClcik? = null
-) : BaseRecyclerViewAdapter<OverTicketModel>() {
+) : BaseRecyclerViewAdapter<ExpiredTicketModel>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseViewHolder<OverTicketModel> {
+    ): BaseViewHolder<ExpiredTicketModel> {
         return ItemViewHolder(
-            ItemOverTicketBinding.inflate(
+            ItemExpiredTicketBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -34,9 +34,9 @@ class FragmentOverTicketAdapter(
     }
 
     class ItemViewHolder(
-        private val binding: ItemOverTicketBinding
-    ) : BaseViewHolder<OverTicketModel>(binding) {
-        override fun bind(item: OverTicketModel) {
+        private val binding: ItemExpiredTicketBinding
+    ) : BaseViewHolder<ExpiredTicketModel>(binding) {
+        override fun bind(item: ExpiredTicketModel) {
             super.bind(item)
 
             when (item.type) {

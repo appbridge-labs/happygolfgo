@@ -35,3 +35,20 @@ fun TextView.bindAverages(averages: String, isMe: Boolean) {
     }
     this.text = averages
 }
+
+@BindingAdapter("pauseList")
+fun TextView.pauseTicketText(item: List<String>?) {
+    val sb = StringBuilder()
+
+    item?.let {
+        for( i in item.indices) {
+            if (item.lastIndex == i) {
+                sb.append(item[i])
+            } else {
+                sb.append("${item[i]}\n")
+            }
+        }
+
+        text = sb
+    }
+}

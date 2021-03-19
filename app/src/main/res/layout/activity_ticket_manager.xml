@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tag="사용"
-                android:text="사용중 티켓" />
+                android:text="사용정지 티켓" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"

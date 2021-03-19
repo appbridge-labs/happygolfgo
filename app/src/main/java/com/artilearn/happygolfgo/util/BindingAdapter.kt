@@ -1,12 +1,15 @@
 package com.artilearn.happygolfgo.util
 
 import android.graphics.Typeface
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.Alram
@@ -277,4 +280,3 @@ fun setReservationCard(
         }
     }
 }
-

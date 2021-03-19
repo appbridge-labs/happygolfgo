@@ -26,7 +26,7 @@ android {
             dimension "type"
             minSdkVersion 23
             resConfigs('en', 'xhdpi')
-            buildConfigField "String", "HG_BASE_URL", "\"http://172.30.1.43:7000/appClient/\""
+            buildConfigField "String", "HG_BASE_URL", "\"http://172.30.1.54:7000/appClient/\""
         }
 
         dev {

@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.reserveconfirm
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R

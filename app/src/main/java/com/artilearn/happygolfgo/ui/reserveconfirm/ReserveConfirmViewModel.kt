@@ -1,7 +1,6 @@
 package com.artilearn.happygolfgo.ui.reserveconfirm
 
 import android.accounts.NetworkErrorException
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -15,7 +14,6 @@ import com.artilearn.happygolfgo.data.reserveconfirm.source.ReserveConfirmReposi
 import com.artilearn.happygolfgo.data.reserveconfirm.source.TimeChangeRepository
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers

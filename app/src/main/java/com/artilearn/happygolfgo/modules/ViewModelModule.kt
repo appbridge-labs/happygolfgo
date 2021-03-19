@@ -78,7 +78,7 @@ val viewModelModule = module {
 
     viewModel { GolfGameViewModel(get()) }
 
-    viewModel { TicketManagerViewModel() }
+    viewModel { TicketManagerViewModel(get()) }
 
     viewModel { ProfileChangeViewModel(get(), androidApplication()) }
 }

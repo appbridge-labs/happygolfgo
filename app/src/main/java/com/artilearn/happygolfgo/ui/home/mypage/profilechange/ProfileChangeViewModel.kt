@@ -100,6 +100,8 @@ class ProfileChangeViewModel(
             repository.uploadProfileImage(it)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { showLoading() }
+                .doAfterTerminate { hideLoading() }
                 .subscribe({
                     setState(ProfileChangeState.SUCCESS)
                 }, { t ->
@@ -119,6 +121,8 @@ class ProfileChangeViewModel(
         repository.uploadDefaultProfileImage()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
             .subscribe({
                 setState(ProfileChangeState.SUCCESS)
             }, { t ->

@@ -1,22 +1,23 @@
-package com.artilearn.happygolfgo.ui.ticketmanager.use
+package com.artilearn.happygolfgo.ui.ticketmanager.pause
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.artilearn.happygolfgo.base.BaseRecyclerViewAdapter
-import com.artilearn.happygolfgo.databinding.ItemUseTicketBinding
+import com.artilearn.happygolfgo.databinding.ItemPauseTicketBinding
+import com.artilearn.happygolfgo.ui.ticketmanager.pause.model.PauseModel
 
-typealias OnRecyclerViewItemClick = (UseTicketModel) -> Unit
+typealias OnRecyclerViewItemClick = (PauseModel) -> Unit
 
-class FragmentUseTicketAdapter(
+class FragmentPauseTicketAdapter(
     private val onItemClick: OnRecyclerViewItemClick? = null
-) : BaseRecyclerViewAdapter<UseTicketModel>() {
+) : BaseRecyclerViewAdapter<PauseModel>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseViewHolder<UseTicketModel> {
+    ): BaseViewHolder<PauseModel> {
         return ItemViewHolder(
-            ItemUseTicketBinding.inflate(
+            ItemPauseTicketBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -34,20 +35,10 @@ class FragmentUseTicketAdapter(
     }
 
     class ItemViewHolder(
-        private val binding: ItemUseTicketBinding
-    ) : BaseViewHolder<UseTicketModel>(binding) {
-        override fun bind(item: UseTicketModel) {
+        private val binding: ItemPauseTicketBinding
+    ) : BaseViewHolder<PauseModel>(binding) {
+        override fun bind(item: PauseModel) {
             super.bind(item)
-
-            with(binding) {
-                if (item.isStoped) {
-                    tvTicketStop.text = "일시 정지 중"
-                    tvTicketStop.visibility = View.VISIBLE
-                } else {
-                    tvTicketStop.text = null
-                    tvTicketStop.visibility = View.GONE
-                }
-            }
         }
     }
 

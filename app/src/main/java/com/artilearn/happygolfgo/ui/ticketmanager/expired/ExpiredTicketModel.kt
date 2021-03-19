@@ -1,8 +1,8 @@
-package com.artilearn.happygolfgo.ui.ticketmanager.over
+package com.artilearn.happygolfgo.ui.ticketmanager.expired
 
 import com.artilearn.happygolfgo.base.Identifiable
 
-data class OverTicketModel(
+data class ExpiredTicketModel(
     var ticketTitle: String,
     var ticketDate: String,
     var type: Int
