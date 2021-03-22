@@ -7,9 +7,10 @@ import com.artilearn.happygolfgo.ui.ticketmanager.model.ExpiredModel
 object ExpiredTicketMapper : Mapper<RemoteExpiredTicketModel, ExpiredModel> {
     override fun mapper(item: RemoteExpiredTicketModel): ExpiredModel {
         return ExpiredModel(
+            type = item.type,
             name = item.name,
             date = dateMapper(item.startDate, item.endDate),
-            paid = item.price
+            paid = "${item.price} 원"
         )
     }
 
@@ -19,4 +20,5 @@ object ExpiredTicketMapper : Mapper<RemoteExpiredTicketModel, ExpiredModel> {
 
         return "${start[1]}.${start[2]} ~ ${end[1]}.${end[2]}"
     }
+
 }

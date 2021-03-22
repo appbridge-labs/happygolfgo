@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.ticketmanager.source.TicketManagerRepository
+import com.artilearn.happygolfgo.ui.ticketmanager.model.ExpiredModel
 import com.artilearn.happygolfgo.ui.ticketmanager.model.PauseModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -23,9 +24,17 @@ class TicketManagerViewModel(
     val pauseTicketList: LiveData<List<PauseModel>>
         get() = _pauseTicketList
 
+    private val _expiredTicketList: MutableLiveData<List<ExpiredModel>> = MutableLiveData()
+    val expiredTicketList: LiveData<List<ExpiredModel>>
+        get() = _expiredTicketList
+
     private val _emptyPauseTicket: MutableLiveData<Boolean> = MutableLiveData(false)
     val emptyPauseTicket: LiveData<Boolean>
         get() = _emptyPauseTicket
+
+    private val _emptyExpiredTicket: MutableLiveData<Boolean> = MutableLiveData(false)
+    val emptyExpiredTicket: LiveData<Boolean>
+        get() = _emptyExpiredTicket
 
     fun tabItemClick(position: Int) {
         _tabPosition.value = position
@@ -52,6 +61,7 @@ class TicketManagerViewModel(
             .doAfterTerminate { hideLoading() }
             .subscribe({
                 println("getExpiredickets success: $it")
+                checkExpiredTicketList(it)
             }, { t ->
                 failError(t)
             }).addTo(compositeDisposable)
@@ -62,7 +72,14 @@ class TicketManagerViewModel(
         _pauseTicketList.value = list
     }
 
+    private fun checkExpiredTicketList(list: List<ExpiredModel>) {
+        isEmptyExpiredTicket(list.isEmpty())
+        _expiredTicketList.value = list
+    }
+
     private fun isEmptyPauseTicket(result: Boolean) = _emptyPauseTicket.postValue(result)
+
+    private fun isEmptyExpiredTicket(result: Boolean) = _emptyExpiredTicket.postValue(result)
 
     private fun failError(t: Throwable) {
         when (t) {

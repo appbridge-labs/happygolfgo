@@ -21,6 +21,8 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
+            bind:onRefresh="@{() -> vm.onRefresh()}"
+            bind:isRefresh="@{vm.isRefresh}"
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout

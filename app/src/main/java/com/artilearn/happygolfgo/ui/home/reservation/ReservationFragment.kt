@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.home.reservation
 
 import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
@@ -29,13 +30,12 @@ class ReservationFragment
         initBinding()
         initViewModelObserving()
         initAdapter()
-        initSwipeRefresh()
     }
 
     override fun onStart() {
         super.onStart()
         /**
-         * 뷰모델에 있었지만 현재 급한 관계로 여기서 통신함...
+         * 뷰모델에 있었지만 현재 급한 관계로 여기서 통신함...(전체)
          * 각 화면에서 유저 액션이 있을 경우 리시버로 해당 아이템모델을 교체해줄 필요
          * 혹은 캐싱데이터로 가지고 놀기, 여유있을 때 수정요망
          */
@@ -56,9 +56,6 @@ class ReservationFragment
             })
             reservationListButton.observe(this@ReservationFragment, Observer {
                 reservationListCheck(adapter.itemCount)
-            })
-            swipeRefresh.observe(this@ReservationFragment, Observer {
-                hideRefresh()
             })
             message.observe(this@ReservationFragment, Observer {
                 showFragmentToast(ToastType.WARNNING, it)
@@ -87,25 +84,6 @@ class ReservationFragment
             }
             recyclerview.adapter = adapter
         }
-    }
-
-    private fun initSwipeRefresh() {
-        with(binding.swipeRefresh) {
-            setOnRefreshListener {
-                viewModel.ticketRefresh()
-            }
-
-            setColorSchemeResources(
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-            )
-        }
-    }
-
-    private fun hideRefresh() {
-        binding.swipeRefresh.isRefreshing = false
     }
 
     private fun reservationListCheck(item: Int) {

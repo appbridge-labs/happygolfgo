@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.databinding.ActivityTicketManagerBinding
-import com.artilearn.happygolfgo.ui.ticketmanager.history.FragmentHistoryTicket
 import com.artilearn.happygolfgo.ui.ticketmanager.expired.FragmentExpiredTicket
 import com.artilearn.happygolfgo.ui.ticketmanager.pause.FragmentPauseTicket
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,7 +18,6 @@ class TicketManagerActivity : BaseActivity<ActivityTicketManagerBinding>(
     private val viewModel: TicketManagerViewModel by viewModel()
     private val useFragment by lazy(::FragmentPauseTicket)
     private val overFragment by lazy(::FragmentExpiredTicket)
-    private val historyFragment by lazy(::FragmentHistoryTicket)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +63,6 @@ class TicketManagerActivity : BaseActivity<ActivityTicketManagerBinding>(
         when (position) {
             0 -> setFragment(useFragment)
             1 -> setFragment(overFragment)
-            2 -> setFragment(historyFragment)
             else -> throw IndexOutOfBoundsException("Not Found TicketManager Position: $position")
         }
     }

@@ -64,7 +64,7 @@ val viewModelModule = module {
 
     viewModel { HomeViewModel() }
 
-    viewModel { ReservationViewModel(get(), get()) }
+    viewModel { ReservationViewModel(get()) }
 
     viewModel { GameCenterViewModel(get()) }
 

@@ -37,12 +37,6 @@
                 android:tag="만료"
                 android:text="만료된 이용권" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tag="히스토리"
-                android:text="티켓 히스토리 " />
-
         </com.google.android.material.tabs.TabLayout>
 
         <FrameLayout

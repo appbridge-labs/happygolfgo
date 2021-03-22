@@ -17,3 +17,11 @@ fun View.emptyPasueTicket(result: Boolean) {
         else -> View.INVISIBLE
     }
 }
+
+@BindingAdapter("emptyExpiredTicket")
+fun View.emptyExpiredTicket(result: Boolean) {
+    visibility = when (result) {
+        true -> View.VISIBLE
+        else -> View.INVISIBLE
+    }
+}
