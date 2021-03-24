@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.home.reservation
 
 import android.accounts.NetworkErrorException
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
@@ -92,6 +93,10 @@ class ReservationViewModel(
                     if (body != null && body.data.tickets.isNotEmpty()) {
                         hideEmptyTicket()
                         _tickets.value = body.data.tickets as ArrayList<Ticket>
+                        Log.d(TAG, "getTicket: ${body.data.pausedTickets}")
+                        Log.d(TAG, "getTicket: ${body.data.expiredTickets}")
+                        Log.d(TAG, "getTicket: ${body.data.pausedTickets.size}")
+                        Log.d(TAG, "getTicket: ${body.data.expiredTickets.size}")
                     } else {
                         showEmptyTicket()
                     }
