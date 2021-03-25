@@ -6,7 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Ticket
+import com.artilearn.happygolfgo.data.home.HomeResponse
+import com.artilearn.happygolfgo.data.home.HomeResponseInfo
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.EXPIRED_TICKET
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.PAUSE_TICKET
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.USE_TICKET
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,7 +34,6 @@ class ReservationViewModel(
     private var disposable: Disposable? = null
 
     private val _emptyTicket: MutableLiveData<Boolean> = MutableLiveData()
-    private val _tickets: MutableLiveData<ArrayList<Ticket>> = MutableLiveData()
     private val _reservationListButton: SingleLiveEvent<Unit> = SingleLiveEvent()
     private val _message = SingleLiveEvent<String>()
     private val _buttonState: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -40,9 +44,6 @@ class ReservationViewModel(
     val emptyTicket: LiveData<Boolean>
         get() = _emptyTicket
 
-    val tickets: LiveData<ArrayList<Ticket>>
-        get() = _tickets
-
     val reservationListButton: LiveData<Unit>
         get() = _reservationListButton
 
@@ -52,6 +53,10 @@ class ReservationViewModel(
     val buttonState: LiveData<Boolean>
         get() = _buttonState
 
+    private val _ticketList: MutableLiveData<List<Ticket>> = MutableLiveData()
+    val ticketList: LiveData<List<Ticket>>
+        get() = _ticketList
+
     init {
         compositeDisposable.addAll(
             reservationList.throttleFirst(1000, TimeUnit.MILLISECONDS)
@@ -60,7 +65,7 @@ class ReservationViewModel(
 
             _onRefreshSubject.observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { _isRefreshSubject.onNext(true) }
-                .map { _tickets.value?.size }
+                .map { _ticketList.value?.size }
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { _isRefreshSubject.onNext(false) }
                 .subscribe { it?.let { getTicket() } },
@@ -92,23 +97,19 @@ class ReservationViewModel(
                 if (it.isSuccessful) {
                     if (body != null && body.data.tickets.isNotEmpty()) {
                         hideEmptyTicket()
-                        _tickets.value = body.data.tickets as ArrayList<Ticket>
-                        Log.d(TAG, "getTicket: ${body.data.pausedTickets}")
-                        Log.d(TAG, "getTicket: ${body.data.expiredTickets}")
-                        Log.d(TAG, "getTicket: ${body.data.pausedTickets.size}")
-                        Log.d(TAG, "getTicket: ${body.data.expiredTickets.size}")
+                        _ticketList.value = allTicketList(body.data)
                     } else {
                         showEmptyTicket()
                     }
                 } else {
-                    _serverError.value = "서버로부터 데이터를 불러오는데 실패했습니다"
+                    _serverError.value = "서버로부터 이용권을 불러오는데 실패했습니다"
                 }
             }, { t ->
                 when (t) {
                     is NetworkErrorException -> _networkFail.call()
                     is HttpException -> {
                         if (t.code() == 419) _appRefresh.call()
-                        else _serverError.value = "데이터를 불러오는데 실패했습니다"
+                        else _serverError.value = "이용권을 불러오는데 실패했습니다"
                     }
                     else -> _serverError.value = "알 수 없는 오류 발생"
                 }
@@ -129,4 +130,85 @@ class ReservationViewModel(
         _buttonState.value = result
     }
 
+    private fun allTicketList(item: HomeResponseInfo): List<Ticket> {
+        val newTicketList = arrayListOf<Ticket>()
+
+        val useList = mapperUseTicket(item.tickets)
+        val pauseList = mapperPauseTicket(item.pausedTickets)
+        val expiredList = mapperExpiredTicket(item.expiredTickets)
+
+        newTicketList.addAll(useList)
+        newTicketList.addAll(pauseList)
+        newTicketList.addAll(expiredList)
+
+        return newTicketList
+    }
+
+    private fun mapperUseTicket(item: List<Ticket>): List<Ticket> {
+        return item.map {
+            Ticket(
+                viewType = USE_TICKET,
+                id = it.id,
+                name = it.name,
+                type = it.type,
+                period = it.period,
+                totalCount = it.totalCount,
+                usedCount = it.usedCount,
+                onlyOnceToday = it.onlyOnceToday,
+                remainingCount = it.remainingCount,
+                isUnlimited = it.isUnlimited,
+                startDate = it.startDate,
+                endDate = it.endDate,
+                allowToBook = it.allowToBook,
+                pasuePeriods = it.pasuePeriods,
+                totalPrice = it.totalPrice,
+                maxReservationCount = it.maxReservationCount
+            )
+        }
+    }
+
+    private fun mapperPauseTicket(item: List<Ticket>): List<Ticket> {
+        return item.map {
+            Ticket(
+                viewType = PAUSE_TICKET,
+                id = it.id,
+                name = it.name,
+                type = it.type,
+                period = it.period,
+                totalCount = it.totalCount,
+                usedCount = it.usedCount,
+                onlyOnceToday = it.onlyOnceToday,
+                remainingCount = it.remainingCount,
+                isUnlimited = it.isUnlimited,
+                startDate = it.startDate,
+                endDate = it.endDate,
+                allowToBook = it.allowToBook,
+                pasuePeriods = it.pasuePeriods,
+                totalPrice = it.totalPrice
+            )
+        }
+    }
+
+    private fun mapperExpiredTicket(item: List<Ticket>): List<Ticket> {
+        return item.map {
+            Ticket(
+                viewType = EXPIRED_TICKET,
+                id = it.id,
+                name = it.name,
+                type = it.type,
+                period = it.period,
+                totalCount = it.totalCount,
+                usedCount = it.usedCount,
+                onlyOnceToday = it.onlyOnceToday,
+                remainingCount = it.remainingCount,
+                isUnlimited = it.isUnlimited,
+                startDate = it.startDate,
+                endDate = it.endDate,
+                allowToBook = it.allowToBook,
+                pasuePeriods = it.pasuePeriods,
+                totalPrice = it.totalPrice
+            )
+        }
+
+    }
 }

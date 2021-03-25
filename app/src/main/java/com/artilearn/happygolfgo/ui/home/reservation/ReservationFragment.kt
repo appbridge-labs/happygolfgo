@@ -10,6 +10,9 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.FragmentReservationBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.home.HomeViewModel
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.EXPIRED_TICKET
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.PAUSE_TICKET
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.USE_TICKET
 import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
 import com.artilearn.happygolfgo.util.snackbar
@@ -23,7 +26,8 @@ class ReservationFragment
     : BaseFragment<FragmentReservationBinding, ReservationViewModel>(R.layout.fragment_reservation) {
 
     override val viewModel: ReservationViewModel by viewModel()
-    private lateinit var adapter: ReservationAdapter
+    //private lateinit var adapter: ReservationAdapter
+    private lateinit var adapter: ReservationNewAdapter
 
     override fun init() {
 
@@ -48,16 +52,16 @@ class ReservationFragment
 
     private fun initViewModelObserving() {
         with(viewModel) {
-            serverError.observe(this@ReservationFragment, Observer {
+            serverError.observe(viewLifecycleOwner, Observer {
                 showFragmentToast(ToastType.ERROR, it)
             })
-            networkFail.observe(this@ReservationFragment, Observer {
+            networkFail.observe(viewLifecycleOwner, Observer {
                 showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
             })
-            reservationListButton.observe(this@ReservationFragment, Observer {
+            reservationListButton.observe(viewLifecycleOwner, Observer {
                 reservationListCheck(adapter.itemCount)
             })
-            message.observe(this@ReservationFragment, Observer {
+            message.observe(viewLifecycleOwner, Observer {
                 showFragmentToast(ToastType.WARNNING, it)
             })
             appRefresh.observe(viewLifecycleOwner, Observer {
@@ -67,13 +71,31 @@ class ReservationFragment
     }
 
     private fun initAdapter() {
-        adapter = ReservationAdapter { ticket ->
-            with(ticket) {
-                when {
-                    !isUnlimited && remainingCount == 0 -> binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
-                    allowToBook == false -> binding.parentLayout.snackbar(getString(R.string.home_reservation_allowbook_fail))
-                    ticket.type == 1 -> "" // group lesson
-                    else -> goSelectionDate(ticket)
+        adapter = ReservationNewAdapter { ticket ->
+            when (ticket.viewType) {
+                USE_TICKET -> { // 티켓타입 (레슨, 타석ㄱ에 따라 allowabookt 처리 )
+                    with(ticket) {
+                        when {
+                            !isUnlimited && remainingCount == 0 -> {
+                                binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
+                            }
+                            allowToBook == false -> {
+                                binding.parentLayout.snackbar("예약은 최대 ${ticket.maxReservationCount}개 까지만 가능합니다")
+                            }
+                            ticket.type == 1 -> {
+                                // group lesson
+                            }
+                            else -> {
+                                goSelectionDate(ticket)
+                            }
+                        }
+                    }
+                }
+                PAUSE_TICKET -> {
+                    binding.parentLayout.snackbar("정지중인 이용권입니다")
+                }
+                EXPIRED_TICKET -> {
+                    binding.parentLayout.snackbar("만료된 이용권입니다")
                 }
             }
         }
@@ -100,8 +122,7 @@ class ReservationFragment
     }
 
     private fun goSelectionDate(ticket: Ticket) {
-        val selectIntent = Intent(activity, TicketDateActivity::class.java)
-            .apply {
+        val selectIntent = Intent(activity, TicketDateActivity::class.java).apply {
                 putExtra(TICKET, ticket)
             }
         startActivity(selectIntent)

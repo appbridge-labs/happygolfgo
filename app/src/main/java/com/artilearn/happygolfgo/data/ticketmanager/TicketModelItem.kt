@@ -1,8 +1,11 @@
 package com.artilearn.happygolfgo.data.ticketmanager
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class TicketModelItem(
     @SerializedName("id")
     @Expose
@@ -59,8 +62,9 @@ data class TicketModelItem(
     @SerializedName("totalPrice")
     @Expose
     val totalPrice: Int
-)
+) : Parcelable
 
+@Parcelize
 data class TicketPausePeriodsModel(
     @SerializedName("id")
     @Expose
@@ -77,4 +81,4 @@ data class TicketPausePeriodsModel(
     @SerializedName("endDate")
     @Expose
     val endDate: String
-)
+) : Parcelable

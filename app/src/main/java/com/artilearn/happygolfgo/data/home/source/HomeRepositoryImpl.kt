@@ -1,8 +1,12 @@
 package com.artilearn.happygolfgo.data.home.source
 
 import android.accounts.NetworkErrorException
+import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.home.HomeResponse
 import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSource
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.EXPIRED_TICKET
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.PAUSE_TICKET
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.USE_TICKET
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Single
 import retrofit2.HttpException
