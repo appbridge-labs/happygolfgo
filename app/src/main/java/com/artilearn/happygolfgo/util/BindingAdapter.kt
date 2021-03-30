@@ -68,10 +68,12 @@ fun ticketCount(
 }
 
 @BindingAdapter("setTickets", "setScroll")
-fun RecyclerView.setTicketItems(tickes: List<Ticket>?, vm: ReservationViewModel) {
+fun RecyclerView.setTicketItems(ticket: List<Ticket>?, vm: ReservationViewModel) {
     with(adapter as ReservationNewAdapter) {
-        tickes?.let {
+        ticket?.let {
             this.addItems(it)
+            //this.addItems(it)
+            //this.addItem(it)
             //this.submitList(it)
         }
     }

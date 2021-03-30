@@ -68,14 +68,13 @@ class MyPageFragment
         }
     }
 
-    //todo 티켓관리 xml 배포 전 추가할 것인지 냅둘 것인지 판단
     private fun initView() {
         with(binding) {
             includeInfor.tv_text.text = getString(R.string.mypage_info_change)
             includeRecord.tv_text.text = getString(R.string.mypage_lesson_title)
             includePassword.tv_text.text = getString(R.string.mypage_password_change)
             includeLogout.tv_text.text = getString(R.string.mypage_logout)
-            includeTicket.tv_text.text = "이용권 관리"
+            //includeTicket.tv_text.text = "이용권 관리"
             includeUpdate.tv_text.text = getString(R.string.mypage_update)
             includeUpdate.tv_text.setTextColor(ContextCompat.getColor(includeUpdate.tv_text.context, R.color.color_mypage_update))
             includeUpdate.parent_card.setBackgroundResource(R.drawable.bg_mypage_update)
@@ -89,7 +88,7 @@ class MyPageFragment
             includeRecord.setOnClickListener { goLessonLog() }
             includeLogout.setOnClickListener { viewModel.logout() }
             includePassword.setOnClickListener { goPwAuth() }
-            includeTicket.setOnClickListener { goTicketManager() }
+            //includeTicket.setOnClickListener { goTicketManager() }
         }
     }
 

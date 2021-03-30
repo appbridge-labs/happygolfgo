@@ -15,12 +15,13 @@ import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Compa
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.USE_TICKET
 import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
-import com.artilearn.happygolfgo.util.snackbar
+import com.artilearn.happygolfgo.util.*
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.koin.android.ext.android.bind
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class ReservationFragment
     : BaseFragment<FragmentReservationBinding, ReservationViewModel>(R.layout.fragment_reservation) {
@@ -73,8 +74,10 @@ class ReservationFragment
     private fun initAdapter() {
         adapter = ReservationNewAdapter { ticket ->
             when (ticket.viewType) {
-                USE_TICKET -> { // 티켓타입 (레슨, 타석ㄱ에 따라 allowabookt 처리 )
+                USE_TICKET -> {
                     with(ticket) {
+                        val startDateEquals = convertDate(startDate)?.compareTo(getNowDate()) == -1
+
                         when {
                             !isUnlimited && remainingCount == 0 -> {
                                 binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
@@ -84,6 +87,9 @@ class ReservationFragment
                             }
                             ticket.type == 1 -> {
                                 // group lesson
+                            }
+                            !startDateEquals -> {
+                                binding.parentLayout.snackbar("이용권의 시작 날짜가 되지 않았습니다")
                             }
                             else -> {
                                 goSelectionDate(ticket)

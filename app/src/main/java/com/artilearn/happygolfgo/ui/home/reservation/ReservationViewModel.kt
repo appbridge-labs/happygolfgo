@@ -53,8 +53,8 @@ class ReservationViewModel(
     val buttonState: LiveData<Boolean>
         get() = _buttonState
 
-    private val _ticketList: MutableLiveData<List<Ticket>> = MutableLiveData()
-    val ticketList: LiveData<List<Ticket>>
+    private val _ticketList: MutableLiveData<ArrayList<Ticket>> = MutableLiveData()
+    val ticketList: LiveData<ArrayList<Ticket>>
         get() = _ticketList
 
     init {
@@ -130,16 +130,30 @@ class ReservationViewModel(
         _buttonState.value = result
     }
 
-    private fun allTicketList(item: HomeResponseInfo): List<Ticket> {
+    private fun allTicketList(item: HomeResponseInfo): ArrayList<Ticket> {
         val newTicketList = arrayListOf<Ticket>()
 
         val useList = mapperUseTicket(item.tickets)
         val pauseList = mapperPauseTicket(item.pausedTickets)
         val expiredList = mapperExpiredTicket(item.expiredTickets)
 
-        newTicketList.addAll(useList)
-        newTicketList.addAll(pauseList)
-        newTicketList.addAll(expiredList)
+        if (useList.isNotEmpty()) {
+            for (i in useList.indices) {
+                newTicketList.add(useList[i])
+            }
+        }
+
+        if (pauseList.isNotEmpty()) {
+            for (i in pauseList.indices) {
+                newTicketList.add(pauseList[i])
+            }
+        }
+
+        if (expiredList.isNotEmpty()) {
+            for (i in expiredList.indices) {
+                newTicketList.add(expiredList[i])
+            }
+        }
 
         return newTicketList
     }

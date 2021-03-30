@@ -133,6 +133,11 @@ class ReservationNewAdapter(
         this.notifyDataSetChanged()
     }
 
+    fun addItem(item: Ticket) {
+        this.items.add(item)
+        this.notifyDataSetChanged()
+    }
+
     companion object {
         const val USE_TICKET = 1
         const val PAUSE_TICKET = 2
