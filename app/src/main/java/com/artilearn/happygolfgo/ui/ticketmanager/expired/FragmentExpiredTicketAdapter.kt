@@ -1,22 +1,23 @@
-package com.artilearn.happygolfgo.ui.ticketmanager.over
+package com.artilearn.happygolfgo.ui.ticketmanager.expired
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseRecyclerViewAdapter
-import com.artilearn.happygolfgo.databinding.ItemOverTicketBinding
+import com.artilearn.happygolfgo.databinding.ItemExpiredTicketBinding
+import com.artilearn.happygolfgo.ui.ticketmanager.model.ExpiredModel
 
-typealias OnRecyclerViewItemClcik = (OverTicketModel) -> Unit
+typealias OnRecyclerViewItemClcik = (ExpiredModel) -> Unit
 
-class FragmentOverTicketAdapter(
+class FragmentExpiredTicketAdapter(
     private val onItemClick: OnRecyclerViewItemClcik? = null
-) : BaseRecyclerViewAdapter<OverTicketModel>() {
+) : BaseRecyclerViewAdapter<ExpiredModel>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseViewHolder<OverTicketModel> {
+    ): BaseViewHolder<ExpiredModel> {
         return ItemViewHolder(
-            ItemOverTicketBinding.inflate(
+            ItemExpiredTicketBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -34,15 +35,11 @@ class FragmentOverTicketAdapter(
     }
 
     class ItemViewHolder(
-        private val binding: ItemOverTicketBinding
-    ) : BaseViewHolder<OverTicketModel>(binding) {
-        override fun bind(item: OverTicketModel) {
+        private val binding: ItemExpiredTicketBinding
+    ) : BaseViewHolder<ExpiredModel>(binding) {
+        override fun bind(item: ExpiredModel) {
             super.bind(item)
 
-            when (item.type) {
-                0 -> binding.ivPoint.setImageResource(R.drawable.ic_reservation_lesson_point)
-                else -> binding.ivPoint.setImageResource(R.drawable.ic_home_reservation_ticket_point)
-            }
         }
     }
 }

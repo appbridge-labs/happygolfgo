@@ -84,7 +84,6 @@ class AlramFragment
         }
     }
 
-    //todo 완성..배포전 스티커 확인 후 체크인 번호 추가
     private fun swipeToDelete(rv: RecyclerView) {
         val swipeCallback = object : BaseSwipeDelete() {
             override fun onSwipe(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -127,7 +126,6 @@ class AlramFragment
         inflater.inflate(R.menu.menu_alram, menu)
     }
 
-    //todo 전체삭제 완성!!!
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_delete_all) {
             val currentList = adapter.currentList.toMutableList()

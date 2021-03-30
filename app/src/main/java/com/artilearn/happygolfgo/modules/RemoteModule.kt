@@ -33,6 +33,8 @@ import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSourc
 import com.artilearn.happygolfgo.data.splash.source.remote.SplashRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSource
 import com.artilearn.happygolfgo.data.ticketdate.source.remote.TicketDateRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.ticketmanager.source.remote.TicketManagerRemoteDataSource
+import com.artilearn.happygolfgo.data.ticketmanager.source.remote.TicketManagerRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.tickettime.source.remote.TicketTimeRemoteDataSource
 import com.artilearn.happygolfgo.data.tickettime.source.remote.TicketTimeRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSource
@@ -84,4 +86,6 @@ val remoteModule = module {
     single<GolfGameRemoteDataSource> { GolfGameRemoteDataSourceImpl(get()) }
 
     single<ProfileChangeRemoteDataSource> { ProfileChangeRemoteDataSourceImpl(get()) }
+
+    single<TicketManagerRemoteDataSource> { TicketManagerRemoteDataSourceImpl(get()) }
 }

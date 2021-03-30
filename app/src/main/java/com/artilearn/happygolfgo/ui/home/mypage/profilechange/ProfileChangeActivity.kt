@@ -1,34 +1,59 @@
 package com.artilearn.happygolfgo.ui.home.mypage.profilechange
 
 import android.os.*
+import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
+import com.artilearn.happygolfgo.base.BaseLoadingFragment
 import com.artilearn.happygolfgo.databinding.ActivityProfileChangeBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.home.mypage.profilechange.ProfileChangeViewModel.ProfileChangeState.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.*
+import java.util.*
 
-//todo 사진 업로드, 기본 업로드 완성되었지만 갤러리 갔다 취소? 하는 쪽 코드에서 에러뜸 uri.toString 널포인트 뜨는 듯
 class ProfileChangeActivity : BaseActivity<ActivityProfileChangeBinding>(
     R.layout.activity_profile_change
 ) {
-    private val TAG = javaClass.simpleName
     private val viewModel: ProfileChangeViewModel by viewModel()
+
     private val getContent = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { url ->
-        setProfile(url.toString())
+        if (url != null) {
+            setProfile(url.toString())
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
 
         initBinding()
         initToolbar(binding.toolbar.toolbar, "프로필 변경", true)
         initViewModelObserving()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_edit_in, R.anim.slide_edit_out)
+    }
+
+    override fun onDestroy() {
+        overridePendingTransition(R.anim.slide_edit_in, R.anim.slide_edit_out)
+        super.onDestroy()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initBinding() {
@@ -73,9 +98,9 @@ class ProfileChangeActivity : BaseActivity<ActivityProfileChangeBinding>(
             }
             uri == CHANGE_DEFAULT_IMAGE -> {
                 with(viewModel) {
-                    onNextButtonText("변경")
                     setProfileImage(null)
                     onNextUri("")
+                    onNextButtonText("변경")
                 }
             }
             else -> {

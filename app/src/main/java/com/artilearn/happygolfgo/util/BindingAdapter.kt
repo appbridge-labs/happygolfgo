@@ -1,20 +1,25 @@
 package com.artilearn.happygolfgo.util
 
 import android.graphics.Typeface
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
+import com.artilearn.happygolfgo.data.home.HomeResponseInfo
 import com.artilearn.happygolfgo.ui.home.alram.AlramAdapter
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationAdapter
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
@@ -63,10 +68,13 @@ fun ticketCount(
 }
 
 @BindingAdapter("setTickets", "setScroll")
-fun RecyclerView.setTicketItems(tickes: List<Ticket>?, vm: ReservationViewModel) {
-    with(adapter as ReservationAdapter) {
-        tickes?.let {
-            this.submitList(it)
+fun RecyclerView.setTicketItems(ticket: List<Ticket>?, vm: ReservationViewModel) {
+    with(adapter as ReservationNewAdapter) {
+        ticket?.let {
+            this.addItems(it)
+            //this.addItems(it)
+            //this.addItem(it)
+            //this.submitList(it)
         }
     }
 
@@ -277,4 +285,3 @@ fun setReservationCard(
         }
     }
 }
-

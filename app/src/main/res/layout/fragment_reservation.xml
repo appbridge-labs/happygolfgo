@@ -21,7 +21,9 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            bind:isRefresh="@{vm.isRefresh}"
+            bind:onRefresh="@{() -> vm.onRefresh()}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -40,7 +42,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     bind:setScroll="@{vm}"
-                    bind:setTickets="@{vm.tickets}"
+                    bind:setTickets="@{vm.ticketList}"
                     tools:itemCount="6"
                     tools:listitem="@layout/item_home_reservation_ticket" />
 

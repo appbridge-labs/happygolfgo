@@ -11,7 +11,6 @@ import com.bumptech.glide.request.RequestOptions
 
 @BindingAdapter("onBindProfile")
 fun ImageView.bindImage(imagePath: String?) {
-    println("imagePath: $imagePath")
     if (imagePath.isNullOrEmpty()) {
         Glide.with(this)
             .load(R.drawable.ic_empty_user_profile)
