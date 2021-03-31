@@ -88,9 +88,10 @@ class ReservationFragment
                             ticket.type == 1 -> {
                                 // group lesson
                             }
-                            !startDateEquals -> {
-                                binding.parentLayout.snackbar("이용권의 시작 날짜가 되지 않았습니다")
-                            }
+                            // 이용권 시작날짜가 현재날짜보다 뒤에 있는 경우 앱단에서 막고 배포했는데 기획변경으로 인한 재수정 후 배포 (21.3.31)
+//                            !startDateEquals -> {
+//                                binding.parentLayout.snackbar("이용권의 시작 날짜가 되지 않았습니다")
+//                            }
                             else -> {
                                 goSelectionDate(ticket)
                             }
