@@ -25,7 +25,8 @@ import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import kotlinx.android.synthetic.main.custom_toolbar.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
-
+//comments: keyword 예약 확인 화면:  예약명 타석이용 정책사항
+//TODO:  안드로이드는 타석에 대한 정보가 없다. 타석 정보 추가
 class ReserveConfirmActivity :
     BaseActivity<ActivityReserveConfirmBinding>(R.layout.activity_reserve_confirm) {
 
@@ -98,6 +99,12 @@ class ReserveConfirmActivity :
                         BottimViewType.CANCEL_TYPE
                     )
                 }
+
+                //TODO: 타석이 배정된 경우에만 타석을 보여준다.
+                showChangePlateNumberLayout();
+                setReservationTicketPlateNumber(it.plateReservation.plateNumber.toString());
+
+                //comments: layout에 있는 resource_id와 데이타를 설정하여 준다.
                 setReservationTicketName(it.plateReservation.name)
                 setReservationTicketDate(it.plateReservation.startDate)
                 setReservationTicketTime(it.plateReservation.startDate, it.plateReservation.endDate)
@@ -111,6 +118,7 @@ class ReserveConfirmActivity :
                         BottimViewType.CANCEL_TYPE
                     )
                 }
+
                 setReservationTicketName(it.lessonReservation.name)
                 setReservationTicketDate(it.lessonReservation.startDate)
                 setReservationTicketTime(
@@ -159,25 +167,36 @@ class ReserveConfirmActivity :
             }
             "reservation" -> {
                 initBottomView(binding.reserveConfirmBottomView.bottom_layout, getString(R.string.reserve_confirm_bottom_title), BottimViewType.DEFAULT_TYPE)
-                if (ticketTime.plateAvailabilityId != null) {
-                    viewModel.ticketId = ticket.id
-                    viewModel.plateAvailabilityId = ticketTime.plateAvailabilityId
-                    viewModel.plateTimeChange = timeChange
-                    viewModel.requestPolicy()
-                } else {
-                    viewModel.ticketId = ticket.id
-                    viewModel.lessonAvailabilityId = ticketTime.lessonAvailabilityId
-                    binding.tvTicketPolicy.text = getString(R.string.reserve_confirm_lesson_policy)
+                //feature/20211222/migration
+                //TODO check this out, what tickeTime is null
+                val typedTicketTime : TicketTime? = ticketTime;
+                val typedTicket : Ticket? = ticket;
+                if ( typedTicketTime != null && typedTicket != null ) {
+                    if (typedTicketTime.plateAvailabilityId != null) {
+                        viewModel.ticketId = typedTicket.id
+                        viewModel.plateAvailabilityId = typedTicketTime.plateAvailabilityId
+                        viewModel.plateTimeChange = timeChange
+                        viewModel.requestPolicy()
+                    } else {
+                        viewModel.ticketId = typedTicket.id
+                        viewModel.lessonAvailabilityId = typedTicketTime?.lessonAvailabilityId
+                        binding.tvTicketPolicy.text =
+                            getString(R.string.reserve_confirm_lesson_policy)
+                    }
+                    setReservationTicketName(typedTicket.name)
+                    setReservationTicketDate(typedTicketTime.startDate)
+                    setReservationTicketTime(typedTicketTime.startDate, typedTicketTime.endDate)
                 }
-                setReservationTicketName(ticket.name)
-                setReservationTicketDate(ticketTime.startDate)
-                setReservationTicketTime(ticketTime.startDate, ticketTime.endDate)
             }
         }
     }
 
     private fun setReservationTicketName(name: String) {
         binding.tvTicketName.text = name
+    }
+
+    private fun setReservationTicketPlateNumber(plateNumber: String) {
+        binding.tvTicketPlateNumber.text = plateNumber;
     }
 
     private fun setReservationTicketDate(startTime: String) {
@@ -196,6 +215,13 @@ class ReserveConfirmActivity :
 
     private fun setReservationPolicy(policy: String) {
         binding.tvTicketPolicy.text = policy
+    }
+
+    private fun showChangePlateNumberLayout() {
+        with(binding) {
+            ticketplatenumberLayout.visibility = View.VISIBLE;
+//            llTimechange.setOnClickListener { goTicketTime() }
+        }
     }
 
     private fun showChangeTimeLayout() {
@@ -252,7 +278,8 @@ class ReserveConfirmActivity :
         } else {
             with(intent) {
                 putExtra(TICKET, ticket)
-                putExtra(SELECTION_DATE, ticket.startDate)
+                //TODO: check this out ticket is not null, which is assured above
+                putExtra(SELECTION_DATE, ticket?.startDate)
                 putExtra(PLATE_TIME_CHANGE, plateId)
             }
         }
@@ -278,7 +305,9 @@ class ReserveConfirmActivity :
             "ReservationPlateFromAlram", "cancel_plate" -> viewModel.reservationPlateCancel(plateId)
             "ReservationLessonFromAlram", "cancel_lesson" -> viewModel.reservationLessonCancel(lessonId)
             "reservation" -> {
-                if (ticketTime.plateAvailabilityId != null) {
+                //feature/20211222/migration
+                val  typedTicketTime : TicketTime ? = ticketTime;
+                if (typedTicketTime?.plateAvailabilityId != null) {
                     if (timeChange == 0) viewModel.reservationPlate()
                     else viewModel.reservationPlateTimeChange()
                 } else {

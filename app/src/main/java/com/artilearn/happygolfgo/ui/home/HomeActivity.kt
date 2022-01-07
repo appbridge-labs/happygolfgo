@@ -186,9 +186,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     override fun onStart() {
         super.onStart()
-
-        when (fcmEventType) {
-            "3", "4", "6" -> vm.fcmOnNext(fcmEventType)
+        //feature/20211222/migration
+        //Smart cas to 'String' is impossible, beacause 'fcmEventType' is a property that has open or custom getter
+        //so, save it to local temp variable and use it
+        when (val  typedFcmEventType : String? =  fcmEventType) {
+            "3", "4", "6" -> vm.fcmOnNext(typedFcmEventType)
             "" -> goAlramFCM()
         }
     }

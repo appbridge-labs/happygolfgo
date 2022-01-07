@@ -48,9 +48,9 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/iv_point"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:setTicketEndDate="@{item.endDate}"
-                bind:setTicketStartDate="@{item.startDate}"
-                tools:text="09.01 ~ 09.24" />
+                bind:setTicketEndDateInShortYear="@{item.endDate}"
+                bind:setTicketStartDateInShortYear="@{item.startDate}"
+                tools:text="21.09.01 ~ 22.09.24" />
 
             <TextView
                 android:id="@+id/tv_ticket_name"

@@ -66,6 +66,8 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
     private fun initView() {
         initToolbar(binding.commentToolbar.toolbar, getString(R.string.log_toolbar_title), true)
         initBottomView(binding.commentBottomView.bottom_layout, getString(R.string.bottom_view_default), BottimViewType.DEFAULT_TYPE)
+        //feature/20211222/migration
+        //kotling version 1.6.0 now, Typemismatch error comes out
         setCoachNameLessonTime(coachName, lessonDate)
     }
 
@@ -78,11 +80,15 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
             viewModel.ratingOnNext(rating)
         }
     }
-
-    private fun setCoachNameLessonTime(name: String, date: String) {
-        val time = convertTime(date).trim().split(":")
-        val text = "${time[0]}.${time[1]}.${time[2]}"
-        binding.tvCoachInfo.text = text
+    //featue/20211222/migration
+    private fun setCoachNameLessonTime(name: String?, date: String?) {
+        if (name !=  null && date != null) {
+            val time = convertTime(date).trim().split(":")
+            val text = "${time[0]}.${time[1]}.${time[2]}"
+            binding.tvCoachInfo.text = text
+        } else {
+            binding.tvCoachInfo.text = "ER00  name and date null"
+        }
     }
 
     private fun showEmptyRating() {

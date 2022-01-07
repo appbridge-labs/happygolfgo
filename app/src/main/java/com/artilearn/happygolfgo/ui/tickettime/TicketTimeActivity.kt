@@ -55,7 +55,14 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
 
     private fun initView() {
         initToolbar(binding.tickettimeToolbar.toolbar, getString(R.string.tickettime_toolbar_title), true)
-        viewModel.selectTime(ticket.type, date, ticket.id)
+        //feature/20211222/migration
+        //TODO: be sure  that it's okay if ticket is null
+        val typedTicket : Ticket? = ticket;
+        val typedDate : String? = date;
+        if (typedTicket != null && typedDate != null ) {
+//            viewModel.selectTime(ticket.type, date, ticket.id)
+            viewModel.selectTime(typedTicket.type, typedDate, typedTicket.id)
+        }
     }
 
     private fun initAdapter() {

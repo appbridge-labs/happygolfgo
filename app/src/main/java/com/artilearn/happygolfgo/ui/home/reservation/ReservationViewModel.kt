@@ -24,6 +24,7 @@ import io.reactivex.subjects.Subject
 import retrofit2.HttpException
 import java.util.concurrent.TimeUnit
 
+//comments: Eddie Kim, 홈화면에서 티켓에 대한 정보를 가져오는 부분
 class ReservationViewModel(
     private val repository: HomeRepository
 ) : BaseViewModel() {

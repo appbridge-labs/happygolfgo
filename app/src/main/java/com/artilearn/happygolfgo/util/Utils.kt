@@ -38,6 +38,19 @@ fun convertTime(time: String): String {
 
     return output.format(date)
 }
+//comments: Eddie Kim, 년도 2자리만 표시하게 수정한다.
+fun convertTimeInShortYear(time: String): String {
+    val default = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    val conver = "yy:MM:dd:HH:mm"
+
+    val input = SimpleDateFormat(default, Locale.KOREA)
+    input.timeZone = TimeZone.getTimeZone("UTC")
+
+    val output = SimpleDateFormat(conver, Locale.KOREA)
+    val date = input.parse(time)
+
+    return output.format(date)
+}
 
 fun convertDate(str: String): Date? {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA)

@@ -24,8 +24,12 @@ import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
+//comments: DataBinding: layout.xml에 있는 attribute를 통하여 값을 전달한다.
+//DataBinding에 대한 부분이 여기에 들어 있다. Eddie Kim
 @BindingAdapter("setTicketType")
 fun setTicketType(iv: ImageView, type: Int) {
     when (type) {
@@ -41,6 +45,14 @@ fun ticketDate(tv: TextView, startDate: String, endDate: String) {
     val endTime = convertTime(endDate).trim().split(":")
 
     val text = "${startTime[1]}.${startTime[2]}~${endTime[1]}.${endTime[2]}"
+    tv.text = text
+}
+
+@BindingAdapter("setTicketStartDateInShortYear", "setTicketEndDateInShortYear")
+fun ticketDateInShortYear(tv: TextView, startDate: String, endDate: String) {
+    val startTime = convertTimeInShortYear(startDate).trim().split(":")
+    val endTime = convertTimeInShortYear(endDate).trim().split(":")
+    val text =  "${startTime[0]}.${startTime[1]}.${startTime[2]}~${endTime[0]}.${endTime[1]}.${endTime[2]}"
     tv.text = text
 }
 
