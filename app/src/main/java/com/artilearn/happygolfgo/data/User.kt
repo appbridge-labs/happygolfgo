@@ -67,10 +67,10 @@ data class User(
     @SerializedName("accessToken")
     @Expose
     val accessToken: String,
-
+    //TODO: checkinID == null  Version 41(2.2.5)
     @SerializedName("checkinID")
     @Expose
-    val checkinId: String,
+    val checkinId: String?,
 
     @SerializedName("branches")
     @Expose

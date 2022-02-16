@@ -78,6 +78,7 @@
     <string name="pwreset_please_check_pw">비밀번호를 확인해 주세요</string>
     <string name="lesson_post_list_toolbar_title">레슨 포스트 목록</string>
     <string name="alram_empty_message">알림이 없습니다</string>
+    <string name="rhythm_coach_toolbar_title">리듬코치</string>
     <string name="alram_toolbar_title">알림</string>
     <string name="ticketdate_toolbar_title">날짜 선택</string>
     <string name="ticketdate_impossible_ticket">당일 중복 예약이 불가능한 이용권 입니다</string>
@@ -149,6 +150,11 @@
     <string name="home_tag_name_alram">알림</string>
     <string name="home_tag_name_mypage">마이페이지</string>
     <string name="home_app_finish_title">정말 종료하시겠습니까?</string>
+    <string name="fragment_alert_title_ignore_max_reservation">최대 예약</string>
+    <string name="fragment_alert_message_ignore_max_reservation">최대 예약 가능 횟수를 초과하였습니다. \n새 예약을 하시려면 기존 예약을 취소하셔야 합니다. \n예약 가능 시간을  조회하시겠습니까 ?</string>
+    <string name="fragment_alert_cancel_ignore_max_reservation">닫기</string>
+    <string name="fragment_alert_okay_ignore_max_reservation"> 조회하기 </string>
+    <string  name="ticket_time_activity_error_max_reservation_count"> 최대 예약 가능 횟수를 초과하였습니다. </string>
     <string name="home_app_finish_positive">종료하기</string>
     <string name="home_app_finish_negative">취소</string>
     <string name="fragment_reservation_donot_refresh">가져올 티켓이 없습니다</string>
@@ -157,4 +163,21 @@
     <string name="golf_game_score_toolbar_title">골프력 게임 스코어</string>
     <string name="tickettime_dont_reservation">예약불가</string>
     <string name="menu_alram_toolbar_title">전체삭제</string>
+    <string name="rhythm_coach_background_image_desc">backgroundimage</string>
+    <string name="rhythm_coach_btn_bg_speed_down_description">템포 내리기</string>
+    <string name="rhythm_coach_fragment_tv_speed_display_description">X 1</string>
+    <string name="rhythm_coa_frament_btn_speed_up_description">템포 올리기</string>
+    <string name="rhythm_coach_frament_rhythm_coach_btn_bg_pause_description">멈춤</string>
+    <string name="rhythm_coach_frament_rhythm_coach_btn_bg_play_description">재생</string>
+    <string name="rhythm_coach_frament_rhythm_coach_btn_bg_repeat_off_description">반복재생 멈춤</string>
+    <string name="rhythm_coach_fragment_rhythm_coach_btn_repeat_ripple_description">반복재생</string>
+    <string name="rhythm_coach_frament_tv_title_description">봄의 왈츠</string>
+    <string name="rhythm_coach_fragment_tv_composer_description">차이코프스키</string>
+    <string name="rhythm_coach_frament_tv_current_pos">0.0</string>
+    <string name="rhythm_coach_fragment_tv_max_pos">0.0</string>
+    <string name="rhythm_coach_notification_channel_name">HappyGolfGo</string>
+    <string name="rhythm_coach_notification_player_txt_title">행복골프 리듬코치</string>
+    <string name="rhythm_coach_fragment_to_double_format">%.2f</string>
+    <string name="rhythm_coach_fragment_x_speed_index_format">%1$s</string>
+    <string name="rhythm_coach_fragment_x_speed_index_default_format">0.8x</string>
 </resources>

@@ -87,7 +87,10 @@ class ReserveConfirmActivity :
                             isUnlimited = isUnlimited,
                             startDate = it.plateReservation.startDate,
                             endDate = it.plateReservation.endDate,
-                            allowToBook = null
+                            allowToBook = null,
+                           ignoreLimit =  null,
+                            multipleReservation =  null,
+                            maxMultipleCount = null,
                         )
                     }
                 }

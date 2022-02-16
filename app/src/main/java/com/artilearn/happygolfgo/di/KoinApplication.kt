@@ -1,8 +1,10 @@
 package com.artilearn.happygolfgo.di
 
 import android.app.Application
+import android.app.PendingIntent
 import android.util.Log
 import com.artilearn.happygolfgo.modules.*
+import com.artilearn.happygolfgo.service.RhythmCoachServiceInterface
 import com.artilearn.happygolfgo.util.HappyGolfUserExceptionHandler
 import com.facebook.stetho.Stetho
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -13,14 +15,35 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import java.io.IOException
+import java.lang.Exception
 import java.net.SocketException
 
 class KoinApplication : Application() {
+
     private val TAG = javaClass.simpleName
+    companion object {
+        lateinit var mInstance: KoinApplication
+    }
+    var mRhythmCoachServiceInterface: RhythmCoachServiceInterface? = null
+
+    open fun initRhythmCoachServiceInterface() {
+        // version 39(2.2.3) 버그 수정으로 롤백중
+        // 2022.02.15 리듬코치 배포 보류 중
+//        if (mRhythmCoachServiceInterface == null) {
+//            mRhythmCoachServiceInterface = try {
+//                RhythmCoachServiceInterface(applicationContext)
+//            } catch (e: Exception) {
+//                null
+//            }
+//        }
+    }
 
     override fun onCreate() {
         super.onCreate()
-
+        //TODO: Exception Handling for mInstance and ServiceInterface creation
+        mInstance = this
+        // 리듬 코치 배포 보류 중 2022.02.15
+        //initRhythmCoachServiceInterface();
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@KoinApplication)

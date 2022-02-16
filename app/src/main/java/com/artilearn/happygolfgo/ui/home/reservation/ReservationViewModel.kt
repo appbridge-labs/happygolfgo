@@ -14,6 +14,8 @@ import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Compa
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.USE_TICKET
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
@@ -175,6 +177,9 @@ class ReservationViewModel(
                 startDate = it.startDate,
                 endDate = it.endDate,
                 allowToBook = it.allowToBook,
+                ignoreLimit = it.ignoreLimit, //TODO: flag to ignore max reservation limit to see opened reseration time schedule
+                multipleReservation = it.multipleReservation,//TODO flag to select multiple time in a reservation for songdo branch
+                maxMultipleCount = it.maxMultipleCount,//TODO count for max reservation selection in a reservation for songdo branch
                 pasuePeriods = it.pasuePeriods,
                 totalPrice = it.totalPrice,
                 maxReservationCount = it.maxReservationCount
@@ -198,6 +203,9 @@ class ReservationViewModel(
                 startDate = it.startDate,
                 endDate = it.endDate,
                 allowToBook = it.allowToBook,
+                ignoreLimit = it.ignoreLimit, //TODO: flag to ignore max reservation limit to see opened reseration time schedule
+                multipleReservation = it.multipleReservation,//TODO flag to select multiple time in a reservation for songdo branch
+                maxMultipleCount = it.maxMultipleCount,//TODO count for max reservation selection in a reservation for songdo branch
                 pasuePeriods = it.pasuePeriods,
                 totalPrice = it.totalPrice
             )
@@ -220,10 +228,12 @@ class ReservationViewModel(
                 startDate = it.startDate,
                 endDate = it.endDate,
                 allowToBook = it.allowToBook,
+                ignoreLimit = it.ignoreLimit, //TODO: flag to ignore max reservation limit to see opened reseration time schedule
+                multipleReservation = it.multipleReservation,//TODO flag to select multiple time in a reservation for songdo branch
+                maxMultipleCount = it.maxMultipleCount,//TODO count for max reservation selection in a reservation for songdo branch
                 pasuePeriods = it.pasuePeriods,
                 totalPrice = it.totalPrice
             )
         }
-
     }
 }

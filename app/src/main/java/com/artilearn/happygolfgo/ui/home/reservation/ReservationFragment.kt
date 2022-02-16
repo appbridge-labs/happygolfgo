@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.home.reservation
 
 import android.content.Intent
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
@@ -83,15 +84,16 @@ class ReservationFragment
                                 binding.parentLayout.snackbar(getString(R.string.home_fail_ticket))
                             }
                             allowToBook == false -> {
-                                binding.parentLayout.snackbar("예약은 최대 ${ticket.maxReservationCount}개 까지만 가능합니다")
+                                when (ignoreLimit) {
+                                    true -> {
+                                        showContinueMessage(ticket)
+                                    }
+                                    else -> binding.parentLayout.snackbar("예약은 최대 ${ticket.maxReservationCount}개 까지만 가능합니다")
+                                }
                             }
                             ticket.type == 1 -> {
                                 // group lesson
                             }
-                            // 이용권 시작날짜가 현재날짜보다 뒤에 있는 경우 앱단에서 막고 배포했는데 기획변경으로 인한 재수정 후 배포 (21.3.31)
-//                            !startDateEquals -> {
-//                                binding.parentLayout.snackbar("이용권의 시작 날짜가 되지 않았습니다")
-//                            }
                             else -> {
                                 goSelectionDate(ticket)
                             }
@@ -105,7 +107,7 @@ class ReservationFragment
                     binding.parentLayout.snackbar("만료된 이용권입니다")
                 }
             }
-        }
+        }//end of adapter
 
         with(binding) {
             recyclerview.itemAnimator = SlideInUpAnimator().apply {
@@ -113,6 +115,18 @@ class ReservationFragment
             }
             recyclerview.adapter = adapter
         }
+    }
+
+    private fun showContinueMessage(ticket: Ticket) {
+        val dialog = AlertDialog.Builder(requireActivity())
+        dialog.setTitle(getString(R.string.fragment_alert_title_ignore_max_reservation))
+            .setMessage(R.string.fragment_alert_message_ignore_max_reservation)
+            .setPositiveButton(getString(R.string.fragment_alert_okay_ignore_max_reservation)) { _, _ ->
+                goSelectionDate(ticket)
+            }
+            .setNegativeButton(getString(R.string.fragment_alert_cancel_ignore_max_reservation)) { _, _ ->  }
+        dialog.create()
+        dialog.show()
     }
 
     private fun reservationListCheck(item: Int) {

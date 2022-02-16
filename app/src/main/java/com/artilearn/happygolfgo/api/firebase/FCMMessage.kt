@@ -115,15 +115,16 @@ class FCMMessage : FirebaseMessagingService(), LifecycleObserver {
             }
         }
 
-
         val sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-
+        //comments: Target SDK 31, FLAG_IMMUTABLE
         val pendingIntent = PendingIntent.getActivity(
             this,
             NOTIFICATION_ID,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+//                    PendingIntent.FLAG_UPDATE_CURRENT
         )
+
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_appnotifi)
             .setContentTitle("${body["title"]}")

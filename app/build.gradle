@@ -14,8 +14,8 @@ android {
         applicationId "com.artilearn.happygolfgo"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 39
-        versionName "2.2.3"
+        versionCode 41
+        versionName "2.2.5"
 
         testInstrumentationRunner "androidx.ratingbar_star.runner.AndroidJUnitRunner"
     }
@@ -33,7 +33,9 @@ android {
             dimension "type"
             minSdkVersion 23
             resConfigs('en', 'xhdpi')
-            buildConfigField "String", "HG_BASE_URL", "\"http://52.79.253.238/development/appClient/\""
+//            buildConfigField "String", "HG_BASE_URL", "\"http://52.79.253.238/development/appClient/\""
+//            buildConfigField "String", "HG_BASE_URL", "\"https://happygolfgoapi.com/happygolfgo/appClient/\""
+            buildConfigField "String", "HG_BASE_URL", "\"http:/192.168.0.3:7000/appClient/\""
         }
 
         prod {
@@ -71,7 +73,8 @@ android {
 }
 
 dependencies {
-    implementation "androidx.work:work-runtime-ktx:2.4.0"
+//    implementation "androidx.work:work-runtime-ktx:2.4.0"
+    implementation "androidx.work:work-runtime-ktx:2.7.0"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -79,6 +82,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.github.happygolfdev:TLSModules-Android:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -106,6 +111,8 @@ dependencies {
     // material calendar
     //implementation 'com.applandeo:material-calendar-view:1.8.0-rc01'
     implementation 'com.applandeo:material-calendar-view:1.9.0-rc01'
+//    2022.02.15 시뮬레이터에서 날짜가 보이지 않는 버그가 있음.  sdk 31
+//    implementation 'com.applandeo:material-calendar-view:1.9.0-rc03'
 
     // firebase
     implementation 'com.google.firebase:firebase-analytics-ktx:17.5.0'

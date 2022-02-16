@@ -66,11 +66,19 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
     }
 
     private fun initAdapter() {
+        //TODO: 예약 불가한 상황이면:  allowBook은 nullable
         adapter = TicketTimeAdapter { ticketTime ->
-            if (ticketTime.availableCount != null && ticketTime.availableCount == 0)
-                binding.root.snackbar(getString(R.string.tickettime_dont_reservation))
-            else
-                goReserveConfirm(ticketTime)
+            when {
+                ticketTime.availableCount != null && ticketTime.availableCount == 0 -> {
+                    binding.root.snackbar(getString(R.string.tickettime_dont_reservation))
+                }
+                ticket != null && ticket?.allowToBook != null && ticket?.allowToBook == false -> {
+                    binding.root.snackbar(getString(R.string.ticket_time_activity_error_max_reservation_count))
+                }
+                else -> {
+                    goReserveConfirm(ticketTime)
+                }
+            }
         }
 
         binding.recyclerview.itemAnimator = SlideInUpAnimator().apply {

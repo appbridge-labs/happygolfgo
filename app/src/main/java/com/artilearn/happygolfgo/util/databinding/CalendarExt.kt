@@ -66,6 +66,7 @@ fun CalendarView.bindDays(
             } else {
                 when (eventDay.calendar) {
                     in eventDays -> {
+                        //조회 2022.02.15 조회 통과 시켜준다.
                         if (ticket.onlyOnceToday) calendarView.snackbar("1일 1회 예약 가능합니다")
                         else viewModel.calendarListener(ticket, date)
                     }

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.FCM_EVENT_TYPE
@@ -14,9 +13,11 @@ import com.artilearn.happygolfgo.constants.LESSON_ID
 import com.artilearn.happygolfgo.constants.PLATE_ID
 import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
+import com.artilearn.happygolfgo.di.KoinApplication
 import com.artilearn.happygolfgo.ui.home.alram.AlramFragment
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageFragment
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationFragment
+import com.artilearn.happygolfgo.ui.home.rhythmcoach.RhythmCoachFragment
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,6 +28,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private lateinit var reservationFragment: ReservationFragment
     private lateinit var alramFragment: AlramFragment
     private lateinit var myPageFragment: MyPageFragment
+    //TODO: RhythmCoach
+    private lateinit var rhythmCoachFragment: RhythmCoachFragment
 
     private val fcmEventType by lazy { intent.getStringExtra(FCM_EVENT_TYPE) }
     private val reservationType by lazy { intent.getStringExtra(RESERVATION_TYPE) }
@@ -39,6 +42,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         initBinding()
         initViewModelObserving()
         setSupportActionBar((binding.homeToolbar.toolbar))
+        startRhythmCoachService()
     }
 
     private fun initBinding() {
@@ -47,17 +51,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initViewModelObserving() {
         with(vm) {
-            backPressedEvent.observe(this@HomeActivity, Observer {
+            backPressedEvent.observe(this@HomeActivity, {
                 showAppFinish()
             })
-            eventType.observe(this@HomeActivity, Observer {
+            eventType.observe(this@HomeActivity, {
                 when (eventType.value) {
                     HomeViewModel.FcmTypeMoveModel.PLATE -> goReservaitonPlateFromFCM()
                     HomeViewModel.FcmTypeMoveModel.LESSON -> goReservationLessonFromFCM()
                     HomeViewModel.FcmTypeMoveModel.LOG -> goLessonLogFromFCM()
+                    else -> {}  // do nothing
                 }
             })
-            bottom.observe(this@HomeActivity, Observer {
+            bottom.observe(this@HomeActivity, {
                 toolbarText(it)
                 initFragment(it)
             })
@@ -71,11 +76,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             "예약" ->  title = getString(R.string.home_toolbar_text)
             "알림" -> title = getString(R.string.alram_toolbar_title)
             "마이페이지" -> title = getString(R.string.mypage_toolbar_title)
+            "리듬코치" -> title = getString(R.string.rhythm_coach_toolbar_title)
         }
 
         initToolbar(binding.homeToolbar.toolbar, title, false)
     }
 
+    //comments: 홈화면에서 bottom 메뉴 아이템을 눌럭을때, 프레그먼트를 고체해준다.
     private fun initFragment(name: String) {
         when (name) {
             "예약" -> {
@@ -90,16 +97,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 myPageFragment = MyPageFragment()
                 loadFragment(myPageFragment)
             }
+            //TODO: rhythm coach
+            "리듬코치" -> {
+               rhythmCoachFragment = RhythmCoachFragment()
+                loadFragment(rhythmCoachFragment)
+            }
         }
     }
 
     private fun menuIsCheckItem(name: String) {
+        //TODO:  check menuIsCheckItem
         with(binding.bottomNavigation) {
             when (name) {
                 "예약" -> menu.findItem(R.id.reservation).isChecked = true
-                //"게임센터" -> menu.findItem(R.id.gamecenter).isChecked = true
+                //"게임센터" -> menu.findItem(R.id.game center).isChecked = true
                 "알림" -> menu.findItem(R.id.alram).isChecked = true
                 "마이페이지" -> menu.findItem(R.id.mypage).isChecked = true
+//                2022.02.15  리듬 코치 배포 보류 중
+//                "리듬코치" -> menu.findItem(R.id.rhythmcoach).isChecked = true //adding rhythm coach
             }
         }
     }
@@ -112,6 +127,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             is ReservationFragment -> tagName = "예약"
             is AlramFragment -> tagName = "알림"
             is MyPageFragment -> tagName = "마이페이지"
+            is RhythmCoachFragment -> tagName = "리듬코치" //adding rhythm coach
         }
 
         menuIsCheckItem(tagName)
@@ -128,6 +144,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         val reservation = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_reservation))
         val alram = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_alram))
         val mypage = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_mypage))
+        val rhythmCoach = supportFragmentManager.findFragmentByTag("리듬코치")
 
         when {
             reservation != null && reservation.isVisible -> {
@@ -142,13 +159,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
                 toolbarText("마이페이지")
                 menuIsCheckItem("마이페이지")
             }
+            rhythmCoach != null && rhythmCoach.isVisible -> {
+                toolbarText("리듬코치")
+                menuIsCheckItem("리듬코치")
+            }
         }
     }
 
     private fun showAppFinish() {
         val dialog = AlertDialog.Builder(this@HomeActivity)
         dialog.setTitle(getString(R.string.home_app_finish_title))
-            .setPositiveButton(getString(R.string.home_app_finish_positive)) { _, _ -> this.finish() }
+            .setPositiveButton(getString(R.string.home_app_finish_positive)) { _, _ ->
+                stopRhythmCoachService()
+                this.finish() }
             .setNegativeButton(getString(R.string.home_app_finish_negative)) { _, _ ->  }
         dialog.create()
         dialog.show()
@@ -187,14 +210,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     override fun onStart() {
         super.onStart()
         //feature/20211222/migration
-        //Smart cas to 'String' is impossible, beacause 'fcmEventType' is a property that has open or custom getter
+        //Smart cas to 'String' is impossible, because  'fcmEventType' is a property that has open or custom getter
         //so, save it to local temp variable and use it
         when (val  typedFcmEventType : String? =  fcmEventType) {
             "3", "4", "6" -> vm.fcmOnNext(typedFcmEventType)
             "" -> goAlramFCM()
         }
     }
-
+// TODO: 백버튼 처리
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1) {
             vm.backPressed()
@@ -205,4 +228,20 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         }
     }
 
+    private fun startRhythmCoachService() {
+//       2022.02.15 리듬 코치 보류 중
+//        KoinApplication.mInstance.initRhythmCoachServiceInterface()
+    }
+
+    private fun stopRhythmCoachService() {
+//        2022.02.15 리듬 코치 보류 중
+//        KoinApplication.mInstance.mRhythmCoachServiceInterface?.stopPlay()
+//        KoinApplication.mInstance.mRhythmCoachServiceInterface?.unbindRhythmCoachService()
+//        KoinApplication.mInstance.mRhythmCoachServiceInterface = null
+    }
+
+    override fun onDestroy() {
+        stopRhythmCoachService()
+        super.onDestroy()
+    }
 }
