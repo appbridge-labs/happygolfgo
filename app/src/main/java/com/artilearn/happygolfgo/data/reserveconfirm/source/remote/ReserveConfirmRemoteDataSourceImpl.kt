@@ -20,6 +20,10 @@ class ReserveConfirmRemoteDataSourceImpl(
         return apiInterface.reservationPlate(data)
     }
 
+    override fun remoteReservationThreeOnTimePlate(data: HashMap<String, ReserveThreeOneTimePlateModel>): Single<Response<ReservePlateResponse>> {
+        return apiInterface.reservationThreeOneTimePlate(data)
+    }
+
     override fun remoteReservationLesson(
         data: HashMap<String, ReserveLessonModel>
     ): Single<Response<ReserveLessonResponse>> {

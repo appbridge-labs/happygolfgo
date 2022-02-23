@@ -59,6 +59,27 @@
                 android:textStyle="bold"
                 tools:text="2020년 3월 12일 06:00 ~ 07:00" />
 
+            <TextView
+                android:id="@+id/tv_subtitleSecond"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                tools:text="2020년 3월 12일 06:00 ~ 07:00" />
+
+            <TextView
+                android:id="@+id/tv_subtitleThird"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                tools:text="2020년 3월 12일 06:00 ~ 07:00" />
         </LinearLayout>
 
         <include

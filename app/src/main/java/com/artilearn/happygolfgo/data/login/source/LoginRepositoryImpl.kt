@@ -63,7 +63,7 @@ class LoginRepositoryImpl(
             autoLogin = true
             nickname = user.nickname
             phoneNumber = user.phoneNumber
-            //TODO:  알수 없는 오류 해결중: checkinID가 넘어오지 않을 때가 있다 Version 41(2.2.5).
+            //DONETODO:  알수 없는 오류 해결중: checkinID가 넘어오지 않을 때가 있다 Version 41(2.2.5).
 //            checkinId =user.checkinId
             checkinId = user.checkinId ?: "0000"
         }

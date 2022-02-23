@@ -49,7 +49,7 @@ interface ApiInterface {
         @Body data: HashMap<String, SynchronizedDataModel>
     ): Single<Response<SynchronizedResponse>>
 
-    //TODO:   main/user/ver_1_0 : 최대 예약 걸려 있을때, 무시하고 진행할 수 있는 옵션 저장 한다. 2022.02.13
+    //DONETODO:   main/user/ver_1_0 : 최대 예약 걸려 있을때, 무시하고 진행할 수 있는 옵션 저장 한다. 2022.02.13
     //@GET("main/user")
     @GET("main/user/ver_1_0")
     fun mainHome(): Single<Response<HomeResponse>>
@@ -115,6 +115,13 @@ interface ApiInterface {
     fun reservationPlate(
         @Body data: HashMap<String, ReservePlateModel>
     ): Single<Response<ReservePlateResponse>>
+
+
+    @POST("reservation/user/plate/threeOneTime")
+    fun reservationThreeOneTimePlate(
+        @Body data: HashMap<String, ReserveThreeOneTimePlateModel>
+    ): Single<Response<ReservePlateResponse>>
+
 
     @POST("reservation/user/lessonReservation")
     fun reservationLesson(

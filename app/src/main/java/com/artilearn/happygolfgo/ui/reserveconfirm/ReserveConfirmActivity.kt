@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.custom_toolbar.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 //comments: keyword 예약 확인 화면:  예약명 타석이용 정책사항
-//TODO:  안드로이드는 타석에 대한 정보가 없다. 타석 정보 추가
+//DONETODO:  안드로이드는 타석에 대한 정보가 없다. 타석 정보 추가
 class ReserveConfirmActivity :
     BaseActivity<ActivityReserveConfirmBinding>(R.layout.activity_reserve_confirm) {
 
@@ -103,7 +104,7 @@ class ReserveConfirmActivity :
                     )
                 }
 
-                //TODO: 타석이 배정된 경우에만 타석을 보여준다.
+                //DONETODO: 타석이 배정된 경우에만 타석을 보여준다.
                 showChangePlateNumberLayout();
                 setReservationTicketPlateNumber(it.plateReservation.plateNumber.toString());
 
@@ -171,7 +172,8 @@ class ReserveConfirmActivity :
             "reservation" -> {
                 initBottomView(binding.reserveConfirmBottomView.bottom_layout, getString(R.string.reserve_confirm_bottom_title), BottimViewType.DEFAULT_TYPE)
                 //feature/20211222/migration
-                //TODO check this out, what tickeTime is null
+                //DONETODO check this out, what tickeTime is null
+                setupMultiplePlateTime();
                 val typedTicketTime : TicketTime? = ticketTime;
                 val typedTicket : Ticket? = ticket;
                 if ( typedTicketTime != null && typedTicket != null ) {
@@ -216,6 +218,16 @@ class ReserveConfirmActivity :
         binding.tvTicketTime.text = text
     }
 
+    private fun setStartEndTimeByTextView(startTime: String?, endTime: String?, textView:TextView) {
+        if (startTime != null && endTime != null) {
+            val start = convertTime(startTime).trim().split(":")
+            val end = convertTime(endTime).trim().split(":")
+            val text = "${start[3]}:${start[4]} ~ ${end[3]}:${end[4]}"
+            textView.visibility = View.VISIBLE
+            textView.text = text
+        }
+    }
+
     private fun setReservationPolicy(policy: String) {
         binding.tvTicketPolicy.text = policy
     }
@@ -236,6 +248,18 @@ class ReserveConfirmActivity :
 
     private fun hideChangeTimeLayout() {
         binding.llTimechange.visibility = View.GONE
+    }
+
+    private fun setupMultiplePlateTime() {
+        if (ticketTime != null && ticketTime?.isMutiple != null && ticketTime?.isMutiple == true) {
+            if (ticketTime?.secondStartDate != null && ticketTime?.secondEndDate != null) {
+                setStartEndTimeByTextView( ticketTime?.secondStartDate, ticketTime?.secondEndDate, binding.tvTicketTimeSecond )
+            }
+
+            if (ticketTime?.thirdStartDate != null && ticketTime?.thirdEndDate != null) {
+                setStartEndTimeByTextView( ticketTime?.thirdStartDate, ticketTime?.thirdEndDate, binding.tvTicketTimeThird )
+            }
+        }
     }
 
     private fun goReserveSuccessPlate(plate: ReservationPlate) {
@@ -266,6 +290,7 @@ class ReserveConfirmActivity :
     }
 
     private fun goTicketTime() {
+        //feature/20220216/multiSelection
         val intent = Intent(this, TicketTimeActivity::class.java)
 
         if (ticket == null) {
@@ -281,7 +306,7 @@ class ReserveConfirmActivity :
         } else {
             with(intent) {
                 putExtra(TICKET, ticket)
-                //TODO: check this out ticket is not null, which is assured above
+                //DONETODO: check this out ticket is not null, which is assured above
                 putExtra(SELECTION_DATE, ticket?.startDate)
                 putExtra(PLATE_TIME_CHANGE, plateId)
             }
@@ -309,10 +334,21 @@ class ReserveConfirmActivity :
             "ReservationLessonFromAlram", "cancel_lesson" -> viewModel.reservationLessonCancel(lessonId)
             "reservation" -> {
                 //feature/20211222/migration
+                //feature/2022/0216/multiSelection
+                //하단의 예약을 클릭 했을 때
                 val  typedTicketTime : TicketTime ? = ticketTime;
                 if (typedTicketTime?.plateAvailabilityId != null) {
-                    if (timeChange == 0) viewModel.reservationPlate()
-                    else viewModel.reservationPlateTimeChange()
+                    if (timeChange == 0) { //예약 변경이 아닐 경우
+                         if (ticketTime != null && ticketTime?.isMutiple != null  && ticketTime?.isMutiple == true) {
+                             viewModel.reservationThreeOnTimePlate(ticketTime?.firstPlateAvailabilityId ?: 0
+                                                                        ,ticketTime?.secondPlateAvailabilityId ?: 0
+                                                                        ,ticketTime?.thirdPlateAvailabilityId ?: 0)
+                         } else {
+                             viewModel.reservationPlate()
+                         }
+                    } else {
+                        viewModel.reservationPlateTimeChange()
+                    }
                 } else {
                     viewModel.reservationLesson()
                 }

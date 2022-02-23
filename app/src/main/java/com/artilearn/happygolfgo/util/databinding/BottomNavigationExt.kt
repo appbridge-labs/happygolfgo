@@ -11,7 +11,7 @@ fun BottomNavigationView.onBottomClick(viewModel: HomeViewModel) {
     setOnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.reservation -> viewModel.onNextBottomEvent("예약")
-            //TODO: game center to rhythm coach 2022.01.09
+            //DONETODO: game center to rhythm coach 2022.01.09
 //            R.id.gamecenter -> {
 //                RequestEnvironmentMode.test("게임센터")
 //            }

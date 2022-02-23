@@ -19,11 +19,16 @@ class TicketTimeViewModel(
     private val _ticketTime: SingleLiveEvent<ArrayList<TicketTime>> = SingleLiveEvent()
     private val _emptyTicketTime: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
+    private val _buttonClickable: SingleLiveEvent<Unit> = SingleLiveEvent()
+
     val ticketTime: LiveData<ArrayList<TicketTime>>
         get() = _ticketTime
 
     val emptyTicketTime: LiveData<Boolean>
         get() = _emptyTicketTime
+
+//    val buttonClickable: LiveData<Unit>
+//        get() = _buttonClickable
 
     fun selectTime(type: Int, date: String, id: Int) {
         when (type) {

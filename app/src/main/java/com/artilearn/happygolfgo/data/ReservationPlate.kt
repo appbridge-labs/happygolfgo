@@ -27,6 +27,22 @@ data class ReservationPlate(
     @Expose
     var endDate: String,
 
+    @SerializedName("secondStartDate")
+    @Expose
+    var secondStartDate: String?,
+
+    @SerializedName("secondEndDate")
+    @Expose
+    var secondEndDate: String?,
+
+    @SerializedName("thirdStartDate")
+    @Expose
+    var thirdStartDate: String?,
+
+    @SerializedName("thirdEndDate")
+    @Expose
+    var thirdEndDate: String?,
+
     @SerializedName("plateNumber")
     @Expose
     var plateNumber: String?,

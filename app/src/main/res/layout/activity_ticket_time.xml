@@ -18,10 +18,10 @@
         android:layout_height="match_parent"
         android:background="@color/color_white"
         tools:context=".ui.tickettime.TicketTimeActivity">
-
+<!--        layout="@layout/custom_toolbar_with_buttons"-->
         <include
             android:id="@+id/tickettime_toolbar"
-            layout="@layout/custom_toolbar"
+            layout="@layout/custom_toolbar_with_buttons"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +41,16 @@
             bind:setTicketTime="@{vm.ticketTime}"
             tools:itemCount="7"
             tools:listitem="@layout/item_ticket_time" />
+
+        <!--            하단에 예약 확인 넣기  feature/2022/2016/multiSelection -->
+        <include
+            android:id="@+id/reserve_confirm_bottom_view"
+            layout="@layout/custom_bottom_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ProgressBar
             android:id="@+id/progressbar"

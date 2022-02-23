@@ -1,9 +1,6 @@
 package com.artilearn.happygolfgo.data.reserveconfirm.source
 
-import com.artilearn.happygolfgo.data.reserveconfirm.ReserveLessonModel
-import com.artilearn.happygolfgo.data.reserveconfirm.ReserveLessonResponse
-import com.artilearn.happygolfgo.data.reserveconfirm.ReservePlateModel
-import com.artilearn.happygolfgo.data.reserveconfirm.ReservePlateResponse
+import com.artilearn.happygolfgo.data.reserveconfirm.*
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -16,4 +13,9 @@ interface ReservationRepository {
     fun reservationLesson(
         data: HashMap<String, ReserveLessonModel>
     ): Single<Response<ReserveLessonResponse>>
+
+    //featue/2022/0216/multipleSelectoin
+    fun reservationThreeOneTimePlate(
+        data: HashMap<String, ReserveThreeOneTimePlateModel>
+    ): Single<Response<ReservePlateResponse>>
 }

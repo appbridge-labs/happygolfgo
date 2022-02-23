@@ -59,17 +59,17 @@ data class Ticket(
     @Expose
     var allowToBook: Boolean?,
 
-    //TODO: 최대 예약 갯수 제한을 풀고 진행할 것인지 가부 2022.02.13
+    //DONETODO: 최대 예약 갯수 제한을 풀고 진행할 것인지 가부 2022.02.13
     @SerializedName("ignoreLimit")
     @Expose
     var ignoreLimit: Boolean?,
 
-    //TODO: 다중 선택이 가능하게 할 것인지 가부 2022.02.13
+    //DONETODO: 다중 선택이 가능하게 할 것인지 가부 2022.02.13
     @SerializedName("multipleReservation")
     @Expose
     var multipleReservation:Boolean?,
 
-    //TODO: 다중 선택일 경우 최대로 선택할 수 있는 시간대 갯수 2022.02.13
+    //DONETODO: 다중 선택일 경우 최대로 선택할 수 있는 시간대 갯수 2022.02.13
     @SerializedName("maxMultipleCount")
     @Expose
     var maxMultipleCount:Int?,

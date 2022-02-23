@@ -42,6 +42,7 @@ class KoinApplication : Application() {
         super.onCreate()
         //TODO: Exception Handling for mInstance and ServiceInterface creation
         mInstance = this
+        //TODO:rollback rthythm coach
         // 리듬 코치 배포 보류 중 2022.02.15
         //initRhythmCoachServiceInterface();
         startKoin {

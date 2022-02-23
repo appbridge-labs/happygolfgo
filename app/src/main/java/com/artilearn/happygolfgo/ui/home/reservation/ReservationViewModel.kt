@@ -177,9 +177,9 @@ class ReservationViewModel(
                 startDate = it.startDate,
                 endDate = it.endDate,
                 allowToBook = it.allowToBook,
-                ignoreLimit = it.ignoreLimit, //TODO: flag to ignore max reservation limit to see opened reseration time schedule
-                multipleReservation = it.multipleReservation,//TODO flag to select multiple time in a reservation for songdo branch
-                maxMultipleCount = it.maxMultipleCount,//TODO count for max reservation selection in a reservation for songdo branch
+                ignoreLimit = it.ignoreLimit, //DONETODO: flag to ignore max reservation limit to see opened reseration time schedule
+                multipleReservation = it.multipleReservation,//DONETODO flag to select multiple time in a reservation for songdo branch
+                maxMultipleCount = it.maxMultipleCount,//DONETODO count for max reservation selection in a reservation for songdo branch
                 pasuePeriods = it.pasuePeriods,
                 totalPrice = it.totalPrice,
                 maxReservationCount = it.maxReservationCount
@@ -203,9 +203,9 @@ class ReservationViewModel(
                 startDate = it.startDate,
                 endDate = it.endDate,
                 allowToBook = it.allowToBook,
-                ignoreLimit = it.ignoreLimit, //TODO: flag to ignore max reservation limit to see opened reseration time schedule
-                multipleReservation = it.multipleReservation,//TODO flag to select multiple time in a reservation for songdo branch
-                maxMultipleCount = it.maxMultipleCount,//TODO count for max reservation selection in a reservation for songdo branch
+                ignoreLimit = it.ignoreLimit, //DONETODO: flag to ignore max reservation limit to see opened reseration time schedule
+                multipleReservation = it.multipleReservation,//DONETODO flag to select multiple time in a reservation for songdo branch
+                maxMultipleCount = it.maxMultipleCount,//DONETODO count for max reservation selection in a reservation for songdo branch
                 pasuePeriods = it.pasuePeriods,
                 totalPrice = it.totalPrice
             )
@@ -228,9 +228,9 @@ class ReservationViewModel(
                 startDate = it.startDate,
                 endDate = it.endDate,
                 allowToBook = it.allowToBook,
-                ignoreLimit = it.ignoreLimit, //TODO: flag to ignore max reservation limit to see opened reseration time schedule
-                multipleReservation = it.multipleReservation,//TODO flag to select multiple time in a reservation for songdo branch
-                maxMultipleCount = it.maxMultipleCount,//TODO count for max reservation selection in a reservation for songdo branch
+                ignoreLimit = it.ignoreLimit, //DONETODO: flag to ignore max reservation limit to see opened reseration time schedule
+                multipleReservation = it.multipleReservation,//DONETODO flag to select multiple time in a reservation for songdo branch
+                maxMultipleCount = it.maxMultipleCount,//DONETODO count for max reservation selection in a reservation for songdo branch
                 pasuePeriods = it.pasuePeriods,
                 totalPrice = it.totalPrice
             )

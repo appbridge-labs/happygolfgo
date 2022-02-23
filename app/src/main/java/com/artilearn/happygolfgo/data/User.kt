@@ -67,7 +67,7 @@ data class User(
     @SerializedName("accessToken")
     @Expose
     val accessToken: String,
-    //TODO: checkinID == null  Version 41(2.2.5)
+    //DONETODO: checkinID == null  Version 41(2.2.5)
     @SerializedName("checkinID")
     @Expose
     val checkinId: String?,

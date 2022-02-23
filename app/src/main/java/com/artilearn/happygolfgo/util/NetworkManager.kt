@@ -13,7 +13,7 @@ class NetworkManager(private val context: Context) {
 
     private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    //TODO: check this out. ACCESS_NETWORK_STATE
+    //DONETODO: check this out. ACCESS_NETWORK_STATE
     //feature/20211221/migration
     fun networkState(): Boolean {
         val nw = connectivityManager.activeNetwork ?: return false
@@ -23,7 +23,7 @@ class NetworkManager(private val context: Context) {
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
 //            else -> false
-            //TODO: check this out permission errors later
+            //DONETODO: check this out permission errors later
             //feature/20211222/migration
             //jay, omit this by mistakes
             else ->  true

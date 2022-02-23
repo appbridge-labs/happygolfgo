@@ -87,6 +87,7 @@
     <string name="tickettime_toolbar_title">시간 선택</string>
     <string name="reserve_confirm_toolbar_title">예약 확인</string>
     <string name="reserve_confirm_bottom_title">동의하며 예약하기</string>
+    <string name="tikect_time_activity_bottom_title">예약하기</string>
     <string name="reserve_confirm_cancel_bottom_title">예약 취소</string>
     <string name="reserve_confirm_lesson_policy">- 예약 취소 정책\n예약 취소는 레슨 당일 이전에만 가능합니다.\n\n- 결석 정책\n예약된 레슨에 결석 시 레슨 이용권이 1회 차감 됩니다.</string>
     <string name="reserve_confirm_ticket_name">예약명</string>
@@ -150,11 +151,12 @@
     <string name="home_tag_name_alram">알림</string>
     <string name="home_tag_name_mypage">마이페이지</string>
     <string name="home_app_finish_title">정말 종료하시겠습니까?</string>
-    <string name="fragment_alert_title_ignore_max_reservation">최대 예약</string>
+    <string name="fragment_alert_title_ignore_max_reservation">최대 예약 초과</string>
     <string name="fragment_alert_message_ignore_max_reservation">최대 예약 가능 횟수를 초과하였습니다. \n새 예약을 하시려면 기존 예약을 취소하셔야 합니다. \n예약 가능 시간을  조회하시겠습니까 ?</string>
     <string name="fragment_alert_cancel_ignore_max_reservation">닫기</string>
     <string name="fragment_alert_okay_ignore_max_reservation"> 조회하기 </string>
     <string  name="ticket_time_activity_error_max_reservation_count"> 최대 예약 가능 횟수를 초과하였습니다. </string>
+    <string  name="ticket_time_activity_error_only_once_day"> 1일 1회 예약 가능합니다. </string>
     <string name="home_app_finish_positive">종료하기</string>
     <string name="home_app_finish_negative">취소</string>
     <string name="fragment_reservation_donot_refresh">가져올 티켓이 없습니다</string>
@@ -180,4 +182,5 @@
     <string name="rhythm_coach_fragment_to_double_format">%.2f</string>
     <string name="rhythm_coach_fragment_x_speed_index_format">%1$s</string>
     <string name="rhythm_coach_fragment_x_speed_index_default_format">0.8x</string>
+    <string name="custom_toolbar_with_bottom_reservation">예약하기</string>
 </resources>

@@ -52,6 +52,23 @@ class ReserveConfirmRepositoryImpl(
         }
     }
 
+    override fun reservationThreeOneTimePlate(
+        data: HashMap<String, ReserveThreeOneTimePlateModel>
+    ): Single<Response<ReservePlateResponse>> {
+        return if (networkManager.networkState()) {
+            reservationRemoteDataSource.remoteReservationThreeOnTimePlate(data)
+                .flatMap {
+                    if (it.isSuccessful) {
+                        Single.just(it)
+                    } else {
+                        Single.error(HttpException(it))
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
     override fun reservationLesson(
         data: HashMap<String, ReserveLessonModel>
     ): Single<Response<ReserveLessonResponse>> {

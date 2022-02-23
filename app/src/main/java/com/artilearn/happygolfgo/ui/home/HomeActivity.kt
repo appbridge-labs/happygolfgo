@@ -217,7 +217,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             "" -> goAlramFCM()
         }
     }
-// TODO: 백버튼 처리
+// DONETODO: 백버튼 처리
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount == 1) {
             vm.backPressed()

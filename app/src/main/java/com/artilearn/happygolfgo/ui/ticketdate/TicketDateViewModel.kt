@@ -36,6 +36,10 @@ class TicketDateViewModel(
     private val _goNext: MutableLiveData<Pair<Ticket, String>> = MutableLiveData()
     val goNext: LiveData<Pair<Ticket, String>>
         get() = _goNext
+    //feature/2022/0216/multiSelection
+    private  val _goNextForReviewOnly : MutableLiveData<Pair<Ticket,String>> = MutableLiveData()
+    val goNextForReviewOnly:LiveData<Pair<Ticket,String>>
+     get() = _goNextForReviewOnly
 
     private val _used: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val used: LiveData<Boolean>
@@ -132,6 +136,10 @@ class TicketDateViewModel(
 
     fun calendarListener(ticket: Ticket, day: String) {
         _goNext.value = Pair(ticket, day)
+    }
+
+    fun calendarListenerForViewOnly(ticket: Ticket, day: String) {
+        _goNextForReviewOnly.value = Pair(ticket, day)
     }
 
     fun onClose() = _dialogCloseSubject.onNext(Unit)

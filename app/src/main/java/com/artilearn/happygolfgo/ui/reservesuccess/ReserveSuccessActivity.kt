@@ -2,6 +2,8 @@ package com.artilearn.happygolfgo.ui.reservesuccess
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.PLATE_TIME_CHANGE
@@ -46,6 +48,30 @@ class ReserveSuccessActivity :
                 else tvMain.text = getString(R.string.reserve_success_title_change)
                 tvTitle.text = convertToTitle(plate.name, plate.totalCount, plate.remainingCount)
                 tvSubtitle.text = convertToTime(plate.startDate, plate.endDate)
+                try {
+                    if (plate.secondStartDate != null && plate.secondEndDate != null) {
+                        if (plate.secondEndDate!!.length > 4 && plate.secondStartDate!!.length > 4) {
+                            tvSubtitleSecond.visibility = View.VISIBLE
+                            tvSubtitleSecond.text =
+                                convertToTime(plate.secondStartDate!!, plate.secondEndDate!!)
+                        }
+                    } else {
+
+                    }
+
+                    if (plate.thirdStartDate != null && plate.thirdEndDate != null) {
+                        if (plate.thirdEndDate!!.length > 4 && plate.thirdStartDate!!.length > 4) {
+                            tvSubtitleThird.visibility = View.VISIBLE
+                            tvSubtitleThird.text = convertToTime(plate.thirdStartDate!!, plate.thirdEndDate!!)
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                }  catch (e: Exception) {
+                    Log.d("error", e.toString())
+                }
             }
             reservationLesson?.let { lesson ->
                 tvMain.text = getString(R.string.reserve_success_title)

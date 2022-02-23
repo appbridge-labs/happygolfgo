@@ -11,7 +11,10 @@
             name="vm"
             type="com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmViewModel" />
     </data>
-
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -129,8 +132,28 @@
                         android:textSize="24dp"
                         tools:text="06:00 ~ 06:30" />
 
+                    <TextView
+                        android:id="@+id/tv_ticketTimeSecond"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="16dp"
+                        android:textColor="@color/color_black"
+                        android:textSize="24dp"
+                        tools:text="06:00 ~ 06:30" />
+
+                    <TextView
+                        android:id="@+id/tv_ticketTimeThird"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="16dp"
+                        android:textColor="@color/color_black"
+                        android:textSize="24dp"
+                        tools:text="06:00 ~ 06:30" />
                 </LinearLayout>
-<!--               TODO: 타석 정보 보여 주기-->
                 <LinearLayout
                     android:id="@+id/ticketplatenumber_layout"
                     android:layout_width="match_parent"
@@ -250,4 +273,5 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

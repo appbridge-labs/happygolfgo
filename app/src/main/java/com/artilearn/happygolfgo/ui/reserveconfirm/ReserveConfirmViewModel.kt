@@ -70,6 +70,15 @@ class ReserveConfirmViewModel(
     var ticketId: Int? = null
     var plateTimeChange: Int? = null
 
+    var isMultipleReservation : Boolean = false //최대 일일 동시 예약수는 3회 이다.
+    var firstPlateAvailabilityID: Int = 0
+    var secondPlateAvailabilityID: Int = 0
+    var thirdPlateAvailabilityID: Int = 0
+
+    var firstPlateTime : String = ""
+    var secondPlateTime : String = ""
+    var thirdPlateTime : String = ""
+
     fun requestPolicy() {
         compositeDisposable.add(
             reserveConfirmRepository.requestPolicy()
@@ -98,6 +107,60 @@ class ReserveConfirmViewModel(
         )
     }
 
+    //feature/2022/0216/multiSelection
+    //타석 예약하는 부분
+    fun reservationThreeOnTimePlate(firstPlateAvailabilityID:Int = 0, secondPlateAvailabilityId:Int=0, thirdPlateAvailabilityId : Int = 0) {
+        if (ticketId != null && plateAvailabilityId != null) {
+            val dataModel = ReserveThreeOneTimePlateModel(ticketId!!, firstPlateAvailabilityID ,secondPlateAvailabilityId, thirdPlateAvailabilityId)
+            val data = hashMapOf<String, ReserveThreeOneTimePlateModel>()
+            data["Data"] = dataModel
+            compositeDisposable.add(
+                reservationRepository.reservationThreeOneTimePlate(data)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe { showLoading() }
+                    .doAfterTerminate { hideLoading() }
+                    .doOnError { t -> errorLog(TAG, t) }
+                    .subscribe({ response ->
+                        val body = response.body()
+                        if (response.isSuccessful && body != null) {
+                            _reservationPlate.value = body.data.plateReservation
+                        } else {
+                            _buttonClickable.call()
+                            val erroBody = response.errorBody()
+                            if (erroBody == null) {
+                                _serverError.value = "오류로 인한 예약실패"
+                            } else {
+                                val gson = Gson()
+                                val type = object : TypeToken<ApiError>() {}.type
+                                val errorResponse: ApiError =
+                                    gson.fromJson(erroBody.charStream(), type)
+                                when (errorResponse.resultCode) {
+                                    4110 -> _serverError.value = "사용 불가능한 이용권 입니다"
+                                    4102 -> _serverError.value = "최대 예약횟수는 3회 입니다"
+                                    4117 -> _serverError.value = "예약가능한 타석이 없습니다"
+                                    4103, 4116 -> _serverError.value = "당일 예약이 가득 찼습니다"
+                                    4118 -> _serverError.value = "요청 정보를 알 수 없습니다"
+                                    4112 -> _serverError.value = "해당 티켓은 타석 이용권이 아닙니다"
+                                }
+                            }
+                        }
+                    }, { t ->
+                        _buttonClickable.call()
+                        when (t) {
+                            is NetworkErrorException -> _networkFail.value = Unit
+                            is HttpException -> {
+                                if (t.code() == 419) _appRefresh.call()
+                                else _serverError.value = "데이터를 불러오는데 실패했습니다"
+                            }
+                            else -> _serverError.value = "알 수 없는 오류 발생"
+                        }
+                    })
+            )
+        } else {
+            _unKnowError.call()
+        }
+    }
     fun reservationPlate() {
         if (ticketId != null && plateAvailabilityId != null) {
             val dataModel = ReservePlateModel(ticketId!!, plateAvailabilityId!!)
@@ -314,7 +377,11 @@ class ReserveConfirmViewModel(
                     plateNumber = item.plateNumber,
                     remainingCount = item.remainingCount,
                     totalCount = item.totalCount,
-                    isUnlimited = item.isUnlimited
+                    isUnlimited = item.isUnlimited,
+                    secondStartDate = "0",
+                    secondEndDate = "0",
+                    thirdStartDate = "0",
+                    thirdEndDate = "0",
                 )
                 _reservationTimeChange.value = plate
             }, { t ->
