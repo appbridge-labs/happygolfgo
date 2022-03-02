@@ -28,13 +28,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        하단 예약하기 버튼 보이지 않는 버그 수정 : 다중 선택일 경우-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/reserve_confirm_bottom_view"-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/reserve_confirm_bottom_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tickettime_toolbar"

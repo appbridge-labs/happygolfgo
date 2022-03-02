@@ -74,6 +74,10 @@ class TicketTimeActivity : BaseActivity<ActivityTicketTimeBinding>(R.layout.acti
                 //binding.tickettimeToolbar.btnReservation.visibility = View.VISIBLE
                 initBottomView(binding.reserveConfirmBottomView.bottom_layout, getString(R.string.tikect_time_activity_bottom_title), BottimViewType.DEFAULT_TYPE)
             }
+//            hotfix/2022/0302 하단 액션바 가림 현상
+            else -> {
+                binding.reserveConfirmBottomView.visibility = View.GONE;
+            }
         }
         //DONETODO: be sure  that it's okay if ticket is null
         val typedTicket : Ticket? = ticket
