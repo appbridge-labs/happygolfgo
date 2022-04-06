@@ -74,6 +74,15 @@ data class Ticket(
     @Expose
     var maxMultipleCount:Int?,
 
+    //doneTODO: 다중 브랜치 사용자 표시
+    @SerializedName("branchName")
+    @Expose
+    var branchName:String?,
+
+    @SerializedName("multipleBranchTicketUser")
+    @Expose
+    var multipleBranchTicketUser:Boolean?,
+
     @SerializedName("pausesPeriods")
     @Expose
     val pasuePeriods: List<TicketPausePeriodsModel>? = null,

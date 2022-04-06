@@ -6,6 +6,7 @@ import com.artilearn.happygolfgo.ui.ticketmanager.model.PauseModel
 
 object PauseTicketMapper : Mapper<RemotePasueTicketModel, PauseModel> {
     override fun mapper(item: RemotePasueTicketModel): PauseModel {
+        //doneTODO:
         return PauseModel(
             name = item.name,
             type = item.type,

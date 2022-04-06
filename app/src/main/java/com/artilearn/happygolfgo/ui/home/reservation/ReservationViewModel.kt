@@ -179,7 +179,9 @@ class ReservationViewModel(
                 allowToBook = it.allowToBook,
                 ignoreLimit = it.ignoreLimit, //DONETODO: flag to ignore max reservation limit to see opened reseration time schedule
                 multipleReservation = it.multipleReservation,//DONETODO flag to select multiple time in a reservation for songdo branch
-                maxMultipleCount = it.maxMultipleCount,//DONETODO count for max reservation selection in a reservation for songdo branch
+                maxMultipleCount = it.maxMultipleCount,//DONETODO count for max reservation selection in a reservation for songdo branc
+                branchName = it.branchName, //doneTODO:
+                multipleBranchTicketUser = it.multipleBranchTicketUser, //doneTODO:
                 pasuePeriods = it.pasuePeriods,
                 totalPrice = it.totalPrice,
                 maxReservationCount = it.maxReservationCount
@@ -206,6 +208,8 @@ class ReservationViewModel(
                 ignoreLimit = it.ignoreLimit, //DONETODO: flag to ignore max reservation limit to see opened reseration time schedule
                 multipleReservation = it.multipleReservation,//DONETODO flag to select multiple time in a reservation for songdo branch
                 maxMultipleCount = it.maxMultipleCount,//DONETODO count for max reservation selection in a reservation for songdo branch
+                branchName = it.branchName, //doneTODO:
+                multipleBranchTicketUser = it.multipleBranchTicketUser, //doneTODO:
                 pasuePeriods = it.pasuePeriods,
                 totalPrice = it.totalPrice
             )
@@ -231,6 +235,8 @@ class ReservationViewModel(
                 ignoreLimit = it.ignoreLimit, //DONETODO: flag to ignore max reservation limit to see opened reseration time schedule
                 multipleReservation = it.multipleReservation,//DONETODO flag to select multiple time in a reservation for songdo branch
                 maxMultipleCount = it.maxMultipleCount,//DONETODO count for max reservation selection in a reservation for songdo branch
+                branchName = it.branchName, //doneTODO:
+                multipleBranchTicketUser = it.multipleBranchTicketUser, //doneTODO:
                 pasuePeriods = it.pasuePeriods,
                 totalPrice = it.totalPrice
             )

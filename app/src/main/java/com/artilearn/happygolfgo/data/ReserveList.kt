@@ -49,7 +49,15 @@ data class ReserveList(
 
     @SerializedName("ticket")
     @Expose
-    val ticket: ReservationTicket?
+    val ticket: ReservationTicket?,
+
+    @SerializedName("multipleBranchTicketUser")
+    @Expose
+    var multipleBranchTicketUser:Boolean?,
+
+    @SerializedName("branchName")
+    @Expose
+    val branchName: String?,
 ) : Parcelable {
 
     @Parcelize

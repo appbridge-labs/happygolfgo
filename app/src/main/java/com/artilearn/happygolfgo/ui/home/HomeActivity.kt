@@ -51,21 +51,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun initViewModelObserving() {
         with(vm) {
-            backPressedEvent.observe(this@HomeActivity, {
+            backPressedEvent.observe(this@HomeActivity) {
                 showAppFinish()
-            })
-            eventType.observe(this@HomeActivity, {
+            }
+            eventType.observe(this@HomeActivity) {
                 when (eventType.value) {
                     HomeViewModel.FcmTypeMoveModel.PLATE -> goReservaitonPlateFromFCM()
                     HomeViewModel.FcmTypeMoveModel.LESSON -> goReservationLessonFromFCM()
                     HomeViewModel.FcmTypeMoveModel.LOG -> goLessonLogFromFCM()
                     else -> {}  // do nothing
                 }
-            })
-            bottom.observe(this@HomeActivity, {
+            }
+            bottom.observe(this@HomeActivity) {
                 toolbarText(it)
                 initFragment(it)
-            })
+            }
         }
     }
 

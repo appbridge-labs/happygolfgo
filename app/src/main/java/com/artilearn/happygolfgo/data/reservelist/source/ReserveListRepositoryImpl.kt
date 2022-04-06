@@ -27,4 +27,19 @@ class ReserveListRepositoryImpl(
             Single.error(NetworkErrorException("Network Error"))
         }
     }
+
+    override fun selectReservationListInMultiBranch(): Single<Response<ReserveListResponse>> {
+        return if (networkManager.networkState()) {
+            reserveListRemoteDataSource.remoteSelectReservationListInMultiBranche()
+                .flatMap {
+                    if (it.isSuccessful) {
+                        Single.just(it)
+                    } else {
+                        Single.error(HttpException(it))
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
 }

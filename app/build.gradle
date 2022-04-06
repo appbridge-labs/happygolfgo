@@ -9,13 +9,17 @@ apply plugin: "androidx.navigation.safeargs"
 android {
     compileSdkVersion 31
     buildToolsVersion "29.0.3"
+    /*
+        TODO:  targetSdkVersion 32로 Android 13으로 올림 경우 2022.11월 정도
+          you must declare the AD_ID Permission
+     */
 
     defaultConfig {
         applicationId "com.artilearn.happygolfgo"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 43
-        versionName "2.2.7"
+        versionCode 44
+        versionName "2.2.8"
 
         testInstrumentationRunner "androidx.ratingbar_star.runner.AndroidJUnitRunner"
     }
@@ -35,7 +39,7 @@ android {
             resConfigs('en', 'xhdpi')
             buildConfigField "String", "HG_BASE_URL", "\"http://52.79.253.238/development/appClient/\""
 //            buildConfigField "String", "HG_BASE_URL", "\"https://happygolfgoapi.com/happygolfgo/appClient/\""
-//            buildConfigField "String", "HG_BASE_URL", "\"http:/192.168.0.3:7000/appClient/\""
+//            buildConfigField "String", "HG_BASE_URL", "\"http:/192.168.0.4:7000/appClient/\""
         }
 
         prod {

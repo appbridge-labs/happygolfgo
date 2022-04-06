@@ -183,4 +183,6 @@
     <string name="rhythm_coach_fragment_x_speed_index_format">%1$s</string>
     <string name="rhythm_coach_fragment_x_speed_index_default_format">0.8x</string>
     <string name="custom_toolbar_with_bottom_reservation">예약하기</string>
+    <string name="item_reservation_new_list_iv_description">티켓 종류 구분</string>
+    <string name="item_reservation_new_list_iv_arrow_description">상세보기 화살표 이미지</string>
 </resources>

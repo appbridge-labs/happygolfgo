@@ -28,6 +28,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 //comments: keyword 예약 확인 화면:  예약명 타석이용 정책사항
 //DONETODO:  안드로이드는 타석에 대한 정보가 없다. 타석 정보 추가
+//doneTODO: 브랜치 명을 표시해 준다.
 class ReserveConfirmActivity :
     BaseActivity<ActivityReserveConfirmBinding>(R.layout.activity_reserve_confirm) {
 
@@ -92,6 +93,8 @@ class ReserveConfirmActivity :
                            ignoreLimit =  null,
                             multipleReservation =  null,
                             maxMultipleCount = null,
+                            branchName = null, //doneTODO:
+                            multipleBranchTicketUser = null, //doneTODO
                         )
                     }
                 }
@@ -110,6 +113,10 @@ class ReserveConfirmActivity :
 
                 //comments: layout에 있는 resource_id와 데이타를 설정하여 준다.
                 setReservationTicketName(it.plateReservation.name)
+                //doneTODO: 다중 브랜치 사용자인 경우 브랜치 이름을 넣어준다.
+                if (it.plateReservation.multipleBranchTicketUser != null && it.plateReservation.multipleBranchTicketUser == true) {
+                    setReservationBranchName(it.plateReservation.branchName)
+                }
                 setReservationTicketDate(it.plateReservation.startDate)
                 setReservationTicketTime(it.plateReservation.startDate, it.plateReservation.endDate)
                 setReservationPolicy(it.policy.body)
@@ -129,6 +136,9 @@ class ReserveConfirmActivity :
                     it.lessonReservation.startDate,
                     it.lessonReservation.endDate
                 )
+                if (it.lessonReservation.multipleBranchTicketUser != null && it.lessonReservation.multipleBranchTicketUser == true) {
+                    setReservationBranchName(it.lessonReservation.branchName)
+                }
             })
             policy.observe(this@ReserveConfirmActivity, Observer {
                 setReservationPolicy(it)
@@ -198,6 +208,12 @@ class ReserveConfirmActivity :
 
     private fun setReservationTicketName(name: String) {
         binding.tvTicketName.text = name
+    }
+
+    private fun setReservationBranchName(name: String?) {
+        name?.let {
+            binding.tvReservationNameBranch.text = "예약명(${name})"
+        }
     }
 
     private fun setReservationTicketPlateNumber(plateNumber: String) {

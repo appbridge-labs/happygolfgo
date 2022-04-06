@@ -5,6 +5,6 @@ import io.reactivex.Single
 import retrofit2.Response
 
 interface ReserveListRepository {
-
     fun selectReservationList(): Single<Response<ReserveListResponse>>
+    fun selectReservationListInMultiBranch(): Single<Response<ReserveListResponse>>
 }

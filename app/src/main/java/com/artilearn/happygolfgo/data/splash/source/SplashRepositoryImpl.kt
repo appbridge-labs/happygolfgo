@@ -57,7 +57,7 @@ class SplashRepositoryImpl(
             splashRemoteDataSource.remoteUserSynchronized(data)
                 .flatMap {
                     if (it.code() == 200) {
-                        userInfoSynchronized(it.body()?.data)
+                        userInfoSynchronized(it.body()?.data) //TODO: Non-fatal Exception: java.lang.IllegalStateException
                         Single.just(it)
                     } else {
                         Single.just(it)
@@ -93,7 +93,7 @@ class SplashRepositoryImpl(
     private fun saveFcmToken(token: String?) {
         token?.let { splashLocalDataSource.fcmToken = token }
     }
-
+    //TODO:
     private fun userInfoSynchronized(user: SynchronizedDetail?) {
         user?.let {
             with(splashLocalDataSource) {
@@ -104,7 +104,7 @@ class SplashRepositoryImpl(
                 fcmToken = user.fcmToken
                 accessToken = user.accessToken
                 dateOfBirth = user.dateOfBirth
-                checkinId = user.checkinId
+                checkinId = user.checkinId //TODO: Non-fatal Exception: java.lang.IllegalStateException
             }
         }
     }

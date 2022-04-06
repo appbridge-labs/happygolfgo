@@ -51,7 +51,11 @@ interface ApiInterface {
 
     //DONETODO:   main/user/ver_1_0 : 최대 예약 걸려 있을때, 무시하고 진행할 수 있는 옵션 저장 한다. 2022.02.13
     //@GET("main/user")
-    @GET("main/user/ver_1_0")
+    //doneTODO: 제주 브랜치 기존 ver_1_0 에서  multibranchtickets로 변경
+//    @GET("main/user/ver_1_0")
+//    fun mainHome(): Single<Response<HomeResponse>>
+
+    @GET("main/user/multibranchtickets")
     fun mainHome(): Single<Response<HomeResponse>>
 
     @GET("mypage/appversion")
@@ -83,7 +87,9 @@ interface ApiInterface {
     @GET("user/lessonlogs")
     fun getLessonLogs(): Single<Response<LessonLogResponse>>
 
-    @GET("main/user/notifications")
+    //doneTODO: 2022/0304/multibranchtickets notification handling
+//    @GET("main/user/notifications")
+    @GET("main/user/notifications_v_1_0")
     fun getAlramMessage(): Single<Response<AlramResponse>>
 
     @GET("reservation/user/plateAvailableDates/{ticketID}")
@@ -128,7 +134,16 @@ interface ApiInterface {
         @Body data: HashMap<String, ReserveLessonModel>
     ): Single<Response<ReserveLessonResponse>>
 
-    @GET("reservation/user/myReservations")
+//    @GET("reservation/user/myReservationsInMultiBranch")
+//    fun reservationListInMultiBranch(): Single<Response<ReserveListResponse>>
+
+    //doneTODO: multiBranchCall
+    @GET("reservation/user/myReservationsInMultiBranch")
+    fun reservationListInMultiBranch(): Single<Response<ReserveListResponse>>
+
+    //doneTODO: 다중 브랜치 사용자 로그인 추가
+//    @GET("reservation/user/myReservations")
+    @GET("reservation/user/myReservations_v_1")
     fun reservationList(): Single<Response<ReserveListResponse>>
 
     @DELETE("reservation/user/lessonReservation/{lessonReservationID}")
@@ -150,12 +165,12 @@ interface ApiInterface {
     fun uploadLessonComment(
         @Body data: HashMap<String, CommentModel>
     ): Completable
-
+    //doneTODO:  지점 정보 추가
     @GET("reservation/user/lessonReservation/detail/{lessonReservationID}")
     fun getReservationLessonDetail(
         @Path("lessonReservationID") lessonId: Int
     ): Single<Response<ReservationLessonDetail>>
-
+    //doneTODO: 지점 정보 추가
     @GET("reservation/user/plateReservation/detail/{plateReservationID}")
     fun getReservationPlateDetail(
         @Path("plateReservationID") plateId: Int

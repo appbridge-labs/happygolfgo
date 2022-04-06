@@ -58,5 +58,13 @@ data class LessonReservation(
 
     @SerializedName("isCancellable")
     @Expose
-    val isCancellable: Boolean
+    val isCancellable: Boolean,
+
+    @SerializedName("multipleBranchTicketUser")
+    @Expose
+    val multipleBranchTicketUser: Boolean?,
+
+    @SerializedName("branchName")
+    @Expose
+    val branchName: String?
 )

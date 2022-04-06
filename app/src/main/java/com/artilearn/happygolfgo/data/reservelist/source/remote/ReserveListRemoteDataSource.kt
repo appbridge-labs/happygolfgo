@@ -7,4 +7,5 @@ import retrofit2.Response
 interface ReserveListRemoteDataSource {
 
     fun remoteSelectReservationList(): Single<Response<ReserveListResponse>>
+    fun remoteSelectReservationListInMultiBranche(): Single<Response<ReserveListResponse>>
 }

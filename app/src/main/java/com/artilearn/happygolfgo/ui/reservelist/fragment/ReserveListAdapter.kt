@@ -20,6 +20,7 @@ class ReserveListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         binding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
+            //doneTODO: 내 타석 예약 리스트
             R.layout.item_reservation_new_list,
             parent,
             false

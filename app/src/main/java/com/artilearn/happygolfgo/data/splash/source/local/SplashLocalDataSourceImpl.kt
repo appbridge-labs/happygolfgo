@@ -53,7 +53,7 @@ class SplashLocalDataSourceImpl(
         set(value) {
             preferenceManager.fcmToken = value
         }
-
+    //TODO: non-fatal exception in firebase
     override var checkinId: String
         get() = preferenceManager.checkinId
         set(value) {

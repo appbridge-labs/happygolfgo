@@ -69,6 +69,14 @@ data class PlateReservation(
     @Expose
     val isCancellable: Boolean,
 
+    @SerializedName("multipleBranchTicketUser")
+    @Expose
+    val multipleBranchTicketUser: Boolean?,
+
+    @SerializedName("branchName")
+    @Expose
+    val branchName: String?,
+
     @SerializedName("ticket")
     @Expose
     val ticket: Ticket

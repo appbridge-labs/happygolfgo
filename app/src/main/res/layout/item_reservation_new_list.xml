@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View" />
         <variable
             name="item"
             type="com.artilearn.happygolfgo.data.ReserveList" />
@@ -27,29 +27,36 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/iv_point"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_ticket_name_box"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:setReservationPoint="@{item.plateNumber}"
-                tools:srcCompat="@drawable/ic_home_reservation_ticket_point" />
+                >
+                <ImageView
+                    android:id="@+id/iv_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:setReservationPoint="@{item.plateNumber}"
+                    tools:srcCompat="@drawable/ic_home_reservation_ticket_point"
+                    android:contentDescription="@string/item_reservation_new_list_iv_description" />
 
-            <TextView
-                android:id="@+id/tv_ticket_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/color_black"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/iv_point"
-                app:layout_constraintStart_toEndOf="@id/iv_point"
-                app:layout_constraintTop_toTopOf="@id/iv_point"
-                bind:setTicketName="@{item.name}"
-                tools:text="티켓 이름" />
+                <TextView
+                    android:id="@+id/tv_ticket_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/color_black"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    bind:setTicketName="@{item.name}"
+                    tools:text="티켓 이름" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/glide_view"
@@ -59,7 +66,7 @@
                 android:background="@color/color_line_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_ticket_name" />
+                app:layout_constraintTop_toBottomOf="@id/ll_ticket_name_box" />
 
             <LinearLayout
                 android:id="@+id/parent_child_linear"
@@ -81,7 +88,7 @@
                         android:id="@+id/tv_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -94,8 +101,8 @@
                         android:id="@+id/tv_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30dp"
-                        android:translationY="-4dp"
+                        android:textSize="30sp"
+                        android:translationY="-4sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_month"
@@ -116,7 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/reservation_new_list_start_text"
-                        android:textSize="12dp"
+                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -125,7 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/color_black"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/start_time"
@@ -145,7 +152,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/reservation_new_list_end_text"
-                        android:textSize="12dp"
+                        android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/color_black"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/end_time"
@@ -172,7 +179,25 @@
                 app:layout_constraintBottom_toBottomOf="@id/parent_child_linear"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/parent_child_linear"
-                app:srcCompat="@drawable/ic_home_reservation_ticket_arrow" />
+                app:srcCompat="@drawable/ic_home_reservation_ticket_arrow"
+                android:contentDescription="@string/item_reservation_new_list_iv_arrow_description" />
+
+
+            <TextView
+                android:id="@+id/tv_branchname"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:visibility="@{item.multipleBranchTicketUser ? View.VISIBLE : View.GONE}"
+                bind:setMultiUserBranchName="@{item.branchName}"
+                tools:text="티켓 이름"
+                app:layout_constraintTop_toBottomOf="@id/parent_child_linear"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/color_black"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

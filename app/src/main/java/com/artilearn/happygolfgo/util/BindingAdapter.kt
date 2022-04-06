@@ -191,6 +191,14 @@ fun setTicketName(tv: TextView, name: String) {
     tv.text = name
 }
 
+//doneTODO: 멀티 브랜치 사용자 정보
+@BindingAdapter("setMultiUserBranchName")
+fun setMultiUserBranchName(tv: TextView, name: String?) {
+    name?.let {
+        tv.text = name
+    }
+}
+
 @BindingAdapter("setLogThumbNail")
 fun setLogThumbNail(iv: ImageView, thumbNail: String?) {
     thumbNail?.let {

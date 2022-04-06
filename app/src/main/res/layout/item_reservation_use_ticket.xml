@@ -5,15 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="item"
             type="com.artilearn.happygolfgo.data.Ticket" />
     </data>
 
+<!--    android:layout_height="114dp"-->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="114dp"
+        android:layout_height="wrap_content"
+        android:minHeight="114dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="12dp"
@@ -52,15 +55,18 @@
                 bind:setTicketStartDateInShortYear="@{item.startDate}"
                 tools:text="21.09.01 ~ 22.09.24" />
 
+<!--            android:maxLines="2"-->
+<!--            android:ellipsize="end"-->
             <TextView
                 android:id="@+id/tv_ticket_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@{item.name}"
                 android:textSize="14dp"
                 app:layout_constraintStart_toStartOf="@id/tv_ticket_date"
                 app:layout_constraintTop_toBottomOf="@id/tv_ticket_date"
+                app:layout_constraintEnd_toStartOf="@id/iv_arrow"
                 tools:text="티켓 이름" />
 
             <ImageView
@@ -79,21 +85,40 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="32dp"
+                android:layout_marginTop="4dp"
                 android:background="@color/color_line_gray"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_ticket_name" />
+<!-- doneTODO: 다중 브랜치 사용자의 지점 표시 작업  -->
+            <TextView
+                android:id="@+id/tv_branch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="7dp"
+                android:textAlignment="textStart"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:visibility="@{item.multipleBranchTicketUser ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_count"
+                app:layout_constraintStart_toStartOf="@id/tv_ticket_date"
+                bind:setMultiUserBranchName="@{item.branchName}"
+                tools:text="제주점" />
 
             <TextView
                 android:id="@+id/tv_count"
-                android:layout_width="wrap_content"
+                android:layout_width="127dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="7dp"
                 android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_branch"
                 bind:setTicketIsUnLimited="@{item.unlimited}"
                 bind:setTicketOnlyOnceToday="@{item.onlyOnceToday}"
                 bind:setTicketRemainingCount="@{item.remainingCount}"

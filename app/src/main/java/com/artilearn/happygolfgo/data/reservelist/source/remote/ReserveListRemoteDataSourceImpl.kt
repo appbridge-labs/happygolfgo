@@ -12,4 +12,8 @@ class ReserveListRemoteDataSourceImpl(
     override fun remoteSelectReservationList(): Single<Response<ReserveListResponse>> {
         return apiInterface.reservationList()
     }
+
+    override fun remoteSelectReservationListInMultiBranche(): Single<Response<ReserveListResponse>> {
+        return apiInterface.reservationListInMultiBranch()
+    }
 }

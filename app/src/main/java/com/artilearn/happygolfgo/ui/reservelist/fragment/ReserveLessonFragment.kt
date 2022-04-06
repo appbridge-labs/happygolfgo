@@ -69,6 +69,7 @@ class ReserveLessonFragment
     }
 
     private fun goReservationConfirm(item: ReserveList) {
+        //doneTODO: 레슨 예약 상세로 이동
         val confirmIntent = Intent(activity, ReserveConfirmActivity::class.java)
             .apply {
                 putExtra(LESSON_ID, item.id)
