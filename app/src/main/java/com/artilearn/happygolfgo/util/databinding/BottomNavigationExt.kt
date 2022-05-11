@@ -18,6 +18,8 @@ fun BottomNavigationView.onBottomClick(viewModel: HomeViewModel) {
             //  version 39(2.2.3) 버그 수정 중
 //          2022.02.15 리듬 코치 배포 보류 중
 //            R.id.rhythmcoach -> viewModel.onNextBottomEvent("리듬코치");
+            //vc45
+            R.id.record -> viewModel.onNextBottomEvent("기록실")//
             R.id.alram -> viewModel.onNextBottomEvent("알림")
             R.id.mypage -> viewModel.onNextBottomEvent("마이페이지")
         }

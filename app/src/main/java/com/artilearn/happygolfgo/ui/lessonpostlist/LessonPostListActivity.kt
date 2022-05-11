@@ -12,6 +12,7 @@ import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class LessonPostListActivity
     : BaseActivity<ActivityLessonPostListBinding>(R.layout.activity_lesson_post_list) {
 

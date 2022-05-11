@@ -44,7 +44,6 @@ class LessonPostListAdapter(
             binding.item = item
             binding.executePendingBindings()
         }
-
     }
 
     fun setItems(logList: List<LessonLog>) {

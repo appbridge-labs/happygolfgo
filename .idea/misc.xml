@@ -3,36 +3,60 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.13518518518518519" />
         <entry key="app/src/main/res/drawable/bg_alram_read.xml" value="0.2111111111111111" />
         <entry key="app/src/main/res/drawable/bg_btn_bottom.xml" value="0.2111111111111111" />
+        <entry key="app/src/main/res/drawable/bg_gamecenter_my_info.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_round_detail_score_transparent.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_training_management_weight_excercise_tv.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_training_record_round_detail_analysis_item.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_training_record_round_section_ll_record.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_training_record_section.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_training_record_section_one.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_training_record_swing_video.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_training_record_swing_video_right_arrow.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/rhythm_coach_btn_bg_speed_up_gradient.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/rhythm_coach_btn_bg_speed_up_selector.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/rhythm_coach_btn_repeat_ripple.xml" value="0.22407407407407406" />
         <entry key="app/src/main/res/drawable/rhythm_coach_button_gradient.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/drawable/rhythm_coach_va_repeat.xml" value="0.5" />
+        <entry key="app/src/main/res/drawable/shape_circular_rounded_green_oval.xml" value="0.104" />
         <entry key="app/src/main/res/layout/activity_alram.xml" value="0.1852355072463768" />
         <entry key="app/src/main/res/layout/activity_error.xml" value="0.2421875" />
+        <entry key="app/src/main/res/layout/activity_golf_game.xml" value="0.3334855930505315" />
+        <entry key="app/src/main/res/layout/activity_golf_rank.xml" value="0.3360410431808465" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.19908814589665655" />
+        <entry key="app/src/main/res/layout/activity_lesson_post_list.xml" value="0.19709277469003847" />
+        <entry key="app/src/main/res/layout/activity_log.xml" value="0.15904232578024796" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/layout/activity_my_info.xml" value="0.15989583333333332" />
         <entry key="app/src/main/res/layout/activity_reserve_confirm.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/activity_reserve_success.xml" value="0.30052083333333335" />
         <entry key="app/src/main/res/layout/activity_ticket_date.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/layout/activity_ticket_time.xml" value="0.28854166666666664" />
+        <entry key="app/src/main/res/layout/activity_training_record_round_detail.xml" value="0.1642290012536565" />
+        <entry key="app/src/main/res/layout/activity_training_record_swing_video_list.xml" value="0.1642290012536565" />
+        <entry key="app/src/main/res/layout/activity_training_record_swing_video_player.xml" value="0.38095238095238093" />
         <entry key="app/src/main/res/layout/common_view.xml" value="0.28854166666666664" />
         <entry key="app/src/main/res/layout/custom_bottom_view.xml" value="0.24114583333333334" />
         <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.28854166666666664" />
         <entry key="app/src/main/res/layout/custom_toolbar_with_buttons.xml" value="0.28854166666666664" />
+        <entry key="app/src/main/res/layout/exp_player_controller.xml" value="0.23815359477124182" />
         <entry key="app/src/main/res/layout/fragment_alram.xml" value="0.1852355072463768" />
+        <entry key="app/src/main/res/layout/fragment_gamecenter.xml" value="0.29846014492753625" />
         <entry key="app/src/main/res/layout/fragment_mypage.xml" value="0.1852355072463768" />
         <entry key="app/src/main/res/layout/fragment_reservation.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_training_record.xml" value="0.31183368869936035" />
+        <entry key="app/src/main/res/layout/item_group_rank.xml" value="0.1642290012536565" />
         <entry key="app/src/main/res/layout/item_home_reservation_ticket.xml" value="0.2545289855072464" />
         <entry key="app/src/main/res/layout/item_home_ticket.xml" value="0.2545289855072464" />
+        <entry key="app/src/main/res/layout/item_lesson_post_list.xml" value="0.24388032638259294" />
         <entry key="app/src/main/res/layout/item_pause_ticket.xml" value="0.2359375" />
         <entry key="app/src/main/res/layout/item_reservation_expired_ticket.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/item_reservation_new_list.xml" value="0.28709716796875007" />
         <entry key="app/src/main/res/layout/item_reservation_pause_ticket.xml" value="0.20572916666666666" />
         <entry key="app/src/main/res/layout/item_reservation_use_ticket.xml" value="0.31417490641276047" />
+        <entry key="app/src/main/res/layout/item_swing_video_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_ticket_time.xml" value="0.8417408506429278" />
         <entry key="app/src/main/res/layout/rhythm_coach_fragment.xml" value="0.26666666666666666" />
         <entry key="app/src/main/res/layout/rhythm_coach_notification_player.xml" value="0.23385416666666667" />

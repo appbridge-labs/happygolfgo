@@ -77,8 +77,10 @@
     <string name="pwreset_change_success">비밀번호가 변경 되었습니다</string>
     <string name="pwreset_please_check_pw">비밀번호를 확인해 주세요</string>
     <string name="lesson_post_list_toolbar_title">레슨 포스트 목록</string>
+    <string name="training_record_swing_list_toolbar_title">스윙 영상 (최근 10개)</string>
     <string name="alram_empty_message">알림이 없습니다</string>
     <string name="rhythm_coach_toolbar_title">리듬코치</string>
+    <string name="game_record_toolbar_title">기록실</string>
     <string name="alram_toolbar_title">알림</string>
     <string name="ticketdate_toolbar_title">날짜 선택</string>
     <string name="ticketdate_impossible_ticket">당일 중복 예약이 불가능한 이용권 입니다</string>
@@ -107,6 +109,8 @@
     <string name="ticket_time_empty_time_text">예약가능한 시간이 없습니다</string>
     <string name="fragment_reserve_lesson_empty">예약내역이 없습니다</string>
     <string name="log_toolbar_title">레슨 포스트</string>
+    <string name="training_record_score_card_toolbar_title">스코어카드</string>
+    <string name="swing_video_player_toolbar_title">스윙 동영상</string>
     <string name="log_comment_tile">나의 코멘트</string>
     <string name="log_video_start_fail">오류로 인한 동영상 시작 실패</string>
     <string name="log_bottom_view_title">코멘트 남기기</string>
@@ -155,8 +159,8 @@
     <string name="fragment_alert_message_ignore_max_reservation">최대 예약 가능 횟수를 초과하였습니다. \n새 예약을 하시려면 기존 예약을 취소하셔야 합니다. \n예약 가능 시간을  조회하시겠습니까 ?</string>
     <string name="fragment_alert_cancel_ignore_max_reservation">닫기</string>
     <string name="fragment_alert_okay_ignore_max_reservation"> 조회하기 </string>
-    <string  name="ticket_time_activity_error_max_reservation_count"> 최대 예약 가능 횟수를 초과하였습니다. </string>
-    <string  name="ticket_time_activity_error_only_once_day"> 1일 1회 예약 가능합니다. </string>
+    <string name="ticket_time_activity_error_max_reservation_count"> 최대 예약 가능 횟수를 초과하였습니다. </string>
+    <string name="ticket_time_activity_error_only_once_day"> 1일 1회 예약 가능합니다. </string>
     <string name="home_app_finish_positive">종료하기</string>
     <string name="home_app_finish_negative">취소</string>
     <string name="fragment_reservation_donot_refresh">가져올 티켓이 없습니다</string>
@@ -185,4 +189,5 @@
     <string name="custom_toolbar_with_bottom_reservation">예약하기</string>
     <string name="item_reservation_new_list_iv_description">티켓 종류 구분</string>
     <string name="item_reservation_new_list_iv_arrow_description">상세보기 화살표 이미지</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

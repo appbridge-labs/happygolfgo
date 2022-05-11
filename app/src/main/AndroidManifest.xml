@@ -6,10 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<!--&lt;!&ndash;     version 39(2.2.3) 버그 수정-->
-<!--  롤백중-->
-<!--   2022.02.15 리듬코치 배포 보류 -->
-<!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
+
     <application
         android:name=".di.KoinApplication"
         android:allowBackup="false"
@@ -20,20 +17,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-<!--       rhythm_coach 2022.01.12 version 39(2.2.3) 버그 수정 중 롤백 -->
-<!--       2022.02.15 리듬코치 배포제외 중 service 주석 처리-->
-<!--        <service-->
-<!--            android:name=".service.RhythmCoachService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="false">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="REWIND"/>-->
-<!--                <action android:name="TOGGLE_PLAY"/>-->
-<!--                <action android:name="FORWARD"/>-->
-<!--                <action android:name="CLOSE"/>-->
-<!--            </intent-filter>-->
-<!--        </service>-->
-
+        <activity
+            android:name=".ui.home.record.TrainingRecordRoundDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".ui.home.record.TrainingRecordSwingVideoPlayerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.home.record.TrainingRecordSwingVideoListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" /> <!-- rhythm_coach 2022.01.12 version 39(2.2.3) 버그 수정 중 롤백 -->
+        <!-- 2022.02.15 리듬코치 배포제외 중 service 주석 처리 -->
+        <!-- <service -->
+        <!-- android:name=".service.RhythmCoachService" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="false"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="REWIND"/> -->
+        <!-- <action android:name="TOGGLE_PLAY"/> -->
+        <!-- <action android:name="FORWARD"/> -->
+        <!-- <action android:name="CLOSE"/> -->
+        <!-- </intent-filter> -->
+        <!-- </service> -->
         <activity
             android:name=".ui.home.mypage.profilechange.ProfileChangeActivity"
             android:exported="false"
@@ -105,8 +113,7 @@
             android:name=".ui.myinfo.MyInfoActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-<!--        Version 41(2.2.5) -->
+            android:windowSoftInputMode="stateAlwaysHidden" /> <!-- Version 41(2.2.5) -->
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="false"

@@ -32,4 +32,6 @@
     <color name="color_graph_iron">#5C7CFA</color>
     <color name="color_graph_sw">#22B8CF</color>
     <color name="color_graph_putt">#51CF66</color>
+    <color name="color_graph_direction">#F8BBD0</color>
+    <color name="color_graph_green_attack">#00897b</color>
 </resources>

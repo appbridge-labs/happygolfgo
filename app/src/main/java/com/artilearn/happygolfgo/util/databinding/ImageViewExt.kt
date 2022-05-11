@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 
 @BindingAdapter("onBindProfile")
@@ -26,6 +27,38 @@ fun ImageView.bindImage(imagePath: String?) {
             ))
             .into(this)
     }
+}
+
+@BindingAdapter("onBindSwingVideoThumbNail")
+fun ImageView.bindSwingVideoThumNail(imagePath: String?) {
+    if (imagePath.isNullOrEmpty()) {
+        Glide.with(this)
+            .load(R.drawable.ic_flag_no_ticket_card)
+            .into(this)
+    } else {
+        Glide.with(this)
+            .load(imagePath)
+            .apply(RequestOptions.bitmapTransform(
+                MultiTransformation(
+                    CenterCrop(),
+                    RoundedCorners(32)
+                )
+            ))
+            .into(this)
+    }
+}
+
+@BindingAdapter("onBindScoreCardBackground")
+fun ImageView.bindScoreCardBackgroundl(imagePath: String?) {
+    Glide.with(this)
+        .load(R.drawable.bg_training_record_round_scroe_card)
+        .apply(RequestOptions.bitmapTransform(
+            MultiTransformation(
+                CenterCrop(),
+                RoundedCorners(120)
+            )
+        ))
+        .into(this)
 }
 
 @BindingAdapter("onImage")

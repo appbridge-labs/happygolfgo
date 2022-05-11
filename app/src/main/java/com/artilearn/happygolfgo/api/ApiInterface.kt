@@ -2,7 +2,7 @@ package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.alram.AlramResponse
 import com.artilearn.happygolfgo.data.comment.CommentModel
-import com.artilearn.happygolfgo.data.gamecenter.GameCenterResponse
+import com.artilearn.happygolfgo.data.gamecenter.*
 import com.artilearn.happygolfgo.data.golfgame.GolfGameResponse
 import com.artilearn.happygolfgo.data.golfrank.GolfRankResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
@@ -27,6 +27,7 @@ import com.artilearn.happygolfgo.data.ticketmanager.TicketManagerResponse
 import com.artilearn.happygolfgo.data.tickettime.TicketTimeResponse
 import com.artilearn.happygolfgo.data.version.LogoutModel
 import com.artilearn.happygolfgo.data.version.VersionResponse
+import com.artilearn.happygolfgo.ui.home.record.model.TSSummarySwingVideoDetailUpdateReqModel
 import io.reactivex.Completable
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -185,6 +186,34 @@ interface ApiInterface {
     fun plateTimeChange(
         @Body data: HashMap<String, PlateTimeChangeModel>
     ): Single<Response<PlateTimeChangeResponse>>
+
+    //comments: API 추가  vc45
+    //vc45 trainingManagement/summary/time
+    @GET("trainingCenter/summary/time")
+    fun getTrainingManagementSummaryTime(): Single<Response<TrainingManagementSummaryTimeResponse>>
+
+    @GET("trainingCenter/summary/weight")
+    fun getTrainingManagementSummaryWeight(): Single<Response<TrainingManagementSummaryWeightResponse>>
+
+    @GET("trainingCenter/summary/golfPower")
+    fun getTrainingManagementSummaryGolfPower(): Single<Response<TrainingManagementSummaryGolfPowerResponse>>
+
+    @GET("trainingCenter/summary/round")
+    fun getTrainingManagementSummaryRound(): Single<Response<TrainingManagementSummaryRoundResponse>>
+
+    @GET("trainingCenter/summary/round/{gmID}")
+    fun getTrainingManagementSummaryRoundDetail(
+        @Path("gmID") gmID: Int
+    ): Single<Response<TrainingManagementSummaryRoundDetailResponse>>
+
+    @GET("trainingCenter/summary/swingVideo")
+    fun getTrainingManagementSummarySwingVideo(): Single<Response<TrainingManagementSummarySwingVideoResponse>>
+
+    @POST("trainingCenter/summary/swingVideo/detail/update")
+    fun updateTrainingManagementSummarySwingVideoDetail(
+        @Body data: HashMap<String, TSSummarySwingVideoDetailUpdateReqModel>
+    ): Single<Response<TrainingManagementSummarySwingVideoDetailUpdateResponse>>
+
 
     @GET("hgGame")
     fun getGameCenter(): Single<GameCenterResponse>

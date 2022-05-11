@@ -1,11 +1,14 @@
 package com.artilearn.happygolfgo.data.gamecenter.source
 
 import android.accounts.NetworkErrorException
-import com.artilearn.happygolfgo.data.gamecenter.GameCenterResponse
+import com.artilearn.happygolfgo.data.gamecenter.*
 import com.artilearn.happygolfgo.data.gamecenter.source.local.GameCenterLocalDataSource
 import com.artilearn.happygolfgo.data.gamecenter.source.remote.GameCenterRemoteDataSource
+import com.artilearn.happygolfgo.ui.home.record.model.TSSummarySwingVideoDetailUpdateReqModel
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Single
+import retrofit2.HttpException
+import retrofit2.Response
 
 class GameCenterRepositoryImpl(
     private val remote: GameCenterRemoteDataSource,
@@ -20,4 +23,95 @@ class GameCenterRepositoryImpl(
         }
     }
 
+    override  fun getTrainingManagementSummaryTime(): Single<Response<TrainingManagementSummaryTimeResponse>> {
+        return if (network.networkState()) {
+            remote.getTrainingManagementSummaryTime()
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun getTrainingManagementSummaryWeight(): Single<Response<TrainingManagementSummaryWeightResponse>> {
+        return if (network.networkState()) {
+            remote.getTrainingManagementSummaryWeight()
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun getTrainingManagementSummaryGolfPower(): Single<Response<TrainingManagementSummaryGolfPowerResponse>> {
+        return if (network.networkState()) {
+            remote.getTrainingManagementSummaryGolfPower()
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun getTrainingManagementSummaryRound(): Single<Response<TrainingManagementSummaryRoundResponse>> {
+        return if (network.networkState()) {
+            remote.getTrainingManagementSummaryRound()
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun getTrainingManagementSummarySwingVideo(): Single<Response<TrainingManagementSummarySwingVideoResponse>> {
+        return if (network.networkState()) {
+            remote.getTrainingManagementSummarySwingVideo()
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun getTrainingManagementSummaryRoundDetail(gmID: Int): Single<Response<TrainingManagementSummaryRoundDetailResponse>> {
+        return if (network.networkState()) {
+            remote.getTrainingManagementSummaryRoundDetail(gmID)
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun updateTrainingManagementSummarySwingVideoDetail(data: HashMap<String, TSSummarySwingVideoDetailUpdateReqModel>): Single<Response<TrainingManagementSummarySwingVideoDetailUpdateResponse>> {
+        return if (network.networkState()) {
+            remote.updateTrainingManagementSummarySwingVideoDetail(data)
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
 }

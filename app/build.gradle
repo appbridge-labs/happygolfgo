@@ -18,8 +18,8 @@ android {
         applicationId "com.artilearn.happygolfgo"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 44
-        versionName "2.2.8"
+        versionCode 45
+        versionName "2.2.9"
 
         testInstrumentationRunner "androidx.ratingbar_star.runner.AndroidJUnitRunner"
     }
@@ -37,9 +37,9 @@ android {
             dimension "type"
             minSdkVersion 23
             resConfigs('en', 'xhdpi')
-            buildConfigField "String", "HG_BASE_URL", "\"http://52.79.253.238/development/appClient/\""
+//            buildConfigField "String", "HG_BASE_URL", "\"http://52.79.253.238/development/appClient/\""
 //            buildConfigField "String", "HG_BASE_URL", "\"https://happygolfgoapi.com/happygolfgo/appClient/\""
-//            buildConfigField "String", "HG_BASE_URL", "\"http:/192.168.0.4:7000/appClient/\""
+            buildConfigField "String", "HG_BASE_URL", "\"http:/192.168.0.5:7000/appClient/\""
         }
 
         prod {

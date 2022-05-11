@@ -18,6 +18,8 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.data.home.HomeResponseInfo
 import com.artilearn.happygolfgo.ui.home.alram.AlramAdapter
+import com.artilearn.happygolfgo.ui.home.record.SwingVideoListAdapter
+import com.artilearn.happygolfgo.ui.home.record.model.TRSummarySwingVideoRecordModel
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationAdapter
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
@@ -110,11 +112,71 @@ fun RecyclerView.setLessonLogItems(logs: List<LessonLog>?) {
     }
 }
 
+
+@BindingAdapter("setSwingVideoItems")
+fun RecyclerView.setSwingVideoItems(items: List<TRSummarySwingVideoRecordModel>?) {
+    with(adapter as SwingVideoListAdapter) {
+        this.clear()
+        items?.let { this.setItems(it) }
+    }
+}
+
 @BindingAdapter("setLogTime", "setLogCoachName")
 fun setLessonLogItem(tv: TextView, time: String, coach: String) {
     val logTime = convertTime(time).trim().split(":")
     val text = "${logTime[0]}. ${logTime[1]}. ${logTime[2]} / $coach"
     tv.text = text
+}
+
+@BindingAdapter("setSwingVideoClub", "setSwingVideoDist", "setSwingVideoShortUnit")
+fun setSwingVideoClubDistItem(tv: TextView, club: String, dist: String, shortUnit:String) {
+    val text = "$club ・ ${dist}${shortUnit}"
+    tv.text = text
+}
+
+@BindingAdapter("setSwingVideoTime", "setSwingVideoPosition")
+fun setSwingVideoTimePosItem(tv: TextView, time: String, pos:String) {
+    try {
+        val logTime = convertTime(time).trim().split(":")
+        val text = "${logTime[0]}. ${logTime[1]}. ${logTime[2]} / ${pos}"
+        tv.text = text
+    } catch (e: Exception) {
+        tv.text = ""
+    }
+}
+
+@BindingAdapter("setRoundDateTime")
+fun setRoundDateTimeItem(tv: TextView, time: String) {
+    try {
+        val logTime = convertTime(time).trim().split(":")
+        val text = "${logTime[0]}. ${logTime[1]}. ${logTime[2]}"
+        tv.text = text
+    } catch (e: Exception) {
+        tv.text = ""
+    }
+}
+
+@BindingAdapter("setSwingVideoDateTime", "setSwingVideoPosition")
+fun setSwingVideoDateTime(tv: TextView, time: String, position:String) {
+    try {
+        val logTime = convertTime(time).trim().split(":")
+        val trimmedMonth = logTime[1].trim()
+        val trimmedDay = logTime[2].trim()
+        val text = "${logTime[0]}년 ${trimmedMonth}월 ${trimmedDay}일 $position"
+        tv.text = text
+    } catch (e: Exception) {
+        tv.text = ""
+    }
+}
+
+@BindingAdapter("setSwingVideoRecordClub", "setSwingVideoRecordDist")
+fun setSwingVideoRecordClubDistItem(tv: TextView, club: String, dist:String) {
+    try {
+        val text = "${club} . ${dist}m"
+        tv.text = text
+    } catch (e: Exception) {
+        tv.text = ""
+    }
 }
 
 @BindingAdapter("setAlramDate")
@@ -203,6 +265,20 @@ fun setMultiUserBranchName(tv: TextView, name: String?) {
 fun setLogThumbNail(iv: ImageView, thumbNail: String?) {
     thumbNail?.let {
         iv.setImage(iv, it)
+    }
+}
+
+@BindingAdapter("setShotTypeImageIndex")
+fun setShotTypeImageIndex(iv: ImageView, imageIndex: String) {
+    when(imageIndex) {
+         "1" ->  iv.setImageResource(R.drawable.img_shot_type_image_1)
+        "2" ->  iv.setImageResource(R.drawable.img_shot_type_image_2)
+        "3" ->  iv.setImageResource(R.drawable.img_shot_type_image_3)
+        "4" ->  iv.setImageResource(R.drawable.img_shot_type_image_4)
+        "5" ->  iv.setImageResource(R.drawable.img_shot_type_image_5)
+        "6" ->  iv.setImageResource(R.drawable.img_shot_type_image_6)
+        "7" ->  iv.setImageResource(R.drawable.img_shot_type_image_7)
+        else ->  iv.setImageResource(R.drawable.img_shot_type_image_1)
     }
 }
 

@@ -44,7 +44,7 @@ import com.artilearn.happygolfgo.data.tutorial.source.TutorialRepositoryImpl
 import com.artilearn.happygolfgo.data.version.source.VersionRepository
 import com.artilearn.happygolfgo.data.version.source.VersionRepositoryImpl
 import org.koin.dsl.module
-
+//comments: IoC  네트워크 레파지토리 추가될때 여기에 추가한다.
 val repositoryModule = module {
 
     single<LoginRepository> { LoginRepositoryImpl(get(), get(), get()) }

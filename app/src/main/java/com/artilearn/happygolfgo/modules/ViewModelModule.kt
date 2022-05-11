@@ -9,6 +9,10 @@ import com.artilearn.happygolfgo.ui.home.alram.AlramViewModel
 import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterViewModel
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageViewModel
 import com.artilearn.happygolfgo.ui.home.mypage.profilechange.ProfileChangeViewModel
+import com.artilearn.happygolfgo.ui.home.record.TrainingRecordRoundDetailViewModel
+import com.artilearn.happygolfgo.ui.home.record.TrainingRecordSwingVideoListViewModel
+import com.artilearn.happygolfgo.ui.home.record.TrainingRecordSwingVideoPlayerViewModel
+import com.artilearn.happygolfgo.ui.home.record.TrainingRecordViewModel
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListViewModel
 import com.artilearn.happygolfgo.ui.log.LogViewModel
@@ -60,13 +64,21 @@ val viewModelModule = module {
 
     viewModel { LogViewModel(get()) }
 
+    viewModel { TrainingRecordRoundDetailViewModel(get()) }
+
+    viewModel { TrainingRecordSwingVideoPlayerViewModel(get()) }
+
     viewModel { LessonPostListViewModel(get()) }
+
+    viewModel { TrainingRecordSwingVideoListViewModel(get()) }
 
     viewModel { HomeViewModel() }
 
     viewModel { ReservationViewModel(get()) }
 
     viewModel { GameCenterViewModel(get()) }
+    //vc45  게임로그 뷰모모델에 대한 Dependency Injection
+    viewModel { TrainingRecordViewModel(get()) }
 
     viewModel { AlramViewModel(get()) }
 

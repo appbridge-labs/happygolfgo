@@ -11,14 +11,11 @@
         android:icon="@drawable/ic_home_alram"
         app:showAsAction="ifRoom"
         android:title="알림" />
-<!--     TODO: rhythm Coach 2022.01.08  Adding bottom item  -->
-<!--    version 39(2.2.3) 버그 수정으로 롤백 중 -->
-<!--    2022.02.15 리듬코치 배포 보류 중 -->
-<!--    <item-->
-<!--        android:id="@+id/rhythmcoach"-->
-<!--        android:icon="@drawable/hg_ic_home_rhythm_coach"-->
-<!--        app:showAsAction="ifRoom"-->
-<!--        android:title="리듬코치" />-->
+    <item
+        android:id="@+id/record"
+        android:icon="@drawable/ic_home_record"
+        app:showAsAction="ifRoom"
+        android:title="기록실" />
     <item
         android:id="@+id/mypage"
         android:icon="@drawable/ic_home_mypage"
