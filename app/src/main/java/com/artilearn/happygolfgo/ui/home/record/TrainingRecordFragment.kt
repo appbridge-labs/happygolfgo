@@ -196,14 +196,14 @@ class TrainingRecordFragment :
                 }
 
                 axisLeft.run {
-                    isEnabled = false
+                    isEnabled = true
                     axisMinimum = 0f
                     axisMaximum = 100f
                     textSize = 0f;
                     textColor = Color.WHITE
                 }
                 axisRight.run {
-                    isEnabled = false
+                    isEnabled = true
                     axisMinimum = 0f
                     axisMaximum = 100f
                     textSize = 0f;

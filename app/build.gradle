@@ -38,8 +38,8 @@ android {
             minSdkVersion 23
             resConfigs('en', 'xhdpi')
 //            buildConfigField "String", "HG_BASE_URL", "\"http://52.79.253.238/development/appClient/\""
-//            buildConfigField "String", "HG_BASE_URL", "\"https://happygolfgoapi.com/happygolfgo/appClient/\""
-            buildConfigField "String", "HG_BASE_URL", "\"http:/192.168.0.5:7000/appClient/\""
+            buildConfigField "String", "HG_BASE_URL", "\"https://happygolfgoapi.com/happygolfgo/appClient/\""
+//            buildConfigField "String", "HG_BASE_URL", "\"http:/192.168.0.5:7000/appClient/\""
         }
 
         prod {
