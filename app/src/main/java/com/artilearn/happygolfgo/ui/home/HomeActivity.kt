@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -247,5 +248,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     override fun onDestroy() {
         stopRhythmCoachService()
         super.onDestroy()
+    }
+
+    public fun  onGotoTrainingCenter() {
+        Log.d("oo", "onGotoTrainingCenter")
+       vm.moveToTheTab("기록실")
     }
 }

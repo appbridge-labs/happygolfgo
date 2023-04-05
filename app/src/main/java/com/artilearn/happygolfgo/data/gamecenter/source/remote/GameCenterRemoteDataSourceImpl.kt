@@ -38,7 +38,26 @@ class GameCenterRemoteDataSourceImpl(
     }
 
     override fun updateTrainingManagementSummarySwingVideoDetail(data: HashMap<String, TSSummarySwingVideoDetailUpdateReqModel>): Single<Response<TrainingManagementSummarySwingVideoDetailUpdateResponse>> {
-        return api.updateTrainingManagementSummarySwingVideoDetail(data);
+        return api.updateTrainingManagementSummarySwingVideoDetail(data)
     }
 
+    override fun getMyGolfPowerExamResultPageInfo(): Single<Response<MyGolfPowerExamResultPageInfoResponse>> {
+        return api.getMyGolfPowerExamResultPageInfo()
+    }
+
+    override fun getMyGolfPowerPageExamResultPageInfoDetail(pageIndex:Int) : Single<Response<MyGolfPowerExamResultPageInfoDetailResponse>> {
+        return api.getMyGolfPowerPageExamResultPageInfoDetail(pageIndex)
+    }
+
+    override fun getBranchRanking(pageIndex: Int): Single<Response<GolfRankingInBranchResponse>> {
+        return api.getBranchRanking(pageIndex)
+    }
+
+    override fun getSubjectRanking(pageIndex: Int): Single<Response<GolfRankingSubjectResponse>> {
+        return api.getSubjectRanking(pageIndex)
+    }
+
+    override fun getAllBranchRanking(pageIndex: Int): Single<Response<GolfRankingAllBranchResponse>> {
+        return api.getAllBranchRanking(pageIndex)
+    }
 }

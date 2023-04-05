@@ -14,7 +14,8 @@ import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReservePlateFragment
-    : BaseFragment<FragmentReservePlateBinding, ReservePlateViewModel>(R.layout.fragment_reserve_plate) {
+    : BaseFragment<FragmentReservePlateBinding, ReservePlateViewModel>
+        (R.layout.fragment_reserve_plate) {
 
     override val viewModel: ReservePlateViewModel by viewModel()
     private lateinit var adapter: ReserveListAdapter

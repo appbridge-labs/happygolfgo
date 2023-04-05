@@ -6,16 +6,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Ticket
-import com.artilearn.happygolfgo.data.home.HomeResponse
+import com.artilearn.happygolfgo.data.announcement.Announcement
+import com.artilearn.happygolfgo.data.examination.Examination
 import com.artilearn.happygolfgo.data.home.HomeResponseInfo
+import com.artilearn.happygolfgo.data.home.JoinMonthlyExamInputModel
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
+import com.artilearn.happygolfgo.data.version.MobileVersionAndroid
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.EXPIRED_TICKET
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.PAUSE_TICKET
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.USE_TICKET
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
@@ -35,6 +36,8 @@ class ReservationViewModel(
     private val _isRefreshSubject: BehaviorSubject<Boolean> = BehaviorSubject.createDefault(false)
     private val _onRefreshSubject: PublishSubject<Unit> = PublishSubject.create()
     private var disposable: Disposable? = null
+    private var disposableForAnnouncmentAndExam : Disposable? = null
+    private var disposableForJoinMonthlyExam : Disposable? = null
 
     private val _emptyTicket: MutableLiveData<Boolean> = MutableLiveData()
     private val _reservationListButton: SingleLiveEvent<Unit> = SingleLiveEvent()
@@ -60,6 +63,30 @@ class ReservationViewModel(
     val ticketList: LiveData<ArrayList<Ticket>>
         get() = _ticketList
 
+    private val _retryExamPermission : SingleLiveEvent<Unit> = SingleLiveEvent()
+    val retryExamPermission: LiveData<Unit>
+     get() = _retryExamPermission
+
+    private val _announcement: MutableLiveData<Announcement> = MutableLiveData()
+    val announcement:LiveData<Announcement>
+        get() = _announcement
+
+    private val _examination:MutableLiveData<Examination> = MutableLiveData()
+    val examination:LiveData<Examination>
+       get() = _examination
+
+    private val _mobileVersionAndroid:MutableLiveData<MobileVersionAndroid> = MutableLiveData()
+    val mobileVersionAndroid:LiveData<MobileVersionAndroid>
+        get() = _mobileVersionAndroid
+
+    private val _announcementClick = SingleLiveEvent<String>()
+    val announcementClick:LiveData<String>
+        get() = _announcementClick
+
+    private val _scoreClick = SingleLiveEvent<String>()
+    val scoreClick:LiveData<String>
+        get() = _scoreClick
+
     init {
         compositeDisposable.addAll(
             reservationList.throttleFirst(1000, TimeUnit.MILLISECONDS)
@@ -71,7 +98,9 @@ class ReservationViewModel(
                 .map { _ticketList.value?.size }
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { _isRefreshSubject.onNext(false) }
-                .subscribe { it?.let { getTicket() } },
+                .subscribe { it?.let {
+                    fetchData()
+                } },
 
             _isRefreshSubject.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(_isRefresh::setValue)
@@ -80,6 +109,170 @@ class ReservationViewModel(
 
     fun onReservationList() {
         reservationList.onNext(Unit)
+    }
+
+    fun onClickAnnouncement() {
+        announcement.value?.let {
+            _announcementClick.value = it.serviceUrl
+        }
+    }
+
+    fun onClickTrainingCenter() {
+        _scoreClick.value = "go to Training"
+    }
+
+    //TODO: bounce or throttle
+    fun onClickTakeExam() {
+       Log.d("log", "onClickTakeExam")
+        if (examination.value?.state == "taken") {
+            _retryExamPermission.call()
+        } else {
+            requestJoinMonthlyExam();
+        }
+    }
+
+    //POST METHOD CALLING
+    fun requestJoinMonthlyExam() {
+        disposableForJoinMonthlyExam?.let {
+            if (!it.isDisposed) {
+                it.dispose()
+            }
+        }
+
+        val dataModel = JoinMonthlyExamInputModel(
+            examination.value?.golfPowerExamCategoryID ?: "-1",
+            examination.value?.golfPowerMonthlyExamID ?: "-1",
+            examination.value?.state ?: "waiting"
+            )
+        //POST Method
+        val data = hashMapOf<String, JoinMonthlyExamInputModel>()
+        data["Data"] = dataModel
+
+        disposableForJoinMonthlyExam = repository.requestJoinMonthlyExam(data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .doOnError { t -> errorLog(TAG, t) }
+            .subscribe({ it ->
+                val body = it.body()
+                if (it.isSuccessful) {
+                    if (body  != null && body.data.errorCode == 0 ) {
+                        _examination.value?.let { v ->
+                            val  exam = v.copy()
+                            exam.state = body.data.res.state
+                            exam.golfPowerMonthlyExamID  = body.data.res.golfPowerMonthlyExamID
+                            setExaminiationComputedValue(exam)
+                            resetExamScore(exam)
+                            _examination.value = exam
+                        }
+                    } else {
+                        body?.data?.errorMessage.let {
+                            _serverError.value = "오률 메세지: $it"
+                        }
+                    }
+                } else {
+                    _serverError.value = "재시험 요청에 실패하였습니다. 다시 시도해 주십시요."
+                }
+            }, { t ->
+                when (t) {
+//                    is NetworkErrorException -> _networkFail.call()
+//                    is HttpException -> {
+//                        if (t.code() == 419) _appRefresh.call()
+//                        else _serverError.value = "이용권을 불러오는데 실패했습니다"
+//                    }
+//                    else -> _serverError.value = "알 수 없는 오류 발생"
+                }
+            }).addTo(compositeDisposable)
+    }
+
+    private fun resetExamScore(exam: Examination) {
+        with(exam) {
+            putting = "-"
+            sg = "-"
+            irn = "-"
+            wu = "-"
+            drv = "-"
+        }
+    }
+    private fun setExaminiationComputedValue(exam:Examination) {
+        with(exam) {
+            isWaiting = false
+            actionButtonOn = false
+            if (state == "waiting") {
+                isWaiting = true
+                stateNumber = -1
+                actionTitle = ""
+            } else if (state == "finished") {
+                stateNumber = 0
+                actionTitle = "응시완료"
+            } else if (state == "take") {
+                stateNumber = -2
+                actionTitle = "응시하기"
+                actionButtonOn = true
+            } else if (state == "taking") {
+                stateNumber = 1
+                actionTitle = "응시중"
+            } else if (state == "taken") {
+                stateNumber = 2
+                actionTitle = "재시험"
+                actionButtonOn = true
+            } else if (state == "takingAgain") {
+                stateNumber = 3
+                actionTitle = "응시중"
+            } else if (state == "takenAgain") {
+                stateNumber = 4
+                actionTitle = "응시완료"
+            } else if (state == "uncompleted") {
+                stateNumber = 5
+                actionTitle = "응시완료"
+            }
+        }
+        return ;
+    }
+
+    private fun getAnnouncementAndExam() {
+        disposableForAnnouncmentAndExam?.let {
+            if (!it.isDisposed) {
+                it.dispose()
+            }
+        }
+
+        disposableForAnnouncmentAndExam = repository.requestAnnouncementAndExam()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError { t -> errorLog(TAG, t) }
+            .subscribe({
+                val body = it.body()
+                if (it.isSuccessful) {
+                    if (body  != null && body.data.errorCode == 0 ) {
+                        setExaminiationComputedValue(body.data.res.exam)
+                        _announcement.value =  body.data.res.announcement
+                        _examination.value = body.data.res.exam
+                        _mobileVersionAndroid.value = body.data.res.version.androidVersion
+                    } else {
+                        body?.data?.errorMessage.let { msg ->
+                            _serverError.value = "오류 메세지: $msg"
+                        }
+                    }
+                } else {
+                    _serverError.value = "시험 정보를 받아오는데 실패하였습니다."
+                }
+            }, { t ->
+                when (t) {
+//                    is NetworkErrorException -> _networkFail.call()
+//                    is HttpException -> {
+//                        if (t.code() == 419) _appRefresh.call()
+//                        else _serverError.value = "이용권을 불러오는데 실패했습니다"
+//                    }
+//                    else -> _serverError.value = "알 수 없는 오류 발생"
+                }
+            }).addTo(compositeDisposable)
+    }
+
+    fun fetchData() {
+        getTicket()
+        getAnnouncementAndExam()
     }
 
     fun getTicket() {

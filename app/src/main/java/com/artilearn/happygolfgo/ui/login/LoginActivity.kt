@@ -2,10 +2,7 @@ package com.artilearn.happygolfgo.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.base.BaseLoadingFragment
@@ -17,7 +14,6 @@ import com.artilearn.happygolfgo.ui.common.DeveloperOptionFragment
 import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.login.model.LoginOverlap
 import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
-import com.artilearn.happygolfgo.ui.pwreset.PwResetActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
@@ -41,19 +37,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            networkFail.observe(this@LoginActivity, Observer {
+            networkFail.observe(this@LoginActivity) {
                 showToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
-            })
-            serverError.observe(this@LoginActivity, Observer {
+            }
+            serverError.observe(this@LoginActivity) {
                 showToast(ToastType.ERROR, it)
-            })
-            forgetPassword.observe(this@LoginActivity, Observer {
+            }
+            forgetPassword.observe(this@LoginActivity) {
                 goPasswordAuth()
-            })
-            developerOption.observe(this@LoginActivity, Observer {
+            }
+            developerOption.observe(this@LoginActivity) {
                 devOptionView.show(supportFragmentManager, devOptionView.tag)
-            })
-            loginType.observe(this@LoginActivity, Observer {
+            }
+            loginType.observe(this@LoginActivity) {
                 when (loginType.value) {
                     LoginViewModel.LoginType.EMPTY_PHONE -> showEmptyPhone()
                     LoginViewModel.LoginType.EMPTY_PASSWORD -> showEmptyPassword()
@@ -62,15 +58,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                     LoginViewModel.LoginType.SUCCESS -> goHome()
                     LoginViewModel.LoginType.SHOW_LOADING -> loadingView.show(supportFragmentManager, LOADING)
                     LoginViewModel.LoginType.HIDE_LOADING -> loadingView.dismissAllowingStateLoss()
+                    else -> goHome() //when expression must be exhaustive
                 }
-            })
-            appRefresh.observe(this@LoginActivity, Observer {
+            }
+            appRefresh.observe(this@LoginActivity) {
                 goRefresh()
-            })
-            overlapUser.observe(this@LoginActivity, Observer { users ->
+            }
+            overlapUser.observe(this@LoginActivity) { users ->
                 println("ok!: $users")
                 setOverlapUser(users)
-            })
+            }
         }
     }
 

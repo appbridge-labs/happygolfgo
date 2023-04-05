@@ -9,7 +9,6 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.util.Log
-import com.artilearn.happygolfgo.R
 import java.lang.Exception
 
 /*
@@ -275,7 +274,7 @@ open class RhythmCoachService : Service() , AudioManager.OnAudioFocusChangeListe
                  Log.d("SERVICE", "REWIND")
             } else if (action == RhythmCoachCommandActions.FORWARD) {
                 Log.d("SERVICE", "FORWARD")
-            } else if (action === RhythmCoachCommandActions.CLOSE) {
+            } else if (action == RhythmCoachCommandActions.CLOSE) {
                 Log.d("SERVICE", "CLOSE")
                 if (isPlaying()) {
                     pause()

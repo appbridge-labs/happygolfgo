@@ -9,10 +9,7 @@ import com.artilearn.happygolfgo.ui.home.alram.AlramViewModel
 import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterViewModel
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageViewModel
 import com.artilearn.happygolfgo.ui.home.mypage.profilechange.ProfileChangeViewModel
-import com.artilearn.happygolfgo.ui.home.record.TrainingRecordRoundDetailViewModel
-import com.artilearn.happygolfgo.ui.home.record.TrainingRecordSwingVideoListViewModel
-import com.artilearn.happygolfgo.ui.home.record.TrainingRecordSwingVideoPlayerViewModel
-import com.artilearn.happygolfgo.ui.home.record.TrainingRecordViewModel
+import com.artilearn.happygolfgo.ui.home.record.*
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListViewModel
 import com.artilearn.happygolfgo.ui.log.LogViewModel
@@ -30,7 +27,6 @@ import com.artilearn.happygolfgo.ui.ticketmanager.TicketManagerViewModel
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeViewModel
 import com.artilearn.happygolfgo.ui.tutorial.TutorialViewModel
 import org.koin.android.ext.koin.androidApplication
-import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -79,6 +75,16 @@ val viewModelModule = module {
     viewModel { GameCenterViewModel(get()) }
     //vc45  게임로그 뷰모모델에 대한 Dependency Injection
     viewModel { TrainingRecordViewModel(get()) }
+    //Adding
+    viewModel { MyGolfPowerRankingViewModel(get()) }
+
+    viewModel { GolfRankingInBranchViewModel(get())}
+
+    viewModel { GolfRankingBySubjectViewModel(get()) }
+
+    viewModel { GolfRankingInAllBranchViewModel(get()) }
+
+    viewModel { MyGolfPowerViewModel(get())}
 
     viewModel { AlramViewModel(get()) }
 

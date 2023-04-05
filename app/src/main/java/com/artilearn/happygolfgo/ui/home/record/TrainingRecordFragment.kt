@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.ui.home.record
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.SWING_ROUND_DETAIL_ID
@@ -26,10 +25,12 @@ import java.util.*
 class TrainingRecordFragment :
     BaseFragment<FragmentTrainingRecordBinding,
             TrainingRecordViewModel>(R.layout.fragment_training_record) {
-    private val TAG = javaClass.simpleName
+//    private val TAG = javaClass.simpleName
     override val viewModel: TrainingRecordViewModel by viewModel()
 
-    var clickable = true;
+    private lateinit var pagerAdapter: MyGolfPowerPagerAdapter
+
+    var clickable = true
     private val chartNoDataTextSize = 120.0f
 
     override fun init() {
@@ -46,43 +47,61 @@ class TrainingRecordFragment :
 
     private fun initViewModelObserving() {
         with(viewModel) {
-           summaryTime.observe( this@TrainingRecordFragment, Observer { summaryTime ->
-               binding.summaryTime = summaryTime
-           })
+//            2023.04.05 summary time records removed intentionally
+//           summaryTime.observe( this@TrainingRecordFragment, Observer { summaryTime ->
+//               binding.summaryTime = summaryTime
+//           })
 
-            summaryWeight.observe( this@TrainingRecordFragment, Observer { summaryWeight ->
+            summaryWeight.observe( this@TrainingRecordFragment) { summaryWeight ->
                 binding.summaryWeight = summaryWeight
                 setSummaryWeightChartData(summaryWeight)
-            })
+            }
 
-
-            summaryGolfPower.observe( this@TrainingRecordFragment, Observer { summaryGoldPower ->
+            summaryGolfPower.observe( this@TrainingRecordFragment) { summaryGoldPower ->
                 binding.summaryGolfPower = summaryGoldPower
-            })
+            }
 
-            golfPowerRecords.observe( this@TrainingRecordFragment, Observer { golfPowerRecords ->
+            golfPowerRecords.observe( this@TrainingRecordFragment) { golfPowerRecords ->
                 setGolfPowerChartData(golfPowerRecords)
-            })
+            }
 
-
-            summaryRound.observe( this@TrainingRecordFragment, Observer { summaryRound ->
+            summaryRound.observe( this@TrainingRecordFragment) { summaryRound ->
                 binding.summaryRound = summaryRound
-            })
+            }
 
-            networkFail.observe(this@TrainingRecordFragment, Observer {
+            networkFail.observe(this@TrainingRecordFragment) {
                 showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
-            })
-            serverError.observe(this@TrainingRecordFragment, Observer {
+            }
+            serverError.observe(this@TrainingRecordFragment) {
                 showFragmentToast(ToastType.ERROR, it)
-            })
-            appRefresh.observe(this@TrainingRecordFragment, Observer {
+            }
+            appRefresh.observe(this@TrainingRecordFragment) {
                 goRefreshFromFragment()
-            })
+            }
+
+            adapterPageInfo.observe(this@TrainingRecordFragment) {  adapterPageInfo ->
+                try {
+                    if (adapterPageInfo.pageCount > 0) {
+                        pagerAdapter.reloadMyGolfPagerAdapter(adapterPageInfo.pageCount)
+                        if (adapterPageInfo.currentPageIndex > -1) {
+                            binding.viewpager.setCurrentItem(
+                                adapterPageInfo.currentPageIndex,
+                                true
+                            )
+                        }
+                    }
+                } catch ( _: Exception) {
+                   //Eating
+                }
+            }
         }
     }
 
     private fun initAdapter() {
-
+        binding.viewpager.adapter = activity?.let {
+            this.pagerAdapter = MyGolfPowerPagerAdapter(it)
+            this.pagerAdapter
+        }
     }
 
     private fun initOnClickListener() {
@@ -94,8 +113,8 @@ class TrainingRecordFragment :
     }
 
     private fun initCharts() {
-        initWeightChart();
-        initGolfPowerChart();
+        initWeightChart()
+        initGolfPowerChart()
     }
 
     private fun initWeightChart() {
@@ -191,7 +210,7 @@ class TrainingRecordFragment :
                     setDrawGridLines(true)
                     granularity = 1f
                     setDrawAxisLine(true)
-                    setAxisLineColor(Color.BLUE);
+                    setAxisLineColor(Color.BLUE)
                     textSize = 12f
                 }
 
@@ -199,14 +218,14 @@ class TrainingRecordFragment :
                     isEnabled = true
                     axisMinimum = 0f
                     axisMaximum = 100f
-                    textSize = 0f;
+                    textSize = 0f
                     textColor = Color.WHITE
                 }
                 axisRight.run {
                     isEnabled = true
                     axisMinimum = 0f
                     axisMaximum = 100f
-                    textSize = 0f;
+                    textSize = 0f
                     textColor = Color.WHITE
                 }
 
@@ -276,15 +295,15 @@ class TrainingRecordFragment :
 
         val groupSpace = 0.2f
         val barSpace = 0f
-        var barWidth = 0.4f
+        val barWidth = 0.4f
         // (barSpace + barWidth) * 2 + groupSpace = 1
         // (barSpace + barWidth) * 2 + groupSpace = 1
         data.setBarWidth(barWidth)
         // so that the entire chart is shown when scrolled from right to left
         //xAxis.setAxisMaximum(labels.length - 1.1f)
-        binding.golfPowerSectionLayoutChart.data = data; //original
+        binding.golfPowerSectionLayoutChart.data = data //original
 
-        binding.golfPowerSectionLayoutChart.groupBars(-0.5f, groupSpace, barSpace);
+        binding.golfPowerSectionLayoutChart.groupBars(-0.5f, groupSpace, barSpace)
         binding.golfPowerSectionLayoutChart.setScaleEnabled(false)
         binding.golfPowerSectionLayoutChart.setVisibleXRangeMaximum(7f)
 
@@ -305,7 +324,7 @@ class TrainingRecordFragment :
 
     private fun goRoundDetail(gmID:Int) {
         if (gmID < 1) {
-            return ;
+            return
         }
         if (clickable) {
             clickable = false
@@ -317,10 +336,14 @@ class TrainingRecordFragment :
             startActivity(roundDetailIntent)
             Timer().schedule(object : TimerTask() {
                 override fun run() {
-                    clickable = true;
+                    clickable = true
                 }
             }, 1000)
         }
+    }
+
+    private fun goGolfPowerRanking() {
+
     }
 
     private fun goSwingVideoList() {
@@ -331,7 +354,7 @@ class TrainingRecordFragment :
             startActivity(swingVideoIntent)
             Timer().schedule(object : TimerTask() {
                 override fun run() {
-                    clickable = true;
+                    clickable = true
                 }
             }, 1000)
         }

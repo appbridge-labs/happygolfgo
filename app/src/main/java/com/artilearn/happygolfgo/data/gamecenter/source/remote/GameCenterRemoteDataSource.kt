@@ -4,7 +4,6 @@ import com.artilearn.happygolfgo.data.gamecenter.*
 import com.artilearn.happygolfgo.ui.home.record.model.TSSummarySwingVideoDetailUpdateReqModel
 import io.reactivex.Single
 import retrofit2.Response
-import retrofit2.http.Body
 
 interface GameCenterRemoteDataSource {
     fun getGames(): Single<GameCenterResponse>
@@ -18,4 +17,11 @@ interface GameCenterRemoteDataSource {
     fun updateTrainingManagementSummarySwingVideoDetail(
        data: HashMap<String, TSSummarySwingVideoDetailUpdateReqModel>
     ): Single<Response<TrainingManagementSummarySwingVideoDetailUpdateResponse>>
+
+    //my golf ranking in the branch and all the branches and examination report
+    fun getMyGolfPowerExamResultPageInfo() : Single<Response<MyGolfPowerExamResultPageInfoResponse>>
+    fun getMyGolfPowerPageExamResultPageInfoDetail(pageIndex:Int): Single<Response<MyGolfPowerExamResultPageInfoDetailResponse>>
+    fun getBranchRanking(pageIndex:Int) : Single<Response<GolfRankingInBranchResponse>>
+    fun getSubjectRanking(pageIndex:Int) : Single<Response<GolfRankingSubjectResponse>>
+    fun getAllBranchRanking(pageIndex:Int) : Single<Response<GolfRankingAllBranchResponse>>
 }

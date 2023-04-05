@@ -24,9 +24,9 @@
             name="averages"
             type="com.artilearn.happygolfgo.ui.home.gamecenter.model.GCAveragesModel" />
 
-        <variable
-            name="rank"
-            type="com.artilearn.happygolfgo.data.gamecenter.GameCenterResponse.GameCenterRank" />
+<!--        <variable-->
+<!--            name="rank"-->
+<!--            type="com.artilearn.happygolfgo.data.gamecenter.GameCenterResponse.GameCenterRank" />-->
 
     </data>
 

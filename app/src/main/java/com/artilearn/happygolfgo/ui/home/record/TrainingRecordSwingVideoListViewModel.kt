@@ -4,10 +4,7 @@ import android.accounts.NetworkErrorException
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
-import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.gamecenter.source.GameCenterRepository
-import com.artilearn.happygolfgo.data.lessonlog.source.LessonLogRepository
-import com.artilearn.happygolfgo.ui.home.record.mapper.TRSummaryTimeMapper
 import com.artilearn.happygolfgo.ui.home.record.mapper.TrainingManagementSwingVideoRecordsMapper
 import com.artilearn.happygolfgo.ui.home.record.model.TRSummarySwingVideoRecordModel
 import com.artilearn.happygolfgo.util.ext.errorLog

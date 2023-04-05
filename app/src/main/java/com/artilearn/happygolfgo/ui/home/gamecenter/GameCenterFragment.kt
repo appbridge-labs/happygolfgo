@@ -2,8 +2,6 @@ package com.artilearn.happygolfgo.ui.home.gamecenter
 
 import android.content.Intent
 import android.graphics.Color
-import android.util.Log
-import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.databinding.FragmentGamecenterBinding
@@ -19,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GameCenterFragment :
     BaseFragment<FragmentGamecenterBinding, GameCenterViewModel>(R.layout.fragment_gamecenter) {
-    private val TAG = javaClass.simpleName
+//    private val TAG = javaClass.simpleName
     override val viewModel: GameCenterViewModel by viewModel()
     private lateinit var adapter: GameCenterAdapter
 
@@ -37,31 +35,32 @@ class GameCenterFragment :
 
     private fun initViewModelObserving() {
         with(viewModel) {
-            button.observe(this@GameCenterFragment, Observer {
+            button.observe(this@GameCenterFragment) {
                 when (button.value) {
                     GameCenterViewModel.ButtonType.RANK -> goGameRank()
                     GameCenterViewModel.ButtonType.GAME -> goGameScore()
+                    else -> goGameRank() //when must be exhaustive
                 }
-            })
-            user.observe(this@GameCenterFragment, Observer { user ->
+            }
+            user.observe(this@GameCenterFragment){ user ->
                 binding.user = user
-            })
-            averages.observe(this@GameCenterFragment, Observer { averages ->
+            }
+            averages.observe(this@GameCenterFragment) { averages ->
                 binding.averages = averages
                 setBarData(averages)
-            })
-            sumary.observe(this@GameCenterFragment, Observer { sumary ->
+            }
+            sumary.observe(this@GameCenterFragment) { sumary ->
                 binding.sumary = sumary
-            })
-            networkFail.observe(this@GameCenterFragment, Observer {
+            }
+            networkFail.observe(this@GameCenterFragment) {
                 showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
-            })
-            serverError.observe(this@GameCenterFragment, Observer {
+            }
+            serverError.observe(this@GameCenterFragment) {
                 showFragmentToast(ToastType.ERROR, it)
-            })
-            appRefresh.observe(this@GameCenterFragment, Observer {
+            }
+            appRefresh.observe(this@GameCenterFragment) {
                 goRefreshFromFragment()
-            })
+            }
         }
     }
 

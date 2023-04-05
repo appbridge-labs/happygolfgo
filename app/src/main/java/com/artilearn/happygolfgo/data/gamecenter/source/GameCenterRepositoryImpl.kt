@@ -114,4 +114,89 @@ class GameCenterRepositoryImpl(
             Single.error(NetworkErrorException("Network Error"))
         }
     }
+
+    override fun getMyGolfPowerExamResultPageInfo(): Single<Response<MyGolfPowerExamResultPageInfoResponse>> {
+        return if (network.networkState()) {
+            remote.getMyGolfPowerExamResultPageInfo()
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun getMyGolfPowerPageExamResultPageInfoDetail(pageIndex:Int):
+            Single<Response<MyGolfPowerExamResultPageInfoDetailResponse>> {
+        return if (network.networkState()) {
+            remote.getMyGolfPowerPageExamResultPageInfoDetail(pageIndex)
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun getBranchRanking(pageIndex: Int): Single<Response<GolfRankingInBranchResponse>> {
+        return if (network.networkState()) {
+            remote.getBranchRanking(pageIndex)
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun getSubjectRanking(pageIndex: Int): Single<Response<GolfRankingSubjectResponse>> {
+        return if (network.networkState()) {
+            remote.getSubjectRanking(pageIndex)
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+    override fun getAllBranchRanking(pageIndex: Int): Single<Response<GolfRankingAllBranchResponse>> {
+        return if (network.networkState()) {
+            remote.getAllBranchRanking(pageIndex)
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
 }

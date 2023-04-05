@@ -1,25 +1,22 @@
 package com.artilearn.happygolfgo.ui.home.record.mapper
 
 import com.artilearn.happygolfgo.data.gamecenter.*
-import com.artilearn.happygolfgo.ui.home.gamecenter.mapper.GameCenterMapper
-import com.artilearn.happygolfgo.ui.home.gamecenter.model.GCAveragesModel
 import com.artilearn.happygolfgo.ui.home.record.model.*
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*
 
-object TRSummaryTimeMapper
-    : TrainingRecordMapper<TrainingManagementSummaryTimeResponse.TrainingManagementSummaryTimeRes,
-        TRSummaryTimeModel> {
-    override fun mapper(from: TrainingManagementSummaryTimeResponse.TrainingManagementSummaryTimeRes): TRSummaryTimeModel {
-        return TRSummaryTimeModel(
-            title = from.title ?: "",
-            time = from.time ?: "",
-            unit = from.unit ?: ""
-        )
-    }
-}
+//2023.04.05 remove summary time in training record section
+//object TRSummaryTimeMapper
+//    : TrainingRecordMapper<TrainingManagementSummaryTimeResponse.TrainingManagementSummaryTimeRes,
+//        TRSummaryTimeModel> {
+//    override fun mapper(from: TrainingManagementSummaryTimeResponse.TrainingManagementSummaryTimeRes): TRSummaryTimeModel {
+//        return TRSummaryTimeModel(
+//            title = from.title ?: "",
+//            time = from.time ?: "",
+//            unit = from.unit ?: ""
+//        )
+//    }
+//}
 
 object TRSummaryWeightMapper
     : TrainingRecordMapper<TrainingManagementSummaryWeightResponse.TrainingManagementSummaryWeightRes,
@@ -73,12 +70,12 @@ object TRSummaryRoundMapper
                  return  TRSummaryRoundModel(
                      title = from.title ?: "스크린 라운딩 기록",
                      subTitle = from .subTitle ?: "(최근 3개월)",
-                     isNoData = (from.isNoData ?: -1) as Int,
+                     isNoData = from.isNoData ?: -1,
                      bestTitle = from.bestTitle ?: "",
                      bestCC = from.bestCC ?: "",
                      bestDate = from.bestDate ?: "",
                      bestScore = from.bestScore ?: "",
-                     bestGmId = (from.bestGmId ?: -1) as Int,
+                     bestGmId = from.bestGmId ?: -1,
                      avgTitle = from.avgTitle ?: "",
                      avgCC = from.avgCC ?: "",
                      avgDate = from.avgDate ?: "",
@@ -87,18 +84,18 @@ object TRSummaryRoundMapper
                      lastCC = from.lastCC ?: "",
                      lastDate = from.lastDate ?: "",
                      lastScore = from.lastScore ?: "",
-                     lastGmId = (from.lastGmId ?: -1) as Int
+                     lastGmId = from.lastGmId ?: -1
                  )
              } else {
                  val ret = TRSummaryRoundModel(
                      title = from.title ?: "스크린 라운딩 기록",
                      subTitle = from .subTitle ?: "(최근 3개월)",
-                     isNoData = (from.isNoData ?: -1) as Int,
+                     isNoData = from.isNoData ?: -1,
                      bestTitle = from.bestTitle ?: "",
                      bestCC = from.bestCC ?: "",
                      bestDate = convertedDate(from.bestDate ?: "0000.00.00"),
                      bestScore = from.bestScore ?: "",
-                     bestGmId = (from.bestGmId ?: -1) as Int,
+                     bestGmId = from.bestGmId ?: -1,
                      avgTitle = from.avgTitle ?: "",
                      avgCC = from.avgCC ?: "",
                      avgDate = from.avgDate ?: "",
@@ -107,7 +104,7 @@ object TRSummaryRoundMapper
                      lastCC = from.lastCC ?: "",
                      lastDate = convertedDate(from.lastDate ?: "0000.00.00"),
                      lastScore = from.lastScore ?: "",
-                     lastGmId = (from.lastGmId ?: -1) as Int
+                     lastGmId = from.lastGmId ?: -1
                  )
                  return ret;
              }
@@ -135,11 +132,11 @@ object TrainingManagementSwingVideoRecordsMapper
     : TrainingRecordMapper<TrainingManagementSummarySwingVideoResponse.TrainingManagementSummarySwingVideoRes,
         List<TRSummarySwingVideoRecordModel>> {
     override fun mapper(from: TrainingManagementSummarySwingVideoResponse.TrainingManagementSummarySwingVideoRes): List<TRSummarySwingVideoRecordModel> {
-        val lst = mutableListOf<TRSummarySwingVideoRecordModel>();
+        val lst = mutableListOf<TRSummarySwingVideoRecordModel>()
         from.records.map { record ->
             if (record.svrUrl1 != null && isValidUrl(record.svrUrl1)) {
                 val svr1 = TRSummarySwingVideoRecordModel(
-                    id = (record.id ?: 0) as Int,
+                    id = record.id ?: 0,
                     club = record.club ?: "",
                     dist = record.dist ?: "",
                     carry = record.carry ?: "",
@@ -157,11 +154,11 @@ object TrainingManagementSwingVideoRecordsMapper
                     svrUrlThumbNail2 = "",
                     videoPosition = "정면",
                 )
-                lst.add(svr1);
+                lst.add(svr1)
             }
             if (record.svrUrl2 != null && isValidUrl(record.svrUrl2)) {
                val svr2 =  TRSummarySwingVideoRecordModel(
-                    id = (record.id ?: 0) as Int,
+                    id = record.id ?: 0,
                     club = record.club ?: "",
                     dist = record.dist ?: "",
                     carry = record.carry ?: "",
@@ -179,10 +176,10 @@ object TrainingManagementSwingVideoRecordsMapper
                    svrUrlThumbNail2 = "",
                    videoPosition = "측면",
                 )
-                lst.add(svr2);
+                lst.add(svr2)
             }
             val trSummarySwingVideoRecordModel = TRSummarySwingVideoRecordModel(
-                id = (record.id ?: 0) as Int,
+                id = record.id ?: 0,
                 club = record.club ?: "",
                 dist = record.dist ?: "",
                 carry = record.carry ?: "",
@@ -202,7 +199,7 @@ object TrainingManagementSwingVideoRecordsMapper
             )
             trSummarySwingVideoRecordModel
         }
-        return lst;
+        return lst
     }
     private  fun isValidUrl(url:String?) :  Boolean {
         return try {
@@ -210,9 +207,9 @@ object TrainingManagementSwingVideoRecordsMapper
                 val dirExtension = url.substringAfterLast('/',"")
                 return if (dirExtension.isNotEmpty()) {
                     val fileExtension = dirExtension.substringAfterLast('.',"")
-                    fileExtension.isNotEmpty();
+                    fileExtension.isNotEmpty()
                 } else {
-                    false;
+                    false
                 }
             } else {
                 false
@@ -326,17 +323,17 @@ object TrainingManagementRoundDetailMapper
         }
     }
 
-    public  fun roundRecords(from :  TrainingManagementSummaryRoundDetailResponse.TrainingManagementSummaryRoundDetailRes)
-    : List<TRSummaryRoundDetailRecordModel> {
-        return from.records.map { record ->
-            TRSummaryRoundDetailRecordModel(
-             holeIndex = record.holeIndex ?: "",
-             par = record.par ?: "",
-             score = record.score ?: "",
-             deltaScore = record.deltaScore ?: ""
-            )
-        }
-    }
+//    fun roundRecords(from :  TrainingManagementSummaryRoundDetailResponse.TrainingManagementSummaryRoundDetailRes)
+//    : List<TRSummaryRoundDetailRecordModel> {
+//        return from.records.map { record ->
+//            TRSummaryRoundDetailRecordModel(
+//             holeIndex = record.holeIndex ?: "",
+//             par = record.par ?: "",
+//             score = record.score ?: "",
+//             deltaScore = record.deltaScore ?: ""
+//            )
+//        }
+//    }
 
     private  fun convertedDate(time:String) : String {
         try {
@@ -353,6 +350,17 @@ object TrainingManagementRoundDetailMapper
         } catch (e:Exception) {
             return "2022.00.00"
         }
+    }
+}
+
+
+object TRMyGolfPowerExamResultPageInfoModelMapper
+    : TrainingRecordMapper<MyGolfPowerExamResultPageInfoResponse.MyGolfPowerExamResultPageInfoRes, TRMyGolfPowerExamResultPageInfoModel> {
+    override fun mapper(from: MyGolfPowerExamResultPageInfoResponse.MyGolfPowerExamResultPageInfoRes): TRMyGolfPowerExamResultPageInfoModel {
+        return  TRMyGolfPowerExamResultPageInfoModel(
+            pageCount = from.pageCount?.toInt() ?: 0,
+            currentPageIndex = from.currentPageIndex?.toInt() ?: -1
+        )
     }
 }
 

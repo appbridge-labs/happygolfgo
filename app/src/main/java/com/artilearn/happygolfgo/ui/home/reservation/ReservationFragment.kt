@@ -1,35 +1,114 @@
 package com.artilearn.happygolfgo.ui.home.reservation
 
+import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AlertDialog
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.artilearn.happygolfgo.BuildConfig
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
+import com.artilearn.happygolfgo.constants.MARKET_PLAY_STORE
+import com.artilearn.happygolfgo.constants.PLAY_STORE
 import com.artilearn.happygolfgo.constants.TICKET
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.FragmentReservationBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
-import com.artilearn.happygolfgo.ui.home.HomeViewModel
+import com.artilearn.happygolfgo.ui.home.HomeActivity
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.EXPIRED_TICKET
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.PAUSE_TICKET
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.USE_TICKET
 import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
 import com.artilearn.happygolfgo.util.*
-import jp.wasabeef.recyclerview.animators.LandingAnimator
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
-import org.koin.android.ext.android.bind
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 class ReservationFragment
     : BaseFragment<FragmentReservationBinding, ReservationViewModel>(R.layout.fragment_reservation) {
 
+    private var ANNOUNCE_URI = ""
+    private var package_name = "com.android.chrome";
+
+    fun Context.isPackageInstalled(packageName: String): Boolean {
+        // check if chrome is installed or not
+        return try {
+            packageManager.getPackageInfo(packageName, 0)
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
+    }
+
+    private fun openWebBrowser() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ANNOUNCE_URI))
+        startActivity(intent)
+    }
+
+    private fun goPlayStore() {
+        val playStore = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(PLAY_STORE)
+            setPackage("com.android.vending")
+        }
+        startActivity(playStore)
+    }
+
+    private fun goPlayStoreByMarket() {
+        val playStore = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(MARKET_PLAY_STORE)
+        }
+        startActivity(playStore)
+    }
+    private fun launchChromeTab() {
+        try {
+            if (ANNOUNCE_URI.isEmpty()) {
+                return ;
+            }
+            val builder = CustomTabsIntent.Builder()
+            // to set the toolbar color use CustomTabColorSchemeParams
+            // since CustomTabsIntent.Builder().setToolBarColor() is deprecated
+
+            val params = CustomTabColorSchemeParams.Builder()
+            params.setToolbarColor(ContextCompat.getColor(requireActivity(), R.color.color_white))
+            builder.setDefaultColorSchemeParams(params.build())
+
+            // shows the title of web-page in toolbar
+            builder.setShowTitle(true)
+
+            // setShareState(CustomTabsIntent.SHARE_STATE_ON) will add a menu to share the web-page
+            builder.setShareState(CustomTabsIntent.SHARE_STATE_ON)
+
+            // To modify the close button, use
+            // builder.setCloseButtonIcon(bitmap)
+
+            // to set weather instant apps is enabled for the custom tab or not, use
+            builder.setInstantAppsEnabled(true)
+
+            //  To use animations use -
+            //  builder.setStartAnimations(this, android.R.anim.start_in_anim, android.R.anim.start_out_anim)
+            //  builder.setExitAnimations(this, android.R.anim.exit_in_anim, android.R.anim.exit_out_anim)
+            val customBuilder = builder.build()
+
+            if (requireActivity().isPackageInstalled(package_name)) {
+                // if chrome is available use chrome custom tabs
+                customBuilder.intent.setPackage(package_name)
+                customBuilder.launchUrl(requireActivity(), Uri.parse(ANNOUNCE_URI))
+            } else {
+                openWebBrowser();
+            }
+        } catch (_:Exception) {
+
+        }
+    }
+
     override val viewModel: ReservationViewModel by viewModel()
     //private lateinit var adapter: ReservationAdapter
-    private lateinit var adapter: ReservationNewAdapter
+//    private lateinit var adapter: ReservationNewAdapter
+    private lateinit var adapter: ReservationAdapterWithHeader
 
     override fun init() {
 
@@ -45,7 +124,7 @@ class ReservationFragment
          * 각 화면에서 유저 액션이 있을 경우 리시버로 해당 아이템모델을 교체해줄 필요
          * 혹은 캐싱데이터로 가지고 놀기, 여유있을 때 수정요망
          */
-        viewModel.getTicket()
+        viewModel.fetchData()
     }
 
     private fun initBinding() {
@@ -69,11 +148,28 @@ class ReservationFragment
             appRefresh.observe(viewLifecycleOwner, Observer {
                 goRefreshFromFragment()
             })
+
+            announcementClick.observe(viewLifecycleOwner, Observer {
+                ANNOUNCE_URI = it;
+                launchChromeTab();
+            })
+
+            scoreClick.observe(viewLifecycleOwner, Observer {
+                (requireActivity() as HomeActivity).onGotoTrainingCenter();
+            })
+
+            retryExamPermission.observe(viewLifecycleOwner, Observer {
+                showRetryExamMessage();
+            })
+
+            mobileVersionAndroid.observe(viewLifecycleOwner, Observer {
+                checkMobileAndroidVersion();
+            })
         }
     }
 
     private fun initAdapter() {
-        adapter = ReservationNewAdapter { ticket ->
+        adapter = ReservationAdapterWithHeader( viewModel) { ticket ->
             when (ticket.viewType) {
                 USE_TICKET -> {
                     with(ticket) {
@@ -117,6 +213,39 @@ class ReservationFragment
         }
     }
 
+    private fun checkMobileAndroidVersion() {
+        try {
+            viewModel.mobileVersionAndroid.value?.forceUpdate.let {
+                if (it == "true") {
+                    val dialog = AlertDialog.Builder(requireActivity())
+                    dialog.setTitle(getString(R.string.app_update_title))
+                        .setMessage(getString(R.string.app_update_message))
+                        .setPositiveButton(getString(R.string.app_update_yes)) { _, _ ->
+                            goPlayStore();
+                        }
+                        .setNegativeButton(getString(R.string.app_update_no)) { _, _ ->
+                            activity?.finishAffinity();
+                        }
+                    dialog.create()
+                    dialog.show()
+                }
+            }
+        } catch(_:Exception) {
+
+        }
+    }
+
+    private fun showRetryExamMessage() {
+        val dialog = AlertDialog.Builder(requireActivity())
+        dialog.setTitle(getString(R.string.exam_retry_exam_title))
+            .setMessage(R.string.exam_retry_exam_message)
+            .setPositiveButton(getString(R.string.exam_retry_exam_yes)) { _, _ ->
+                viewModel.requestJoinMonthlyExam();
+            }
+            .setNegativeButton(getString(R.string.exam_retry_exam_no)) { _, _ ->  }
+        dialog.create()
+        dialog.show()
+    }
     private fun showContinueMessage(ticket: Ticket) {
         val dialog = AlertDialog.Builder(requireActivity())
         dialog.setTitle(getString(R.string.fragment_alert_title_ignore_max_reservation))
@@ -148,5 +277,4 @@ class ReservationFragment
             }
         startActivity(selectIntent)
     }
-
 }

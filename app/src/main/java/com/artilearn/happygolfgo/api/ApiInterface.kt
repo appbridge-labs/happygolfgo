@@ -5,7 +5,10 @@ import com.artilearn.happygolfgo.data.comment.CommentModel
 import com.artilearn.happygolfgo.data.gamecenter.*
 import com.artilearn.happygolfgo.data.golfgame.GolfGameResponse
 import com.artilearn.happygolfgo.data.golfrank.GolfRankResponse
+import com.artilearn.happygolfgo.data.home.AnnouncementAndExamResponse
 import com.artilearn.happygolfgo.data.home.HomeResponse
+import com.artilearn.happygolfgo.data.home.JoinMonthlyExamInputModel
+import com.artilearn.happygolfgo.data.home.JoinMonthlyExaminationResponse
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.log.LogResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
@@ -58,6 +61,17 @@ interface ApiInterface {
 
     @GET("main/user/multibranchtickets")
     fun mainHome(): Single<Response<HomeResponse>>
+
+    @GET("main/user/announcementAndExam")
+    fun announcementAndExam(
+        @Query("mobilePlatform") mobilePlatform: String = "android",
+        @Query("appVersion") appVersion: String = "2.2.10"
+    ): Single<Response<AnnouncementAndExamResponse>>
+
+    @POST("main/user/joinMonthlyExamination")
+    fun joinMonthlyExam(
+        @Body data: HashMap<String, JoinMonthlyExamInputModel>
+    ): Single<Response<JoinMonthlyExaminationResponse>>
 
     @GET("mypage/appversion")
     fun getAppVersion(
@@ -191,6 +205,31 @@ interface ApiInterface {
     //vc45 trainingManagement/summary/time
     @GET("trainingCenter/summary/time")
     fun getTrainingManagementSummaryTime(): Single<Response<TrainingManagementSummaryTimeResponse>>
+
+    @GET("main/user/announcementAndExam/myGolfPowerPageExamResultPageInfo")
+    fun getMyGolfPowerExamResultPageInfo(
+        @Query("mobilePlatform") mobilePlatform: String = "android",
+    ): Single<Response<MyGolfPowerExamResultPageInfoResponse>>
+
+    @GET("main/user/announcementAndExam/myGolfPowerPageExamResultPageInfoDetail/{pageIndex}")
+    fun getMyGolfPowerPageExamResultPageInfoDetail(
+       @Path("pageIndex")  pageIndex: Int
+    ):Single<Response<MyGolfPowerExamResultPageInfoDetailResponse>>
+
+    @GET("main/user/announcementAndExam/branchRanking/{pageIndex}")
+    fun getBranchRanking(
+        @Path("pageIndex")  pageIndex: Int
+    ):Single<Response<GolfRankingInBranchResponse>>
+
+    @GET("main/user/announcementAndExam/participationRate/{pageIndex}")
+    fun getSubjectRanking(
+        @Path("pageIndex")  pageIndex: Int
+    ):Single<Response<GolfRankingSubjectResponse>>
+
+    @GET("main/user/announcementAndExam/allBranchRanking/{pageIndex}")
+    fun getAllBranchRanking(
+        @Path("pageIndex")  pageIndex: Int
+    ):Single<Response<GolfRankingAllBranchResponse>>
 
     @GET("trainingCenter/summary/weight")
     fun getTrainingManagementSummaryWeight(): Single<Response<TrainingManagementSummaryWeightResponse>>

@@ -2,7 +2,6 @@ package com.artilearn.happygolfgo.ui.reserveconfirm
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -58,22 +57,26 @@ class ReserveConfirmActivity :
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            networkFail.observe(this@ReserveConfirmActivity, Observer {
+            networkFail.observe(this@ReserveConfirmActivity) {
                 showNetworkFail()
-            })
-            serverError.observe(this@ReserveConfirmActivity, Observer { errorMsg ->
+            }
+            serverError.observe(this@ReserveConfirmActivity) { errorMsg ->
                 showToast(ToastType.ERROR, errorMsg)
-            })
-            status.observe(this@ReserveConfirmActivity, Observer {
+            }
+            status.observe(this@ReserveConfirmActivity) {
                 when (status.value) {
                     ReserveConfirmViewModel.ReservationStatus.CANCEL_SUCCESS -> goReservationCancelSuccess()
                     ReserveConfirmViewModel.ReservationStatus.CANCEL_FAIL -> showToast(
                         ToastType.ERROR,
                         getString(R.string.reserve_confirm_cancel_fail)
                     )
+                    else -> showToast(
+                        ToastType.ERROR,
+                        getString(R.string.reserve_confirm_cancel_fail)
+                    ) //when expression must be exhaustive
                 }
-            })
-            plateModel.observe(this@ReserveConfirmActivity, Observer {
+            }
+            plateModel.observe(this@ReserveConfirmActivity) {
                 if (ticket == null) {
                     secondPlateId = it.plateReservation.id
                     with(it.plateReservation.ticket) {
@@ -108,8 +111,8 @@ class ReserveConfirmActivity :
                 }
 
                 //DONETODO: 타석이 배정된 경우에만 타석을 보여준다.
-                showChangePlateNumberLayout();
-                setReservationTicketPlateNumber(it.plateReservation.plateNumber.toString());
+                showChangePlateNumberLayout()
+                setReservationTicketPlateNumber(it.plateReservation.plateNumber.toString())
 
                 //comments: layout에 있는 resource_id와 데이타를 설정하여 준다.
                 setReservationTicketName(it.plateReservation.name)
@@ -120,8 +123,9 @@ class ReserveConfirmActivity :
                 setReservationTicketDate(it.plateReservation.startDate)
                 setReservationTicketTime(it.plateReservation.startDate, it.plateReservation.endDate)
                 setReservationPolicy(it.policy.body)
-            })
-            lessonModel.observe(this@ReserveConfirmActivity, Observer {
+            }
+
+            lessonModel.observe(this@ReserveConfirmActivity) {
                 if (it.lessonReservation.isCancellable) {
                     initBottomView(
                         binding.reserveConfirmBottomView.bottom_layout,
@@ -139,28 +143,28 @@ class ReserveConfirmActivity :
                 if (it.lessonReservation.multipleBranchTicketUser != null && it.lessonReservation.multipleBranchTicketUser == true) {
                     setReservationBranchName(it.lessonReservation.branchName)
                 }
-            })
-            policy.observe(this@ReserveConfirmActivity, Observer {
+            }
+            policy.observe(this@ReserveConfirmActivity) {
                 setReservationPolicy(it)
-            })
-            unKnowError.observe(this@ReserveConfirmActivity, Observer {
+            }
+            unKnowError.observe(this@ReserveConfirmActivity) {
                 showToast(ToastType.WARNNING, "티켓 정보를 알 수 없습니다")
-            })
-            reservationPlate.observe(this@ReserveConfirmActivity, Observer {
+            }
+            reservationPlate.observe(this@ReserveConfirmActivity) {
                 goReserveSuccessPlate(it)
-            })
-            reservationLesson.observe(this@ReserveConfirmActivity, Observer {
+            }
+            reservationLesson.observe(this@ReserveConfirmActivity) {
                 goReserveSuccessLesson(it)
-            })
-            buttonClickable.observe(this@ReserveConfirmActivity, Observer {
+            }
+            buttonClickable.observe(this@ReserveConfirmActivity) {
                 binding.reserveConfirmBottomView.bottom_layout.isClickable = true
-            })
-            reservationTimeChange.observe(this@ReserveConfirmActivity, Observer {
+            }
+            reservationTimeChange.observe(this@ReserveConfirmActivity) {
                 goReserveSuccessPlateTime(it)
-            })
-            appRefresh.observe(this@ReserveConfirmActivity, Observer {
+            }
+            appRefresh.observe(this@ReserveConfirmActivity) {
                 goRefresh()
-            })
+            }
         }
     }
 
@@ -183,9 +187,9 @@ class ReserveConfirmActivity :
                 initBottomView(binding.reserveConfirmBottomView.bottom_layout, getString(R.string.reserve_confirm_bottom_title), BottimViewType.DEFAULT_TYPE)
                 //feature/20211222/migration
                 //DONETODO check this out, what tickeTime is null
-                setupMultiplePlateTime();
-                val typedTicketTime : TicketTime? = ticketTime;
-                val typedTicket : Ticket? = ticket;
+                setupMultiplePlateTime()
+                val typedTicketTime : TicketTime? = ticketTime
+                val typedTicket : Ticket? = ticket
                 if ( typedTicketTime != null && typedTicket != null ) {
                     if (typedTicketTime.plateAvailabilityId != null) {
                         viewModel.ticketId = typedTicket.id
@@ -194,7 +198,7 @@ class ReserveConfirmActivity :
                         viewModel.requestPolicy()
                     } else {
                         viewModel.ticketId = typedTicket.id
-                        viewModel.lessonAvailabilityId = typedTicketTime?.lessonAvailabilityId
+                        viewModel.lessonAvailabilityId = typedTicketTime.lessonAvailabilityId
                         binding.tvTicketPolicy.text =
                             getString(R.string.reserve_confirm_lesson_policy)
                     }
@@ -217,7 +221,7 @@ class ReserveConfirmActivity :
     }
 
     private fun setReservationTicketPlateNumber(plateNumber: String) {
-        binding.tvTicketPlateNumber.text = plateNumber;
+        binding.tvTicketPlateNumber.text = plateNumber
     }
 
     private fun setReservationTicketDate(startTime: String) {
@@ -250,7 +254,7 @@ class ReserveConfirmActivity :
 
     private fun showChangePlateNumberLayout() {
         with(binding) {
-            ticketplatenumberLayout.visibility = View.VISIBLE;
+            ticketplatenumberLayout.visibility = View.VISIBLE
 //            llTimechange.setOnClickListener { goTicketTime() }
         }
     }
@@ -352,7 +356,7 @@ class ReserveConfirmActivity :
                 //feature/20211222/migration
                 //feature/2022/0216/multiSelection
                 //하단의 예약을 클릭 했을 때
-                val  typedTicketTime : TicketTime ? = ticketTime;
+                val  typedTicketTime : TicketTime ? = ticketTime
                 if (typedTicketTime?.plateAvailabilityId != null) {
                     if (timeChange == 0) { //예약 변경이 아닐 경우
                          if (ticketTime != null && ticketTime?.isMutiple != null  && ticketTime?.isMutiple == true) {

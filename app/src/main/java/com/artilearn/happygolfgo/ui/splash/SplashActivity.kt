@@ -29,18 +29,18 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            goTutorial.observe(this@SplashActivity, Observer {
+            goTutorial.observe(this@SplashActivity){
                 goTutorial()
-            })
-            goLogin.observe(this@SplashActivity, Observer {
+            }
+            goLogin.observe(this@SplashActivity) {
                 goLogin()
-            })
-            goHome.observe(this@SplashActivity, Observer {
+            }
+            goHome.observe(this@SplashActivity) {
                 goHome()
-            })
-            needUpdate.observe(this@SplashActivity, Observer {
+            }
+            needUpdate.observe(this@SplashActivity) {
                 needReLogin(it)
-            })
+            }
         }
     }
 

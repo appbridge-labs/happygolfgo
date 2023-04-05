@@ -1,0 +1,56 @@
+package com.artilearn.happygolfgo.ui.home.record
+
+import android.os.Bundle
+import com.artilearn.happygolfgo.R
+import com.artilearn.happygolfgo.base.BaseFragment
+import com.artilearn.happygolfgo.constants.MY_GOLF_POWER_ADAPTER_INDEX
+import com.artilearn.happygolfgo.databinding.FragmentGolfRankingBySubjectBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
+class GolfRankingBySubjectFragment :
+    BaseFragment<FragmentGolfRankingBySubjectBinding, GolfRankingBySubjectViewModel>
+        (R.layout.fragment_golf_ranking_by_subject) {
+    private var pageIndex = -1
+    override val viewModel: GolfRankingBySubjectViewModel by viewModel()
+    private lateinit var  adapter: GolfRankingBySubjectAdapter
+
+    companion object {
+        fun newInstance(pageIndex: Int): GolfRankingBySubjectFragment {
+            val args = Bundle()
+            args.putInt(MY_GOLF_POWER_ADAPTER_INDEX, pageIndex)
+            val fragment = GolfRankingBySubjectFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+    override fun init() {
+        initBinding()
+        initAdapter()
+        initViewModelObserving()
+        initRequest()
+    }
+
+    private fun initBinding() {
+        binding.vm = viewModel
+    }
+
+    private fun initViewModelObserving() {
+
+    }
+
+    private fun initAdapter() {
+        adapter = GolfRankingBySubjectAdapter(viewModel)
+        binding.recyclerview.adapter = adapter
+
+        val pageIndex = arguments?.getInt(MY_GOLF_POWER_ADAPTER_INDEX)
+        pageIndex?.let {
+            this.pageIndex = pageIndex
+        }
+    }
+
+    private fun initRequest() {
+        viewModel.pageIndex = pageIndex
+        viewModel.request()
+    }
+}

@@ -65,7 +65,7 @@ class MyPageViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { _eventType.value = MyPageStateType.PLAY_STORE },
 
-            //DONETODO 프로필 변경 막고 배포
+            //DONETODO 프로필 변경 막고 배포 : Don't change the profile image in user app
             //_profileClickSubject.subscribe { _eventType.value = MyPageStateType.PERMISSION },
             _defaultImageSubject.subscribe { _bottomState.value = Event(BottomFragmentState.DEFAULT_IMAGE) },
             _gallerySubject.subscribe { _bottomState.value = Event(BottomFragmentState.GALLERY) },

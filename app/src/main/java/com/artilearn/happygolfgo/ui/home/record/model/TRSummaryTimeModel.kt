@@ -1,8 +1,6 @@
 package com.artilearn.happygolfgo.ui.home.record.model
 
 import android.os.Parcelable
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 data class TRSummaryTimeModel(
@@ -140,4 +138,9 @@ data class TRSummaryRoundDetailRecordModel (
 data class TSSummarySwingVideoDetailUpdateReqModel (
     var id:  Int,
     var type:Int, //1 or 2
+)
+
+data class  TRMyGolfPowerExamResultPageInfoModel  (
+     var pageCount: Int,
+     var currentPageIndex : Int
 )

@@ -3,9 +3,6 @@ package com.artilearn.happygolfgo.data.gamecenter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class TrainingManagementResponse {
-
-}
 
 data class TrainingManagementSummaryTimeResponse(
     @SerializedName("resultCode")
@@ -168,7 +165,7 @@ data class TrainingManagementSummaryGolfPowerResponse(
 
         @SerializedName("records")
         @Expose
-        val records: List<TrainingManagementSummaryGolfPowerResponse.GolfPowerRecord>
+        val records: List<GolfPowerRecord>
     )
 
     data class GolfPowerRecord(
@@ -296,7 +293,7 @@ data class TrainingManagementSummaryRoundResponse(
 
         @SerializedName("records")
         @Expose
-        val records: List<TrainingManagementSummaryRoundResponse.RoundRecord>
+        val records: List<RoundRecord>
     )
 
     data class RoundRecord(
@@ -361,7 +358,7 @@ data class TrainingManagementSummarySwingVideoResponse(
 
         @SerializedName("records")
         @Expose
-        val records: List<TrainingManagementSummarySwingVideoResponse.SwingVideoRecord>
+        val records: List<SwingVideoRecord>
     )
 
     data class SwingVideoRecord(
@@ -571,7 +568,7 @@ data class TrainingManagementSummaryRoundDetailResponse(
 
     @SerializedName("records")
         @Expose
-        val records: List<TrainingManagementSummaryRoundDetailResponse.RoundRecord>
+        val records: List<RoundRecord>
     )
 
     data class RoundRecord(
@@ -622,4 +619,471 @@ data class TrainingManagementSummarySwingVideoDetailUpdateResponse(
         val errorMessage: String,
     )
 }
+
+
+data class MyGolfPowerExamResultPageInfoResponse(
+    @SerializedName("resultCode")
+    @Expose
+    val resultCode: Int,
+
+    @SerializedName("statusCode")
+    @Expose
+    val statusCode: Int,
+
+    @SerializedName("message")
+    @Expose
+    val message: String,
+
+    @SerializedName("Data")
+    @Expose
+    val data: MyGolfPowerExamResultPageInfoData
+) {
+    data class MyGolfPowerExamResultPageInfoData(
+        @SerializedName("errorCode")
+        @Expose
+        val errorCode: Int,
+
+        @SerializedName("errorMessage")
+        @Expose
+        val errorMessage: String,
+
+        @SerializedName("res")
+        @Expose
+        val res: MyGolfPowerExamResultPageInfoRes,
+    )
+
+    data class MyGolfPowerExamResultPageInfoRes(
+        @SerializedName("pageCount")
+        @Expose
+        val pageCount: String?,
+
+        @SerializedName("currentPageIndex")
+        @Expose
+        val currentPageIndex: String?,
+    )
+}
+
+data class MyGolfPowerExamResultPageInfoDetailResponse(
+    @SerializedName("resultCode")
+    @Expose
+    val resultCode: Int,
+
+    @SerializedName("statusCode")
+    @Expose
+    val statusCode: Int,
+
+    @SerializedName("message")
+    @Expose
+    val message: String,
+
+    @SerializedName("Data")
+    @Expose
+    val data: MyGolfPowerExamResultPageInfoDetailData
+) {
+    data class MyGolfPowerExamResultPageInfoDetailData(
+        @SerializedName("errorCode")
+        @Expose
+        val errorCode: Int,
+
+        @SerializedName("errorMessage")
+        @Expose
+        val errorMessage: String,
+
+        @SerializedName("res")
+        @Expose
+        val res: MyGolfPowerExamResultPageInfoDetailRes,
+    )
+
+    data class MyGolfPowerExamResultPageInfoDetailRes(
+        @SerializedName("pageInfo")
+        @Expose
+        val pageInfo: MyGolfPowerExamResultPageInfoDetailResPageInfo,
+
+        @SerializedName("avg")
+        @Expose
+        val avg: MyGolfPowerExamResultPageInfoDetailResPageInfoGameRankingAvg?,
+
+        @SerializedName("putt")
+        @Expose
+        val putt: MyGolfPowerExamResultPageInfoDetailResPageInfoGameRanking?,
+
+        @SerializedName("sg")
+        @Expose
+        val sg: MyGolfPowerExamResultPageInfoDetailResPageInfoGameRanking?,
+
+        @SerializedName("iron")
+        @Expose
+        val iron: MyGolfPowerExamResultPageInfoDetailResPageInfoGameRanking?,
+
+        @SerializedName("drv")
+        @Expose
+        val drv: MyGolfPowerExamResultPageInfoDetailResPageInfoGameRanking?,
+
+        @SerializedName("wu")
+        @Expose
+        val wu: MyGolfPowerExamResultPageInfoDetailResPageInfoGameRanking?,
+    )
+
+    data class MyGolfPowerExamResultPageInfoDetailResPageInfo (
+        @SerializedName("index")
+        @Expose
+        val index: String?,
+
+        @SerializedName("title")
+        @Expose
+        val title: String?,
+
+        @SerializedName("isOpen")
+        @Expose
+        val isOpen: String?,
+
+        @SerializedName("noticeOfNextExam")
+        @Expose
+        val noticeOfNextExam: String?,
+    )
+
+
+    data class MyGolfPowerExamResultPageInfoDetailResPageInfoGameRankingAvg (
+
+        @SerializedName("title")
+        @Expose
+        val title: String?,
+
+        @SerializedName("rankingInMyBranch")
+        @Expose
+        val rankingInMyBranch: String?,
+
+        @SerializedName("rankingInAllBranch")
+        @Expose
+        val rankingInAllBranch: String?,
+
+        @SerializedName("score")
+        @Expose
+        val score: String?,
+
+        @SerializedName("indicator")
+        @Expose
+        val indicator: String?,
+
+        @SerializedName("delta")
+        @Expose
+        val delta: String?,
+
+        @SerializedName("numberOfPlayersInMyBranch")
+        @Expose
+        val numberOfPlayersInMyBranch: String?,
+
+        @SerializedName("numberOfPlayersInAllBranch")
+        @Expose
+        val numberOfPlayersInAllBranch: String?,
+
+        @SerializedName("commentBetterThan")
+        @Expose
+        val commentBetterThan: String?,
+
+        @SerializedName("commentSummary")
+        @Expose
+        val commentSummary: String?
+    )
+    data class MyGolfPowerExamResultPageInfoDetailResPageInfoGameRanking (
+
+        @SerializedName("title")
+        @Expose
+        val title: String?,
+
+        @SerializedName("rankingInMyBranch")
+        @Expose
+        val rankingInMyBranch: String?,
+
+        @SerializedName("rankingInAllBranch")
+        @Expose
+        val rankingInAllBranch: String?,
+
+        @SerializedName("score")
+        @Expose
+        val score: String?,
+
+        @SerializedName("indicator")
+        @Expose
+        val indicator: String?,
+
+        @SerializedName("delta")
+        @Expose
+        val delta: String?,
+
+        @SerializedName("iconType")
+        @Expose
+        val iconType: String?,
+
+        @SerializedName("hideComments")
+        @Expose
+        val hideComments: String?,
+
+        @SerializedName("commentSummary")
+        @Expose
+         val commentSummary: String?
+    )
+}
+
+data class GolfRankingInBranchResponse(
+    @SerializedName("resultCode")
+    @Expose
+    val resultCode: Int,
+
+    @SerializedName("statusCode")
+    @Expose
+    val statusCode: Int,
+
+    @SerializedName("message")
+    @Expose
+    val message: String,
+
+    @SerializedName("Data")
+    @Expose
+    val data: GolfRankingInBranchResponseData
+) {
+    data class GolfRankingInBranchResponseData(
+        @SerializedName("errorCode")
+        @Expose
+        val errorCode: Int,
+
+        @SerializedName("errorMessage")
+        @Expose
+        val errorMessage: String,
+
+        @SerializedName("res")
+        @Expose
+        val res: GolfRankingInBranchRes,
+    )
+
+    data class GolfRankingInBranchRes(
+        @SerializedName("pageInfo")
+        @Expose
+        val pageInfo: GolfRankingInBranchResPageInfo,
+
+        @SerializedName("rankings")
+        @Expose
+        val rankings: List<GolfRankingInBranchResRanking>,
+    )
+
+    data class GolfRankingInBranchResPageInfo (
+        @SerializedName("index")
+        @Expose
+        val index: String?,
+
+        @SerializedName("title")
+        @Expose
+        val title: String?,
+
+        @SerializedName("isOpen")
+        @Expose
+        val isOpen: String?,
+
+        @SerializedName("noticeOfNextExam")
+        @Expose
+        val noticeOfNextExam: String?,
+    )
+
+    data class GolfRankingInBranchResRanking (
+        @SerializedName("title")
+        @Expose
+        val title: String?,
+
+        @SerializedName("firstName")
+        @Expose
+        val firstName: String?,
+
+        @SerializedName("firstScore")
+        @Expose
+        val firstScore: String?,
+
+        @SerializedName("secondName")
+        @Expose
+        val secondName: String?,
+
+        @SerializedName("secondScore")
+        @Expose
+        val secondScore: String?,
+
+        @SerializedName("thirdName")
+        @Expose
+        val thirdName: String?,
+
+        @SerializedName("thirdScore")
+        @Expose
+        val thirdScore: String?
+    )
+}
+
+data class GolfRankingSubjectResponse(
+    @SerializedName("resultCode")
+    @Expose
+    val resultCode: Int,
+
+    @SerializedName("statusCode")
+    @Expose
+    val statusCode: Int,
+
+    @SerializedName("message")
+    @Expose
+    val message: String,
+
+    @SerializedName("Data")
+    @Expose
+    val data: GolfRankingSubjectResponseData
+) {
+    data class GolfRankingSubjectResponseData(
+        @SerializedName("errorCode")
+        @Expose
+        val errorCode: Int,
+
+        @SerializedName("errorMessage")
+        @Expose
+        val errorMessage: String,
+
+        @SerializedName("res")
+        @Expose
+        val res: GolfRankingSubjectRes,
+    )
+
+    data class GolfRankingSubjectRes(
+        @SerializedName("pageInfo")
+        @Expose
+        val pageInfo: GolfRankingSubjectResPageInfo,
+
+        @SerializedName("rankings")
+        @Expose
+        val rankings: List<GolfRankingSubjectResRanking>,
+    )
+
+    data class GolfRankingSubjectResPageInfo (
+        @SerializedName("index")
+        @Expose
+        val index: String?,
+
+        @SerializedName("title")
+        @Expose
+        val title: String?,
+
+        @SerializedName("isOpen")
+        @Expose
+        val isOpen: String?,
+
+        @SerializedName("noticeOfNextExam")
+        @Expose
+        val noticeOfNextExam: String?,
+    )
+
+    data class GolfRankingSubjectResRanking (
+
+        @SerializedName("rankingOrder")
+        @Expose
+        val rankingOrder: String?,
+
+        @SerializedName("branchName")
+        @Expose
+        val branchName: String?,
+
+        @SerializedName("sumOfPlayersScoreInfo")
+        @Expose
+        val sumOfPlayersScoreInfo: String?,
+
+        @SerializedName("participationRate")
+        @Expose
+        val participationRate: String?,
+    )
+}
+
+
+data class GolfRankingAllBranchResponse(
+    @SerializedName("resultCode")
+    @Expose
+    val resultCode: Int,
+
+    @SerializedName("statusCode")
+    @Expose
+    val statusCode: Int,
+
+    @SerializedName("message")
+    @Expose
+    val message: String,
+
+    @SerializedName("Data")
+    @Expose
+    val data: GolfRankingAllBranchResponseData
+) {
+    data class GolfRankingAllBranchResponseData(
+        @SerializedName("errorCode")
+        @Expose
+        val errorCode: Int,
+
+        @SerializedName("errorMessage")
+        @Expose
+        val errorMessage: String,
+
+        @SerializedName("res")
+        @Expose
+        val res: GolfRankingAllBranchRes,
+    )
+
+    data class GolfRankingAllBranchRes(
+        @SerializedName("pageInfo")
+        @Expose
+        val pageInfo: GolfRankingAllBranchResPageInfo,
+
+        @SerializedName("rankings")
+        @Expose
+        val rankings: List<GolfRankingAllBranchResRanking>,
+    )
+
+    data class GolfRankingAllBranchResPageInfo (
+        @SerializedName("index")
+        @Expose
+        val index: String?,
+
+        @SerializedName("title")
+        @Expose
+        val title: String?,
+
+        @SerializedName("isOpen")
+        @Expose
+        val isOpen: String?,
+
+        @SerializedName("noticeOfNextExam")
+        @Expose
+        val noticeOfNextExam: String?,
+    )
+
+    data class GolfRankingAllBranchResRanking (
+
+        @SerializedName("title")
+        @Expose
+        val title: String?,
+
+        @SerializedName("firstBranchName")
+        @Expose
+        val firstBranchName: String?,
+
+        @SerializedName("firstBranchScore")
+        @Expose
+        val firstBranchScore: String?,
+
+        @SerializedName("secondBranchName")
+        @Expose
+        val secondBranchName: String?,
+
+        @SerializedName("secondBranchScore")
+        @Expose
+        val secondBranchScore: String?,
+
+        @SerializedName("thirdBranchName")
+        @Expose
+        val thirdBranchName: String?,
+
+        @SerializedName("thirdBranchScore")
+        @Expose
+        val thirdBranchScore: String?
+    )
+}
+
 

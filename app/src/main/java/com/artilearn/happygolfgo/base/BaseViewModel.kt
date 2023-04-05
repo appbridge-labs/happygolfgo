@@ -37,4 +37,10 @@ abstract class BaseViewModel : ViewModel() {
         compositeDisposable.clear()
         super.onCleared()
     }
+
+    companion object {
+        const val CONSTANT_IN_COMPANION_OBJECT = "constant at in companion object"
+        const val CONSTANT_ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE = "데이타를 불러오는데 실패했습니다."
+        const val CONSTANT_ERROR_MESSAGE_UNKNOWN_ERROR  = "알 수 없는 오류 발생"
+    }
 }

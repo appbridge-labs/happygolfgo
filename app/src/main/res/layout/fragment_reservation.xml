@@ -34,8 +34,9 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:clipToPadding="false"
-                    android:paddingTop="20dp"
+                    android:paddingTop="7dp"
                     android:paddingBottom="100dp"
+                    android:background="@color/color_header_view_background_in_reservation"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +44,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     bind:setScroll="@{vm}"
                     bind:setTickets="@{vm.ticketList}"
+                    bind:setAnnouncement="@{vm.announcement}"
+                    bind:setExamination="@{vm.examination}"
                     tools:itemCount="6"
                     tools:listitem="@layout/item_home_reservation_ticket" />
 

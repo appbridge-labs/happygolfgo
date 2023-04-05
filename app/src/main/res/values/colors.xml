@@ -34,4 +34,16 @@
     <color name="color_graph_putt">#51CF66</color>
     <color name="color_graph_direction">#F8BBD0</color>
     <color name="color_graph_green_attack">#00897b</color>
+    <color name="color_header_view_background_in_reservation">#F0EEEE</color>
+    <color name="color_announcement_in_header_view_in_reservation">#67D2FF</color>
+    <color name="color_announcement_subject_in_header_view_in_reservation">#7B6F72</color>
+    <color name="color_more_in_header_view_in_reservation">#7B6F72</color>
+    <color name="color_exam_in_header_view_in_reservation">#FF9F3F</color>
+    <color name="color_no_action_in_header_view_in_reservation">#67BC63</color>
+    <color name="color_bg_training_record_section_my_golf_power">#3F7AA4</color>
+    <color name="color_bg_my_golf_power_exam_result_page_info">#3F7AA4</color>
+    <color name="color_bg_my_golf_power_exam_divider">#E5E5E5</color>
+    <color name="color_my_golf_power_title_color">#727272</color>
+    <color name="color_my_golf_power_sub_title_color">#3F7AA4</color>
+    <color name="color_my_golf_power_normal_score">#4BBFF0</color>
 </resources>

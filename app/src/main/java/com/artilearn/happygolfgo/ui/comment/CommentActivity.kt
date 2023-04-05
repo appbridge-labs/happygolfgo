@@ -3,7 +3,6 @@ package com.artilearn.happygolfgo.ui.comment
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.Observer
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.COACH_NAME
@@ -42,24 +41,25 @@ class CommentActivity : BaseActivity<ActivityCommetBinding>(R.layout.activity_co
 
     private fun initViewModelObserve() {
         with(viewModel) {
-            success.observe(this@CommentActivity, Observer {
+            success.observe(this@CommentActivity) {
                 goMyPage()
-            })
-            networkFail.observe(this@CommentActivity, Observer {
+            }
+            networkFail.observe(this@CommentActivity){
                 showNetworkFail()
-            })
-            serverError.observe(this@CommentActivity, Observer { errorMsg ->
+            }
+            serverError.observe(this@CommentActivity) { errorMsg ->
                 showToast(ToastType.ERROR, errorMsg)
-            })
-            commentType.observe(this@CommentActivity, Observer {
+            }
+            commentType.observe(this@CommentActivity) {
                 when (commentType.value) {
                     CommentViewModel.CommentEmptyType.EMPTY_COMMENT -> showEmptyComment()
                     CommentViewModel.CommentEmptyType.EMPTY_RATING -> showEmptyRating()
+                    else -> showEmptyComment() //when expression must be exhaustive 2023/02/13
                 }
-            })
-            appRefresh.observe(this@CommentActivity, Observer {
+            }
+            appRefresh.observe(this@CommentActivity){
                 goRefresh()
-            })
+            }
         }
     }
 

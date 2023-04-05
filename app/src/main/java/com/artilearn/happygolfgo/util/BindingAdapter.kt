@@ -8,26 +8,22 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
-import com.artilearn.happygolfgo.data.Alram
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
-import com.artilearn.happygolfgo.data.home.HomeResponseInfo
-import com.artilearn.happygolfgo.ui.home.alram.AlramAdapter
-import com.artilearn.happygolfgo.ui.home.record.SwingVideoListAdapter
+import com.artilearn.happygolfgo.data.announcement.Announcement
+import com.artilearn.happygolfgo.data.examination.Examination
+import com.artilearn.happygolfgo.ui.home.record.*
+import com.artilearn.happygolfgo.ui.home.record.model.RankingBySubjectData
+import com.artilearn.happygolfgo.ui.home.record.model.RankingInAllBranchData
+import com.artilearn.happygolfgo.ui.home.record.model.RankingInBranchData
 import com.artilearn.happygolfgo.ui.home.record.model.TRSummarySwingVideoRecordModel
-import com.artilearn.happygolfgo.ui.home.reservation.ReservationAdapter
-import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter
+import com.artilearn.happygolfgo.ui.home.reservation.ReservationAdapterWithHeader
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 //comments: DataBinding: layout.xml에 있는 attribute를 통하여 값을 전달한다.
@@ -81,9 +77,30 @@ fun ticketCount(
     }
 }
 
+
+@BindingAdapter("setTicketsHeaderView", "setScrollHeaderView")
+fun RecyclerView.setTicketItemsHeaderView(ticket: List<Ticket>?, vm: ReservationViewModel) {
+        with(adapter as ReservationAdapterWithHeader) {
+        ticket?.let {
+            this.addItems(it)
+        }
+    }
+
+    this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            when (recyclerView.scrollState) {
+                0 -> vm.onButtonState(true)
+                else -> vm.onButtonState(false)
+
+            }
+        }
+    })
+}
+
 @BindingAdapter("setTickets", "setScroll")
 fun RecyclerView.setTicketItems(ticket: List<Ticket>?, vm: ReservationViewModel) {
-    with(adapter as ReservationNewAdapter) {
+    with(adapter as ReservationAdapterWithHeader) {
         ticket?.let {
             this.addItems(it)
             //this.addItems(it)
@@ -104,6 +121,26 @@ fun RecyclerView.setTicketItems(ticket: List<Ticket>?, vm: ReservationViewModel)
     })
 }
 
+@BindingAdapter("setAnnouncement")
+fun RecyclerView.setAnnouncement(announcement: Announcement?) {
+    with(adapter as ReservationAdapterWithHeader) {
+        announcement?.let {
+            //this.addItems(it)
+            this.setAnnouncement(announcement)
+        }
+    }
+}
+
+@BindingAdapter("setExamination")
+fun RecyclerView.setExamination(examination: Examination?) {
+    with(adapter as ReservationAdapterWithHeader) {
+        examination?.let {
+            this.setExamination(examination)
+        }
+    }
+}
+
+
 @BindingAdapter("setLessonLog")
 fun RecyclerView.setLessonLogItems(logs: List<LessonLog>?) {
     with(adapter as LessonPostListAdapter) {
@@ -116,6 +153,30 @@ fun RecyclerView.setLessonLogItems(logs: List<LessonLog>?) {
 @BindingAdapter("setSwingVideoItems")
 fun RecyclerView.setSwingVideoItems(items: List<TRSummarySwingVideoRecordModel>?) {
     with(adapter as SwingVideoListAdapter) {
+        this.clear()
+        items?.let { this.setItems(it) }
+    }
+}
+
+@BindingAdapter("setRankingInBranchDataItems")
+fun RecyclerView.setRankingInBranchDataItems(items: List<RankingInBranchData>?) {
+    with(adapter as GolfRankingInBranchAdapter) {
+        this.clear()
+        items?.let { this.setItems(it) }
+    }
+}
+
+@BindingAdapter("setRankingBySubjectDataItems")
+fun RecyclerView.setRankingBySubjectDataItems(items: List<RankingBySubjectData>?) {
+    with(adapter as GolfRankingBySubjectAdapter) {
+        this.clear()
+        items?.let { this.setItems(it) }
+    }
+}
+
+@BindingAdapter("setRankingAllBranchDataItems")
+fun RecyclerView.setRankingAllBranchDataItems(items: List<RankingInAllBranchData>?) {
+    with(adapter as GolfRankingInAllBranchAdapter) {
         this.clear()
         items?.let { this.setItems(it) }
     }
@@ -261,12 +322,12 @@ fun setMultiUserBranchName(tv: TextView, name: String?) {
     }
 }
 
-@BindingAdapter("setLogThumbNail")
-fun setLogThumbNail(iv: ImageView, thumbNail: String?) {
-    thumbNail?.let {
-        iv.setImage(iv, it)
-    }
-}
+//@BindingAdapter("setLogThumbNail")
+//fun setLogThumbNail(iv: ImageView, thumbNail: String?) {
+//    thumbNail?.let {
+//        iv.setImage(iv, it)
+//    }
+//}
 
 @BindingAdapter("setShotTypeImageIndex")
 fun setShotTypeImageIndex(iv: ImageView, imageIndex: String) {
@@ -282,12 +343,47 @@ fun setShotTypeImageIndex(iv: ImageView, imageIndex: String) {
     }
 }
 
-@BindingAdapter("setLogComment")
-fun setLogComment(tv: TextView, comment: String?) {
-    comment?.let {
-        tv.text = it
+@BindingAdapter("setGolfWeatherIconInMyGolfPower")
+fun setGolfWeatherIconInMyGolfPower(iv: ImageView, iconType: String?) {
+    if (iconType != null) {
+        iv.visibility = View.VISIBLE
+        when (iconType) {
+            "1" -> iv.setImageResource(R.drawable.my_golf_power_score_board_weather_sunny)
+            "2" -> iv.setImageResource(R.drawable.my_golf_power_score_board_weather_cloudy)
+            "3" -> iv.setImageResource(R.drawable.my_golf_power_score_board_weather_partly_sunny)
+            "4" -> iv.setImageResource(R.drawable.my_golf_power_score_board_weather_rainy)
+            else -> {
+                iv.visibility = View.INVISIBLE
+            }
+        }
+    } else {
+        iv.visibility = View.INVISIBLE
     }
 }
+
+@BindingAdapter("setScoreIndicatorIconInMyGolfPower")
+fun setScoreIndicatorIconInMyGolfPower(iv: ImageView, indicator: String?) {
+    if (indicator != null) {
+        iv.visibility = View.VISIBLE
+        when (indicator) {
+            "up" -> iv.setImageResource(R.drawable.my_golf_power_exam_result_page_up_arrow)
+            "even" -> iv.setImageResource(R.drawable.my_golf_power_exam_result_page_even_arrow)
+            "down" -> iv.setImageResource(R.drawable.my_golf_power_exam_result_page_down_arrow)
+            else -> {
+                iv.visibility = View.INVISIBLE
+            }
+        }
+    } else {
+        iv.visibility = View.INVISIBLE
+    }
+}
+
+//@BindingAdapter("setLogComment")
+//fun setLogComment(tv: TextView, comment: String?) {
+//    comment?.let {
+//        tv.text = it
+//    }
+//}
 
 @BindingAdapter("setReservationStartTime")
 fun setReservationStartTime(tv: TextView, startTime: String) {
@@ -379,5 +475,17 @@ fun setReservationCard(
         } else {
             cv.setBackgroundResource(R.drawable.bg_reservation_card_default)
         }
+    }
+}
+
+@BindingAdapter("setMedalImageInSubjectInRanking")
+fun setMedalImageInSubjectInRanking(v: View, type: String) {
+    when (type) {
+        "1" ->  v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_first)
+        "2" ->  v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_second)
+        "3" ->  v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_third)
+        "4" ->  v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_fourth)
+        "5" ->  v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_fifth)
+        else ->v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_first)
     }
 }

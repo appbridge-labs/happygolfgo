@@ -17,4 +17,9 @@ interface GameCenterRepository {
     fun updateTrainingManagementSummarySwingVideoDetail(
         data: HashMap<String, TSSummarySwingVideoDetailUpdateReqModel>
     ): Single<Response<TrainingManagementSummarySwingVideoDetailUpdateResponse>>
+    fun getMyGolfPowerExamResultPageInfo() : Single<Response<MyGolfPowerExamResultPageInfoResponse>>
+    fun getMyGolfPowerPageExamResultPageInfoDetail(pageIndex:Int) : Single<Response<MyGolfPowerExamResultPageInfoDetailResponse>>
+    fun getBranchRanking(pageIndex:Int) : Single<Response<GolfRankingInBranchResponse>>
+    fun getSubjectRanking(pageIndex:Int) : Single<Response<GolfRankingSubjectResponse>>
+    fun getAllBranchRanking(pageIndex:Int) : Single<Response<GolfRankingAllBranchResponse>>
 }

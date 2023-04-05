@@ -54,6 +54,7 @@ class MyPageFragment
                     MyPageViewModel.MyPageStateType.NEED_UPDATE -> showUpdate()
                     MyPageViewModel.MyPageStateType.PLAY_STORE -> goPlayStore()
                     MyPageViewModel.MyPageStateType.PERMISSION -> checkPermission()
+                    else -> goLogin() //when expression must be exhaustive
                 }
             })
             appVersion.observe(this@MyPageFragment, Observer { version ->
@@ -133,6 +134,7 @@ class MyPageFragment
     }
 
     private fun checkPermission() {
+        //TODO: behavior change : app targeting android 13 or higher
         TedRx2Permission.with(this.context)
             .setPermissions(
                 WRITE_EXTERNAL_STORAGE,

@@ -1,9 +1,7 @@
 package com.artilearn.happygolfgo.ui.home
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
-import com.artilearn.happygolfgo.util.Event
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
@@ -61,6 +59,8 @@ class HomeViewModel : BaseViewModel() {
 
     fun onNextBottomEvent(name: String) = _bottomSubject.onNext(name)
     fun backPressed() = backPressed.onNext(Unit)
+
+    fun moveToTheTab(name: String)  =  _bottomSubject.onNext(name)
 
     enum class FcmTypeMoveModel {
         PLATE,
