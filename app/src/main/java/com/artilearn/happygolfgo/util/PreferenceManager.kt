@@ -67,6 +67,10 @@ class PreferenceManager(context: Context) {
         get() = prefs.getBoolean(CALENDAR_GET_USED, false)
         set(value) = editor.putBoolean(CALENDAR_GET_USED, value).apply()
 
+    var fcmTokenUpdatedDate: String
+        get() = prefs.getString(PREF_ITEM_FCM_TOKEN_UPDATED_DATE, "") ?: ""
+        set(value) = editor.putString(PREF_ITEM_FCM_TOKEN_UPDATED_DATE, value).apply()
+
     fun userLogout() {
         with(editor) {
             remove(NAME).apply()

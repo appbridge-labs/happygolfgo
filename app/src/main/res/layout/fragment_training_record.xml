@@ -10,9 +10,9 @@
         <variable
             name="vm"
             type="com.artilearn.happygolfgo.ui.home.record.TrainingRecordViewModel" />
-<!--        <variable-->
-<!--            name="summaryTime"-->
-<!--            type="com.artilearn.happygolfgo.ui.home.record.model.TRSummaryTimeModel"/>-->
+        <variable
+            name="summaryTime"
+            type="com.artilearn.happygolfgo.ui.home.record.model.TRSummaryTimeModel"/>
 
         <variable
             name="summaryWeight"
@@ -49,34 +49,79 @@
                 android:paddingRight="0dp"
                 android:paddingLeft="0dp"
                 >
-                <!-- vc45 2022년 누적 훈련 시간 -->
-
-                <!--                   -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/time_section_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:elevation="4dp"
-                    android:outlineProvider="none"
-                    android:padding="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-<!--                    <FrameLayout-->
-<!--                        android:layout_width="match_parent"-->
+            <!--                    2023.05.02 시험 성적에 대한 데이타를 보여주지 않는다. -->
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:id="@+id/time_section_layout"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="0dp"-->
+<!--                    android:elevation="4dp"-->
+<!--                    android:outlineProvider="none"-->
+<!--                    android:padding="0dp"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent">-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="320dp"-->
+<!--                        android:background="@color/color_bg_training_record_section_my_golf_power"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        />-->
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="0dp"-->
 <!--                        android:layout_height="wrap_content"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" -->
-<!--                    >-->
-                    <LinearLayout
+<!--                        android:layout_marginStart="1dp"-->
+<!--                        android:orientation="vertical"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        app:layout_constraintVertical_bias="0.0">-->
+<!--                        <androidx.viewpager2.widget.ViewPager2-->
+<!--                            android:id="@+id/viewpager"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="730dp"-->
+<!--                            android:layout_marginHorizontal="16dp"-->
+<!--                            android:padding="10dp"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"/>-->
+<!--                    </LinearLayout>-->
+<!--                    <View-->
+<!--                        android:layout_width="10dp"-->
+<!--                        android:layout_height="13dp"-->
+<!--                        android:background="@drawable/my_golf_ranking_pager_left_arrow"-->
+<!--                        android:layout_marginStart="4dp"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        />-->
+<!--                    <View-->
+<!--                        android:layout_width="10dp"-->
+<!--                        android:layout_height="13dp"-->
+<!--                        android:layout_marginEnd="4dp"-->
+<!--                        android:background="@drawable/my_golf_ranking_pager_right_arrow"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        />-->
+                <!--                   summary time  -->
+                <!-- vc45 2022년 누적 훈련 시간 -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/time_section_layout"
                         android:layout_width="0dp"
-                        android:layout_height="320dp"
-                        android:background="@color/color_bg_training_record_section_my_golf_power"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:background="@drawable/bg_training_record_section_one"
+                        android:elevation="4dp"
+                        android:outlineProvider="none"
+                        android:padding="16dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-
+                        app:layout_constraintTop_toTopOf="parent">
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -88,35 +133,45 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0">
 
-<!--                        android:background="@color/color_line_gray"-->
-                        <androidx.viewpager2.widget.ViewPager2
-                            android:id="@+id/viewpager"
-                            android:layout_width="match_parent"
-                            android:layout_height="730dp"
-                            android:layout_marginHorizontal="16dp"
-                            android:padding="10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"/>
+                        <TextView
+                            android:id="@+id/time_section_layout_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="#FEC74E"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:text="@{summaryTime.title}"
+                            tools:text="훈련시간"
+                            />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/time_section_layout_subtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:textColor="@color/color_white"
+                                android:textSize="24sp"
+                                tools:text="6"
+                                android:text="@{summaryTime.time}" />
+                            <TextView
+                                android:id="@+id/time_section_layout_subtitle_unit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:textColor="@color/color_white"
+                                android:textSize="18sp"
+                                tools:text="시간"
+                                android:text="@{summaryTime.unit}" />
+                        </LinearLayout>
                     </LinearLayout>
-                    <View
-                        android:layout_width="10dp"
-                        android:layout_height="13dp"
-                        android:background="@drawable/my_golf_ranking_pager_left_arrow"
-                        android:layout_marginStart="4dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-                    <View
-                        android:layout_width="10dp"
-                        android:layout_height="13dp"
-                        android:layout_marginEnd="4dp"
-                        android:background="@drawable/my_golf_ranking_pager_right_arrow"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
-                    <!--                    </FrameLayout>-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <!--              end of time_section_layout 제일 상단 누적 훈련 시간 섹션 -->
                 <!--                훈련 비중에 대한 섹션 -->

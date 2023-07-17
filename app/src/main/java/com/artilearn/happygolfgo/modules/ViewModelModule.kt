@@ -70,7 +70,7 @@ val viewModelModule = module {
 
     viewModel { HomeViewModel() }
 
-    viewModel { ReservationViewModel(get()) }
+    viewModel { ReservationViewModel(get(), get()) }
 
     viewModel { GameCenterViewModel(get()) }
     //vc45  게임로그 뷰모모델에 대한 Dependency Injection

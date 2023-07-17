@@ -104,6 +104,18 @@ fun ImageView.setImage(iv: ImageView, str: String?) {
     }
 }
 
+fun ImageView.setSwingPreviewImage(iv: ImageView, str: String?) {
+    str?.let {
+        Glide.with(iv).load(it)
+            .apply(
+                RequestOptions()
+                    .placeholder(imageLoadingProgress(iv.context))
+//                    .error(R.drawable.ic_error)
+            )
+            .into(iv)
+    }
+}
+
 fun convertStringtoLong(time: String): Long {
     val defaultFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     defaultFormat.timeZone = TimeZone.getTimeZone("UTC")

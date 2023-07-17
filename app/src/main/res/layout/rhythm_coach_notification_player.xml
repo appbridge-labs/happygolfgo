@@ -36,10 +36,10 @@
         android:background="@null"
         android:src="@drawable/rhythm_coach_btn_bg_speed_down"/>
 
-    <ImageButton
-        android:id="@+id/btn_close"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@null"
-        android:src="@drawable/action_bar_close"/>
+<!--    <ImageButton-->
+<!--        android:id="@+id/btn_close"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:background="@null"-->
+<!--        android:src="@drawable/action_bar_close"/>-->
 </LinearLayout>

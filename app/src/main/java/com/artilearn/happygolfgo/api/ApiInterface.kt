@@ -5,10 +5,7 @@ import com.artilearn.happygolfgo.data.comment.CommentModel
 import com.artilearn.happygolfgo.data.gamecenter.*
 import com.artilearn.happygolfgo.data.golfgame.GolfGameResponse
 import com.artilearn.happygolfgo.data.golfrank.GolfRankResponse
-import com.artilearn.happygolfgo.data.home.AnnouncementAndExamResponse
-import com.artilearn.happygolfgo.data.home.HomeResponse
-import com.artilearn.happygolfgo.data.home.JoinMonthlyExamInputModel
-import com.artilearn.happygolfgo.data.home.JoinMonthlyExaminationResponse
+import com.artilearn.happygolfgo.data.home.*
 import com.artilearn.happygolfgo.data.lessonlog.LessonLogResponse
 import com.artilearn.happygolfgo.data.log.LogResponse
 import com.artilearn.happygolfgo.data.login.LoginDataModel
@@ -72,6 +69,11 @@ interface ApiInterface {
     fun joinMonthlyExam(
         @Body data: HashMap<String, JoinMonthlyExamInputModel>
     ): Single<Response<JoinMonthlyExaminationResponse>>
+
+    @POST("auth/user/refreshFcmToken")
+    fun refreshFcmToken(
+        @Body data: HashMap<String, RefreshFcmTokenPutParam>
+    ): Single<Response<RefreshFcmTokenResponse>>
 
     @GET("mypage/appversion")
     fun getAppVersion(

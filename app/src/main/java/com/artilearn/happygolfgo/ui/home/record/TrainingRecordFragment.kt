@@ -47,10 +47,9 @@ class TrainingRecordFragment :
 
     private fun initViewModelObserving() {
         with(viewModel) {
-//            2023.04.05 summary time records removed intentionally
-//           summaryTime.observe( this@TrainingRecordFragment, Observer { summaryTime ->
-//               binding.summaryTime = summaryTime
-//           })
+           summaryTime.observe( this@TrainingRecordFragment) { summaryTime ->
+               binding.summaryTime = summaryTime
+           }
 
             summaryWeight.observe( this@TrainingRecordFragment) { summaryWeight ->
                 binding.summaryWeight = summaryWeight
@@ -79,29 +78,39 @@ class TrainingRecordFragment :
                 goRefreshFromFragment()
             }
 
-            adapterPageInfo.observe(this@TrainingRecordFragment) {  adapterPageInfo ->
-                try {
-                    if (adapterPageInfo.pageCount > 0) {
-                        pagerAdapter.reloadMyGolfPagerAdapter(adapterPageInfo.pageCount)
-                        if (adapterPageInfo.currentPageIndex > -1) {
-                            binding.viewpager.setCurrentItem(
-                                adapterPageInfo.currentPageIndex,
-                                true
-                            )
-                        }
-                    }
-                } catch ( _: Exception) {
-                   //Eating
-                }
-            }
+            setObserverForPageInfoAdapter()
         }
     }
 
+    private fun setObserverForPageInfoAdapter() {
+// 2023.05.02 시험에 대한 정보를 제거한다.
+//            adapterPageInfo.observe(this@TrainingRecordFragment) {  adapterPageInfo ->
+//                try {
+//                    if (adapterPageInfo.pageCount > 0) {
+//                        pagerAdapter.reloadMyGolfPagerAdapter(adapterPageInfo.pageCount)
+//                        if (adapterPageInfo.currentPageIndex > -1) {
+//                            binding.viewpager.setCurrentItem(
+//                                adapterPageInfo.currentPageIndex,
+//                                true
+//                            )
+//                        }
+//                    }
+//                } catch ( _: Exception) {
+//                   //Eating
+//                }
+//            }
+    }
+
     private fun initAdapter() {
-        binding.viewpager.adapter = activity?.let {
-            this.pagerAdapter = MyGolfPowerPagerAdapter(it)
-            this.pagerAdapter
-        }
+        setupViewPagerAdapter()
+    }
+
+    private fun setupViewPagerAdapter() {
+//        2023.05.02 시험 정보에 대한 뷰 어댑터를 제거한다.
+//        binding.viewpager.adapter = activity?.let {
+//            this.pagerAdapter = MyGolfPowerPagerAdapter(it)
+//            this.pagerAdapter
+//        }
     }
 
     private fun initOnClickListener() {

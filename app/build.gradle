@@ -36,10 +36,10 @@ android {
             dimension "type"
             minSdkVersion 23
             resConfigs('en', 'xhdpi')
-//            buildConfigField "String", "HG_BASE_URL", "\"http://52.79.253.238/development/appClient/\""
+            buildConfigField "String", "HG_BASE_URL", "\"http://52.79.253.238/development/appClient/\""
 //            buildConfigField "String", "HG_BASE_URL", "\"https://happygolfgoapi.com/happygolfgo/appClient/\""
 //            buildConfigField "String", "HG_BASE_URL", "\"http:/192.168.0.3:7000/appClient/\""
-            buildConfigField "String", "HG_BASE_URL", "\"http://172.30.1.154:7000/appClient/\""
+//            buildConfigField "String", "HG_BASE_URL", "\"http://172.30.1.154:7000/appClient/\""
         }
 
         prod {
@@ -79,35 +79,36 @@ android {
 }
 
 dependencies {
-    def lifecycle_version = "2.5.1"
-    def arch_version = "2.1.0"
+//    def lifecycle_version = "2.5.1"
+    def lifecycle_version = "2.6.1"
+    def arch_version = "2.2.0"
     def core_version = "1.9.0"
 //    implementation "androidx.work:work-runtime-ktx:2.4.0"
-    implementation "androidx.work:work-runtime-ktx:2.8.0"
+    implementation "androidx.work:work-runtime-ktx:2.8.1"  //from 2.8.0
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation "androidx.core:core-ktx:$core_version" //upsidedown test
-    implementation "androidx.core:core:$core_version" //upsidedowncake test
+    implementation "androidx.core:core-ktx:$core_version"
+//    implementation "androidx.core:core:$core_version" //remove 04.06
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.github.happygolfdev:TLSModules-Android:1.1.3'
+//    implementation 'com.github.happygolfdev:TLSModules-Android:1.1.3' // not used any more
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0'
+//    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.0'
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'androidx.recyclerview:recyclerview:1.3.0'
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'com.google.android.material:material:1.8.0'
 
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
     // ktx
-    implementation 'androidx.activity:activity-ktx:1.6.1'
-    implementation 'androidx.fragment:fragment-ktx:1.5.5'
+    implementation 'androidx.activity:activity-ktx:1.7.0'
+    implementation 'androidx.fragment:fragment-ktx:1.5.6'
 
     // retrofit, okhttp log
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -119,7 +120,6 @@ dependencies {
     // aac lifecycle
     //android.arch.lifecycle:extensions:2.2.0 deprecated
     //implementation 'android.arch.lifecycle:extensions:2.2.0'
-
 
     // ViewModel
      implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
@@ -134,7 +134,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 
     // Annotation processor
-    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+//    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version") //remove 04.05 order 1
     // alternately - if using Java8, use the following instead of lifecycle-compiler
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
 
@@ -153,32 +153,18 @@ dependencies {
     // optional - Test helpers for Lifecycle runtime
     testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version")
 
-
-    // material calendar
-    //implementation 'com.applandeo:material-calendar-view:1.8.0-rc01'
     implementation 'com.applandeo:material-calendar-view:1.9.0-rc03'
 //    2022.02.15 시뮬레이터에서 날짜가 보이지 않는 버그가 있음.  sdk 31
 //    implementation 'com.applandeo:material-calendar-view:1.9.0-rc03'
 
     // firebase
-
-    implementation 'com.google.firebase:firebase-analytics-ktx:17.5.0'
-    implementation 'com.google.firebase:firebase-core:17.5.0'
-    implementation 'com.google.firebase:firebase-messaging:20.1.5'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx:17.2.1'
-    implementation 'com.google.firebase:firebase-crashlytics-ndk:17.2.1'
-
-//    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
-//    implementation 'com.google.firebase:firebase-core:21.1.1'
-//    implementation 'com.google.firebase:firebase-messaging:23.1.1'
-//    implementation 'com.google.firebase:firebase-crashlytics:18.3.4'
-//    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.4'
-//    implementation 'com.google.firebase:firebase-crashlytics-ndk:18.3.4'
-
-
-    // deprecated crashlytics fabric
-    //implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    //upgrading firebase order 2
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.1'
+    implementation 'com.google.firebase:firebase-core:21.1.1'
+    implementation 'com.google.firebase:firebase-messaging:23.1.2'
+    implementation 'com.google.firebase:firebase-crashlytics:18.3.6'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.6'
+    implementation 'com.google.firebase:firebase-crashlytics-ndk:18.3.6'
 
     // rxjava
     implementation "io.reactivex.rxjava2:rxjava:2.2.21"
@@ -191,19 +177,13 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
     // exoplayer
-//    implementation 'com.google.android.exoplayer:exoplayer:2.18.2'
-//    implementation 'com.google.android.exoplayer:exoplayer-core:2.18.2'
-//    implementation 'com.google.android.exoplayer:exoplayer-dash:2.18.2'
-//    implementation 'com.google.android.exoplayer:exoplayer-ui:2.18.2'
-
-    // exoplayer
-    implementation 'com.google.android.exoplayer:exoplayer:2.10.5'
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.10.5'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.10.5'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.10.5'
+    implementation 'com.google.android.exoplayer:exoplayer:2.18.5'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.18.5'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.18.5'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.18.5'
 
     // ktx fragment
-    implementation 'androidx.fragment:fragment-ktx:1.5.5'
+    implementation 'androidx.fragment:fragment-ktx:1.5.6'
 
     // stetho
     implementation 'com.facebook.stetho:stetho:1.6.0'

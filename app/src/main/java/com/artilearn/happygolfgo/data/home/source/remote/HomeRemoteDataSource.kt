@@ -1,9 +1,6 @@
 package com.artilearn.happygolfgo.data.home.source.remote
 
-import com.artilearn.happygolfgo.data.home.AnnouncementAndExamResponse
-import com.artilearn.happygolfgo.data.home.HomeResponse
-import com.artilearn.happygolfgo.data.home.JoinMonthlyExamInputModel
-import com.artilearn.happygolfgo.data.home.JoinMonthlyExaminationResponse
+import com.artilearn.happygolfgo.data.home.*
 import io.reactivex.Single
 import retrofit2.Response
 
@@ -14,4 +11,6 @@ interface HomeRemoteDataSource {
     fun remoteAnnouncementAndExam():Single<Response<AnnouncementAndExamResponse>>
 
     fun remoteJoinMonthlyExam(data:HashMap<String, JoinMonthlyExamInputModel>): Single<Response<JoinMonthlyExaminationResponse>>
+
+    fun remoteFreshFcmToken(data:HashMap<String, RefreshFcmTokenPutParam>):Single<Response<RefreshFcmTokenResponse>>
 }

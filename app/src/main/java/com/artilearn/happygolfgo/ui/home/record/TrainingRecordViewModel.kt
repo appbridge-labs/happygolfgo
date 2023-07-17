@@ -28,9 +28,9 @@ class TrainingRecordViewModel(
     private val _adapterPageInfo: MutableLiveData<TRMyGolfPowerExamResultPageInfoModel> = MutableLiveData()
 
     // 2023.04.05 summary time removed
-//    private val _summaryTime: MutableLiveData<TRSummaryTimeModel> = MutableLiveData()
-//    val summaryTime: LiveData<TRSummaryTimeModel>
-//        get() = _summaryTime
+    private val _summaryTime: MutableLiveData<TRSummaryTimeModel> = MutableLiveData()
+    val summaryTime: LiveData<TRSummaryTimeModel>
+        get() = _summaryTime
 
     val adapterPageInfo: LiveData<TRMyGolfPowerExamResultPageInfoModel>
         get() =  _adapterPageInfo
@@ -51,12 +51,14 @@ class TrainingRecordViewModel(
         get() = _roundRecords
 
     init {
-        requestMyGolfPowerExamResultPageInfo()
+//        requestMyGolfPowerExamResultPageInfo()
+        requestSummaryTime()
         requestSummaryWeight()
         requestSummaryGoldPower()
         requestSummaryRound()
     }
 
+//    2023.05.02 시험 정보에 대한 정보 rollback
     private fun requestMyGolfPowerExamResultPageInfo() {
         repository.getMyGolfPowerExamResultPageInfo()
             .subscribeOn(Schedulers.io())
@@ -86,34 +88,34 @@ class TrainingRecordViewModel(
                 }).addTo(compositeDisposable)
     }
 
-//    private fun requestSummaryTime() {
-//        repository.getTrainingManagementSummaryTime()
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .doOnSubscribe { showLoading() }
-//            .doOnError { t -> errorLog(TAG, t) }
-//            .subscribe({ response ->
-//                val body = response.body()
-//                if (response.isSuccessful && body != null) {
-//                    if (body.data.errorCode == 0) {
-//                        _summaryTime.value = TRSummaryTimeMapper.mapper(body.data.res);
-//                    } else {
-//                        _serverError.value = _ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
-//                    }
-//                } else {
-//                    _serverError.value = _ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
-//                }
-//            }, { t ->
-//                when (t) {
-//                    is NetworkErrorException -> _networkFail.value = Unit
-//                    is HttpException -> {
-//                        if (t.code() == 419) _appRefresh.call()
-//                        else _serverError.value = _ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
-//                    }
-//                    else -> _serverError.value =  _ERROR_MESSAGE_UNKNOWN_ERROR
-//                }
-//            }).addTo(compositeDisposable)
-//    }
+    private fun requestSummaryTime() {
+        repository.getTrainingManagementSummaryTime()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doOnError { t -> errorLog(TAG, t) }
+            .subscribe({ response ->
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    if (body.data.errorCode == 0) {
+                        _summaryTime.value = TRSummaryTimeMapper.mapper(body.data.res);
+                    } else {
+                        _serverError.value = _ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
+                    }
+                } else {
+                    _serverError.value = _ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
+                }
+            }, { t ->
+                when (t) {
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    is HttpException -> {
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = _ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
+                    }
+                    else -> _serverError.value =  _ERROR_MESSAGE_UNKNOWN_ERROR
+                }
+            }).addTo(compositeDisposable)
+    }
 
     private fun requestSummaryWeight() {
         repository.getTrainingManagementSummaryWeight()

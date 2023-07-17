@@ -4,7 +4,6 @@ import androidx.databinding.BindingAdapter
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.ui.home.HomeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.tlsolution.tlsmodules.Network.RequestEnvironmentMode
 
 @BindingAdapter("bottomClick")
 fun BottomNavigationView.onBottomClick(viewModel: HomeViewModel) {

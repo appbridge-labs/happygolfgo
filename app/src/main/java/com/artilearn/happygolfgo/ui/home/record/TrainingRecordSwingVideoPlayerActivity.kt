@@ -8,47 +8,37 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.media.browse.MediaBrowser
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Observer
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseActivity
 import com.artilearn.happygolfgo.constants.*
-import com.artilearn.happygolfgo.data.LogDetail
-import com.artilearn.happygolfgo.data.ReservationLesson
-import com.artilearn.happygolfgo.data.ReservationPlate
-import com.artilearn.happygolfgo.data.Ticket
-import com.artilearn.happygolfgo.databinding.ActivityLogBinding
 import com.artilearn.happygolfgo.databinding.ActivityTrainingRecordSwingVideoPlayerBinding
-import com.artilearn.happygolfgo.enummodel.BottimViewType
 import com.artilearn.happygolfgo.enummodel.ToastType
-import com.artilearn.happygolfgo.ui.comment.CommentActivity
 import com.artilearn.happygolfgo.ui.home.record.model.TRSummarySwingVideoRecordModel
-import com.artilearn.happygolfgo.ui.log.LogViewModel
-import com.artilearn.happygolfgo.util.convertTime
 import com.artilearn.happygolfgo.util.setImage
-import com.google.android.exoplayer2.ExoPlayerFactory
+import com.artilearn.happygolfgo.util.setSwingPreviewImage
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.common_default_view.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.launch
-
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 
@@ -63,7 +53,7 @@ class TrainingRecordSwingVideoPlayerActivity
     private val swingRecordModel by lazy { intent.getParcelableExtra<TRSummarySwingVideoRecordModel>(SWING_VIDEO_DETAIL) }
 
     private var playReady = false
-    private var player: SimpleExoPlayer? = null
+    private var player: ExoPlayer? = null
     private var currentWindow = 0
     private var playbackPosition = 0L
     private var  clickableDelete = true
@@ -137,13 +127,15 @@ class TrainingRecordSwingVideoPlayerActivity
     }
 
     private fun initializePlayer(path: String) {
-        player = ExoPlayerFactory.newSimpleInstance(this)
+        player = ExoPlayer.Builder(this).build() //ExoPlayerFactory.newSimpleInstance(this)
         binding.exoplayer.player = player
 
         val uri = path.toUri()
-        val mediaSource = buildMediaSource(uri)
+        val dataSourceFactory = DefaultDataSourceFactory(this, "happygolf_pro")
+        val mediaItem: MediaItem = MediaItem.fromUri(uri)
+        val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
 
-        val exoEventListener = object : Player.EventListener {
+        val exoEventListener = object : Player.Listener {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
                 when (playbackState) {
                     Player.STATE_BUFFERING -> videoStateReady()
@@ -157,16 +149,10 @@ class TrainingRecordSwingVideoPlayerActivity
                 super.onPlayerStateChanged(playWhenReady, playbackState)
             }
         }
-
         player?.playWhenReady = playReady
         player?.seekTo(currentWindow, playbackPosition)
         player?.prepare(mediaSource, false, false)
         player?.addListener(exoEventListener)
-    }
-
-    private fun buildMediaSource(uri: Uri): MediaSource {
-        val dataSourceFactory = DefaultDataSourceFactory(this, "happygolf_pro")
-        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
     }
 
     private fun videoStateEnd() {
@@ -189,7 +175,7 @@ class TrainingRecordSwingVideoPlayerActivity
         if (player != null) {
             playReady = player!!.playWhenReady
             playbackPosition = player!!.currentPosition
-            currentWindow = player!!.currentWindowIndex
+            currentWindow = player!!.currentMediaItemIndex
             player!!.release()
             player = null
         }
@@ -253,7 +239,8 @@ class TrainingRecordSwingVideoPlayerActivity
             binding.videoLayout.visibility = View.GONE
         } else {
             with(binding.ivThumbnail) {
-                setImage(this, thumbNail)
+//                setImage(this, thumbNail)
+                setSwingPreviewImage(this, thumbNail)
             }
         }
     }

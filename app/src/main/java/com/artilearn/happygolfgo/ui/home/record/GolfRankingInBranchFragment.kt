@@ -5,6 +5,8 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.MY_GOLF_POWER_ADAPTER_INDEX
 import com.artilearn.happygolfgo.databinding.FragmentGolfRankingInBranchBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
+import androidx.lifecycle.Observer
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GolfRankingInBranchFragment :
@@ -40,10 +42,14 @@ class GolfRankingInBranchFragment :
     }
 
     private fun initViewModelObserving() {
-// items of list adapter is directtly being binded in xml through adapter
-//        with(viewModel) {
-//
-//        }
+        with(viewModel) {
+            serverError.observe(this@GolfRankingInBranchFragment) {
+                showFragmentToast(ToastType.ERROR, it)
+            }
+            networkFail.observe(this@GolfRankingInBranchFragment) {
+                showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+            }
+        }
     }
 
     private fun initAdapter() {

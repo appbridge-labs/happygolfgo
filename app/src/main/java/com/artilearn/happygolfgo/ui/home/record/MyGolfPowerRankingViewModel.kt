@@ -19,12 +19,7 @@ class MyGolfPowerRankingViewModel(
     private val _ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE = "데이타를 불러오는데 실패했습니다."
     private val _ERROR_MESSAGE_UNKNOWN_ERROR  = "알 수 없는 오류 발생"
     private val TAG = javaClass.simpleName
-//    private val _summaryTime: MutableLiveData<TRSummaryTimeModel> = MutableLiveData()
     private val _adapterPageInfo: MutableLiveData<TRMyGolfPowerExamResultPageInfoModel> = MutableLiveData()
-// never used
-//    val summaryTime: LiveData<TRSummaryTimeModel>
-//        get() = _summaryTime
-// never used
     val adapterPageInfo: LiveData<TRMyGolfPowerExamResultPageInfoModel>
         get() =  _adapterPageInfo
 

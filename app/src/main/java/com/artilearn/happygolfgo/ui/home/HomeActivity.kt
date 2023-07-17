@@ -3,6 +3,7 @@ package com.artilearn.happygolfgo.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -72,11 +73,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun toolbarText(name: String) {
         var title = getString(R.string.home_toolbar_text)
 
+        binding.homeToolbar.toolbar.visibility = View.VISIBLE
+        binding.homeToolbar.logInToolbar.visibility = View.GONE
+
         when (name) {
-            "예약" ->  title = getString(R.string.home_toolbar_text)
-            "알림" -> title = getString(R.string.alram_toolbar_title)
-            "마이페이지" -> title = getString(R.string.mypage_toolbar_title)
-            "기록실" -> title = getString(R.string.game_record_toolbar_title)
+            "예약" ->  {
+                binding.homeToolbar.toolbar.visibility = View.GONE
+                binding.homeToolbar.logInToolbar.visibility = View.VISIBLE
+                 title = getString(R.string.home_toolbar_text)
+            }
+            "알림" -> {
+                title = getString(R.string.alram_toolbar_title)
+            }
+            "마이페이지" -> {
+                 title = getString(R.string.mypage_toolbar_title)
+            }
+            "기록실" -> {
+                title = getString(R.string.game_record_toolbar_title)
+            }
         }
 
         initToolbar(binding.homeToolbar.toolbar, title, false)

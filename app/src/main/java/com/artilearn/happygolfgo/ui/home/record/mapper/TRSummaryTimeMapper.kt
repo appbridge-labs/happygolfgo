@@ -6,17 +6,17 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 //2023.04.05 remove summary time in training record section
-//object TRSummaryTimeMapper
-//    : TrainingRecordMapper<TrainingManagementSummaryTimeResponse.TrainingManagementSummaryTimeRes,
-//        TRSummaryTimeModel> {
-//    override fun mapper(from: TrainingManagementSummaryTimeResponse.TrainingManagementSummaryTimeRes): TRSummaryTimeModel {
-//        return TRSummaryTimeModel(
-//            title = from.title ?: "",
-//            time = from.time ?: "",
-//            unit = from.unit ?: ""
-//        )
-//    }
-//}
+object TRSummaryTimeMapper
+    : TrainingRecordMapper<TrainingManagementSummaryTimeResponse.TrainingManagementSummaryTimeRes,
+        TRSummaryTimeModel> {
+    override fun mapper(from: TrainingManagementSummaryTimeResponse.TrainingManagementSummaryTimeRes): TRSummaryTimeModel {
+        return TRSummaryTimeModel(
+            title = from.title ?: "",
+            time = from.time ?: "",
+            unit = from.unit ?: ""
+        )
+    }
+}
 
 object TRSummaryWeightMapper
     : TrainingRecordMapper<TrainingManagementSummaryWeightResponse.TrainingManagementSummaryWeightRes,

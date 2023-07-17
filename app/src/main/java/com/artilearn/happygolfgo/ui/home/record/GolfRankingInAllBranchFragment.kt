@@ -5,6 +5,7 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.MY_GOLF_POWER_ADAPTER_INDEX
 import com.artilearn.happygolfgo.databinding.FragmentGolfRankingInAllBranchBinding
+import com.artilearn.happygolfgo.enummodel.ToastType
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GolfRankingInAllBranchFragment :
@@ -46,7 +47,14 @@ class GolfRankingInAllBranchFragment :
     }
 
     private fun initViewModelObserving() {
-
+        with(viewModel) {
+            serverError.observe(this@GolfRankingInAllBranchFragment) {
+                showFragmentToast(ToastType.ERROR, it)
+            }
+            networkFail.observe(this@GolfRankingInAllBranchFragment) {
+                showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+            }
+        }
     }
 
     private fun initRequest() {

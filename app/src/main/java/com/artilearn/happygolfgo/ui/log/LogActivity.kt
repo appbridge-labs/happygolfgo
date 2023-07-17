@@ -19,7 +19,9 @@ import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.comment.CommentActivity
 import com.artilearn.happygolfgo.util.convertTime
 import com.artilearn.happygolfgo.util.setImage
-import com.google.android.exoplayer2.ExoPlayerFactory
+import com.artilearn.happygolfgo.util.setLessonLogItem
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
@@ -34,7 +36,7 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
     private val lessonId by lazy { intent.getIntExtra(LESSON_ID, 0) }
 
     private var playReady = false
-    private var player: SimpleExoPlayer? = null
+    private var player: ExoPlayer? = null
     private var currentWindow = 0
     private var playbackPosition = 0L
     private var log: LogDetail? = null
@@ -99,13 +101,16 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
     }
 
     private fun initializePlayer(path: String) {
-        player = ExoPlayerFactory.newSimpleInstance(this)
+        player = ExoPlayer.Builder(this).build()
         binding.exoplayer.player = player
 
         val uri = path.toUri()
-        val mediaSource = buildMediaSource(uri)
+        val dataSourceFactory = DefaultDataSourceFactory(this, "happygolf_pro")
+        val mediaItem: MediaItem = MediaItem.fromUri(uri)
+        val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
 
-        val exoEventListener = object : Player.EventListener {
+
+        val exoEventListener = object : Player.Listener {
             override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
                 when (playbackState) {
                     Player.STATE_BUFFERING -> videoStateReady()
@@ -120,17 +125,10 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
                 super.onPlayerStateChanged(playWhenReady, playbackState)
             }
         }
-
         player?.playWhenReady = playReady
         player?.seekTo(currentWindow, playbackPosition)
         player?.prepare(mediaSource, false, false)
         player?.addListener(exoEventListener)
-    }
-
-    private fun buildMediaSource(uri: Uri): MediaSource {
-        val dataSourceFactory = DefaultDataSourceFactory(this, "happygolf_pro")
-
-        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(uri)
     }
 
     private fun videoStateEnd() {
@@ -152,7 +150,7 @@ class LogActivity : BaseActivity<ActivityLogBinding>(R.layout.activity_log) {
         if (player != null) {
             playReady = player!!.playWhenReady
             playbackPosition = player!!.currentPosition
-            currentWindow = player!!.currentWindowIndex
+            currentWindow = player!!.currentMediaItemIndex
             player!!.release()
             player = null
         }

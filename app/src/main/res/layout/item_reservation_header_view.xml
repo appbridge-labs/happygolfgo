@@ -108,6 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:weightSum="10"
+                    android:visibility="gone"
                     >
                     <TextView
                         android:layout_width="0dp"
@@ -211,12 +212,13 @@
                             />
                     </FrameLayout>
                 </LinearLayout>
+<!--                android:visibility="@{examination.waiting ? View.GONE: View.VISIBLE}"-->
                 <LinearLayout
                     android:id="@+id/ll_examination_score_view"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:visibility="@{examination.waiting ? View.GONE: View.VISIBLE}"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/ll_examination_info_view">
                     <LinearLayout
                         android:id="@+id/ll_divider_2"

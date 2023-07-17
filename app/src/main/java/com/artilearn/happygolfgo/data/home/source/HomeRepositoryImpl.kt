@@ -1,10 +1,7 @@
 package com.artilearn.happygolfgo.data.home.source
 
 import android.accounts.NetworkErrorException
-import com.artilearn.happygolfgo.data.home.AnnouncementAndExamResponse
-import com.artilearn.happygolfgo.data.home.HomeResponse
-import com.artilearn.happygolfgo.data.home.JoinMonthlyExamInputModel
-import com.artilearn.happygolfgo.data.home.JoinMonthlyExaminationResponse
+import com.artilearn.happygolfgo.data.home.*
 import com.artilearn.happygolfgo.data.home.source.remote.HomeRemoteDataSource
 import com.artilearn.happygolfgo.util.NetworkManager
 import io.reactivex.Single
@@ -55,6 +52,23 @@ class HomeRepositoryImpl(
     ): Single<Response<JoinMonthlyExaminationResponse>> {
         return if (networkManager.networkState()) {
             homeRemoteDataSource.remoteJoinMonthlyExam(data)
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun requestFreshFcmToken(data: HashMap<String, RefreshFcmTokenPutParam>): Single<Response<RefreshFcmTokenResponse>> {
+        return if (networkManager.networkState()) {
+            homeRemoteDataSource.remoteFreshFcmToken(data)
                 .flatMap {
                     with(it) {
                         if (isSuccessful) {

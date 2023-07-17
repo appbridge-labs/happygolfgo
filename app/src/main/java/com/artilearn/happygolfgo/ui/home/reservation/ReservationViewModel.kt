@@ -1,6 +1,7 @@
 package com.artilearn.happygolfgo.ui.home.reservation
 
 import android.accounts.NetworkErrorException
+import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,13 +11,16 @@ import com.artilearn.happygolfgo.data.announcement.Announcement
 import com.artilearn.happygolfgo.data.examination.Examination
 import com.artilearn.happygolfgo.data.home.HomeResponseInfo
 import com.artilearn.happygolfgo.data.home.JoinMonthlyExamInputModel
+import com.artilearn.happygolfgo.data.home.RefreshFcmTokenPutParam
 import com.artilearn.happygolfgo.data.home.source.HomeRepository
 import com.artilearn.happygolfgo.data.version.MobileVersionAndroid
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.EXPIRED_TICKET
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.PAUSE_TICKET
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.USE_TICKET
+import com.artilearn.happygolfgo.util.PreferenceManager
 import com.artilearn.happygolfgo.util.SingleLiveEvent
 import com.artilearn.happygolfgo.util.ext.errorLog
+import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
@@ -25,11 +29,15 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import retrofit2.HttpException
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 //comments: Eddie Kim, 홈화면에서 티켓에 대한 정보를 가져오는 부분
 class ReservationViewModel(
-    private val repository: HomeRepository
+    private val repository: HomeRepository,
+    private val preferenceManager: PreferenceManager
 ) : BaseViewModel() {
     private val TAG = javaClass.simpleName
     private val reservationList: Subject<Unit> = PublishSubject.create()
@@ -38,6 +46,7 @@ class ReservationViewModel(
     private var disposable: Disposable? = null
     private var disposableForAnnouncmentAndExam : Disposable? = null
     private var disposableForJoinMonthlyExam : Disposable? = null
+    private var disposableForRefreshFcmToken : Disposable? = null
 
     private val _emptyTicket: MutableLiveData<Boolean> = MutableLiveData()
     private val _reservationListButton: SingleLiveEvent<Unit> = SingleLiveEvent()
@@ -105,6 +114,10 @@ class ReservationViewModel(
             _isRefreshSubject.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(_isRefresh::setValue)
         )
+
+        checkFcmToken();
+//        registerFcmToken()
+//        checkFcmToken();
     }
 
     fun onReservationList() {
@@ -127,8 +140,29 @@ class ReservationViewModel(
         if (examination.value?.state == "taken") {
             _retryExamPermission.call()
         } else {
-            requestJoinMonthlyExam();
+            requestJoinMonthlyExam()
         }
+    }
+
+    private fun checkFcmToken() {
+        val lastUpdatedAt =  preferenceManager.fcmTokenUpdatedDate
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
+        val date = Date()
+        val current = formatter.format(date)
+        if  (lastUpdatedAt != current) {
+            preferenceManager.fcmTokenUpdatedDate = current
+            registerFcmToken()
+        }
+    }
+
+    private fun registerFcmToken() {
+         FirebaseMessaging.getInstance().token
+             .addOnCompleteListener { task ->
+                if (task.isSuccessful && task.result != null && !TextUtils.isEmpty(task.result)) {
+                     val token: String = task.result !!
+                     putFcmToken(token)
+                }
+             }
     }
 
     //POST METHOD CALLING
@@ -228,7 +262,7 @@ class ReservationViewModel(
                 actionTitle = "응시완료"
             }
         }
-        return ;
+        return
     }
 
     private fun getAnnouncementAndExam() {
@@ -273,6 +307,42 @@ class ReservationViewModel(
     fun fetchData() {
         getTicket()
         getAnnouncementAndExam()
+    }
+
+    fun putFcmToken(fcmToken:String) {
+        disposableForRefreshFcmToken?.let {
+             if(!it.isDisposed) {
+                 it.dispose()
+             }
+        }
+
+        val dataModel = RefreshFcmTokenPutParam(
+            "1", // 1 for android
+            fcmToken //val fcmToken:String
+        )
+
+        //POST Method
+        val data = hashMapOf<String, RefreshFcmTokenPutParam>()
+        data["Data"] = dataModel
+
+        disposableForRefreshFcmToken = repository.requestFreshFcmToken(data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+//            .doOnSubscribe { showLoading() }
+//            .doAfterTerminate { hideLoading() }
+//            .doOnError { t -> errorLog(TAG, t) }
+            .subscribe({ it ->
+                val body = it.body()
+            }, { t ->
+                when (t) {
+//                    is NetworkErrorException -> _networkFail.call()
+//                    is HttpException -> {
+//                        if (t.code() == 419) _appRefresh.call()
+//                        else _serverError.value = "이용권을 불러오는데 실패했습니다"
+//                    }
+//                    else -> _serverError.value = "알 수 없는 오류 발생"
+                }
+            }).addTo(compositeDisposable)
     }
 
     fun getTicket() {
