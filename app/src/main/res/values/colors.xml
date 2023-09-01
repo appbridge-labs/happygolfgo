@@ -46,4 +46,20 @@
     <color name="color_my_golf_power_title_color">#727272</color>
     <color name="color_my_golf_power_sub_title_color">#3F7AA4</color>
     <color name="color_my_golf_power_normal_score">#4BBFF0</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="red">#FF6565</color>
+    <color name="red_100">#FFEAEA</color>
+    <color name="gray100">#F9F9F9</color>
+    <color name="gray200">#F3F3F3</color>
+    <color name="gray300">#DCE0E5</color>
+    <color name="gray400">#A2A9AE</color>
+    <color name="gray500">#7A8186</color>
+    <color name="blue100">#EEFAFF</color>
+    <color name="blue500">#26A9E0</color>
+    <color name="green100">#F3FFD9</color>
+    <color name="green500">#A3E023</color>
+    <color name="orange500">#FAAD3D</color>
+    <color name="orange100">#FFF6EA</color>
+    <color name="black_op20">#33000000</color>
 </resources>

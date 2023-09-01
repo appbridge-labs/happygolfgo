@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.announcement.Announcement
+import com.artilearn.happygolfgo.data.banner.Banner
 import com.artilearn.happygolfgo.data.examination.Examination
 import com.artilearn.happygolfgo.data.home.HomeResponseInfo
 import com.artilearn.happygolfgo.data.home.JoinMonthlyExamInputModel
@@ -47,12 +48,17 @@ class ReservationViewModel(
     private var disposableForAnnouncmentAndExam : Disposable? = null
     private var disposableForJoinMonthlyExam : Disposable? = null
     private var disposableForRefreshFcmToken : Disposable? = null
+    private var disposableGetBanner : Disposable? = null
 
     private val _emptyTicket: MutableLiveData<Boolean> = MutableLiveData()
     private val _reservationListButton: SingleLiveEvent<Unit> = SingleLiveEvent()
     private val _message = SingleLiveEvent<String>()
     private val _buttonState: MutableLiveData<Boolean> = MutableLiveData(true)
     private val _isRefresh: MutableLiveData<Boolean> = MutableLiveData()
+
+    private val _liveBanners: MutableLiveData<List<Banner>> = MutableLiveData()
+    val liveBanner: LiveData<List<Banner>> = _liveBanners
+
     val isRefresh: LiveData<Boolean>
         get() = _isRefresh
 
@@ -80,6 +86,9 @@ class ReservationViewModel(
     val announcement:LiveData<Announcement>
         get() = _announcement
 
+    private val _showAnnouncement = MutableLiveData(false)
+    val showAnnouncement: LiveData<Boolean> = _showAnnouncement
+
     private val _examination:MutableLiveData<Examination> = MutableLiveData()
     val examination:LiveData<Examination>
        get() = _examination
@@ -95,6 +104,10 @@ class ReservationViewModel(
     private val _scoreClick = SingleLiveEvent<String>()
     val scoreClick:LiveData<String>
         get() = _scoreClick
+
+    private val _todayReservations = SingleLiveEvent<List<String>>()
+    val todayReservation:LiveData<List<String>>
+        get() = _todayReservations
 
     init {
         compositeDisposable.addAll(
@@ -284,13 +297,16 @@ class ReservationViewModel(
                         _announcement.value =  body.data.res.announcement
                         _examination.value = body.data.res.exam
                         _mobileVersionAndroid.value = body.data.res.version.androidVersion
+                        _showAnnouncement.value = !body.data.res.announcement.subject.isNullOrBlank()
                     } else {
                         body?.data?.errorMessage.let { msg ->
                             _serverError.value = "오류 메세지: $msg"
                         }
+                        _showAnnouncement.value = false
                     }
                 } else {
                     _serverError.value = "시험 정보를 받아오는데 실패하였습니다."
+                    _showAnnouncement.value = false
                 }
             }, { t ->
                 when (t) {
@@ -304,9 +320,41 @@ class ReservationViewModel(
             }).addTo(compositeDisposable)
     }
 
+    private fun getBanner() {
+        disposableGetBanner?.let {
+            if (!it.isDisposed) {
+                it.dispose()
+            }
+        }
+
+        disposableGetBanner = repository.getBanner()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError { t -> errorLog(TAG, t) }
+            .subscribe({
+                val body = it.body()
+                if (it.isSuccessful) {
+                    if (body != null && body.data.errorCode == 0 ) {
+                        _liveBanners.value = body.data.res.banners
+                    } else {
+                        body?.data?.errorMessage.let { msg ->
+                            _serverError.value = "오류 메세지: $msg"
+                        }
+                        _showAnnouncement.value = false
+                    }
+                } else {
+                    _serverError.value = "배너 정보를 받아오는데 실패하였습니다."
+                    _showAnnouncement.value = false
+                }
+            }, { t ->
+            }).addTo(compositeDisposable)
+    }
+
     fun fetchData() {
         getTicket()
         getAnnouncementAndExam()
+        getTodaysReservation()
+        getBanner()
     }
 
     fun putFcmToken(fcmToken:String) {
@@ -376,6 +424,44 @@ class ReservationViewModel(
                     is HttpException -> {
                         if (t.code() == 419) _appRefresh.call()
                         else _serverError.value = "이용권을 불러오는데 실패했습니다"
+                    }
+                    else -> _serverError.value = "알 수 없는 오류 발생"
+                }
+            }).addTo(compositeDisposable)
+    }
+
+    fun getTodaysReservation() {
+        repository.selectReservationList()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showLoading() }
+            .doAfterTerminate { hideLoading() }
+            .doOnError { t -> errorLog(TAG, t) }
+            .subscribe({ response ->
+                val body = response.body()
+                val today = SimpleDateFormat("yyyy-MM-dd").format(Date())
+                val timeFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+                if (response.isSuccessful && body != null) {
+                    val plateItems = body.data.plateReservations.filter {
+                        val date = timeFormat.parse(it.startDate)
+                        val dateStr = SimpleDateFormat("yyyy-MM-dd").format(date)
+                        dateStr == today
+                    }.map {
+                        val date = timeFormat.parse(it.startDate)
+                        val time = SimpleDateFormat("HH:mm").format(date)
+                        "${it.name} $time"
+                    }
+                    _todayReservations.value = plateItems
+                } else {
+                    _serverError.value = "예약 정보를 불러오는데 실패했습니다"
+                }
+            }, { t ->
+                when (t) {
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    is HttpException -> {
+                        if (t.code() == 419) _appRefresh.call()
+                        else _serverError.value = "데이터를 불러오는데 실패했습니다"
                     }
                     else -> _serverError.value = "알 수 없는 오류 발생"
                 }

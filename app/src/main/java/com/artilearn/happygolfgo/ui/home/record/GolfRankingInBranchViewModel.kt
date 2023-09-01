@@ -19,7 +19,7 @@ class GolfRankingInBranchViewModel(
 
     private var disposable : Disposable? = null
 
-    var pageIndex:Int? = null
+    var yearMonth: String = ""
     private val _rankingInBranchData:MutableLiveData<ArrayList<RankingInBranchData>> = MutableLiveData()
 
     val rankingInBranchData : LiveData<ArrayList<RankingInBranchData>>
@@ -41,38 +41,36 @@ class GolfRankingInBranchViewModel(
                  it.dispose()
             }
         }
-        pageIndex?.let {
-            disposable = repository.getBranchRanking(it)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {
-                    showLoading()
-                }
-                .doAfterTerminate {
-                    hideLoading()
-                }
-                .doOnError { error ->
-                     errorLog(TAG, error)
-                }
-                .subscribe({ response ->
-                    val body = response.body()
-                    if (response.isSuccessful && body != null) {
-                        val rankingInBranchData = RankingInBranchData.map(body.data.res)
-                        println(rankingInBranchData)
-                        _rankingInBranchData.value = rankingInBranchData
-                        body.data.res.pageInfo.title?.let { pageInfoTitle  ->
-                            title = pageInfoTitle
-                        }
-                    } else {
-                      _serverError.value = CONSTANT_ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
+        disposable = repository.getBranchRanking(yearMonth)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                showLoading()
+            }
+            .doAfterTerminate {
+                hideLoading()
+            }
+            .doOnError { error ->
+                errorLog(TAG, error)
+            }
+            .subscribe({ response ->
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    val rankingInBranchData = RankingInBranchData.map(body.data.res)
+                    println(rankingInBranchData)
+                    _rankingInBranchData.value = rankingInBranchData
+                    body.data.res.title.let { title  ->
+                        this.title = title
                     }
-                },{  e ->
-                    when(e) {
-                        is NetworkErrorException -> _networkFail.value = Unit
-                        else -> _serverError.value = CONSTANT_ERROR_MESSAGE_UNKNOWN_ERROR
-                    }
-                })
-                .addTo(compositeDisposable)
-        }
+                } else {
+                    _serverError.value = CONSTANT_ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
+                }
+            },{  e ->
+                when(e) {
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    else -> _serverError.value = CONSTANT_ERROR_MESSAGE_UNKNOWN_ERROR
+                }
+            })
+            .addTo(compositeDisposable)
     }
 }

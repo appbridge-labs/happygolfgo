@@ -18,14 +18,15 @@ class GolfRankingBySubjectViewModel (
     private val _classNameForLog = javaClass.simpleName
 
     private var disposable : Disposable? = null
-    var pageIndex:Int? = null
+    var yearMonth: String = ""
     private val _rankingBySubjectData:MutableLiveData<ArrayList<RankingBySubjectData>>
       = MutableLiveData()
 
     val rankingBySubjectData : LiveData<ArrayList<RankingBySubjectData>>
     get() = _rankingBySubjectData
 
-    var title :String = ""
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String> = _title
 
     init {
 
@@ -41,37 +42,33 @@ class GolfRankingBySubjectViewModel (
                 it.dispose()
              }
         }
-        pageIndex?.let {
-              disposable = repository.getSubjectRanking(it)
-                  .subscribeOn(Schedulers.io())
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .doOnSubscribe {
-                      showLoading()
-                  }
-                  .doAfterTerminate {
-                      hideLoading()
-                  }
-                  .doOnError { error ->
-                      errorLog(_classNameForLog, error)
-                  }
-                  .subscribe({ response ->
-                    val body = response.body()
-                    if (response.isSuccessful && body != null) {
-                         val rankingBySubjectData = RankingBySubjectData.map(body.data.res)
-                          _rankingBySubjectData.value = rankingBySubjectData
-                         if (body.data.res.pageInfo.title != null ) {
-                             title = body.data.res.pageInfo.title ?: ""
-                         }
-                    } else {
-                        _serverError.value = CONSTANT_ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
-                    }
-                  }, {error ->
-                      when(error) {
-                           is NetworkErrorException -> _networkFail.value = Unit
-                          else -> _serverError.value = CONSTANT_ERROR_MESSAGE_UNKNOWN_ERROR
-                      }
-                  })
-                  .addTo(compositeDisposable)
-        }
+        disposable = repository.getSubjectRanking(yearMonth)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                showLoading()
+            }
+            .doAfterTerminate {
+                hideLoading()
+            }
+            .doOnError { error ->
+                errorLog(_classNameForLog, error)
+            }
+            .subscribe({ response ->
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    val rankingBySubjectData = RankingBySubjectData.map(body.data.res)
+                    _rankingBySubjectData.value = rankingBySubjectData
+                    _title.value = body.data.res.title ?: ""
+                } else {
+                    _serverError.value = CONSTANT_ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
+                }
+            }, {error ->
+                when(error) {
+                    is NetworkErrorException -> _networkFail.value = Unit
+                    else -> _serverError.value = CONSTANT_ERROR_MESSAGE_UNKNOWN_ERROR
+                }
+            })
+            .addTo(compositeDisposable)
     }
 }

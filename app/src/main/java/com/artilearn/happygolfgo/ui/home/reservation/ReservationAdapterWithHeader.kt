@@ -29,7 +29,7 @@ class ReservationAdapterWithHeader(
                         return@also
                     } else {
                         it.itemView.setOnClickListener { _ ->
-                            val currentItem = items[it.adapterPosition -1]
+                            val currentItem = items[it.adapterPosition]
                             onItemClick.invoke(currentItem)
                         }
                     }
@@ -41,7 +41,7 @@ class ReservationAdapterWithHeader(
                         return@also
                     } else {
                         it.itemView.setOnClickListener { _ ->
-                            val currentItem = items[it.adapterPosition -1]
+                            val currentItem = items[it.adapterPosition]
                             onItemClick.invoke(currentItem)
                         }
                     }
@@ -53,7 +53,7 @@ class ReservationAdapterWithHeader(
                         return@also
                     } else {
                         it.itemView.setOnClickListener { _ ->
-                            val currentItem = items[it.adapterPosition -1]
+                            val currentItem = items[it.adapterPosition]
                             onItemClick.invoke(currentItem)
                         }
                     }
@@ -76,32 +76,25 @@ class ReservationAdapterWithHeader(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (position == 0 ) {
-            return  (holder as ReservationHeaderViewHolder).bind(this.announcement, this.examination, reservationViewModel)
-        } else {
-            val type = items[position-1]
-             when (items[position-1].viewType) {
-                USE_TICKET -> {
-                    (holder as UserTicketHolder).bind(type)
-                }
-                PAUSE_TICKET -> {
-                    (holder as PauseTicketHolder).bind(type)
-                }
-                EXPIRED_TICKET -> {
-                    (holder as ExpiredTicketHolder).bind(type)
-                }
+        val type = items[position]
+        when (items[position].viewType) {
+            USE_TICKET -> {
+                (holder as UserTicketHolder).bind(type)
             }
+            PAUSE_TICKET -> {
+                (holder as PauseTicketHolder).bind(type)
+            }
+            EXPIRED_TICKET -> {
+                (holder as ExpiredTicketHolder).bind(type)
+            }
+
         }
     }
 
-    override fun getItemCount() = items.size + 1
+    override fun getItemCount() = items.size
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) {
-            HEADER_VIEW
-        } else {
-            items[position -1].viewType
-        }
+        return items[position].viewType
     }
 
     class UserTicketHolder(private val binding: ItemReservationUseTicketBinding)

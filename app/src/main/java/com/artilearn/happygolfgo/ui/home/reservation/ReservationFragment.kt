@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import com.artilearn.happygolfgo.BuildConfig
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.MARKET_PLAY_STORE
@@ -19,20 +21,25 @@ import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.databinding.FragmentReservationBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.home.HomeActivity
+import com.artilearn.happygolfgo.ui.home.record.BannerViewPagerAdapter
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.EXPIRED_TICKET
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.PAUSE_TICKET
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationNewAdapter.Companion.USE_TICKET
 import com.artilearn.happygolfgo.ui.reservelist.ReserveListActivity
 import com.artilearn.happygolfgo.ui.ticketdate.TicketDateActivity
-import com.artilearn.happygolfgo.util.*
+import com.artilearn.happygolfgo.util.convertDate
+import com.artilearn.happygolfgo.util.getNowDate
+import com.artilearn.happygolfgo.util.snackbar
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.logging.Handler
 
 class ReservationFragment
     : BaseFragment<FragmentReservationBinding, ReservationViewModel>(R.layout.fragment_reservation) {
 
     private var ANNOUNCE_URI = ""
-    private var package_name = "com.android.chrome";
+    private var package_name = "com.android.chrome"
+    private lateinit var pagerAdapter: BannerViewPagerAdapter
 
     fun Context.isPackageInstalled(packageName: String): Boolean {
         // check if chrome is installed or not
@@ -42,6 +49,15 @@ class ReservationFragment
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
+    }
+    private fun setupViewPagerAdapter() {
+        pagerAdapter = BannerViewPagerAdapter {
+            if(it.isOpenInNewWindow == "yes"){
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.openUrl))
+                startActivity(browserIntent)
+            }
+        }
+        binding.vpBanner.adapter = pagerAdapter
     }
 
     private fun openWebBrowser() {
@@ -109,12 +125,14 @@ class ReservationFragment
     //private lateinit var adapter: ReservationAdapter
 //    private lateinit var adapter: ReservationNewAdapter
     private lateinit var adapter: ReservationAdapterWithHeader
+    private lateinit var todaysReservationAdapter: TodaysReservationAdapter
 
     override fun init() {
 
         initBinding()
         initViewModelObserving()
         initAdapter()
+        setupViewPagerAdapter()
     }
 
     override fun onStart() {
@@ -165,6 +183,17 @@ class ReservationFragment
             mobileVersionAndroid.observe(viewLifecycleOwner, Observer {
                 checkMobileAndroidVersion();
             })
+
+            showAnnouncement.observe(viewLifecycleOwner, Observer {
+                binding.llAnnouncement.isVisible = it
+            })
+            liveBanner.observe(viewLifecycleOwner) {
+                pagerAdapter.clear()
+                pagerAdapter.setItems(it)
+                android.os.Handler().postDelayed({
+                    setViewPagerCount()
+                },100)
+            }
         }
     }
 
@@ -204,13 +233,19 @@ class ReservationFragment
                 }
             }
         }//end of adapter
+        todaysReservationAdapter = TodaysReservationAdapter(){
+            Toast.makeText(context, "asdf", Toast.LENGTH_SHORT).show()
+        }
 
         with(binding) {
             recyclerview.itemAnimator = SlideInUpAnimator().apply {
                 addDuration = 300
             }
             recyclerview.adapter = adapter
+            rvTodaysReservation.adapter = todaysReservationAdapter
         }
+
+
     }
 
     private fun checkMobileAndroidVersion() {
@@ -276,5 +311,14 @@ class ReservationFragment
                 putExtra(TICKET, ticket)
             }
         startActivity(selectIntent)
+    }
+
+    private fun setViewPagerCount() {
+        val totalCount = pagerAdapter.itemCount
+        binding.vpBanner.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                binding.tvBannerCount.text = "${position + 1} / ${totalCount}"
+            }
+        })
     }
 }

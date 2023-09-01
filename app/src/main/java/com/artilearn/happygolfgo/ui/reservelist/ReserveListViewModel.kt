@@ -32,7 +32,7 @@ class ReserveListViewModel(
             .subscribe({ response ->
                 val body = response.body()
                 if (response.isSuccessful && body != null) {
-                    _reservationList.value = body
+                    _reservationList.value = body!!
                 } else {
                     _serverError.value = "예약 정보를 불러오는데 실패했습니다"
                 }

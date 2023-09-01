@@ -187,6 +187,7 @@ dependencies {
 
     // stetho
     implementation 'com.facebook.stetho:stetho:1.6.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.6.0'
 
     // navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
@@ -211,5 +212,4 @@ dependencies {
     implementation "com.airbnb.android:lottie:5.2.0"
 
     implementation 'androidx.browser:browser:1.5.0'
-
 }

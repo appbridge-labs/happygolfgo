@@ -860,7 +860,12 @@ data class GolfRankingInBranchResponse(
         @SerializedName("pageInfo")
         @Expose
         val pageInfo: GolfRankingInBranchResPageInfo,
-
+        @SerializedName("yearMonth")
+        @Expose
+        val yearMonth: String,
+        @SerializedName("title")
+        @Expose
+        val title: String,
         @SerializedName("rankings")
         @Expose
         val rankings: List<GolfRankingInBranchResRanking>,
@@ -950,7 +955,12 @@ data class GolfRankingSubjectResponse(
         @SerializedName("pageInfo")
         @Expose
         val pageInfo: GolfRankingSubjectResPageInfo,
-
+        @SerializedName("yearMonth")
+        @Expose
+        val yearMonth: String,
+        @SerializedName("title")
+        @Expose
+        val title: String,
         @SerializedName("rankings")
         @Expose
         val rankings: List<GolfRankingSubjectResRanking>,
@@ -984,9 +994,17 @@ data class GolfRankingSubjectResponse(
         @Expose
         val branchName: String?,
 
+        @SerializedName("area")
+        @Expose
+        val area: String?,
+
         @SerializedName("sumOfPlayersScoreInfo")
         @Expose
         val sumOfPlayersScoreInfo: String?,
+
+        @SerializedName("numberOfPlayers")
+        @Expose
+        val numberOfPlayers: String?,
 
         @SerializedName("participationRate")
         @Expose
@@ -1030,7 +1048,12 @@ data class GolfRankingAllBranchResponse(
         @SerializedName("pageInfo")
         @Expose
         val pageInfo: GolfRankingAllBranchResPageInfo,
-
+        @SerializedName("yearMonth")
+        @Expose
+        val yearMonth: String,
+        @SerializedName("title")
+        @Expose
+        val title: String,
         @SerializedName("rankings")
         @Expose
         val rankings: List<GolfRankingAllBranchResRanking>,

@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.MY_GOLF_POWER_ADAPTER_INDEX
+import com.artilearn.happygolfgo.constants.PARAMS_YEAR_MONTH
 import com.artilearn.happygolfgo.databinding.FragmentGolfRankingInAllBranchBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -11,15 +12,15 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class GolfRankingInAllBranchFragment :
     BaseFragment<FragmentGolfRankingInAllBranchBinding, GolfRankingInAllBranchViewModel>
     (R.layout.fragment_golf_ranking_in_all_branch){
-    private var pageIndex = -1
+    private var yearMonth = ""
     override val viewModel: GolfRankingInAllBranchViewModel by viewModel()
 
     private lateinit var  adapter: GolfRankingInAllBranchAdapter
 
     companion object {
-        fun newInstance(pageIndex: Int): GolfRankingInAllBranchFragment {
+        fun newInstance(yearMonth: String): GolfRankingInAllBranchFragment {
             val args = Bundle()
-            args.putInt(MY_GOLF_POWER_ADAPTER_INDEX, pageIndex)
+            args.putString(PARAMS_YEAR_MONTH, yearMonth)
             val fragment = GolfRankingInAllBranchFragment()
             fragment.arguments = args
             return fragment
@@ -40,10 +41,8 @@ class GolfRankingInAllBranchFragment :
     private fun initAdapter() {
         adapter = GolfRankingInAllBranchAdapter(viewModel)
         binding.recyclerview.adapter = adapter
-        val pageIndex = arguments?.getInt(MY_GOLF_POWER_ADAPTER_INDEX)
-        pageIndex?.let {
-            this.pageIndex = pageIndex
-        }
+
+        yearMonth = arguments?.getString(PARAMS_YEAR_MONTH) ?: ""
     }
 
     private fun initViewModelObserving() {
@@ -58,7 +57,7 @@ class GolfRankingInAllBranchFragment :
     }
 
     private fun initRequest() {
-        viewModel.pageIndex = pageIndex
+        viewModel.yearMonth = yearMonth
         viewModel.request()
     }
 }

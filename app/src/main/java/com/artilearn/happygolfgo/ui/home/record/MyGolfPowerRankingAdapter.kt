@@ -6,17 +6,17 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 
 class MyGolfPowerRankingAdapter (
     private val fa: FragmentActivity,
-    private val pageIndex:Int
+    private val yearMonth: String,
 ) : FragmentStateAdapter(fa) {
 
     override fun getItemCount() = 3
 
     override fun createFragment(position: Int): Fragment {
         return when(position) {
-            0 ->  GolfRankingInBranchFragment.newInstance(pageIndex)
-            1 -> GolfRankingBySubjectFragment.newInstance(pageIndex)
-            2 -> GolfRankingInAllBranchFragment.newInstance(pageIndex)
-            else ->  GolfRankingInBranchFragment.newInstance(pageIndex)
+            0 ->  GolfRankingInBranchFragment.newInstance(yearMonth)
+            1 -> GolfRankingBySubjectFragment.newInstance(yearMonth)
+            2 -> GolfRankingInAllBranchFragment.newInstance(yearMonth)
+            else ->  GolfRankingInBranchFragment.newInstance(yearMonth)
         }
     }
 }

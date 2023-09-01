@@ -1,6 +1,11 @@
 package com.artilearn.happygolfgo.data.gamecenter.source.remote
 
 import com.artilearn.happygolfgo.api.ApiInterface
+import com.artilearn.happygolfgo.data.banner.BannerDto
+import com.artilearn.happygolfgo.data.exam.ExamDto
+import com.artilearn.happygolfgo.data.exam.golfpower.GolfPowerExamResultDto
+import com.artilearn.happygolfgo.data.exam.state.ExamStateDto
+import com.artilearn.happygolfgo.data.exam.state.request.ExamStateBody
 import com.artilearn.happygolfgo.data.gamecenter.*
 import com.artilearn.happygolfgo.ui.home.record.model.TSSummarySwingVideoDetailUpdateReqModel
 import io.reactivex.Single
@@ -49,15 +54,31 @@ class GameCenterRemoteDataSourceImpl(
         return api.getMyGolfPowerPageExamResultPageInfoDetail(pageIndex)
     }
 
-    override fun getBranchRanking(pageIndex: Int): Single<Response<GolfRankingInBranchResponse>> {
-        return api.getBranchRanking(pageIndex)
+    override fun getMyGolfPowerPageExamResultPageInfoDetail(yearMonth: String): Single<Response<GolfPowerExamResultDto>> {
+        return api.getMyGolfPowerPageExamResultPageInfoDetail(yearMonth)
     }
 
-    override fun getSubjectRanking(pageIndex: Int): Single<Response<GolfRankingSubjectResponse>> {
-        return api.getSubjectRanking(pageIndex)
+    override fun getBranchRanking(yearMonth: String): Single<Response<GolfRankingInBranchResponse>> {
+        return api.getBranchRanking(yearMonth)
     }
 
-    override fun getAllBranchRanking(pageIndex: Int): Single<Response<GolfRankingAllBranchResponse>> {
-        return api.getAllBranchRanking(pageIndex)
+    override fun getSubjectRanking(yearMonth: String): Single<Response<GolfRankingSubjectResponse>> {
+        return api.getSubjectRanking(yearMonth)
+    }
+
+    override fun getAllBranchRanking(yearMonth: String): Single<Response<GolfRankingAllBranchResponse>> {
+        return api.getAllBranchRanking(yearMonth)
+    }
+
+    override fun getTraningBanners(): Single<Response<BannerDto>> {
+        return api.getTraningBanners()
+    }
+
+    override fun getExamState(): Single<Response<ExamDto>> {
+        return api.getExamState()
+    }
+
+    override fun postJoinMonthlyExamination(data: HashMap<String, ExamStateBody>): Single<Response<ExamStateDto>> {
+        return api.postJoinMonthlyExamination(data)
     }
 }

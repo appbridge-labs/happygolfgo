@@ -190,7 +190,7 @@
     <string name="item_reservation_new_list_iv_description">티켓 종류 구분</string>
     <string name="item_reservation_new_list_iv_arrow_description">상세보기 화살표 이미지</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="announcement_left_in_header_view_in_reservation">공고</string>
+    <string name="announcement_left_in_header_view_in_reservation">공지</string>
     <string name="exam_left_in_header_view_in_reservation">시험</string>
     <string name="announcement_subject_in_header_view_in_reservation">3월 월례회 시작됩니다. </string>
     <string name="exam_subject_in_header_view_in_reservation">다음 시험 시작일 : 2월20일</string>
@@ -219,4 +219,24 @@
     <string name="my_golf_power_ranking_branch_title">소속 훈련소</string>
     <string name="my_golf_power_ranking_all_branch_title">과목별</string>
     <string name="my_golf_power_ranking_by_subject_title">참여도</string>
+    <string name="todays_reservation">오늘의 예약</string>
+    <string name="exam_in_progress">진행중인 시험</string>
+    <string name="title_activity_exam_guide">ExamGuideActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="exam_guide">월말고사 안내\n\n
+-시험 기간 : 매월 셋째 주 월요일부터 일요일까지 7일간\n\n
+-시험 과목 : 골프력 중 5과목(Putting력, S/G력, IRON력, DRV력, W/U력)\n\n
+-응시 방법 : 앱에서  \&apos;응시하기\&apos; 버튼 누른 후 매장 타석에서 시험 기간 안에 5과목을 모두 치르면 응시 완료\n\n
+-규정 : \&apos;응시하기\&apos; 이후 각 과목별 첫 번째 점수만 인정, 점수 덮어쓰기 되지 않음\n\n
+-시험 점수는 2시간 후 앱에 반영\n\n
+-동점자 순위 : Putting력, S/G력, IRON력, DRV력, W/U력 순으로 비교하여 점수가 더 높은 사람을 우선\n\n
+-시상 : 매월 성적 우수자, 성적 향상 우수자, 우수 훈련소에 대해 시상 예정\n</string>
 </resources>

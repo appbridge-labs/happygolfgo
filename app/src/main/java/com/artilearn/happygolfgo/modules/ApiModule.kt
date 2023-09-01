@@ -4,6 +4,7 @@ import com.artilearn.happygolfgo.BuildConfig
 import com.artilearn.happygolfgo.api.ApiInterface
 import com.artilearn.happygolfgo.util.CurrentVersion
 import com.artilearn.happygolfgo.util.PreferenceManager
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -40,6 +41,7 @@ val apiModule = module {
 
     single {
         OkHttpClient.Builder()
+            .addNetworkInterceptor(StethoInterceptor())
             .addInterceptor(get<Interceptor>())
             .addInterceptor(get<HttpLoggingInterceptor>())
             .connectTimeout(60, TimeUnit.SECONDS)

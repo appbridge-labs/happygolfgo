@@ -34,7 +34,7 @@ class LogViewModel(
 
     fun onVideoClick(videoUrl: String?) {
         videoUrl?.let {
-            _videoUrl.value = videoUrl
+            _videoUrl.value = it
         }
     }
 

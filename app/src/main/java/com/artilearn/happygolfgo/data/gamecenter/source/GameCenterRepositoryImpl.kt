@@ -1,6 +1,11 @@
 package com.artilearn.happygolfgo.data.gamecenter.source
 
 import android.accounts.NetworkErrorException
+import com.artilearn.happygolfgo.data.banner.BannerDto
+import com.artilearn.happygolfgo.data.exam.ExamDto
+import com.artilearn.happygolfgo.data.exam.golfpower.GolfPowerExamResultDto
+import com.artilearn.happygolfgo.data.exam.state.ExamStateDto
+import com.artilearn.happygolfgo.data.exam.state.request.ExamStateBody
 import com.artilearn.happygolfgo.data.gamecenter.*
 import com.artilearn.happygolfgo.data.gamecenter.source.local.GameCenterLocalDataSource
 import com.artilearn.happygolfgo.data.gamecenter.source.remote.GameCenterRemoteDataSource
@@ -150,9 +155,9 @@ class GameCenterRepositoryImpl(
         }
     }
 
-    override fun getBranchRanking(pageIndex: Int): Single<Response<GolfRankingInBranchResponse>> {
+    override fun getMyGolfPowerPageExamResultPageInfoDetail(yearMonth: String): Single<Response<GolfPowerExamResultDto>> {
         return if (network.networkState()) {
-            remote.getBranchRanking(pageIndex)
+            remote.getMyGolfPowerPageExamResultPageInfoDetail(yearMonth)
                 .flatMap {
                     with(it) {
                         if (isSuccessful) {
@@ -167,9 +172,9 @@ class GameCenterRepositoryImpl(
         }
     }
 
-    override fun getSubjectRanking(pageIndex: Int): Single<Response<GolfRankingSubjectResponse>> {
+    override fun getBranchRanking(yearMonth: String): Single<Response<GolfRankingInBranchResponse>> {
         return if (network.networkState()) {
-            remote.getSubjectRanking(pageIndex)
+            remote.getBranchRanking(yearMonth)
                 .flatMap {
                     with(it) {
                         if (isSuccessful) {
@@ -183,9 +188,77 @@ class GameCenterRepositoryImpl(
             Single.error(NetworkErrorException("Network Error"))
         }
     }
-    override fun getAllBranchRanking(pageIndex: Int): Single<Response<GolfRankingAllBranchResponse>> {
+
+    override fun getSubjectRanking(yearMonth: String): Single<Response<GolfRankingSubjectResponse>> {
         return if (network.networkState()) {
-            remote.getAllBranchRanking(pageIndex)
+            remote.getSubjectRanking(yearMonth)
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+    override fun getAllBranchRanking(yearMonth: String): Single<Response<GolfRankingAllBranchResponse>> {
+        return if (network.networkState()) {
+            remote.getAllBranchRanking(yearMonth)
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun getTraningBanners(): Single<Response<BannerDto>> {
+        return if (network.networkState()) {
+            remote.getTraningBanners()
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun getExamState(): Single<Response<ExamDto>> {
+        return if (network.networkState()) {
+            remote.getExamState()
+                .flatMap {
+                    with(it) {
+                        if (isSuccessful) {
+                            Single.just(it)
+                        } else {
+                            Single.error(HttpException(it))
+                        }
+                    }
+                }
+        } else {
+            Single.error(NetworkErrorException("Network Error"))
+        }
+    }
+
+    override fun postJoinMonthlyExamination(data: HashMap<String, ExamStateBody>): Single<Response<ExamStateDto>> {
+        return if (network.networkState()) {
+            remote.postJoinMonthlyExamination(data)
                 .flatMap {
                     with(it) {
                         if (isSuccessful) {

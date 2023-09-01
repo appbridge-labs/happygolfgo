@@ -48,6 +48,7 @@ data class RankingInBranchData (
 data class RankingBySubjectData (
     val  rankingOrder: String = "1",
     val  branchName:String = "-",
+    val  area:String = "-",
     val  sumOfPlayersScoreInfo:String = "-",
     val  participationRate:String = "-%"
 ) {
@@ -66,11 +67,13 @@ data class RankingBySubjectData (
             from.rankings.map { ranking ->
                 lst.add(
                     RankingBySubjectData(
-                        ranking.rankingOrder ?:  "-"
-                    ,ranking.branchName ?: "-"
-                    , ranking.sumOfPlayersScoreInfo ?: "-"
-                    , ranking.participationRate ?: "-"
-                    ))
+                        ranking.rankingOrder ?: "-",
+                        ranking.branchName ?: "-",
+                        ranking.area ?: "",
+                        ranking.sumOfPlayersScoreInfo ?: "-",
+                        ranking.participationRate ?: "-"
+                    )
+                )
             }
             return lst as ArrayList<RankingBySubjectData>
         }

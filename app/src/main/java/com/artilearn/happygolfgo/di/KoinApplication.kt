@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.util.Log
 import com.artilearn.happygolfgo.modules.*
 import com.artilearn.happygolfgo.service.RhythmCoachServiceInterface
+import com.artilearn.happygolfgo.util.BaseUtils.init
 import com.artilearn.happygolfgo.util.HappyGolfUserExceptionHandler
 import com.facebook.stetho.Stetho
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -42,6 +43,7 @@ class KoinApplication : Application() {
         super.onCreate()
         //TODO: Exception Handling for mInstance and ServiceInterface creation
         mInstance = this
+        init(this)
         //TODO:rollback rthythm coach
         // 리듬 코치 배포 보류 중 2022.02.15
         //initRhythmCoachServiceInterface();
@@ -58,7 +60,6 @@ class KoinApplication : Application() {
                 viewModelModule
             )
         }
-
         Stetho.initializeWithDefaults(this)
         setCrashHandler()
         rxErrorHandler()

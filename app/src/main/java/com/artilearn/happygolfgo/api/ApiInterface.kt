@@ -1,7 +1,12 @@
 package com.artilearn.happygolfgo.api
 
 import com.artilearn.happygolfgo.data.alram.AlramResponse
+import com.artilearn.happygolfgo.data.banner.BannerDto
 import com.artilearn.happygolfgo.data.comment.CommentModel
+import com.artilearn.happygolfgo.data.exam.ExamDto
+import com.artilearn.happygolfgo.data.exam.golfpower.GolfPowerExamResultDto
+import com.artilearn.happygolfgo.data.exam.state.ExamStateDto
+import com.artilearn.happygolfgo.data.exam.state.request.ExamStateBody
 import com.artilearn.happygolfgo.data.gamecenter.*
 import com.artilearn.happygolfgo.data.golfgame.GolfGameResponse
 import com.artilearn.happygolfgo.data.golfrank.GolfRankResponse
@@ -158,6 +163,7 @@ interface ApiInterface {
     @GET("reservation/user/myReservationsInMultiBranch")
     fun reservationListInMultiBranch(): Single<Response<ReserveListResponse>>
 
+    // 내 예약 목록
     //doneTODO: 다중 브랜치 사용자 로그인 추가
 //    @GET("reservation/user/myReservations")
     @GET("reservation/user/myReservations_v_1")
@@ -218,19 +224,19 @@ interface ApiInterface {
        @Path("pageIndex")  pageIndex: Int
     ):Single<Response<MyGolfPowerExamResultPageInfoDetailResponse>>
 
-    @GET("main/user/announcementAndExam/branchRanking/{pageIndex}")
+    @GET("main/user/announcementAndExam/v1/branchRanking/{yearMonth}")
     fun getBranchRanking(
-        @Path("pageIndex")  pageIndex: Int
+        @Path("yearMonth") yearMonth: String
     ):Single<Response<GolfRankingInBranchResponse>>
 
-    @GET("main/user/announcementAndExam/participationRate/{pageIndex}")
+    @GET("main/user/announcementAndExam/v1/participationRate/{yearMonth}")
     fun getSubjectRanking(
-        @Path("pageIndex")  pageIndex: Int
+        @Path("yearMonth")  yearMonth: String
     ):Single<Response<GolfRankingSubjectResponse>>
 
-    @GET("main/user/announcementAndExam/allBranchRanking/{pageIndex}")
+    @GET("main/user/announcementAndExam/v1/allBranchRanking/{yearMonth}")
     fun getAllBranchRanking(
-        @Path("pageIndex")  pageIndex: Int
+        @Path("yearMonth")  yearMonth: String
     ):Single<Response<GolfRankingAllBranchResponse>>
 
     @GET("trainingCenter/summary/weight")
@@ -287,4 +293,23 @@ interface ApiInterface {
 
     @GET("main/user/expiredTickets")
     fun getExpiredTickets(): Single<TicketManagerResponse>
+
+    @GET("main/user/announcementAndBanners/v1/main")
+    fun getBanners(): Single<Response<BannerDto>>
+
+    @GET("main/user/banner/v1/main/record")
+    fun getTraningBanners(): Single<Response<BannerDto>>
+
+    @GET("main/user/announcementAndExam/v1/golfPowerExamStatus")
+    fun getExamState(): Single<Response<ExamDto>>
+
+    @POST("main/user/announcementAndExam/v1/joinMonthlyExamination")
+    fun postJoinMonthlyExamination(
+        @Body data: HashMap<String, ExamStateBody>
+    ): Single<Response<ExamStateDto>>
+
+    @GET("main/user/announcementAndExam/v1/myGolfPowerPageExamResultPageInfoDetail/{yearMonth}")
+    fun getMyGolfPowerPageExamResultPageInfoDetail(
+        @Path("yearMonth") yearMonth: String
+    ): Single<Response<GolfPowerExamResultDto>>
 }

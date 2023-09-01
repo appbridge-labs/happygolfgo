@@ -33,7 +33,7 @@ class GolfRankingBySubjectAdapter(
         val  ranking = items[position]
         when( position) {
             0  ->  {
-                ( holder as HeaderViewHolder).bind(ranking, golfRankingBySubjectViewModel.title)
+                ( holder as HeaderViewHolder).bind(ranking)
             }
             else ->  {
                 ( holder as NormalViewHolder).bind(ranking)
@@ -43,9 +43,8 @@ class GolfRankingBySubjectAdapter(
 
     class HeaderViewHolder(private val binding: ItemGolfRankingInSubjectAdapterBinding)
         : RecyclerView.ViewHolder(binding.root) {
-        fun bind(ranking:RankingBySubjectData, subjectTitle:String) {
+        fun bind(ranking:RankingBySubjectData) {
                   binding.ranking = ranking
-                  binding.subjectTitle = subjectTitle
                   binding.executePendingBindings()
         }
         companion object HeaderViewHolderFactory {

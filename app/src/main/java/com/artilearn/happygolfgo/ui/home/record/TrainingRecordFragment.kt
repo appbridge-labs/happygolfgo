@@ -2,15 +2,26 @@ package com.artilearn.happygolfgo.ui.home.record
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
+import android.net.Uri
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.base.BaseFragment
+import com.artilearn.happygolfgo.constants.MY_GOLF_POWER_ADAPTER_INDEX
+import com.artilearn.happygolfgo.constants.PARAMS_YEAR_MONTH
 import com.artilearn.happygolfgo.constants.SWING_ROUND_DETAIL_ID
+import com.artilearn.happygolfgo.data.exam.Exam
+import com.artilearn.happygolfgo.data.exam.golfpower.GolfPower
 import com.artilearn.happygolfgo.databinding.FragmentTrainingRecordBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
 import com.artilearn.happygolfgo.ui.golfgame.GolfGameActivity
 import com.artilearn.happygolfgo.ui.golfrank.GolfRankActivity
-import com.artilearn.happygolfgo.ui.home.record.model.TRSummaryGolfPowerRecordModel
-import com.artilearn.happygolfgo.ui.home.record.model.TRSummaryWeightModel
+import com.artilearn.happygolfgo.ui.home.record.model.*
+import com.artilearn.happygolfgo.util.setExamState
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.components.Legend
@@ -18,6 +29,9 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -27,11 +41,15 @@ class TrainingRecordFragment :
             TrainingRecordViewModel>(R.layout.fragment_training_record) {
 //    private val TAG = javaClass.simpleName
     override val viewModel: TrainingRecordViewModel by viewModel()
+    lateinit var scoreAdapter: ScoreAdapter
 
-    private lateinit var pagerAdapter: MyGolfPowerPagerAdapter
+//    private lateinit var pagerAdapter: MyGolfPowerPagerAdapter
+    private lateinit var pagerAdapter: BannerViewPagerAdapter
 
     var clickable = true
     private val chartNoDataTextSize = 120.0f
+
+    var examState = Exam.ExamState.waiting
 
     override fun init() {
         initBinding()
@@ -47,29 +65,32 @@ class TrainingRecordFragment :
 
     private fun initViewModelObserving() {
         with(viewModel) {
-           summaryTime.observe( this@TrainingRecordFragment) { summaryTime ->
-               binding.summaryTime = summaryTime
-           }
+            summaryTime.observe(this@TrainingRecordFragment) { summaryTime ->
+                binding.summaryTime = summaryTime
+            }
 
-            summaryWeight.observe( this@TrainingRecordFragment) { summaryWeight ->
+            summaryWeight.observe(this@TrainingRecordFragment) { summaryWeight ->
                 binding.summaryWeight = summaryWeight
                 setSummaryWeightChartData(summaryWeight)
             }
 
-            summaryGolfPower.observe( this@TrainingRecordFragment) { summaryGoldPower ->
+            summaryGolfPower.observe(this@TrainingRecordFragment) { summaryGoldPower ->
                 binding.summaryGolfPower = summaryGoldPower
             }
 
-            golfPowerRecords.observe( this@TrainingRecordFragment) { golfPowerRecords ->
+            golfPowerRecords.observe(this@TrainingRecordFragment) { golfPowerRecords ->
                 setGolfPowerChartData(golfPowerRecords)
             }
 
-            summaryRound.observe( this@TrainingRecordFragment) { summaryRound ->
+            summaryRound.observe(this@TrainingRecordFragment) { summaryRound ->
                 binding.summaryRound = summaryRound
             }
 
             networkFail.observe(this@TrainingRecordFragment) {
-                showFragmentToast(ToastType.WARNNING, getString(R.string.fragment_network_fail_content))
+                showFragmentToast(
+                    ToastType.WARNNING,
+                    getString(R.string.fragment_network_fail_content)
+                )
             }
             serverError.observe(this@TrainingRecordFragment) {
                 showFragmentToast(ToastType.ERROR, it)
@@ -77,7 +98,35 @@ class TrainingRecordFragment :
             appRefresh.observe(this@TrainingRecordFragment) {
                 goRefreshFromFragment()
             }
-
+            liveBanner.observe(viewLifecycleOwner) {
+                pagerAdapter.setItems(it)
+                android.os.Handler().postDelayed({
+                    setViewPagerCount()
+                },100)
+            }
+            liveExamState.observe(viewLifecycleOwner) {
+                binding.exam = it
+                examState = it.state
+            }
+            liveGolfPower.observe(viewLifecycleOwner) {
+                binding.golfPower = it
+                val items = listOf(
+                    it.putt,
+                    it.sg,
+                    it.wu,
+                    it.drv,
+                    it.iron
+                )
+                scoreAdapter.clear()
+                scoreAdapter.setItems(items)
+                setGolfPowerRadarChart(items)
+            }
+            liveMonth.observe(viewLifecycleOwner) {
+                binding.tvExam.setText("${it}월 시험")
+            }
+            liveState.observe(viewLifecycleOwner) {
+                binding.tvTakeTest.setExamState(it)
+            }
             setObserverForPageInfoAdapter()
         }
     }
@@ -103,6 +152,7 @@ class TrainingRecordFragment :
 
     private fun initAdapter() {
         setupViewPagerAdapter()
+        setSoreAdapter()
     }
 
     private fun setupViewPagerAdapter() {
@@ -111,6 +161,20 @@ class TrainingRecordFragment :
 //            this.pagerAdapter = MyGolfPowerPagerAdapter(it)
 //            this.pagerAdapter
 //        }
+        pagerAdapter = BannerViewPagerAdapter {
+            if(it.isOpenInNewWindow == "yes"){
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.openUrl))
+                startActivity(browserIntent)
+            }
+        }
+        binding.vpBanner.adapter = pagerAdapter
+    }
+
+    private fun setSoreAdapter() {
+        scoreAdapter = ScoreAdapter {
+            // item click
+        }
+        binding.rvScore.adapter = scoreAdapter
     }
 
     private fun initOnClickListener() {
@@ -118,6 +182,34 @@ class TrainingRecordFragment :
            swingVideoSectionLayoutLl.setOnClickListener { goSwingVideoList() }
            roundSectionLayoutBestScoreLl.setOnClickListener { goRoundDetail( summaryRound?.bestGmId ?: 0 ) }
            roundSectionLayoutLastScoreLl.setOnClickListener { goRoundDetail( summaryRound?.lastGmId ?: 0) }
+
+           tvShowScore.setOnClickListener {
+               val myGolfPowerRankingActivityIntent =
+                   Intent(activity, MyGolfPowerRankingActivity::class.java)
+                       .apply {
+                           putExtra(MY_GOLF_POWER_ADAPTER_INDEX, 1)
+                           putExtra(PARAMS_YEAR_MONTH, viewModel.getYearMonth())
+                       }
+               startActivity(myGolfPowerRankingActivityIntent)
+           }
+           llExam.setOnClickListener {
+               val pd: YearMonthPickerDialog<View> = YearMonthPickerDialog(viewModel.examHistory)
+               pd.show(parentFragmentManager, "YearMonthPickerDialog")
+               pd.setListener(object : YearMonthPickerDialog.SelectDateListener {
+                   override fun onSelectDate(yearMonth: Pair<String, String>) {
+                       viewModel.setYearMonth("${yearMonth.first}${yearMonth.second}")
+                       viewModel.getMyGolfPowerPageExamResultPageInfoDetail()
+                   }
+               })
+           }
+           tvTakeTest.setOnClickListener {
+               if(examState == Exam.ExamState.open) {
+                   viewModel.postJoinMonthlyExamination()
+               } else if(examState == Exam.ExamState.not) {
+                   val dialog = ExamGuideFragment.newInstance()
+                   dialog.show(parentFragmentManager, dialog.tag)
+               }
+           }
        }
     }
 
@@ -150,6 +242,11 @@ class TrainingRecordFragment :
 
     // 바차트에서 파이차트로 변경
     private fun setSummaryWeightChartData(item: TRSummaryWeightModel) {
+        val totalScore = item.appr + item.putt + item.drange + item.gpower + item.stroke
+        if(totalScore <= 0) {
+            binding.ivBlurGraph1.visibility = View.VISIBLE
+            return
+        }
         with(binding) {
             weightSectionLayoutChart.run {
                 setUsePercentValues(true)
@@ -244,7 +341,33 @@ class TrainingRecordFragment :
         }
     }
 
+    var aa = listOf<GolfPower>()
+    private fun setGolfPowerRadarChart(items: List<GolfPower>) {
+        binding.radarChart.setDataList(items)
+        aa = items
+
+    }
+
+    private fun setSores(items: List<GolfPower>) {
+        val front = listOf("Putting", "S/G", "W/U", "Driver", "Iron")
+
+        val chartItem = front.mapNotNull {  type ->
+            items.find { it.title == type }
+        }
+
+        scoreAdapter.setItems(chartItem)
+    }
+
     private fun setGolfPowerChartData(items: List<TRSummaryGolfPowerRecordModel>) {
+        var totalScore = 0f
+        items.forEach {
+            totalScore += it.avg
+            totalScore += it.best
+        }
+        if(totalScore <= 0) {
+            binding.ivBlurGraph2.visibility = View.VISIBLE
+            return
+        }
 
         val bestValues = mutableListOf<BarEntry>()
         val avgValues = mutableListOf<BarEntry>()
@@ -367,5 +490,14 @@ class TrainingRecordFragment :
                 }
             }, 1000)
         }
+    }
+
+    private fun setViewPagerCount() {
+        val totalCount = pagerAdapter.itemCount
+        binding.vpBanner.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                binding.tvBannerCount.text = "${position + 1} / ${totalCount}"
+            }
+        })
     }
 }

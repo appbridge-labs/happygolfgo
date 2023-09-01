@@ -16,8 +16,7 @@ class GolfRankingInAllBranchViewModel(
     private val repository: GameCenterRepository
 ) : BaseViewModel() {
     private val classNameForLog = javaClass.simpleName
-    var pageIndex:Int? = null
-
+    var yearMonth: String = ""
     private var disposable : Disposable? = null
 
     private val _rankingAllBranchData:MutableLiveData<ArrayList<RankingInAllBranchData>>
@@ -40,38 +39,33 @@ class GolfRankingInAllBranchViewModel(
                  it.dispose()
             }
        }
-
-       pageIndex?.let {
-           disposable = repository.getAllBranchRanking(it)
-               .subscribeOn(Schedulers.io())
-               .observeOn(AndroidSchedulers.mainThread())
-               .doOnSubscribe {
-                   showLoading()
+       disposable = repository.getAllBranchRanking(yearMonth)
+           .subscribeOn(Schedulers.io())
+           .observeOn(AndroidSchedulers.mainThread())
+           .doOnSubscribe {
+               showLoading()
+           }
+           .doAfterTerminate {
+               hideLoading()
+           }
+           .doOnError {error ->
+               errorLog(classNameForLog, error)
+           }
+           .subscribe({ response->
+               val body = response.body()
+               if(response.isSuccessful && body != null) {
+                   val  rankingAllBranchData = RankingInAllBranchData.map(body.data.res)
+                   _rankingAllBranchData.value = rankingAllBranchData
+                   title = body.data.res.title ?: ""
+               } else {
+                   _serverError.value = CONSTANT_ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
                }
-               .doAfterTerminate {
-                   hideLoading()
+           },{ error->
+               when(error) {
+                   is NetworkErrorException -> _networkFail.value = Unit
+                   else -> _serverError.value = CONSTANT_ERROR_MESSAGE_UNKNOWN_ERROR
                }
-               .doOnError {error ->
-                    errorLog(classNameForLog, error)
-               }
-               .subscribe({ response->
-                   val body = response.body()
-                   if(response.isSuccessful && body != null) {
-                       val  rankingAllBranchData = RankingInAllBranchData.map(body.data.res)
-                        _rankingAllBranchData.value = rankingAllBranchData
-                       if( body.data.res.pageInfo.title != null) {
-                           title = body.data.res.pageInfo.title ?: ""
-                       }
-                   } else {
-                       _serverError.value = CONSTANT_ERROR_MESSAGE_FAILED_TO_LOAD_DATA_FROM_REMOTE
-                   }
-               },{ error->
-                  when(error) {
-                    is NetworkErrorException -> _networkFail.value = Unit
-                      else -> _serverError.value = CONSTANT_ERROR_MESSAGE_UNKNOWN_ERROR
-                  }
-               })
-               .addTo(compositeDisposable)
-       }
+           })
+           .addTo(compositeDisposable)
    }
 }

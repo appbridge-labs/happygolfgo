@@ -1,5 +1,10 @@
 package com.artilearn.happygolfgo.data.gamecenter.source
 
+import com.artilearn.happygolfgo.data.banner.BannerDto
+import com.artilearn.happygolfgo.data.exam.ExamDto
+import com.artilearn.happygolfgo.data.exam.golfpower.GolfPowerExamResultDto
+import com.artilearn.happygolfgo.data.exam.state.ExamStateDto
+import com.artilearn.happygolfgo.data.exam.state.request.ExamStateBody
 import com.artilearn.happygolfgo.data.gamecenter.*
 import com.artilearn.happygolfgo.ui.home.record.model.TSSummarySwingVideoDetailUpdateReqModel
 import io.reactivex.Single
@@ -19,7 +24,11 @@ interface GameCenterRepository {
     ): Single<Response<TrainingManagementSummarySwingVideoDetailUpdateResponse>>
     fun getMyGolfPowerExamResultPageInfo() : Single<Response<MyGolfPowerExamResultPageInfoResponse>>
     fun getMyGolfPowerPageExamResultPageInfoDetail(pageIndex:Int) : Single<Response<MyGolfPowerExamResultPageInfoDetailResponse>>
-    fun getBranchRanking(pageIndex:Int) : Single<Response<GolfRankingInBranchResponse>>
-    fun getSubjectRanking(pageIndex:Int) : Single<Response<GolfRankingSubjectResponse>>
-    fun getAllBranchRanking(pageIndex:Int) : Single<Response<GolfRankingAllBranchResponse>>
+    fun getBranchRanking(yearMonth:String) : Single<Response<GolfRankingInBranchResponse>>
+    fun getSubjectRanking(yearMonth:String) : Single<Response<GolfRankingSubjectResponse>>
+    fun getAllBranchRanking(yearMonth:String) : Single<Response<GolfRankingAllBranchResponse>>
+    fun getTraningBanners() : Single<Response<BannerDto>>
+    fun getExamState() : Single<Response<ExamDto>>
+    fun postJoinMonthlyExamination(data: HashMap<String, ExamStateBody>) : Single<Response<ExamStateDto>>
+    fun getMyGolfPowerPageExamResultPageInfoDetail(yearMonth: String) : Single<Response<GolfPowerExamResultDto>>
 }

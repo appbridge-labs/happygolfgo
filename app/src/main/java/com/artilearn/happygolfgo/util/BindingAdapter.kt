@@ -1,8 +1,10 @@
 package com.artilearn.happygolfgo.util
 
+import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -14,6 +16,9 @@ import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
 import com.artilearn.happygolfgo.data.announcement.Announcement
+import com.artilearn.happygolfgo.data.exam.Exam
+import com.artilearn.happygolfgo.data.exam.golfpower.GolfPower
+import com.artilearn.happygolfgo.data.exam.golfpower.Res
 import com.artilearn.happygolfgo.data.examination.Examination
 import com.artilearn.happygolfgo.ui.home.record.*
 import com.artilearn.happygolfgo.ui.home.record.model.RankingBySubjectData
@@ -22,8 +27,10 @@ import com.artilearn.happygolfgo.ui.home.record.model.RankingInBranchData
 import com.artilearn.happygolfgo.ui.home.record.model.TRSummarySwingVideoRecordModel
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationAdapterWithHeader
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
+import com.artilearn.happygolfgo.ui.home.reservation.TodaysReservationAdapter
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListAdapter
 import com.artilearn.happygolfgo.ui.tickettime.TicketTimeAdapter
+import com.artilearn.happygolfgo.util.BaseUtils.context
 import java.util.*
 
 //comments: DataBinding: layout.xml에 있는 attribute를 통하여 값을 전달한다.
@@ -50,7 +57,7 @@ fun ticketDate(tv: TextView, startDate: String, endDate: String) {
 fun ticketDateInShortYear(tv: TextView, startDate: String, endDate: String) {
     val startTime = convertTimeInShortYear(startDate).trim().split(":")
     val endTime = convertTimeInShortYear(endDate).trim().split(":")
-    val text =  "${startTime[0]}.${startTime[1]}.${startTime[2]}~${endTime[0]}.${endTime[1]}.${endTime[2]}"
+    val text =  "${startTime[0]}.${startTime[1]}.${startTime[2]}\n~${endTime[0]}.${endTime[1]}.${endTime[2]}"
     tv.text = text
 }
 
@@ -481,11 +488,184 @@ fun setReservationCard(
 @BindingAdapter("setMedalImageInSubjectInRanking")
 fun setMedalImageInSubjectInRanking(v: View, type: String) {
     when (type) {
-        "1" ->  v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_first)
-        "2" ->  v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_second)
-        "3" ->  v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_third)
-        "4" ->  v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_fourth)
-        "5" ->  v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_fifth)
-        else ->v.setBackgroundResource(R.drawable.my_golf_ranking_subject_medal_first)
+        "1" ->  v.setBackgroundResource(R.drawable.ic_grade_1)
+        "2" ->  v.setBackgroundResource(R.drawable.ic_grade_2)
+        "3" ->  v.setBackgroundResource(R.drawable.ic_grade_3)
+        "4" ->  v.setBackgroundResource(R.drawable.ic_grade_4)
+        "5" ->  v.setBackgroundResource(R.drawable.ic_grade_5)
+        else ->v.setBackgroundResource(R.drawable.ic_grade_1)
     }
+}
+
+@BindingAdapter("setTicketType")
+fun setTicketType(cardView: CardView, type: Int) {
+    when (type) {
+        0 -> cardView.setCardBackgroundColor(context.getColor(R.color.orange100))
+        1 -> cardView.setCardBackgroundColor(context.getColor(R.color.green100))
+        else -> cardView.setCardBackgroundColor(context.getColor(R.color.blue100))
+    }
+}
+
+@BindingAdapter("setTicketType")
+fun setTicketType(textView: TextView, type: Int) {
+    when (type) {
+        0 -> {
+            textView.text = "레슨"
+            textView.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange500))
+        }
+        1 -> {
+            textView.text = "그룹"
+            textView.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green500))
+        }
+        else -> {
+            textView.text = "타석"
+            textView.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(context, R.color.blue500))
+        }
+    }
+}
+
+@BindingAdapter("setTickCountText")
+fun setTickCountText(textView: TextView, count: Int) {
+    textView.text = count.toString()
+}
+
+@BindingAdapter("setIntToText")
+fun setIntToText(textView: TextView, value: Int) {
+    textView.text = value.toString()
+}
+
+@BindingAdapter("setFloatToText")
+fun setFloatToText(textView: TextView, value: Float) {
+    textView.text = value.toInt().toString()
+}
+
+@BindingAdapter("setTotalRank")
+fun setTotalRank(textView: TextView, value: String) {
+    textView.text = " / $value"
+}
+
+@BindingAdapter("setChangeRank")
+fun setChangeRank(textView: TextView, golfPower: GolfPower) {
+    if(golfPower.indicator == "up"){
+        textView.text = "+${golfPower.delta}"
+        textView.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green100))
+        textView.setTextColor(context.getColor(R.color.green500))
+    } else if(golfPower.indicator == "down") {
+        textView.text = "-${golfPower.delta}"
+        textView.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.red_100))
+        textView.setTextColor(context.getColor(R.color.red))
+    } else {
+        textView.text = "-"
+        textView.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.gray100))
+        textView.setTextColor(context.getColor(R.color.gray500))
+    }
+}
+
+@BindingAdapter("setTodaysReservation", "setViewModel")
+fun RecyclerView.setTodaysReservation(ticket: List<String>?, vm: ReservationViewModel) {
+    with(adapter as TodaysReservationAdapter) {
+        ticket?.let {
+            this.addItems(it)
+        }
+    }
+}
+
+@BindingAdapter("setExamState")
+fun TextView.setExamState(examState: Exam.ExamState?) {
+    examState ?: return
+    when(examState) {
+        Exam.ExamState.waiting -> {
+            backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    BaseUtils.context, R.color.gray300)
+            )
+            setTextColor(BaseUtils.context.getColor(R.color.gray400))
+            text = "대기중"
+            isEnabled = false
+        }
+        Exam.ExamState.taking -> {
+            backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    BaseUtils.context, R.color.green500)
+            )
+            setTextColor(BaseUtils.context.getColor(R.color.color_white))
+            text = "응시중"
+            isEnabled = false
+        }
+        Exam.ExamState.done -> {
+            backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    BaseUtils.context, R.color.gray300)
+            )
+            setTextColor(BaseUtils.context.getColor(R.color.gray400))
+            text = "응시완료"
+            isEnabled = false
+        }
+        Exam.ExamState.not -> {
+            backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    BaseUtils.context, R.color.green500)
+            )
+            setTextColor(BaseUtils.context.getColor(R.color.color_white))
+            text = "도움말"
+            isEnabled = true
+        }
+        Exam.ExamState.open -> {
+            backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    BaseUtils.context, R.color.blue500)
+            )
+            setTextColor(BaseUtils.context.getColor(R.color.color_white))
+            text = "응시하기"
+            isEnabled = true
+        }
+    }
+}
+
+@BindingAdapter("setAvgGolfPower")
+fun TextView.setAvgGolfPower(golfPower: Res?) {
+    golfPower ?: return
+    text = "${golfPower.avg.title} ${golfPower.avg.score}점"
+}
+
+@BindingAdapter("setImprovedScore")
+fun TextView.setImprovedScore(score: String?) {
+    score ?: return
+    text = "${score}점"
+}
+
+@BindingAdapter("setAvgGolfPowerPercent")
+fun TextView.setAvgGolfPowerPercent(golfPower: Res?) {
+    golfPower ?: return
+    if(golfPower.avg.indicator == "up") {
+        text = " (+${golfPower.avg.delta})"
+        setTextColor(BaseUtils.context.getColor(R.color.green500))
+    } else if(golfPower.avg.indicator == "down"){
+        text = " (${golfPower.avg.delta})"
+        setTextColor(BaseUtils.context.getColor(R.color.red))
+    } else {
+        text = " (${golfPower.avg.delta})"
+        setTextColor(BaseUtils.context.getColor(R.color.gray500))
+    }
+}
+
+@BindingAdapter("setRanking")
+fun TextView.setRanking(ranking: String?) {
+    ranking ?: return
+    text = "${ranking}등"
+}
+
+@BindingAdapter("setTotalParticipate")
+fun TextView.setTotalParticipate(particitateCount: String?) {
+    particitateCount ?: return
+    text = "총 ${particitateCount}명이 참여중입니다."
+}
+
+@BindingAdapter("setUpdateDate")
+fun TextView.setUpdateDate(updateDate: String?) {
+    updateDate ?: return
+    text = "Updated $updateDate"
 }

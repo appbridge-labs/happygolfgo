@@ -73,4 +73,28 @@
         <item name="bottomSheetStyle">@style/BottomSheet</item>
     </style>
 
+    <style name="TabSelect" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">@color/color_black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="TabUnSelect" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">@color/gray500</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="ExamBottomSheetDialogTheme" parent="ExamBottomSheetDialog">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/color_white</item>
+    </style>
+    <!-- set the rounded drawable as background to your bottom sheet -->
+    <style name="ExamBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/shape_radius8_top</item>
+    </style>
+    <style name="ExamBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/ExamBottomSheet</item>
+    </style>
 </resources>
