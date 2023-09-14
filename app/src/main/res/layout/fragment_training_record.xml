@@ -305,15 +305,6 @@
                                 android:textStyle="bold"
                                 tools:text="평균점수 64점" />
 
-                            <TextView
-                                setAvgGolfPowerPercent="@{golfPower}"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/color_black"
-                                android:textSize="15dp"
-                                android:textStyle="bold"
-                                tools:text=" (+15%)" />
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -870,6 +861,7 @@
                             android:src="@drawable/bg_graph2_blur"
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
+                            android:background="@color/color_white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -1097,15 +1089,15 @@
                         <ImageView
                             android:visibility="gone"
                             android:id="@+id/ivBlurGraph2"
-                            android:src="@drawable/bg_graph_blur"
+                            android:src="@drawable/bg_stick_graph_blur"
+                            android:background="@color/color_white"
                             android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_width="0dp"
-                            android:layout_height="0dp"/>
+                            android:layout_height="wrap_content"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -1378,6 +1370,19 @@
                         </LinearLayout>
                         <!--          최근     -->
                     </LinearLayout>
+
+                    <ImageView
+                        android:visibility="gone"
+                        android:id="@+id/ivBlurGraph3"
+                        android:src="@drawable/bg_swing_graph_blur"
+                        android:background="@color/color_white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/round_section_layout_first_guideline"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"/>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 <!--                 end of 스크린 라우딩 기록 -->
                 <!-- 스윙 영상 기록실  -->

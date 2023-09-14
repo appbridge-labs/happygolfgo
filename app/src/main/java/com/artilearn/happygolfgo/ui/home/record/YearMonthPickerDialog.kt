@@ -8,19 +8,33 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.compose.ui.graphics.Color
 import androidx.fragment.app.DialogFragment
 import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.exam.YearMonth
 import java.util.*
+import kotlin.collections.ArrayList
+
+data class YearMonthDate(
+    val year: Int,
+    val month: List<Int>
+)
 
 class YearMonthPickerDialog<Button : View?>(
     val examHistory: List<YearMonth>
 ) : DialogFragment() {
     private var listener: SelectDateListener? = null
-    private val MAX_YEAR = 2099
-    private val MIN_YEAR = 1980
+    private val MAX_YEAR = 2030
+    private val MIN_YEAR = 2010
+    private val date: ArrayList<YearMonthDate> = arrayListOf()
+    var isYearEnabled = true
+    var selectYear = -1
+    private val examHistoryString = examHistory.map {
+        it.yearMonth
+    }
 
     val yearToMonthsMap: Map<String, List<String>> by lazy {
         examHistory.groupBy(
@@ -39,6 +53,7 @@ class YearMonthPickerDialog<Button : View?>(
 
     var btnConfirm: Button? = null
     var btnCancel: Button? = null
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder =
@@ -49,6 +64,19 @@ class YearMonthPickerDialog<Button : View?>(
             btnCancel = it.findViewById<Button>(R.id.btn_cancel)
         }
 
+        yearToMonthsMap.forEach { (s, strings) ->
+            date.add(
+                YearMonthDate(
+                    year = s.toInt(),
+                    month = strings.map {
+                        it.toInt()
+                    }
+                )
+            )
+        }
+        isYearEnabled = date.isNotEmpty()
+        selectYear = date[0].year
+
         val monthPicker =
             dialog.findViewById<View>(R.id.picker_month) as NumberPicker
         val yearPicker =
@@ -56,46 +84,95 @@ class YearMonthPickerDialog<Button : View?>(
         monthPicker.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
         yearPicker.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
         btnConfirm?.setOnClickListener {
-            val month = monthPicker.displayedValues[monthPicker.value-1]
-            listener?.onSelectDate(Pair(yearPicker.value.toString(), month))
-            dismiss()
+            val month = String.format("%02d", monthPicker.value)
+            if (examHistoryString.contains("${yearPicker.value}${month}")) {
+                listener?.onSelectDate(
+                    Pair(
+                        yearPicker.value.toString(),
+                        month
+                    )
+                )
+                dismiss()
+            } else {
+                Toast.makeText(
+                    requireContext(), "" +
+                            "미응시한 시험입니다. 다른 날짜를 선택해주세요.", Toast.LENGTH_SHORT
+                ).show()
+            }
         }
         btnCancel?.setOnClickListener {
             dismiss()
         }
 
-        yearPicker.minValue = uniqueYears.minOrNull() ?: MIN_YEAR
-        yearPicker.maxValue = uniqueYears.maxOrNull() ?: MAX_YEAR
-        yearPicker.displayedValues = uniqueYears.map { it.toString() }.toTypedArray()
+        yearPicker.minValue = MIN_YEAR
+        yearPicker.maxValue = MAX_YEAR
+        yearPicker.displayedValues = (MIN_YEAR..MAX_YEAR).map { it.toString() }.toTypedArray()
+        yearPicker.value = selectYear
+        setMonthPickerValues(monthPicker)
         builder.setView(dialog)
 
-        yearPicker.setOnValueChangedListener { _, _, newVal ->
-            val availableMonths = yearToMonthsMap[newVal.toString()] ?: emptyList()
-            setMonthPickerValues(availableMonths, monthPicker)
+        yearPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            date.forEach {
+                if (it.year == newVal) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        picker.textColor = requireContext().getColor(R.color.color_black)
+                        selectYear = newVal
+                    }
+                    isYearEnabled = true
+                    setMonthPickerValues(monthPicker)
+                    return@setOnValueChangedListener
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        picker.textColor = requireContext().getColor(R.color.gray300)
+                    }
+                    selectYear = newVal
+                    isYearEnabled = false
+                }
+            }
+            setMonthPickerValues(monthPicker)
         }
-
-        setInitialMonths(yearPicker.value.toString(), monthPicker)
 
         return builder.create()
     }
 
-    // 초기 월 설정
-    private fun setInitialMonths(year: String, monthPicker: NumberPicker) {
-        val availableMonths = yearToMonthsMap[year] ?: emptyList()
-        setMonthPickerValues(availableMonths, monthPicker)
-    }
-
     // monthPicker에 사용할 월 설정
-    private fun setMonthPickerValues(availableMonths: List<String>, monthPicker: NumberPicker) {
-        if(availableMonths.isNotEmpty()) {
-            monthPicker.displayedValues = null  // 이전 displayedValues를 초기화
-            monthPicker.minValue = 1
-            monthPicker.maxValue = availableMonths.size
-            monthPicker.displayedValues = availableMonths.toTypedArray()
+    private fun setMonthPickerValues(monthPicker: NumberPicker) {
+        monthPicker.displayedValues = null  // 이전 displayedValues를 초기화
+        monthPicker.minValue = 1
+        monthPicker.maxValue = 12
+        monthPicker.displayedValues = (1..12).map { it.toString() }.toTypedArray()
+        monthPicker.value = 1
 
-            // 현재 선택된 값이 새로운 범위를 벗어나면 첫 번째 값으로 설정
-            if (monthPicker.value > availableMonths.size || monthPicker.value < 1) {
-                monthPicker.value = 1
+        for (item in date) {
+            if (item.year == selectYear) {
+                monthPicker.value = date.find { it.year == selectYear }!!.month[0]
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    monthPicker.textColor = requireContext().getColor(R.color.color_black)
+                }
+                break
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    monthPicker.textColor = requireContext().getColor(R.color.gray300)
+                }
+            }
+        }
+
+        monthPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            date.forEach {
+                if (selectYear == it.year) {
+                    it.month.forEach {
+                        if (isYearEnabled && it == newVal) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                picker.textColor = requireContext().getColor(R.color.color_black)
+                            }
+                            return@setOnValueChangedListener
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                picker.textColor = requireContext().getColor(R.color.gray300)
+                            }
+                        }
+                    }
+                }
             }
         }
     }

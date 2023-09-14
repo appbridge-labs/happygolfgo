@@ -66,6 +66,8 @@
                 android:textColor="@color/color_black"
                 android:text="@{item.name}"
                 android:textSize="14dp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvType"
                 tools:text="티켓 이름" />

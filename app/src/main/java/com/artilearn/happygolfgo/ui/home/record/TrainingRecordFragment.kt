@@ -84,6 +84,9 @@ class TrainingRecordFragment :
 
             summaryRound.observe(this@TrainingRecordFragment) { summaryRound ->
                 binding.summaryRound = summaryRound
+                if(summaryRound.avgScore.isEmpty()) {
+                    binding.ivBlurGraph3.visibility = View.VISIBLE
+                }
             }
 
             networkFail.observe(this@TrainingRecordFragment) {

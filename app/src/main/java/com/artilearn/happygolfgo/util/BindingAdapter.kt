@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.artilearn.happygolfgo.R
@@ -668,4 +669,10 @@ fun TextView.setTotalParticipate(particitateCount: String?) {
 fun TextView.setUpdateDate(updateDate: String?) {
     updateDate ?: return
     text = "Updated $updateDate"
+}
+
+
+@BindingAdapter("setTextEmptyGone")
+fun TextView.setTextEmptyGone(text: String) {
+    isVisible = text.isNotEmpty()
 }
