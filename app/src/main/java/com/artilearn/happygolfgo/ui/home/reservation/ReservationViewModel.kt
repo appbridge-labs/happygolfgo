@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.artilearn.happygolfgo.base.BaseViewModel
 import com.artilearn.happygolfgo.data.Ticket
-import com.artilearn.happygolfgo.data.announcement.Announcement
+import com.artilearn.happygolfgo.data.banner.Announcement
 import com.artilearn.happygolfgo.data.banner.Banner
 import com.artilearn.happygolfgo.data.examination.Examination
 import com.artilearn.happygolfgo.data.home.HomeResponseInfo
@@ -294,7 +294,7 @@ class ReservationViewModel(
                 if (it.isSuccessful) {
                     if (body  != null && body.data.errorCode == 0 ) {
                         setExaminiationComputedValue(body.data.res.exam)
-                        _announcement.value =  body.data.res.announcement
+//                        _announcement.value =  body.data.res.announcement
                         _examination.value = body.data.res.exam
                         _mobileVersionAndroid.value = body.data.res.version.androidVersion
                         _showAnnouncement.value = !body.data.res.announcement.subject.isNullOrBlank()
@@ -336,6 +336,7 @@ class ReservationViewModel(
                 if (it.isSuccessful) {
                     if (body != null && body.data.errorCode == 0 ) {
                         _liveBanners.value = body.data.res.banners
+                        _announcement.value =  body.data.res.announcement
                     } else {
                         body?.data?.errorMessage.let { msg ->
                             _serverError.value = "오류 메세지: $msg"

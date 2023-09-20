@@ -16,7 +16,6 @@ import com.artilearn.happygolfgo.R
 import com.artilearn.happygolfgo.data.LessonLog
 import com.artilearn.happygolfgo.data.Ticket
 import com.artilearn.happygolfgo.data.TicketTime
-import com.artilearn.happygolfgo.data.announcement.Announcement
 import com.artilearn.happygolfgo.data.exam.Exam
 import com.artilearn.happygolfgo.data.exam.golfpower.GolfPower
 import com.artilearn.happygolfgo.data.exam.golfpower.Res
@@ -127,16 +126,6 @@ fun RecyclerView.setTicketItems(ticket: List<Ticket>?, vm: ReservationViewModel)
             }
         }
     })
-}
-
-@BindingAdapter("setAnnouncement")
-fun RecyclerView.setAnnouncement(announcement: Announcement?) {
-    with(adapter as ReservationAdapterWithHeader) {
-        announcement?.let {
-            //this.addItems(it)
-            this.setAnnouncement(announcement)
-        }
-    }
 }
 
 @BindingAdapter("setExamination")

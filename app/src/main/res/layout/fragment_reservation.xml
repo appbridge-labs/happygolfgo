@@ -479,7 +479,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/llMyTicketView"
                         bind:setScroll="@{vm}"
                         bind:setTickets="@{vm.ticketList}"
-                        bind:setAnnouncement="@{vm.announcement}"
                         bind:setExamination="@{vm.examination}"
                         tools:itemCount="6"
                         tools:listitem="@layout/item_reservation_use_ticket" />
