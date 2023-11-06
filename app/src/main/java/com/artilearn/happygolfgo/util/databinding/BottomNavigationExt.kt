@@ -19,6 +19,7 @@ fun BottomNavigationView.onBottomClick(viewModel: HomeViewModel) {
 //            R.id.rhythmcoach -> viewModel.onNextBottomEvent("리듬코치");
             //vc45
             R.id.record -> viewModel.onNextBottomEvent("기록실")//
+            R.id.training -> viewModel.onNextBottomEvent("훈련실")//
             R.id.alram -> viewModel.onNextBottomEvent("알림")
             R.id.mypage -> viewModel.onNextBottomEvent("마이페이지")
         }

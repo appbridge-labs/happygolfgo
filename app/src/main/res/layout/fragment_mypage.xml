@@ -128,11 +128,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:text="@string/fragment_mypage_record_title"
-                        android:textSize="14dp" />
+                        android:textColor="@color/color_black"
+                        android:textSize="18dp" />
 
                     <include
                         android:id="@+id/include_record"
-                        layout="@layout/common_view"
+                        layout="@layout/common_button_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp" />
@@ -149,33 +150,72 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
+                        android:textColor="@color/color_black"
+                        android:textSize="18dp"
                         android:text="@string/fragment_mypage_setting_title"
-                        android:textSize="14dp" />
+                        />
 
-<!--                    <include-->
-<!--                        android:id="@+id/include_ticket"-->
-<!--                        layout="@layout/common_view"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="12dp" />-->
+                    <!--                    <include-->
+                    <!--                        android:id="@+id/include_ticket"-->
+                    <!--                        layout="@layout/common_view"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="12dp" />-->
 
                     <include
                         android:id="@+id/include_infor"
-                        layout="@layout/common_view"
+                        layout="@layout/common_button_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp" />
 
                     <include
                         android:id="@+id/include_password"
-                        layout="@layout/common_view"
+                        layout="@layout/common_button_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp" />
 
                     <include
                         android:id="@+id/include_logout"
-                        layout="@layout/common_view"
+                        layout="@layout/common_button_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="@string/lecture_title"
+                        android:textColor="@color/color_black"
+                        android:textSize="18dp" />
+
+                    <include
+                        android:id="@+id/include_my_pick_lecture"
+                        layout="@layout/common_button_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp" />
+
+                    <include
+                        android:id="@+id/include_like_lecture"
+                        layout="@layout/common_button_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp" />
+
+                    <include
+                        android:id="@+id/include_my_comment"
+                        layout="@layout/common_button_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp" />

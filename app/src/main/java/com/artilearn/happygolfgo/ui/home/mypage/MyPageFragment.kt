@@ -12,6 +12,9 @@ import com.artilearn.happygolfgo.base.BaseFragment
 import com.artilearn.happygolfgo.constants.PLAY_STORE
 import com.artilearn.happygolfgo.databinding.FragmentMypageBinding
 import com.artilearn.happygolfgo.enummodel.ToastType
+import com.artilearn.happygolfgo.ui.home.lecture.LectureMyCommentActivity
+import com.artilearn.happygolfgo.ui.home.lecture.LectureMyLikeActivity
+import com.artilearn.happygolfgo.ui.home.lecture.LectureMyPickActivity
 import com.artilearn.happygolfgo.ui.home.mypage.profilechange.MyPageBottomFragment
 import com.artilearn.happygolfgo.ui.home.mypage.profilechange.ProfileChangeActivity
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListActivity
@@ -21,7 +24,10 @@ import com.artilearn.happygolfgo.ui.pwauth.PwAuthActivity
 import com.artilearn.happygolfgo.ui.ticketmanager.TicketManagerActivity
 import com.tedpark.tedpermission.rx2.TedRx2Permission
 import io.reactivex.rxkotlin.addTo
+import kotlinx.android.synthetic.main.common_button_view.view.*
 import kotlinx.android.synthetic.main.common_view.view.*
+import kotlinx.android.synthetic.main.common_view.view.parent_card
+import kotlinx.android.synthetic.main.common_view.view.tv_text
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MyPageFragment
@@ -79,6 +85,20 @@ class MyPageFragment
             includeUpdate.tv_text.text = getString(R.string.mypage_update)
             includeUpdate.tv_text.setTextColor(ContextCompat.getColor(includeUpdate.tv_text.context, R.color.color_mypage_update))
             includeUpdate.parent_card.setBackgroundResource(R.drawable.bg_mypage_update)
+
+
+            includeMyPickLecture.tv_text.text = "담아둔 강의"
+            includeMyComment.tv_text.text = "내 댓글"
+            includeLikeLecture.tv_text.text = "좋아요한 강의"
+
+            includeRecord.iv_icon.setBackgroundResource(R.drawable.ico_my_lesson)
+            includeInfor.iv_icon.setBackgroundResource(R.drawable.ico_my_info)
+            includePassword.iv_icon.setBackgroundResource(R.drawable.ico_my_password)
+            includeLogout.iv_icon.setBackgroundResource(R.drawable.ico_my_logout)
+
+            includeMyPickLecture.iv_icon.setBackgroundResource(R.drawable.ico_my_save)
+            includeMyComment.iv_icon.setBackgroundResource(R.drawable.ico_my_comment)
+            includeLikeLecture.iv_icon.setBackgroundResource(R.drawable.ico_my_like)
         }
     }
 
@@ -89,6 +109,11 @@ class MyPageFragment
             includeRecord.setOnClickListener { goLessonLog() }
             includeLogout.setOnClickListener { viewModel.logout() }
             includePassword.setOnClickListener { goPwAuth() }
+            includeMyPickLecture.setOnClickListener{goFavor()}
+            includeLikeLecture.setOnClickListener{goLike()}
+
+            includeMyComment.setOnClickListener{goMyComment()}
+
             //includeTicket.setOnClickListener { goTicketManager() }
         }
     }
@@ -120,6 +145,19 @@ class MyPageFragment
     private fun goMyInfo() {
         startActivity(Intent(activity, MyInfoActivity::class.java))
     }
+
+    private fun goLike() {
+        startActivity(Intent(activity, LectureMyLikeActivity::class.java))
+    }
+
+    private fun goMyComment() {
+        startActivity(Intent(activity, LectureMyCommentActivity::class.java))
+    }
+
+    private fun goFavor() {
+        startActivity(Intent(activity, LectureMyPickActivity::class.java))
+    }
+
 
     private fun goPwAuth() {
         startActivity(Intent(activity, PwAuthActivity::class.java))

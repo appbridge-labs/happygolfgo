@@ -50,6 +50,15 @@ fun <T : Identifiable> RecyclerView.setAlramItems(list: List<T>?) {
     }
 }
 
+@BindingAdapter("setTrainingList")
+fun <T : Identifiable> RecyclerView.setTrainingList(list: List<T>?) {
+    if (this.adapter is BaseRecyclerViewAdapter<*>) {
+        val adapter = this.adapter as BaseRecyclerViewAdapter<T>
+        adapter.submitList(list)
+    }
+}
+
+
 @BindingAdapter("bindPauseList")
 fun <T: Identifiable> RecyclerView.setPasueList(list: List<T>?) {
     if (this.adapter is BaseRecyclerViewAdapter<*>) {
@@ -57,6 +66,8 @@ fun <T: Identifiable> RecyclerView.setPasueList(list: List<T>?) {
         adapter.submitList(list)
     }
 }
+
+
 
 @BindingAdapter("bindExpiredList")
 fun <T : Identifiable> RecyclerView.setExpiredList(list: List<T>?) {

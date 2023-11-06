@@ -62,4 +62,9 @@
     <color name="orange500">#FAAD3D</color>
     <color name="orange100">#FFF6EA</color>
     <color name="black_op20">#33000000</color>
+
+    <color name="color_lect_green">#3FC057</color>
+    <color name="color_lect_search_bg">#fafafa</color>
+
+
 </resources>

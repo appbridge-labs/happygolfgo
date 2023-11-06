@@ -2,6 +2,7 @@ package com.artilearn.happygolfgo.modules
 
 import com.artilearn.happygolfgo.BuildConfig
 import com.artilearn.happygolfgo.api.ApiInterface
+import com.artilearn.happygolfgo.api.LectureApiInterface
 import com.artilearn.happygolfgo.util.CurrentVersion
 import com.artilearn.happygolfgo.util.PreferenceManager
 import com.facebook.stetho.okhttp3.StethoInterceptor
@@ -65,4 +66,18 @@ val apiModule = module {
             .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
             .build()
     }
+
+    single<LectureApiInterface> {
+        var retrofit =  Retrofit.Builder()
+            .baseUrl(BuildConfig.TRAINING_BASE_URL)
+            .client(get())
+            .addConverterFactory(get<GsonConverterFactory>())
+            .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
+
+            .build()
+
+        retrofit.create(LectureApiInterface::class.java)
+    }
+
+
 }

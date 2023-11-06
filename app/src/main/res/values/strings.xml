@@ -153,6 +153,7 @@
     <string name="home_tag_name_reservation">예약</string>
     <string name="home_tag_name_gamecenter">게임센터</string>
     <string name="home_tag_name_alram">알림</string>
+    <string name="home_tag_name_training">훈련실</string>
     <string name="home_tag_name_mypage">마이페이지</string>
     <string name="home_app_finish_title">정말 종료하시겠습니까?</string>
     <string name="fragment_alert_title_ignore_max_reservation">최대 예약 초과</string>
@@ -239,4 +240,26 @@
 -시험 점수는 2시간 후 앱에 반영\n\n
 -동점자 순위 : Putting력, S/G력, IRON력, DRV력, W/U력 순으로 비교하여 점수가 더 높은 사람을 우선\n\n
 -시상 : 매월 성적 우수자, 성적 향상 우수자, 우수 훈련소에 대해 시상 예정\n</string>
+
+
+    <!--강의실 String-->
+    <string name="lecture_title">강의실</string>
+    <string name="training_title_top1">훈련실</string>
+    <string name="training_title_top2">빈스윙</string>
+
+    <string name="training_search_hint">검색어를 입력하세요</string>
+    <string name="lect_bookmark">담기</string>
+    <string name="lect_like">좋아요</string>
+    <string name="lect_comment_title">댓글</string>
+    <string name="lect_no_comment">댓글이 없습니다.</string>
+    <string name="lect_same_text">같은 시리즈 강의</string>
+    <string name="lect_recommend_title">추천 강의</string>
+    <string name="lect_no_data">검색 결과가 없습니다.</string>
+    <string name="lect_no_pick">담은 강의가 없습니다.</string>
+    <string name="lect_no_like">좋아요 한 강의가 없습니다.</string>
+
+    <string name="lecture_my_pick">담아 둔 강의</string>
+    <string name="lecture_my_like">좋아요 한 강의</string>
+    <string name="lecture_my_comment">내 댓글</string>
+
 </resources>

@@ -36,4 +36,31 @@ abstract class BaseRecyclerViewAdapter<T : Identifiable>
 
         open fun recycle() {}
     }
+
+    abstract class ChildBaseViewHolder<T>(
+        private val binding: ViewDataBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        abstract val parentPoss: Int
+
+        open fun bind(item: T) {
+            binding.setVariable(BR.item, item)
+            binding.executePendingBindings()
+        }
+
+        open fun recycle() {}
+    }
+
+    abstract class ClickViewHolder<T>(
+        private val binding: ViewDataBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        abstract val lectureItemClick: Any
+        open fun bind(item: T) {
+            binding.setVariable(BR.item, item)
+            binding.executePendingBindings()
+        }
+
+        open fun recycle() {}
+    }
 }

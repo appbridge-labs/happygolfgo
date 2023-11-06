@@ -37,9 +37,11 @@ import com.artilearn.happygolfgo.data.ticketmanager.source.remote.TicketManagerR
 import com.artilearn.happygolfgo.data.ticketmanager.source.remote.TicketManagerRemoteDataSourceImpl
 import com.artilearn.happygolfgo.data.tickettime.source.remote.TicketTimeRemoteDataSource
 import com.artilearn.happygolfgo.data.tickettime.source.remote.TicketTimeRemoteDataSourceImpl
+import com.artilearn.happygolfgo.data.lecture.source.remote.LectureRemoteDataSource
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSource
 import com.artilearn.happygolfgo.data.version.source.remote.VersionRemoteDataSourceImpl
 import org.koin.dsl.module
+import com.artilearn.happygolfgo.data.lecture.source.remote.LectureRemoteDataSourceImpl
 
 val remoteModule = module {
 
@@ -88,4 +90,6 @@ val remoteModule = module {
     single<ProfileChangeRemoteDataSource> { ProfileChangeRemoteDataSourceImpl(get()) }
 
     single<TicketManagerRemoteDataSource> { TicketManagerRemoteDataSourceImpl(get()) }
+
+    single<LectureRemoteDataSource> { LectureRemoteDataSourceImpl(get()) }
 }

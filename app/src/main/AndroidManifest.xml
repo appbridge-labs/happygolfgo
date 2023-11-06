@@ -133,6 +133,44 @@
             android:name=".ui.tutorial.TutorialActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.lecture.LectureDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.lecture.LectureSectionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.lecture.LectureSearchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.lecture.LectureMyPickActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.lecture.LectureMyLikeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.lecture.LectureMyCommentActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.home.lecture.FullScreenPlayerActivity"
+            android:exported="false" android:theme="@style/FullScreenTheme"
+            android:screenOrientation="landscape" />
+
+
+
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="false"
@@ -147,6 +185,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <service
             android:name=".api.firebase.FCMMessage"

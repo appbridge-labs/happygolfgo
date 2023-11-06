@@ -258,6 +258,13 @@ fun setAlramBody(tv: TextView, body: String?) {
     }
 }
 
+@BindingAdapter("setTrainBody")
+fun setTrainBody(tv: TextView, body: String?) {
+    body?.let {
+        tv.text = it
+    }
+}
+
 @BindingAdapter("setTicketTime")
 fun RecyclerView.setTicketTimeItem(ticketTime: List<TicketTime>?) {
     with(adapter as TicketTimeAdapter) {

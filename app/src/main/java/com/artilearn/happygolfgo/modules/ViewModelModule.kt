@@ -7,10 +7,17 @@ import com.artilearn.happygolfgo.ui.golfrank.GolfRankViewModel
 import com.artilearn.happygolfgo.ui.home.HomeViewModel
 import com.artilearn.happygolfgo.ui.home.alram.AlramViewModel
 import com.artilearn.happygolfgo.ui.home.gamecenter.GameCenterViewModel
+import com.artilearn.happygolfgo.ui.home.lecture.CommentListViewModel
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageViewModel
 import com.artilearn.happygolfgo.ui.home.mypage.profilechange.ProfileChangeViewModel
 import com.artilearn.happygolfgo.ui.home.record.*
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationViewModel
+import com.artilearn.happygolfgo.ui.home.lecture.LectureDetailViewModel
+import com.artilearn.happygolfgo.ui.home.lecture.LectureSectionViewModel
+import com.artilearn.happygolfgo.ui.home.lecture.LectureFragmentViewModel
+import com.artilearn.happygolfgo.ui.home.lecture.LectureMyCommentListViewModel
+import com.artilearn.happygolfgo.ui.home.lecture.LectureMyLikeViewModel
+import com.artilearn.happygolfgo.ui.home.lecture.LectureMyPickViewModel
 import com.artilearn.happygolfgo.ui.lessonpostlist.LessonPostListViewModel
 import com.artilearn.happygolfgo.ui.log.LogViewModel
 import com.artilearn.happygolfgo.ui.login.LoginViewModel
@@ -54,7 +61,21 @@ val viewModelModule = module {
 
     viewModel { MyPageViewModel(get(), get()) }
 
+    viewModel { LectureFragmentViewModel(get(), get() , get() ) }
+
+    viewModel { LectureDetailViewModel(get(), get() , get() ) }
+
+    viewModel { LectureSectionViewModel(get(), get() , get() ) }
+
+    viewModel { LectureMyPickViewModel(get(), get() , get() ) }
+
+    viewModel { LectureMyLikeViewModel(get(), get() , get() ) }
+
+    viewModel { LectureMyCommentListViewModel(get() ) }
+
+
     viewModel { MyInfoViewModel(get()) }
+
 
     viewModel { LoginViewModel(get(), get()) }
 
@@ -87,6 +108,8 @@ val viewModelModule = module {
     viewModel { MyGolfPowerViewModel(get())}
 
     viewModel { AlramViewModel(get()) }
+
+    viewModel { CommentListViewModel(get()) }
 
     viewModel { GolfRankViewModel(get()) }
 

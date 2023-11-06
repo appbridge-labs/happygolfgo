@@ -12,6 +12,12 @@
         app:showAsAction="ifRoom"
         android:title="알림" />
     <item
+        android:id="@+id/training"
+        android:icon="@drawable/selector_lecture"
+        app:showAsAction="ifRoom"
+        android:title="훈련실" />
+
+    <item
         android:id="@+id/record"
         android:icon="@drawable/selector_record"
         app:showAsAction="ifRoom"

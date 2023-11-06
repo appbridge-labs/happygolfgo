@@ -11,7 +11,8 @@ import com.artilearn.happygolfgo.enummodel.UploadProfileType
 import kotlinx.android.synthetic.main.custom_bottom_view.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_info) {
+class
+MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_info) {
 
     private val viewModel: MyInfoViewModel by viewModel()
 
@@ -28,7 +29,7 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
     }
 
     private fun initViewModelObserve() {
-        with(viewModel) {
+        with(viewModel, fun MyInfoViewModel.() {
             emptyNickName.observe(this@MyInfoActivity, Observer {
                 showEmptyNickName()
             })
@@ -47,7 +48,7 @@ class MyInfoActivity : BaseActivity<ActivityMyInfoBinding>(R.layout.activity_my_
             appRefresh.observe(this@MyInfoActivity, Observer {
                 goRefresh()
             })
-        }
+        })
     }
 
     private fun initView() {

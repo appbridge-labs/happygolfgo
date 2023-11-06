@@ -15,11 +15,11 @@ import com.artilearn.happygolfgo.constants.LESSON_ID
 import com.artilearn.happygolfgo.constants.PLATE_ID
 import com.artilearn.happygolfgo.constants.RESERVATION_TYPE
 import com.artilearn.happygolfgo.databinding.ActivityHomeBinding
-import com.artilearn.happygolfgo.di.KoinApplication
 import com.artilearn.happygolfgo.ui.home.alram.AlramFragment
 import com.artilearn.happygolfgo.ui.home.mypage.MyPageFragment
 import com.artilearn.happygolfgo.ui.home.record.TrainingRecordFragment
 import com.artilearn.happygolfgo.ui.home.reservation.ReservationFragment
+import com.artilearn.happygolfgo.ui.home.lecture.LectureFragment
 import com.artilearn.happygolfgo.ui.log.LogActivity
 import com.artilearn.happygolfgo.ui.reserveconfirm.ReserveConfirmActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,6 +31,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private lateinit var alramFragment: AlramFragment
     private lateinit var myPageFragment: MyPageFragment
     private lateinit var trainingRecordFragment:TrainingRecordFragment
+    private lateinit var lectureFragment:LectureFragment
 
     private val fcmEventType by lazy { intent.getStringExtra(FCM_EVENT_TYPE) }
     private val reservationType by lazy { intent.getStringExtra(RESERVATION_TYPE) }
@@ -88,6 +89,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             "마이페이지" -> {
                  title = getString(R.string.mypage_toolbar_title)
             }
+            "훈련실" -> {
+                title = getString(R.string.training_title_top1)
+            }
             "기록실" -> {
                 title = getString(R.string.game_record_toolbar_title)
             }
@@ -106,6 +110,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             "알림" -> {
                 alramFragment = AlramFragment()
                 loadFragment(alramFragment)
+            }
+            "훈련실" -> {
+               // val bottomSheet = CommnetListDialog(this)
+                //bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+                lectureFragment = LectureFragment()
+                loadFragment(lectureFragment)
             }
             "마이페이지" -> {
                 myPageFragment = MyPageFragment()
@@ -128,6 +138,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             when (name) {
                 "예약" -> menu.findItem(R.id.reservation).isChecked = true
                 //"게임센터" -> menu.findItem(R.id.game center).isChecked = true
+                "훈련실" -> menu.findItem(R.id.training).isChecked = true
                 "알림" -> menu.findItem(R.id.alram).isChecked = true
                 "마이페이지" -> menu.findItem(R.id.mypage).isChecked = true
                 "기록실" -> menu.findItem(R.id.record).isChecked = true //adding rhythm coach
@@ -142,6 +153,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
         when (fragment) {
             is ReservationFragment -> tagName = "예약"
             is AlramFragment -> tagName = "알림"
+            is LectureFragment -> tagName = "훈련실"
             is MyPageFragment -> tagName = "마이페이지"
 //            DELME
 //            is RhythmCoachFragment -> tagName = "기록실" //adding rhythm coach
@@ -160,7 +172,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     private fun backButtonBottomNavigationListener() {
         val reservation = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_reservation))
-        val alram = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_alram))
+        val training = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_training))
+        val alram = supportFragmentManager.findFragmentByTag(getString(R.string.training_title_top1))
         val mypage = supportFragmentManager.findFragmentByTag(getString(R.string.home_tag_name_mypage))
         //comments: vc45
         val rhythmCoach = supportFragmentManager.findFragmentByTag("기록실")
@@ -173,6 +186,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             alram != null && alram.isVisible -> {
                 toolbarText("알림")
                 menuIsCheckItem("알림")
+            }
+            training != null && training.isVisible -> {
+                toolbarText("훈련실")
+                menuIsCheckItem("훈련실")
             }
             mypage != null && mypage.isVisible -> {
                 toolbarText("마이페이지")
